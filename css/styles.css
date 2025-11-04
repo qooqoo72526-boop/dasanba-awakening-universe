@@ -1,63 +1,82 @@
-
-/* Global fonts */
-@font-face {font-family: 'Orbitron'; src: local('Orbitron');}
 :root{
-  --bg:#0c1220;
-  --fg:#e9f0ff;
-  --glass:rgba(255,255,255,.06);
-  --accent:#9aa9ff;
-  --gold:#ffde59;
-  --pink:#ffa6d1;
-  --blue:#9ad1ff;
+  --bg:#0b1020;        /* 深藍黑，已調淡 */
+  --fg:#eaf2ff;
+  --muted:#a6b3d9;
+  --accent:#9b8cff;    /* 漸層紫主色 */
+  --glass: rgba(255,255,255,.06);
+  --glass2: rgba(255,255,255,.12);
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:radial-gradient(1200px 600px at 50% -20%, #1c375a 0%, #0c1220 55%) fixed; color:var(--fg); font-family: 'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;}
-a{color:var(--accent);text-decoration:none}
-.hidden{display:none}
-.center{display:flex;align-items:center;justify-content:center}
+html,body{margin:0;padding:0}
+body.bg-cosmic{
+  background: radial-gradient(60vw 60vh at 20% -10%,#1a2345 0%,#0b1020 60%,#0a0e1a 100%);
+  color:var(--fg); font-family:"Noto Sans TC", system-ui, sans-serif;
+}
 
-/* Star particles */
-.starfield{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 20% 30%,#8fb6ff88 30%,transparent 31%),radial-gradient(1.8px 1.8px at 70% 60%,#ffffff70 30%,transparent 31%),radial-gradient(1.5px 1.5px at 40% 80%,#b2c4ff70 30%,transparent 31%);background-repeat:no-repeat}
-.float{animation:float 6s ease-in-out infinite}
-@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+/* 開場動畫 */
+.splash{
+  position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background: radial-gradient(50% 50% at 50% 50%, #2a2655 0%, #0b1020 100%);
+  z-index:999; animation:fadeOut 3.5s forwards ease 0s;
+}
+.splash-title{
+  font-family:"Orbitron",sans-serif; font-size:28px; letter-spacing:.06em;
+  background: linear-gradient(90deg, #b8a9ff, #7a6aff, #b8a9ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.splash-sub{margin-top:10px; opacity:.85}
+@keyframes fadeOut{0%{opacity:1} 80%{opacity:1} 100%{opacity:0; visibility:hidden}}
 
-/* Top nav */
-.nav{position:sticky;top:0;backdrop-filter:blur(10px);background:linear-gradient(180deg, rgba(12,18,32,.9), rgba(12,18,32,.3));padding:12px 20px;z-index:10;display:flex;gap:10px;align-items:center;justify-content:center}
-.nav .chip{border:1px solid #ffffff20;border-radius:999px;padding:8px 12px;display:inline-flex;gap:8px;align-items:center;font-size:14px}
-.nav .chip.active{background:linear-gradient(180deg,#1f2a44,#11192e);box-shadow:0 0 12px #90a4ff33 inset}
-.nav .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%}
+/* 頂部 Pills */
+.topbar{position:sticky; top:0; padding:10px 14px; backdrop-filter: blur(10px);}
+.pill-nav a{
+  display:inline-block; margin:0 6px 0 0; padding:6px 12px; border-radius:18px;
+  background:var(--glass); color:var(--fg); text-decoration:none; font-size:14px;
+}
+.pill-nav a:hover{background:var(--glass2)}
 
-/* Hero */
-.hero{padding:40px 16px 10px;text-align:center}
-.hero h1{font-family:'Orbitron',system-ui; letter-spacing:1px; margin:0;font-size:48px;line-height:1.1;background:linear-gradient(180deg,#c7d2ff,#a2b5ff 60%,#d6d0ff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 18px #8a7fff40}
-.hero small{display:block;margin-top:8px;color:#c6d3ffbe}
+/* 容器 */
+.container{max-width:1100px; margin:0 auto; padding:16px}
 
-/* Gallery */
-.gallery{overflow:hidden;margin:18px auto;width:min(1100px,95vw);border-radius:16px;position:relative}
-.scroller{display:flex;gap:14px;animation:slide 30s linear infinite}
-.scroller img{height:280px;border-radius:16px;filter:brightness(.98) saturate(102%);box-shadow:0 10px 30px #0008}
-@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-.gallery h3{position:absolute;top:10px;left:14px;font-weight:600;background:linear-gradient(90deg,#e7dbff,#b9c7ff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 18px #9ab0ff55}
+/* 英文主標 */
+.brand-en{font-family:"Orbitron",sans-serif; font-weight:700; letter-spacing:.04em; margin:.3rem 0 0}
+.brand-zh{margin:2px 0 10px; opacity:.85}
 
-/* Cards */
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(1100px,95vw);margin:20px auto 60px}
-.card{background:linear-gradient(180deg,#0e1425,#0b1222);border:1px solid #ffffff12;border-radius:18px;padding:16px;box-shadow:0 10px 30px #000a;transition:transform .3s, box-shadow .3s}
-.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px #000c}
-.card img{width:100%;height:280px;object-fit:cover;border-radius:12px}
-.badge{margin-top:8px;display:flex;gap:8px; align-items:center;color:#cfe1ff}
-.badge .heart{font-size:18px}
-.meta{opacity:.8;font-size:13px;margin-top:6px}
-.card .enter{margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:linear-gradient(180deg,#1e2947,#121a2e);border:1px solid #ffffff20}
+/* hero video */
+.hero{position:relative; border-radius:18px; overflow:hidden; background:var(--glass);}
+.hero-video{width:100%; height:auto; display:block; opacity:.96}
+.hero-titles{position:absolute; left:18px; top:16px; text-shadow:0 2px 10px rgba(0,0,0,.45)}
 
-/* Clouds (chat inputs & options) */
-.cloud{background:linear-gradient(180deg,#131d33,#0f192d);border:1px solid #ffffff1a;border-radius:16px;padding:12px 14px;box-shadow:0 20px 60px #0008}
+/* 觀星畫廊 */
+.gallery{margin:22px 0}
+.gallery-head{display:flex; align-items:baseline; gap:12px; justify-content:space-between; flex-wrap:wrap}
+.gallery-title{font-family:"Orbitron",sans-serif; margin:0}
+.gallery-sub{opacity:.8; font-style:italic}
+.gallery-row{display:flex; gap:12px; overflow:hidden}
+.gallery-row img{height:160px; width:auto; border-radius:12px; opacity:.95}
+.auto-scroll{animation:scrollX 30s linear infinite}
+@keyframes scrollX{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
 
-/* Footer */
-.footer{opacity:.7;text-align:center;padding:30px 12px;font-size:13px}
+/* 角色卡 */
+.cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+.card{
+  position:relative; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow:0 10px 40px rgba(0,0,0,.25); min-height:360px; overflow:hidden;
+}
+.card-img{width:100%; height:210px; object-fit:cover; display:block; filter:saturate(.98)}
+.card-body{padding:12px 14px}
+.card-title{font-weight:700; letter-spacing:.02em}
+.card-tags{color:var(--muted); font-size:14px; margin:2px 0 8px}
+.card-quote{font-size:14px; opacity:.95}
+.card-link{position:absolute; inset:0; text-indent:-9999px}
 
-/* Responsive */
-@media (max-width:900px){
-  .hero h1{font-size:34px}
-  .scroller img{height:220px}
-  .cards{grid-template-columns:1fr}
+.foot-note{opacity:.65; margin:24px 0 60px}
+
+/* RWD */
+@media (max-width: 980px){
+  .cards{grid-template-columns:1fr; }
+  .gallery-row img{height:120px}
 }
