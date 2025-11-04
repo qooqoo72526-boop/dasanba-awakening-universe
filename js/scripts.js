@@ -1,0 +1,1 @@
+// Controls animation, transitions, and hybrid music auto-play
