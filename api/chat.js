@@ -43,7 +43,6 @@ export default async function handler(req) {
     }
     const data = await r.json();
     const text = data.choices?.[0]?.message?.content ?? "（我在聽）";
-
     return new Response(JSON.stringify({ ok: true, reply: text }), {
       status: 200,
       headers: { "Content-Type": "application/json" }
