@@ -1,19 +1,61 @@
-<!doctype html><html lang="zh"><head>
+
+<!doctype html><html lang="zh-Hant">
+<head>
 <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>米果｜星艙</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css"/></head><body>
-<canvas id="stars"></canvas><canvas id="dust"></canvas>
-<div class="topbar"><a href="index.html">⟵</a><span class="dot"></span><a href="dialogue.html">✉️</a></div>
-<section class="hero">
-  <div class="display-en" style="font-size:12px;opacity:.8">🩷 米果｜自我價值 × 邊界</div>
-  <video src="assets/migou_5s.mp4" autoplay muted loop playsinline style="max-width:min(720px,86vw);border-radius:16px;box-shadow:0 20px 70px rgba(0,0,0,.45)"></video>
-  <p class="small">在家的樣子・自由漂浮</p>
+<title>米果｜MIGOU</title>
+<link rel="stylesheet" href="/css/styles.css"/>
+<script src="/js/scripts.js" defer></script>
+<style>
+.room{width:min(1100px,95vw);margin:20px auto;display:grid;gap:16px;grid-template-columns:1.1fr .9fr}
+.video{border-radius:16px;overflow:hidden;box-shadow:0 10px 30px #000a;border:1px solid #ffffff15}
+.story{padding:14px}
+.bubble{margin:0 0 10px 0;padding:12px 14px;border-radius:14px;background:linear-gradient(180deg,#121a30,#0b1222);border:1px solid #ffffff15;box-shadow:0 20px 60px #0008}
+.chat{display:flex;gap:10px;margin-top:12px}
+.chat input{flex:1;padding:12px 14px;border-radius:14px;border:1px solid #ffffff22;background:linear-gradient(180deg,#101a2f,#0b1324);color:#e9f0ff}
+.chat button{padding:12px 14px;border-radius:14px;border:1px solid #ffffff22;background:linear-gradient(180deg,#1f2a44,#121a2e);color:#e9f0ff}
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<nav class="nav">
+  <span class="chip" onclick="go('/index.html')">← 返回</span>
+  <span class="chip" onclick="go('/dialogue.html')">✉️ 雲間信件</span>
+  <span class="chip" onclick="go('/soulmirror.html')">🪞 靈魂照妖鏡</span>
+</nav>
+
+<section class="room">
+  <div class="video">
+    <video src="/assets/migou_5s.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>
+  </div>
+  <div class="story">
+    <div class="bubble float">米果：我很值錢，不要糟蹋我。</div>
+    <div class="bubble">米果飄過一圈粉金雲霧：『妳想守住的界線是什麼？』</div>
+
+    <div class="chat">
+      <input id="msg" placeholder="跟米果說點什麼…"/>
+      <button onclick="send()">送出</button>
+    </div>
+    <div id="reply" class="bubble" style="margin-top:10px"></div>
+  </div>
 </section>
-<section class="center">
-  <a class="btn" href="dialogue.html">在雲上說話</a>
-</section>
-<audio id="bgm" src="assets/room_ambient.mp3" loop></audio>
-<script src="js/scripts.js"></script><script>AppLang.init(); Music.init('bgm');</script>
+
+<script>
+async function send(){
+  const el = document.getElementById('reply');
+  const v = document.getElementById('msg').value.trim();
+  if(!v) return;
+  el.textContent = '…';
+  try{
+    const r = await fetch('/api/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({persona:'Migou', message:v})
+    });
+    const data = await r.json();
+    el.textContent = data.reply || '(靈感在聚集，請再說一次)';
+  }catch(e){
+    el.textContent = '(暫時連線不到星雲，等等再試)';
+  }
+}
+</script>
 </body></html>

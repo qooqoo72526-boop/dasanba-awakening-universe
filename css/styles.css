@@ -1,124 +1,63 @@
 
-/* v8.9 Cosmic Final — Soft Nebula Universe */
+/* Global fonts */
+@font-face {font-family: 'Orbitron'; src: local('Orbitron');}
 :root{
-  --bg:#05060a;
-  --fg:#e9ecf1;
-  --accent:#b6a4ff;
-  --pink:#ff7bd5;
-  --gold:#f6c76f;
-  --cyan:#8fe9ff;
-  --glass:rgba(255,255,255,0.08);
-  --blur:16px;
+  --bg:#0c1220;
+  --fg:#e9f0ff;
+  --glass:rgba(255,255,255,.06);
+  --accent:#9aa9ff;
+  --gold:#ffde59;
+  --pink:#ffa6d1;
+  --blue:#9ad1ff;
 }
 *{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; font-family: "Noto Sans TC", system-ui, -apple-system, Segoe UI, Roboto;
-  color:var(--fg); background:radial-gradient(1200px 600px at 20% -10%, #10131d 0%, #070910 50%, #04060a 100%);
-  overflow-x:hidden;
-}
-/* Orbitron-like display for EN headers */
-.display-en{font-family:"Orbitron", ui-monospace, monospace; letter-spacing:0.06em}
+html,body{margin:0;padding:0;background:radial-gradient(1200px 600px at 50% -20%, #1c375a 0%, #0c1220 55%) fixed; color:var(--fg); font-family: 'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;}
+a{color:var(--accent);text-decoration:none}
+.hidden{display:none}
+.center{display:flex;align-items:center;justify-content:center}
 
-/* Top language mini bar */
-.topbar{
-  position:fixed; z-index:30; top:16px; right:18px; display:flex; gap:10px; align-items:center;
-  background:var(--glass); backdrop-filter: blur(var(--blur)); border-radius:999px; padding:6px 12px;
-  box-shadow:0 0 20px rgba(182,164,255,.25);
-  font-size:12px;
-}
-.topbar a, .topbar button{color:var(--fg); text-decoration:none; background:none; border:none; cursor:pointer}
-.topbar .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;margin-left:4px}
+/* Star particles */
+.starfield{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(2px 2px at 20% 30%,#8fb6ff88 30%,transparent 31%),radial-gradient(1.8px 1.8px at 70% 60%,#ffffff70 30%,transparent 31%),radial-gradient(1.5px 1.5px at 40% 80%,#b2c4ff70 30%,transparent 31%);background-repeat:no-repeat}
+.float{animation:float 6s ease-in-out infinite}
+@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
 
-/* Hero title */
-.hero{
-  position:relative; display:grid; place-items:center; min-height:72vh; text-align:center;
-}
-.hero h1{
-  margin:0; font-size:clamp(28px, 4vw, 56px); line-height:1.1; 
-  background:linear-gradient(90deg, var(--accent), var(--pink), var(--cyan));
-  -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 6px 30px rgba(140,120,255,.25));
-}
-.hero p{
-  margin:14px 0 0; font-size:14px; opacity:.85; letter-spacing:.03em;
-}
+/* Top nav */
+.nav{position:sticky;top:0;backdrop-filter:blur(10px);background:linear-gradient(180deg, rgba(12,18,32,.9), rgba(12,18,32,.3));padding:12px 20px;z-index:10;display:flex;gap:10px;align-items:center;justify-content:center}
+.nav .chip{border:1px solid #ffffff20;border-radius:999px;padding:8px 12px;display:inline-flex;gap:8px;align-items:center;font-size:14px}
+.nav .chip.active{background:linear-gradient(180deg,#1f2a44,#11192e);box-shadow:0 0 12px #90a4ff33 inset}
+.nav .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%}
 
-/* Subtle starfield canvas */
-#stars, #dust{
-  position:fixed; inset:0; z-index:-1; pointer-events:none;
-}
-/* Floating cards row */
-.row{display:grid; grid-template-columns:repeat(3, minmax(220px,1fr)); gap:14px; padding:24px; max-width:1100px; margin:0 auto}
-.card{
-  position:relative; padding:12px; border-radius:18px; background:var(--glass); backdrop-filter: blur(var(--blur)); 
-  box-shadow:0 12px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.05);
-  transform:translateY(0) translateZ(0); transition:transform .5s ease, box-shadow .5s ease;
-}
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 18px 60px rgba(100,120,255,.25);
-}
-.card .badge{position:absolute; top:10px; left:12px; font-size:12px}
-.badge.ajin{color:var(--gold)} .badge.migou{color:var(--pink)} .badge.gungun{color:#86c6ff}
-.card img{width:100%; height:auto; border-radius:14px; display:block}
-.card .ttl{margin:10px 6px 2px; font-size:13px; opacity:.95}
-.card .sub{margin:0 6px 8px; font-size:12px; opacity:.75}
+/* Hero */
+.hero{padding:40px 16px 10px;text-align:center}
+.hero h1{font-family:'Orbitron',system-ui; letter-spacing:1px; margin:0;font-size:48px;line-height:1.1;background:linear-gradient(180deg,#c7d2ff,#a2b5ff 60%,#d6d0ff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 18px #8a7fff40}
+.hero small{display:block;margin-top:8px;color:#c6d3ffbe}
 
-/* Gallery strip */
-.gallery{max-width:1100px;margin:14px auto 50px; padding:0 24px}
-.scroller{
-  display:flex; gap:10px; overflow:auto; scrollbar-width:none; padding:6px;
-}
-.scroller::-webkit-scrollbar{display:none}
-.scroller img{height:140px; width:auto; border-radius:12px; opacity:.92; transition:transform .4s ease, opacity .4s ease}
-.scroller img:hover{transform:translateY(-4px); opacity:1}
+/* Gallery */
+.gallery{overflow:hidden;margin:18px auto;width:min(1100px,95vw);border-radius:16px;position:relative}
+.scroller{display:flex;gap:14px;animation:slide 30s linear infinite}
+.scroller img{height:280px;border-radius:16px;filter:brightness(.98) saturate(102%);box-shadow:0 10px 30px #0008}
+@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.gallery h3{position:absolute;top:10px;left:14px;font-weight:600;background:linear-gradient(90deg,#e7dbff,#b9c7ff);-webkit-background-clip:text;color:transparent;text-shadow:0 0 18px #9ab0ff55}
 
-/* Section headers (tiny) */
-.sec-ttl{max-width:1100px; margin:6px auto 6px; padding:0 24px; font-size:12px; opacity:.7}
+/* Cards */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(1100px,95vw);margin:20px auto 60px}
+.card{background:linear-gradient(180deg,#0e1425,#0b1222);border:1px solid #ffffff12;border-radius:18px;padding:16px;box-shadow:0 10px 30px #000a;transition:transform .3s, box-shadow .3s}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 40px #000c}
+.card img{width:100%;height:280px;object-fit:cover;border-radius:12px}
+.badge{margin-top:8px;display:flex;gap:8px; align-items:center;color:#cfe1ff}
+.badge .heart{font-size:18px}
+.meta{opacity:.8;font-size:13px;margin-top:6px}
+.card .enter{margin-top:10px;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:linear-gradient(180deg,#1e2947,#121a2e);border:1px solid #ffffff20}
 
-/* Soft cloud bubble chat */
-.cloud-bubble{
-  display:inline-block; max-width:min(520px, 80vw);
-  padding:12px 14px; border-radius:22px; background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  box-shadow: 0 8px 26px rgba(120,140,255,.16), inset 0 1px 0 rgba(255,255,255,.08);
-  backdrop-filter: blur(14px);
-  font-size:13px; line-height:1.6;
-  position:relative;
-}
-.cloud-bubble:after{
-  content:""; position:absolute; bottom:-10px; left:24px; width:18px; height:18px; 
-  border-radius:50%; background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
-  filter:blur(0.4px);
-}
-.chat-row{display:flex; gap:12px; align-items:flex-end; margin:12px 0}
-.avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(180deg,#222,#111); box-shadow:0 6px 20px rgba(0,0,0,.4)}
+/* Clouds (chat inputs & options) */
+.cloud{background:linear-gradient(180deg,#131d33,#0f192d);border:1px solid #ffffff1a;border-radius:16px;padding:12px 14px;box-shadow:0 20px 60px #0008}
 
-/* Buttons minimal */
-.btn{
-  border:none; background:linear-gradient(90deg, #2b2e5e, #1c1e3b); color:#e9ecf1; padding:10px 14px;
-  border-radius:999px; cursor:pointer; font-size:12px;
-  box-shadow:0 10px 24px rgba(80,90,160,.35);
-}
-.btn.ghost{background:transparent; border:1px solid rgba(255,255,255,.12)}
+/* Footer */
+.footer{opacity:.7;text-align:center;padding:30px 12px;font-size:13px}
 
-.small{font-size:12px; opacity:.8}
-.center{display:grid; place-items:center}
-.space{height:26px}
-footer{padding:40px 0 70px; text-align:center; font-size:12px; opacity:.7}
-
-/* Splash (3.5s) */
-#splash{
-  position:fixed; inset:0; display:grid; place-items:center; background:rgba(5,6,10,.9); z-index:9999;
-  animation:splashOut 3.6s forwards ease 0.4s;
+/* Responsive */
+@media (max-width:900px){
+  .hero h1{font-size:34px}
+  .scroller img{height:220px}
+  .cards{grid-template-columns:1fr}
 }
-#splash h2{
-  margin:0; padding:22px 28px; border-radius:18px;
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-  backdrop-filter: blur(20px);
-  font-size:clamp(20px,3.6vw,44px);
-  color:transparent; -webkit-background-clip:text; background-clip:text;
-  background-image:linear-gradient(90deg, var(--accent), var(--pink), var(--cyan));
-  text-shadow:0 20px 60px rgba(110,120,255,.25);
-}
-@keyframes splashOut{ 0%{opacity:1} 82%{opacity:1} 100%{opacity:0; visibility:hidden}}
