@@ -1,4 +1,5 @@
-export const config = { runtime: 'edge' };
+// ❗這版不要 export config（不使用 edge）
+// 讓它跑 Vercel 預設的 Node Serverless Function
 
 const SYSTEM = {
   Ajin:  "你是阿金：自由、反骨、行動派。語氣熱血但暖心，像朋友，短句有力，絕不官腔。",
@@ -6,20 +7,20 @@ const SYSTEM = {
   Gungun:"你是滾滾：誠懇、溫柔、安全感的化身。語氣安定，慢條斯理，像心理導師。"
 };
 
-export default async function handler(req) {
+export default async function handler(req, res) {
   try {
     if (req.method !== "POST") {
-      return new Response(JSON.stringify({ error: "POST only" }), { status: 405 });
+      return res.status(405).json({ error: "POST only" });
     }
 
-    const { persona = "Migou", message = "" } = await req.json();
+    const { persona = "Migou", message = "" } = req.body || {};
     if (!message || !message.trim()) {
-      return new Response(JSON.stringify({ error: "Empty message" }), { status: 400 });
+      return res.status(400).json({ error: "Empty message" });
     }
 
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
-      return new Response(JSON.stringify({ error: "Missing OPENAI_API_KEY" }), { status: 500 });
+      return res.status(500).json({ error: "Missing OPENAI_API_KEY" });
     }
 
     const sys = SYSTEM[persona] || SYSTEM.Migou;
@@ -44,17 +45,14 @@ export default async function handler(req) {
 
     if (!r.ok) {
       const t = await r.text();
-      return new Response(JSON.stringify({ error: "Upstream error", detail: t }), { status: 502 });
+      return res.status(502).json({ error: "Upstream error", detail: t });
     }
 
     const data = await r.json();
     const text = data.choices?.[0]?.message?.content ?? "（我在聽）";
 
-    return new Response(JSON.stringify({ ok: true, reply: text }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+    return res.status(200).json({ ok: true, reply: text });
   } catch (e) {
-    return new Response(JSON.stringify({ error: "Unexpected", detail: String(e) }), { status: 500 });
+    return res.status(500).json({ error: "Unexpected", detail: String(e) });
   }
 }
