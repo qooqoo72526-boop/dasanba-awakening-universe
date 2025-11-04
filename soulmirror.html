@@ -1,1 +1,66 @@
-<!-- Soul mirror with reflection and random 25 questions -->
+
+<!doctype html><html lang="zh">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>🪞 靈魂照妖鏡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css"/></head>
+<body>
+<canvas id="stars"></canvas><canvas id="dust"></canvas>
+<div class="topbar"><a href="index.html">⟵</a><span class="dot"></span></div>
+
+<section class="center" style="padding-top:70px">
+  <div class="display-en small" style="opacity:.8">SOUL MIRROR</div>
+  <h2 style="margin:8px 0 4px;font-size:18px;opacity:.9">把真話交給鏡面，它會還你更清楚的自己</h2>
+</section>
+
+<section style="max-width:900px;margin:8px auto 40px;padding:0 22px">
+  <div id="qwrap"></div>
+  <div class="space"></div>
+  <div class="center"><button class="btn" id="submit">交付給宇宙</button></div>
+  <div class="space"></div>
+  <div id="result" class="cloud-bubble" style="display:none"></div>
+</section>
+
+<audio id="bgm" src="assets/mirror_reflect.mp3" loop></audio>
+<script src="js/scripts.js"></script>
+<script>
+AppLang.init(); Music.init('bgm');
+
+const qwrap = document.getElementById('qwrap');
+const picked = SoulMirror.pick25();
+for(const q of picked){
+  const el = document.createElement('div');
+  el.className='cloud-bubble';
+  el.style.display='block'; el.style.margin='10px 0';
+  el.innerHTML = `<div class="small" style="opacity:.8;margin-bottom:6px">${q}</div>
+  <div style="display:flex;gap:8px;margin-top:6px">
+    <input placeholder="寫一行真話" style="flex:1;border:none;background:var(--glass);color:var(--fg);padding:8px 10px;border-radius:10px; outline:none"/>
+    <select style="border:none;background:var(--glass);color:var(--fg);padding:8px 10px;border-radius:10px">
+      <option>直覺</option><option>說不</option><option>晚點再談</option><option>先保護自己</option><option>冒險試試</option>
+    </select>
+  </div>`;
+  qwrap.appendChild(el);
+}
+
+document.getElementById('submit').onclick = async ()=>{
+  const answers = Array.from(qwrap.querySelectorAll('div.cloud-bubble')).map(b=>{
+    const q = b.querySelector('.small').textContent.trim();
+    const a = b.querySelector('input').value.trim();
+    const c = b.querySelector('select').value;
+    return {q,a,choice:c};
+  });
+  const rs = document.getElementById('result');
+  rs.style.display='inline-block';
+  rs.textContent='…鏡面正在折射你的樣子';
+  try{
+    const r = await fetch('/api/analysis.js',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({answers})});
+    const j = await r.json();
+    rs.textContent = j.analysis || '…星際延遲，稍後再試';
+    rs.scrollIntoView({behavior:'smooth'});
+  }catch(e){
+    rs.textContent='…宇宙風暴，請稍後再試';
+  }
+};
+</script>
+</body></html>
