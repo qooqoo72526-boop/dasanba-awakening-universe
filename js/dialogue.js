@@ -1,30 +1,21 @@
 
-// Simple persona chat
-const out = document.querySelector('.bubbles');
-const form = document.querySelector('#chatForm');
-const input = document.querySelector('#msg');
-const personaRadios = document.querySelectorAll('input[name="persona"]');
-
-function bubble(text, me=false){
-  const d = document.createElement('div');
-  d.className = 'msg' + (me ? ' me' : '');
-  d.textContent = text;
-  out.appendChild(d);
-  out.scrollTop = out.scrollHeight;
+async function postJSON(url, data){
+  const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+  return r.json();
 }
-
-form?.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const persona = [...personaRadios].find(r=>r.checked)?.value || 'Migou';
-  const message = input.value.trim();
-  if(!message) return;
-  bubble(message, true);
-  input.value='';
-  try{
-    const r = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ persona, message })});
-    const data = await r.json();
-    bubble(data.reply || '[…]');
-  }catch(err){
-    bubble('（連線過載，等等再試）');
-  }
+document.addEventListener('DOMContentLoaded', ()=>{
+  const form = document.getElementById('chatform');
+  const bubbles = document.querySelector('.bubbles');
+  const msg = document.getElementById('msg');
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const persona = form.querySelector('input[name="persona"]:checked').value;
+    const text = msg.value.trim();
+    if(!text) return;
+    const me = document.createElement('div'); me.className='me'; me.textContent=text; bubbles.appendChild(me);
+    msg.value='';
+    let res = await postJSON('/api/chat', { persona, message: text});
+    const ai = document.createElement('div'); ai.className='ai'; ai.textContent = res.reply || '（我在聽）'; bubbles.appendChild(ai);
+    bubbles.scrollTop = bubbles.scrollHeight;
+  });
 });

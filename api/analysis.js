@@ -1,4 +1,1 @@
-// /api/analysis.js — 暫時空殼，確保不會拖垮部署
-export default function handler(_req, res) {
-  return res.status(200).json({ ok: true });
-}
+export default async function handler(){ return new Response(JSON.stringify({ok:true})) }
