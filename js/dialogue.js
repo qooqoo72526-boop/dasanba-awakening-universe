@@ -1,21 +1,48 @@
-
-async function postJSON(url, data){
-  const r = await fetch(url, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
-  return r.json();
-}
-document.addEventListener('DOMContentLoaded', ()=>{
+(function () {
   const form = document.getElementById('chatform');
-  const bubbles = document.querySelector('.bubbles');
-  const msg = document.getElementById('msg');
-  form.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const persona = form.querySelector('input[name="persona"]:checked').value;
-    const text = msg.value.trim();
-    if(!text) return;
-    const me = document.createElement('div'); me.className='me'; me.textContent=text; bubbles.appendChild(me);
-    msg.value='';
-    let res = await postJSON('/api/chat', { persona, message: text});
-    const ai = document.createElement('div'); ai.className='ai'; ai.textContent = res.reply || '（我在聽）'; bubbles.appendChild(ai);
+  const bubbles = document.querySelector('.bubbles .panel'); // 你頁面裡的訊息容器
+  const radios = document.querySelectorAll('input[name="persona"]');
+
+  function currentPersona() {
+    for (const r of radios) if (r.checked) return r.value;
+    return 'Migou';
+  }
+
+  function addBubble(role, text) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + (role === 'user' ? 'me' : 'ai');
+    div.textContent = text;
+    bubbles.appendChild(div);
     bubbles.scrollTop = bubbles.scrollHeight;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault(); // 重要：不要讓表單做預設導航（會變成 GET）
+    const input = document.getElementById('msg');
+    const message = (input.value || '').trim();
+    if (!message) return;
+
+    const persona = currentPersona();
+    addBubble('user', message);
+    input.value = '';
+
+    try {
+      const r = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ persona, message })
+      });
+
+      const data = await r.json();
+      if (!r.ok || !data.ok) {
+        addBubble('ai', '（連線忙線中，等等我再回你…）');
+        console.error('Chat error', data);
+        return;
+      }
+      addBubble('ai', data.reply);
+    } catch (err) {
+      addBubble('ai', '（我這邊斷線了一下，再試一次）');
+      console.error(err);
+    }
   });
-});
+})();
