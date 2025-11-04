@@ -1,73 +1,82 @@
-
-<!doctype html><html lang="zh-Hant">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>雲間信件</title>
-<link rel="stylesheet" href="/css/styles.css"/>
-<script src="/js/scripts.js" defer></script>
-<style>
-.wrap{width:min(1100px,95vw);margin:20px auto}
-.tabs{display:flex;gap:10px;margin-bottom:12px;justify-content:center}
-.tabs .chip{cursor:pointer}
-.msgs{display:flex;flex-direction:column;gap:10px}
-.b{align-self:flex-start}.m{align-self:flex-end}
-.b,.m{max-width:80%;}
-.b .cloud{border-color:#ffe06640}.m .cloud{border-color:#9ecbff40}
-.input{display:flex;gap:10px;margin-top:12px}
-.input input{flex:1;padding:12px 14px;border-radius:14px;border:1px solid #ffffff22;background:linear-gradient(180deg,#101a2f,#0b1324);color:#e9f0ff}
-.input button{padding:12px 14px;border-radius:14px;border:1px solid #ffffff22;background:linear-gradient(180deg,#1f2a44,#121a2e);color:#e9f0ff}
-</style>
-</head>
-<body>
-<div class="starfield"></div>
-<nav class="nav">
-  <span class="chip" onclick="go('/index.html')">← 返回</span>
-  <span class="chip active">✉️ 雲間信件</span>
-  <span class="chip" onclick="go('/soulmirror.html')">🪞 靈魂照妖鏡</span>
-</nav>
-
-<section class="wrap">
-  <div class="tabs">
-    <span class="chip active" id="p-Ajin" onclick="setP('Ajin')">💛 AJIN</span>
-    <span class="chip" id="p-Migou" onclick="setP('Migou')">🩷 MIGOU</span>
-    <span class="chip" id="p-Gungun" onclick="setP('Gungun')">🩵 GUNGUN</span>
-  </div>
-
-  <div id="msgs" class="msgs">
-    <div class="b"><div class="cloud">選好了嗎？我們直接聊真心話。</div></div>
-  </div>
-
-  <div class="input">
-    <input id="text" placeholder="輸入訊息…" />
-    <button onclick="send()">送出</button>
-  </div>
-</section>
-
-<script>
-let persona = 'Ajin';
-function setP(p){
-  persona=p;
-  for(const id of ['Ajin','Migou','Gungun']){
-    document.getElementById('p-'+id).classList.toggle('active', id===p);
-  }
+:root{
+  --bg:#0b1020;        /* 深藍黑，已調淡 */
+  --fg:#eaf2ff;
+  --muted:#a6b3d9;
+  --accent:#9b8cff;    /* 漸層紫主色 */
+  --glass: rgba(255,255,255,.06);
+  --glass2: rgba(255,255,255,.12);
 }
-async function send(){
-  const t = document.getElementById('text');
-  const v = t.value.trim();
-  if(!v) return;
-  const msgs = document.getElementById('msgs');
-  msgs.insertAdjacentHTML('beforeend', `<div class="m"><div class="cloud">${v}</div></div>`);
-  t.value='';
-  const placeholder = document.createElement('div');
-  placeholder.className='b';
-  placeholder.innerHTML = '<div class="cloud">…</div>';
-  msgs.appendChild(placeholder);
-  try{
-    const r = await fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({persona, message:v})});
-    const data = await r.json();
-    placeholder.innerHTML = `<div class="cloud">${(data.reply||'(我在聽，你再說一次)')}</div>`;
-  }catch(e){
-    placeholder.innerHTML = `<div class="cloud">(暫時連不上宇宙訊號，等一下再試)</div>`;
-  }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body.bg-cosmic{
+  background: radial-gradient(60vw 60vh at 20% -10%,#1a2345 0%,#0b1020 60%,#0a0e1a 100%);
+  color:var(--fg); font-family:"Noto Sans TC", system-ui, sans-serif;
 }
-</script>
-</body></html>
+
+/* 開場動畫 */
+.splash{
+  position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background: radial-gradient(50% 50% at 50% 50%, #2a2655 0%, #0b1020 100%);
+  z-index:999; animation:fadeOut 3.5s forwards ease 0s;
+}
+.splash-title{
+  font-family:"Orbitron",sans-serif; font-size:28px; letter-spacing:.06em;
+  background: linear-gradient(90deg, #b8a9ff, #7a6aff, #b8a9ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.splash-sub{margin-top:10px; opacity:.85}
+@keyframes fadeOut{0%{opacity:1} 80%{opacity:1} 100%{opacity:0; visibility:hidden}}
+
+/* 頂部 Pills */
+.topbar{position:sticky; top:0; padding:10px 14px; backdrop-filter: blur(10px);}
+.pill-nav a{
+  display:inline-block; margin:0 6px 0 0; padding:6px 12px; border-radius:18px;
+  background:var(--glass); color:var(--fg); text-decoration:none; font-size:14px;
+}
+.pill-nav a:hover{background:var(--glass2)}
+
+/* 容器 */
+.container{max-width:1100px; margin:0 auto; padding:16px}
+
+/* 英文主標 */
+.brand-en{font-family:"Orbitron",sans-serif; font-weight:700; letter-spacing:.04em; margin:.3rem 0 0}
+.brand-zh{margin:2px 0 10px; opacity:.85}
+
+/* hero video */
+.hero{position:relative; border-radius:18px; overflow:hidden; background:var(--glass);}
+.hero-video{width:100%; height:auto; display:block; opacity:.96}
+.hero-titles{position:absolute; left:18px; top:16px; text-shadow:0 2px 10px rgba(0,0,0,.45)}
+
+/* 觀星畫廊 */
+.gallery{margin:22px 0}
+.gallery-head{display:flex; align-items:baseline; gap:12px; justify-content:space-between; flex-wrap:wrap}
+.gallery-title{font-family:"Orbitron",sans-serif; margin:0}
+.gallery-sub{opacity:.8; font-style:italic}
+.gallery-row{display:flex; gap:12px; overflow:hidden}
+.gallery-row img{height:160px; width:auto; border-radius:12px; opacity:.95}
+.auto-scroll{animation:scrollX 30s linear infinite}
+@keyframes scrollX{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* 角色卡 */
+.cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+.card{
+  position:relative; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow:0 10px 40px rgba(0,0,0,.25); min-height:360px; overflow:hidden;
+}
+.card-img{width:100%; height:210px; object-fit:cover; display:block; filter:saturate(.98)}
+.card-body{padding:12px 14px}
+.card-title{font-weight:700; letter-spacing:.02em}
+.card-tags{color:var(--muted); font-size:14px; margin:2px 0 8px}
+.card-quote{font-size:14px; opacity:.95}
+.card-link{position:absolute; inset:0; text-indent:-9999px}
+
+.foot-note{opacity:.65; margin:24px 0 60px}
+
+/* RWD */
+@media (max-width: 980px){
+  .cards{grid-template-columns:1fr; }
+  .gallery-row img{height:120px}
+}
