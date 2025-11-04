@@ -1,93 +1,51 @@
-<!-- /index.html -->
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Emotional Value AI | Awakening Universe</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css"/>
-</head>
-<body class="bg-cosmic">
+<!-- 英文主標 + 中文小標（保持你喜歡的紫系漸層） -->
+<header class="hero-title">
+  <h1 class="title-en">Emotional Value AI | Awakening Universe</h1>
+  <p class="title-zh">大三巴覺醒宇宙｜我不療癒，我只教人覺醒。</p>
+</header>
 
-  <!-- 3.5s 英文開場（漸層紫）只在首次載入顯示 -->
-  <div id="splash" class="splash">
-    <div class="splash-title">Emotional Value AI | Awakening Universe</div>
-    <div class="splash-sub">「我不療癒，我只教人覺醒。」</div>
+<!-- 英雄影片：assets/trio.mp4 自動播放、靜音循環、行動裝置可播 -->
+<section class="hero-video">
+  <video id="hero" src="assets/trio.mp4" autoplay muted loop playsinline></video>
+</section>
+
+<!-- 觀星畫廊 🔭（自動橫向滑動，標題回來了） -->
+<section class="gallery">
+  <div class="gallery-head">
+    <h2>🔭 觀星畫廊</h2>
+    <small>Every Soul Has Its Own Orbit.</small>
   </div>
+  <div class="gallery-track" id="galleryTrack">
+    <!-- 你已有 trio.webp ~ trio6.webp，保留檔名即可 -->
+    <img src="assets/trio.webp"  alt="">
+    <img src="assets/trio2.webp" alt="">
+    <img src="assets/trio3.webp" alt="">
+    <img src="assets/trio4.webp" alt="">
+    <img src="assets/trio5.webp" alt="">
+    <img src="assets/trio6.webp" alt="">
+  </div>
+</section>
 
-  <header class="topbar">
-    <nav class="pill-nav">
-      <a href="dialogue.html">✉️ 雲間信件</a>
-      <a href="soulmirror.html">🪞 靈魂照妖鏡</a>
-      <a href="ajin.html">💛 AJIN</a>
-      <a href="migou.html">🩷 MIGOU</a>
-      <a href="gungun.html">🩵 GUNGUN</a>
-    </nav>
-  </header>
+<!-- 角色卡（固定 webp、有背景；等高；心形顏色回來） -->
+<section class="cards">
+  <article class="card">
+    <div class="card-badge">💛 AJIN</div>
+    <img src="assets/ajin.webp" alt="AJIN">
+    <h3>自由｜反骨</h3>
+    <p class="phrase">“Pride isn’t distance — it’s self-love with boundaries.”</p>
+  </article>
 
-  <main class="container">
-    <section class="hero">
-      <video class="hero-video" src="assets/trio.mp4" autoplay muted playsinline loop></video>
-      <div class="hero-titles">
-        <h1 class="brand-en">Emotional Value AI | Awakening Universe</h1>
-        <p class="brand-zh">大三巴覺醒宇宙｜我不療癒，我只教人覺醒。</p>
-      </div>
-    </section>
+  <article class="card">
+    <div class="card-badge">🩷 MIGOU</div>
+    <img src="assets/migou.webp" alt="MIGOU">
+    <h3>自我價值｜邊界</h3>
+    <p class="phrase">「我很值錢，不要糟蹋我。」</p>
+  </article>
 
-    <section class="gallery">
-      <div class="gallery-head">
-        <h2 class="gallery-title">🔭 觀星畫廊</h2>
-        <p class="gallery-sub"><i>Every soul has its own orbit.</i>「每個靈魂，都有自己的軌道。」</p>
-      </div>
-      <div class="gallery-row auto-scroll">
-        <img src="assets/trio.webp" alt="">
-        <img src="assets/trio2.webp" alt="">
-        <img src="assets/trio3.webp" alt="">
-        <img src="assets/trio4.webp" alt="">
-        <img src="assets/trio5.webp" alt="">
-        <img src="assets/trio6.webp" alt="">
-      </div>
-    </section>
-
-    <section class="cards">
-      <article class="card">
-        <img class="card-img" src="assets/ajin.webp" alt="Ajin">
-        <div class="card-body">
-          <div class="card-title">💛 阿金｜AJIN</div>
-          <div class="card-tags">自由｜反骨</div>
-          <div class="card-quote"><i>Pride isn’t distance — it’s self-love with boundaries.</i></div>
-        </div>
-        <a class="card-link" href="ajin.html" aria-label="進入阿金星艙"></a>
-      </article>
-
-      <article class="card">
-        <img class="card-img" src="assets/migou.webp" alt="Migou">
-        <div class="card-body">
-          <div class="card-title">🩷 米果｜MIGOU</div>
-          <div class="card-tags">自我價值｜邊界</div>
-          <div class="card-quote">「我很值錢，不要糟蹋我。」</div>
-        </div>
-        <a class="card-link" href="migou.html" aria-label="進入米果星艙"></a>
-      </article>
-
-      <article class="card">
-        <img class="card-img" src="assets/gungun.webp" alt="Gungun">
-        <div class="card-body">
-          <div class="card-title">🩵 滾滾｜GUNGUN</div>
-          <div class="card-tags">被理解｜安全</div>
-          <div class="card-quote"><i>True safety is being understood.</i></div>
-        </div>
-        <a class="card-link" href="gungun.html" aria-label="進入滾滾星艙"></a>
-      </article>
-    </section>
-
-    <footer class="foot-note">
-      v8.6 · Black-Gold Minimal Cosmic · Responsive · No hard borders
-    </footer>
-  </main>
-
-  <script src="js/scripts.js"></script>
-</body>
-</html>
+  <article class="card">
+    <div class="card-badge">🩵 GUNGUN</div>
+    <img src="assets/gungun.webp" alt="GUNGUN">
+    <h3>被理解｜安全感</h3>
+    <p class="phrase">“True safety is being understood.”</p>
+  </article>
+</section>
