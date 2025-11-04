@@ -40,6 +40,17 @@
       "如果今天重來一次，你會對自己多一分什麼？",
       "你害怕失去的，其實從沒真正擁有過嗎？",
       // …可自行擴充
+      <script>
+const ALL = Array.from({length:500}, (_,i)=> i+1);
+function pick25(){
+  const tmp = ALL.slice();
+  const out = [];
+  while(out.length<25){ out.push(tmp.splice(Math.floor(Math.random()*tmp.length),1)[0]); }
+  return out;
+}
+const ids = pick25();
+// 接著把 ids 映射成你的題庫文字，渲染成「無框漂浮選項」
+</script>
     ];
 
     const symbols = ['🍬','🌙','🔷','✨'];
