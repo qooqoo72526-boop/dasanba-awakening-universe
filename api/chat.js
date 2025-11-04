@@ -33,7 +33,7 @@ export default async function handler(req) {
       temperature: 0.7
     };
 
-    const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    const r = await fetch("https://dasanba-awakening-universe.vercel.app/api/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
