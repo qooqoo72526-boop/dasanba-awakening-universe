@@ -1,72 +1,92 @@
-
-/* v8.9 Clean | Black‑Gold Cosmic Minimal */
+/* v8.9 Clean | Black-Gold Cosmic Minimal */
 :root{
   --bg:#0e1222;
   --card:#121833;
   --glass:rgba(255,255,255,.06);
-  --text:#eaf6ff;
-  --sub:#9fb3d9;
-  --gold:#F6C945;
-  --pink:#F4A4C4;
-  --blue:#6EC3FF;
-  --orbit:rgba(148, 203, 255,.25);
-  --accent:#b9a7ff;
-  --soft:#8aa0c2;
-  --ok:#7ef7c2;
+  --text:#e6f3ff;
+  --sub:#8fb3d9;
+  --gold:#f6c945;
+  --pink:#f44c64;
+  --blue:#36c8ff;
+  --orbit:rgb(148,203,255,.25);
+  --accent:#80a2c2;
+  --soft:#8a0ac2;
+  --ok:#7fcf2c;
 }
+
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;background:radial-gradient(1200px 600px at 70% -10%, rgba(106,88,255,.18), transparent 60%), radial-gradient(900px 500px at -20% 10%, rgba(255,180,240,.15), transparent 60%), var(--bg); color:var(--text); font-family: 'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;}
-a{color:var(--accent);text-decoration:none}
+html,body{margin:0;padding:0;background:
+  radial-gradient(1200px 680px at 70% -10%, rgba(106,88,255,.18), transparent 60%),
+  radial-gradient(900px 600px at -10% 110%, rgba(255,126,196,.10), transparent 65%),
+  var(--bg);
+  color:var(--accent);text-decoration:none;
+}
 h1,h2,h3{font-family: Orbitron, 'Noto Sans TC', system-ui; letter-spacing:.5px}
 h1{font-size: clamp(28px, 4.8vw, 56px); margin:.8rem 0 .2rem}
 h2{font-size: clamp(18px, 2.6vw, 28px); margin:.2rem 0 1rem}
 .small{font-size:.9rem;color:var(--sub)}
 .wrap{max-width:1100px;margin:0 auto;padding:24px}
+
 .nav{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-.badge{padding:6px 12px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); box-shadow:0 0 0 1px rgba(255,255,255,.08) inset}
-.badge.ghost{background:transparent; box-shadow:0 0 0 1px rgba(255,255,255,.12) inset}
-.badge .dot{margin-right:6px}
+.badge{padding:6px 12px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.02)); color:var(--text)}
+.badge_ghost{background:transparent; box-shadow: 0 0 1px rgba(255,255,255,.12) inset}
+.badge .heart{margin-right:6px}
+.kv b{color:var(--text)}
+
 .row{display:grid; grid-template-columns:repeat(12,1fr); gap:16px}
-.card{grid-column:span 12; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border-radius:16px; padding:14px; box-shadow:0 8px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.06) inset}
+.card{grid-column:span 12; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border-radius:16px; padding:12px; border:1px solid rgba(255,255,255,.06)}
 .card.flat{background:var(--glass)}
 
 @media(min-width:860px){
- .col-4{grid-column:span 4}
- .col-6{grid-column:span 6}
- .col-8{grid-column:span 8}
+  .col-4{grid-column: span 4}
+  .col-6{grid-column: span 6}
+  .col-8{grid-column: span 8}
 }
 
+/* ---------- Hero ---------- */
 .hero{position:relative; overflow:hidden; border-radius:18px}
-.hero video, .hero img{width:100%; height:420px; object-fit:cover; display:block; filter:contrast(1.03) saturate(1.06) brightness(0.92)}
-.hero:after{content:''; position:absolute; inset:0; background:radial-gradient(80% 60% at 50% 10%, rgba(0,0,0,.0), rgba(0,0,0,.35));}
+.hero video, .hero img{width:100%; height:420px; object-fit:cover; display:block; filter:contrast(1.03) saturate(1.05)}
+.hero::after{content:''; position:absolute; inset:0; background:radial-gradient(80% 60% at 50% 10%, rgba(0,0,0,.15), transparent 60%)}
 
-.stars{position:absolute; inset:0; background-image:radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.6), transparent), radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,.4), transparent), radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,.5), transparent); opacity:.6; pointer-events:none;}
+/* ---------- 星塵 ---------- */
+.stars{position:absolute; inset:0; pointer-events:none; background-image:radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.6), transparent 60%),
+  radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,.5), transparent 60%),
+  radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,.5), transparent 60%)}
 
-.gallery{position:relative; overflow:auto hidden; white-space:nowrap; scroll-behavior:smooth; border-radius:14px; background:rgba(255,255,255,.03);}
-.gallery img{height:150px; margin:10px; border-radius:12px; display:inline-block; object-fit:cover; box-shadow:0 6px 24px rgba(0,0,0,.35)}
-.gallery .title{position:sticky; left:0; top:0; display:inline-block; margin:10px; padding:8px 12px; border-radius:999px; background:rgba(20,28,60,.75); backdrop-filter: blur(8px); font-family: Orbitron; box-shadow:0 0 0 1px rgba(255,255,255,.07) inset}
+/* ---------- 觀星畫廊 🔭 ---------- */
+.gallery{position:relative; overflow:auto hidden; white-space:nowrap; scroll-behavior:smooth; border-radius:14px; background:var(--glass)}
+.gallery img{height:150px; margin:10px; border-radius:12px; display:inline-block; object-fit:cover; box-shadow: 0 0 1px rgba(255,255,255,.12) inset}
+.gallery .title{position:sticky; left:0; top:0; display:inline-block; margin:10px; padding:8px 12px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.03)); color:var(--text)}
 .marquee{overflow:hidden; white-space:nowrap; opacity:.9}
 
+/* ---------- 角色卡 (三張等高) ---------- */
 .cards{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
-@media(max-width:900px){ .cards{grid-template-columns:1fr} }
-.char{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border-radius:18px; padding:12px; box-shadow:0 0 0 1px rgba(255,255,255,.06) inset; transition:transform .2s ease, box-shadow .2s ease}
-.char:hover{transform:translateY(-3px); box-shadow:0 8px 32px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.1) inset}
+@media(max-width:980px){ .cards{grid-template-columns:1fr} }
+
+.char{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border-radius:18px; padding:12px; box-shadow:0 8px 32px rgba(0,0,0,.35), 0 0 1px rgba(255,255,255,.12) inset}
+.char:hover{transform: translateY(-3px); transition: .2s ease; box-shadow: 0 8px 32px rgba(0,0,0,.35), 0 0 1px rgba(255,255,255,.20) inset}
 .char img{width:100%; height:280px; object-fit:cover; border-radius:14px}
 .char .meta{display:flex; align-items:center; justify-content:space-between; margin-top:8px}
 .tag{font-size:.9rem; color:var(--soft)}
 .tag .heart{margin-right:6px}
 .kv{font-family: Orbitron; font-size:1rem; color:var(--sub)}
-.kv b{color:var(--text)}
 
-.panel{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border-radius:18px; padding:14px}
+/* ---------- 面板 & 按鈕 ---------- */
+.panel{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border-radius:18px; padding:16px}
+.btn{padding:10px 14px; border-radius:12px; border:0; color:#001; background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06))}
+.btn.primary{background:linear-gradient(180deg, rgba(115,90,255,.6), rgba(70,55,170,.65)); color:#fff; box-shadow: 0 12px 40px rgba(70,55,170,.35)}
+.btn.ghost{background:transparent; box-shadow: 0 0 1px rgba(255,255,255,.14) inset; color:var(--text)}
 
-.btn{padding:10px 14px; border-radius:12px; border:0; background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06)); color:var(--text); cursor:pointer}
-.btn.primary{background:linear-gradient(180deg, rgba(115,90,255,.6), rgba(70,55,170,.65)); box-shadow:0 12px 40px rgba(116,90,255,.25)}
-.btn.ghost{background:transparent; box-shadow:0 0 0 1px rgba(255,255,255,.14) inset}
-
-.input{width:100%; background:rgba(255,255,255,.06); color:var(--text); border:0; padding:12px 14px; border-radius:12px; outline:none}
+/* ---------- 表單 / 對話區 ---------- */
+input,textarea{width:100%; background:rgba(255,255,255,.06); color:var(--text); border:0; padding:12px 14px; border-radius:12px}
 .bubbles{position:relative; min-height:160px}
-.bubbles .msg{max-width:86%; margin:10px 0; padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.07); box-shadow:0 8px 26px rgba(0,0,0,.25)}
-.bubbles .me{margin-left:auto; background:rgba(120,180,255,.18)}
+.bubbles .me{max-width: 86%; margin:10px 0; padding:12px 14px; border-radius:16px; background:rgba(255,255,255,.09)}
+.bubbles .ai{max-width: 86%; margin-left:auto; background:rgba(120,180,255,.18)}
 
+/* ---------- 底部 ---------- */
 footer{padding:28px 0; color:var(--sub); text-align:center}
+
+/* ---------- 心形色系 (💛/💖/💙) ---------- */
+.heart--ajin{color:var(--gold)}
+.heart--migou{color:var(--pink)}
+.heart--gungun{color:var(--blue)}
