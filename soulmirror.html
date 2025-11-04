@@ -1,66 +1,93 @@
 
-<!doctype html><html lang="zh">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>🪞 靈魂照妖鏡</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css"/></head>
-<body>
-<canvas id="stars"></canvas><canvas id="dust"></canvas>
-<div class="topbar"><a href="index.html">⟵</a><span class="dot"></span></div>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>🪞 靈魂照妖鏡</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .wrap{max-width:1000px;margin:36px auto;padding:0 16px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .q{background:var(--glass);backdrop-filter:var(--blur);border-radius:14px;padding:12px;font-size:12px}
+    .go{margin:16px 0;border:none;border-radius:999px;padding:12px 16px;font-size:12px;background:linear-gradient(90deg,#c6a2ff33,#93e2ff33);color:var(--fg)}
+    .result{margin-top:20px}
+    .ring{width:220px;height:220px;border-radius:50%;margin:10px auto;background:conic-gradient(#ffd27a 0 40%, #ff9ad0 40% 70%, #9ed8ff 70% 100%);filter:drop-shadow(0 0 20px rgba(255,255,255,.2))}
+    .z{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .voice{font-size:12px;background:var(--glass);padding:10px;border-radius:12px}
+    @media (max-width:900px){ .grid{grid-template-columns:1fr} .z{grid-template-columns:1fr} }
+  </style>
+</head>
+<body class="stars">
+  <div class="bg"></div>
+  <div class="topbar">
+    <div class="brand">SOUL MIRROR</div>
+    <nav class="nav">
+      <a href="/">⟵ 返回</a>
+      <a href="/dialogue">✉️ 雲間信件</a>
+    </nav>
+    <div class="lang">🌍</div>
+  </div>
 
-<section class="center" style="padding-top:70px">
-  <div class="display-en small" style="opacity:.8">SOUL MIRROR</div>
-  <h2 style="margin:8px 0 4px;font-size:18px;opacity:.9">把真話交給鏡面，它會還你更清楚的自己</h2>
-</section>
+  <div class="wrap">
+    <h1 class="title">🪞 靈魂照妖鏡</h1>
+    <p class="subtitle">把靈魂放上鏡面 讓星雲告訴你此刻的軌道</p>
 
-<section style="max-width:900px;margin:8px auto 40px;padding:0 22px">
-  <div id="qwrap"></div>
-  <div class="space"></div>
-  <div class="center"><button class="btn" id="submit">交付給宇宙</button></div>
-  <div class="space"></div>
-  <div id="result" class="cloud-bubble" style="display:none"></div>
-</section>
+    <div id="qs" class="grid"></div>
+    <button class="go" onclick="analyze()">提交宇宙回聲</button>
 
-<audio id="bgm" src="assets/mirror_reflect.mp3" loop></audio>
-<script src="js/scripts.js"></script>
-<script>
-AppLang.init(); Music.init('bgm');
+    <div id="res" class="result"></div>
+  </div>
 
-const qwrap = document.getElementById('qwrap');
-const picked = SoulMirror.pick25();
-for(const q of picked){
-  const el = document.createElement('div');
-  el.className='cloud-bubble';
-  el.style.display='block'; el.style.margin='10px 0';
-  el.innerHTML = `<div class="small" style="opacity:.8;margin-bottom:6px">${q}</div>
-  <div style="display:flex;gap:8px;margin-top:6px">
-    <input placeholder="寫一行真話" style="flex:1;border:none;background:var(--glass);color:var(--fg);padding:8px 10px;border-radius:10px; outline:none"/>
-    <select style="border:none;background:var(--glass);color:var(--fg);padding:8px 10px;border-radius:10px">
-      <option>直覺</option><option>說不</option><option>晚點再談</option><option>先保護自己</option><option>冒險試試</option>
-    </select>
-  </div>`;
-  qwrap.appendChild(el);
-}
+  <script type="module">
+    import {QUESTIONS} from './js/questions.js';
+    // pick 25 distinct
+    const pool = [...QUESTIONS];
+    const picked = [];
+    while(picked.length<25 && pool.length){
+      picked.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]);
+    }
+    const wrap = document.getElementById('qs');
+    picked.forEach((q,i)=>{
+      const d = document.createElement('div'); d.className='q cloudy';
+      d.innerHTML = `<div style="margin-bottom:6px;opacity:.9">${q}</div>
+      <input type="text" placeholder="寫一句真實的話…" style="width:100%;background:transparent;border:none;outline:none;color:var(--fg);font-size:12px;padding:8px 6px;border-bottom:1px dashed rgba(255,255,255,.25)">
+      <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+        ${['是','不是','還不確定','不想回答'].map(v=>`<label style="font-size:11px;opacity:.9"><input type='radio' name='q${i}' value='${v}'> ${v}</label>`).join('')}
+      </div>`;
+      wrap.appendChild(d);
+    });
 
-document.getElementById('submit').onclick = async ()=>{
-  const answers = Array.from(qwrap.querySelectorAll('div.cloud-bubble')).map(b=>{
-    const q = b.querySelector('.small').textContent.trim();
-    const a = b.querySelector('input').value.trim();
-    const c = b.querySelector('select').value;
-    return {q,a,choice:c};
-  });
-  const rs = document.getElementById('result');
-  rs.style.display='inline-block';
-  rs.textContent='…鏡面正在折射你的樣子';
-  try{
-    const r = await fetch('/api/analysis.js',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({answers})});
-    const j = await r.json();
-    rs.textContent = j.analysis || '…星際延遲，稍後再試';
-    rs.scrollIntoView({behavior:'smooth'});
-  }catch(e){
-    rs.textContent='…宇宙風暴，請稍後再試';
-  }
-};
-</script>
-</body></html>
+    async function analyze(){
+      const res = document.getElementById('res');
+      res.innerHTML = `<div class='ring'></div><div class='subtitle' style='text-align:center'>宇宙正在整理你的軌道…</div>`;
+      try{
+        const r = await fetch('/api/chat',{
+          method:'POST',headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({persona:'MIGOU', message:'請以600字深層、不官腔、敢愛敢恨的語氣，給出此刻的覺醒解析，最後讓阿金、米果、滾滾各說一句短句。'})
+        });
+        const j = await r.json();
+        res.innerHTML = `
+          <div class='ring'></div>
+          <div class='z'>
+            <div class='voice cloudy'>
+              <small style="opacity:.75">覺醒解析</small>
+              <div style="margin-top:6px;white-space:pre-wrap">${j.reply || '雲層太厚，等等再試試。'}</div>
+            </div>
+            <div class='voice cloudy'>
+              <small style="opacity:.75">宇宙留影</small>
+              <div style="margin-top:6px;display:flex;gap:8px;align-items:flex-end;justify-content:center">
+                <img src="assets/ajin_clear.webp" alt="ajin" style="width:22%">
+                <img src="assets/migou_clear.webp" alt="migou" style="width:22%">
+                <img src="assets/gungun_clear.webp" alt="gungun" style="width:22%">
+              </div>
+            </div>
+          </div>`;
+      }catch(e){
+        res.innerHTML = "<div class='voice'>連線微弱，稍後再試。</div>";
+      }
+    }
+    window.analyze = analyze;
+  </script>
+</body>
+</html>

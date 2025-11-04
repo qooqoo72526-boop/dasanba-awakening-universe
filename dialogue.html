@@ -1,55 +1,70 @@
 
-<!doctype html><html lang="zh">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>✉️ 雲間信件｜Cloud Letters</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css"/></head>
-<body>
-<canvas id="stars"></canvas><canvas id="dust"></canvas>
-<div class="topbar"><a href="index.html">⟵</a><span class="dot"></span><button onclick="AppLang.set('zh')">中</button><button onclick="AppLang.set('en')">EN</button></div>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>✉️ 雲間信件</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .desk{max-width:950px;margin:40px auto;padding:0 16px}
+    .bubble{background:var(--glass);backdrop-filter:var(--blur);border-radius:18px;padding:14px 14px;margin:8px 0;font-size:12px;line-height:1.6}
+    .row{display:flex;gap:10px}
+    .row>*{flex:1}
+    .pill{display:inline-flex;gap:8px;border-radius:999px;padding:6px 10px;background:rgba(255,255,255,.06);font-size:11px}
+    .who{font-size:11px;opacity:.85;margin-bottom:8px}
+    .send{margin-top:10px;font-size:12px;border:none;border-radius:999px;padding:10px 14px;background:linear-gradient(90deg,#c6a2ff33,#93e2ff33);color:var(--fg)}
+  </style>
+</head>
+<body class="stars">
+  <div class="bg"></div>
+  <div class="topbar">
+    <div class="brand">CLOUD LETTERS</div>
+    <nav class="nav">
+      <a href="/">⟵ 返回</a>
+      <a href="/soulmirror">🪞 靈魂照妖鏡</a>
+    </nav>
+    <div class="lang">🌍</div>
+  </div>
 
-<section class="center" style="padding-top:80px">
-  <div class="cloud-bubble" data-lang="zh">
-    想把心事放上雲，就從一句真話開始。
-  </div>
-  <div class="cloud-bubble display-en" style="display:none" data-lang="en">
-    Say one honest line. Let the cloud carry it.
-  </div>
-</section>
+  <div class="desk">
+    <h1 class="title">✉️ 雲間信件</h1>
+    <p class="subtitle">把心事放上雲 讓宇宙回你一句真心話</p>
 
-<section style="max-width:860px;margin:20px auto;padding:0 20px">
-  <div class="chat-row">
-    <div class="avatar"></div>
-    <div class="cloud-bubble" id="reply">…</div>
-  </div>
-  <div class="chat-row">
-    <select id="persona" class="btn">
-      <option value="migou">🩷 米果</option>
-      <option value="ajin">💛 阿金</option>
-      <option value="gungun">🩵 滾滾</option>
-    </select>
-    <input id="msg" placeholder="打幾個字就好" style="flex:1;border:none;background:var(--glass);color:var(--fg);padding:10px 12px;border-radius:12px; margin:0 8px; outline:none"/>
-    <button class="btn" onclick="send()">送出</button>
-  </div>
-</section>
+    <div class="pill">選擇夥伴：
+      <button class="send" onclick="setP('AJIN')">💛 AJIN</button>
+      <button class="send" onclick="setP('MIGOU')">🩷 MIGOU</button>
+      <button class="send" onclick="setP('GUNGUN')">🩵 GUNGUN</button>
+    </div>
 
-<audio id="bgm" src="assets/bgm_universe.mp3" loop></audio>
-<script src="js/scripts.js"></script>
-<script>
-AppLang.init(); Music.init('bgm');
-async function send(){
-  const message = document.getElementById('msg').value.trim();
-  if(!message) return;
-  const persona = document.getElementById('persona').value;
-  document.getElementById('reply').textContent = '…穿越雲層中';
-  try{
-    const r = await fetch('/api/chat.js',{method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message, persona})});
-    const j = await r.json();
-    document.getElementById('reply').textContent = j.reply || '…雲層太厚，等等再試';
-  }catch(e){
-    document.getElementById('reply').textContent = '…星際連線延遲，等等再試';
-  }
-}
-</script>
-</body></html>
+    <div class="who">目前夥伴：<span id="persona">AJIN</span></div>
+
+    <div class="bubble cloudy">
+      <textarea id="msg" rows="4" style="width:100%;background:transparent;color:var(--fg);border:none;outline:none;font-size:12px" placeholder="寫下此刻的心情或問題…"></textarea>
+      <button class="send" onclick="go()">送出</button>
+    </div>
+
+    <div id="out"></div>
+  </div>
+
+  <script>
+    let persona='AJIN';
+    function setP(p){ persona=p; document.getElementById('persona').textContent=p; }
+    async function go(){
+      const t = document.getElementById('msg').value.trim();
+      if(!t) return;
+      const out = document.getElementById('out');
+      const me = document.createElement('div'); me.className='bubble'; me.textContent='你｜'+t; out.appendChild(me);
+      const wait = document.createElement('div'); wait.className='bubble'; wait.textContent='… 星塵正在聚合'; out.appendChild(wait);
+      try{
+        const r = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona:persona,message:t})});
+        const j = await r.json();
+        wait.remove();
+        const them = document.createElement('div'); them.className='bubble'; them.textContent = j.reply || '雲層太厚，等等再試試。'; out.appendChild(them);
+      }catch(e){
+        wait.textContent='連線微弱，稍後再試。';
+      }
+    }
+  </script>
+</body>
+</html>

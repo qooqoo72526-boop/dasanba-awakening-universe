@@ -1,0 +1,63 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/chat.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "dialogue.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "soulmirror.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "rooms/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "css/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/*",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
+    },
+    {
+      "src": "/dialogue",
+      "dest": "/dialogue.html"
+    },
+    {
+      "src": "/soulmirror",
+      "dest": "/soulmirror.html"
+    },
+    {
+      "src": "/ajin",
+      "dest": "/rooms/ajin.html"
+    },
+    {
+      "src": "/migou",
+      "dest": "/rooms/migou.html"
+    },
+    {
+      "src": "/gungun",
+      "dest": "/rooms/gungun.html"
+    }
+  ]
+}

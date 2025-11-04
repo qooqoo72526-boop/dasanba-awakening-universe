@@ -1,81 +1,83 @@
 
-<!doctype html><html lang="zh">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Emotional Value AI | Awakening Universe</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css"/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Emotional Value AI | Awakening Universe</title>
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
-<body>
-<canvas id="stars"></canvas><canvas id="dust"></canvas>
+<body class="stars">
+  <audio id="bgm" src="assets/bgm.mp3" loop></audio>
+  <div class="bg"></div>
 
-<div id="splash"><h2 class="display-en">Emotional Value AI | Awakening Universe</h2></div>
-
-<div class="topbar">
-  <button onclick="AppLang.set('en')" aria-label="English">🌍 EN</button>
-  <span class="dot"></span>
-  <button onclick="AppLang.set('zh')" aria-label="中文">中</button>
-</div>
-
-<section class="hero">
-  <div data-lang="en" class="display-en" style="display:none">
-    <h1>Emotional Value AI | Awakening Universe</h1>
-    <p>Awaken, not repair. Become who you are.</p>
+  <!-- 3.5秒英文字 Splash -->
+  <div class="splash">
+    <div>
+      <h1>Emotional Value AI | Awakening Universe</h1>
+      <div class="sub"><small>覺醒，不是修復；而是重生</small></div>
+    </div>
   </div>
-  <div data-lang="zh">
-    <h1 class="display-en">Emotional Value AI | Awakening Universe</h1>
-    <p>我不療癒，我只教人覺醒。</p>
+
+  <div class="topbar">
+    <div class="brand">AWAKENING • UNIVERSE</div>
+    <nav class="nav">
+      <a href="/dialogue">✉️ 雲間信件</a>
+      <a href="/soulmirror">🪞 靈魂照妖鏡</a>
+      <a href="/ajin">💛 AJIN</a>
+      <a href="/migou">🩷 MIGOU</a>
+      <a href="/gungun">🩵 GUNGUN</a>
+    </nav>
+    <div class="lang" id="lang">🌍</div>
   </div>
-</section>
 
-<section class="row">
-  <article class="card">
-    <div class="badge ajin">💛 阿金｜自由・反骨</div>
-    <img src="assets/ajin.webp" alt="阿金"/>
-    <div class="ttl small">不必取悅世界</div>
-    <div class="sub small">→ <a href="ajin.html">進入星艙</a></div>
-  </article>
-  <article class="card">
-    <div class="badge migou">🩷 米果｜自我價值・邊界</div>
-    <img src="assets/migou.webp" alt="米果"/>
-    <div class="ttl small">我很值錢，不要糟蹋我</div>
-    <div class="sub small">→ <a href="migou.html">進入星艙</a></div>
-  </article>
-  <article class="card">
-    <div class="badge gungun">🩵 滾滾｜被理解・安全感</div>
-    <img src="assets/gungun.webp" alt="滾滾"/>
-    <div class="ttl small">我靜靜陪你，讓你放心做自己</div>
-    <div class="sub small">→ <a href="gungun.html">進入星艙</a></div>
-  </article>
-</section>
+  <section class="hero">
+    <h1 class="title">Emotional Value AI | Awakening Universe</h1>
+    <p class="subtitle">大三巴覺醒宇宙｜我不療癒，我只教人覺醒。</p>
+    <div class="video-wrap cloudy">
+      <video src="assets/trio.mp4" autoplay muted playsinline loop></video>
+    </div>
+  </section>
 
-<div class="sec-ttl">宇宙生活掠影</div>
-<section class="gallery">
-  <div class="scroller" id="gal">
-    <img src="assets/trio.webp" alt="trio1"/>
-    <img src="assets/trio2.webp" alt="trio2"/>
-    <img src="assets/trio3.webp" alt="trio3"/>
-    <img src="assets/trio4.webp" alt="trio4"/>
-    <img src="assets/trio5.webp" alt="trio5"/>
-    <img src="assets/trio6.webp" alt="trio6"/>
-  </div>
-</section>
+  <section class="gallery">
+    <div class="carousel cloudy">
+      <img id="carousel-img" src="assets/trio.webp" alt="trio"/>
+      <div class="hint">宇宙生活｜自動輪播</div>
+    </div>
+  </section>
 
-<section class="center">
-  <div class="space"></div>
-  <a class="btn" href="dialogue.html">✉️ 雲間信件</a>
-  <span style="width:10px;display:inline-block"></span>
-  <a class="btn ghost" href="soulmirror.html">🪞 靈魂照妖鏡</a>
-</section>
+  <section class="cards">
+    <article class="card cloudy">
+      <span class="enter">➤</span>
+      <img src="assets/ajin.webp" alt="ajin"/>
+      <div class="name">💛 阿金｜AJIN</div>
+      <div class="tag">自由｜反骨</div>
+      <div class="motto">我活著就要自由地燃燒</div>
+      <a class="ghost" href="/ajin" aria-label="open ajin"></a>
+    </article>
+    <article class="card cloudy">
+      <span class="enter">➤</span>
+      <img src="assets/migou.webp" alt="migou"/>
+      <div class="name">🩷 米果｜MIGOU</div>
+      <div class="tag">自我價值｜邊界</div>
+      <div class="motto">我很值錢，不要糟蹋我</div>
+      <a class="ghost" href="/migou" aria-label="open migou"></a>
+    </article>
+    <article class="card cloudy">
+      <span class="enter">➤</span>
+      <img src="assets/gungun.webp" alt="gungun"/>
+      <div class="name">🩵 滾滾｜GUNGUN</div>
+      <div class="tag">被理解｜安全感</div>
+      <div class="motto">我只想讓你放心做自己</div>
+      <a class="ghost" href="/gungun" aria-label="open gungun"></a>
+    </article>
+  </section>
 
-<footer>
-  <div>覺醒，不是修復；而是重生</div>
-  <div class="small">不必學飛，你只是忘了自己有翅膀。</div>
-</footer>
+  <footer>
+    <div>覺醒，不是修復；而是重生｜不必學飛，你只是忘了自己有翅膀。</div>
+  </footer>
 
-<audio id="bgm" src="assets/bgm_universe.mp3" loop></audio>
-<script src="js/scripts.js"></script>
-<script>AppLang.init(); Music.init('bgm');</script>
-</body></html>
+  <script src="js/main.js"></script>
+  <style>.ghost{position:absolute;inset:0;}</style>
+</body>
+</html>
