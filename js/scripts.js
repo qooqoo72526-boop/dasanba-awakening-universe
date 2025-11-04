@@ -1,11 +1,16 @@
+// /js/scripts.js
+(function(){
+  // Splash 僅首次
+  const onceKey = 'dasanba_splash_seen';
+  const splash = document.getElementById('splash');
+  if (splash){
+    if (localStorage.getItem(onceKey)) {
+      splash.style.display='none';
+    } else {
+      localStorage.setItem(onceKey,'1');
+      setTimeout(()=> splash.style.display='none', 3500);
+    }
+  }
 
-function go(href){ location.href = href; }
-function playAmbient(){
-  const a = document.getElementById('ambient');
-  if(!a) return;
-  // autoplay policy: start muted, unmute on first click
-  a.muted = true;
-  a.play().catch(()=>{});
-  window.addEventListener('click', ()=>{ a.muted=false; }, {once:true});
-}
-document.addEventListener('DOMContentLoaded', playAmbient);
+  // 若需要可在此加入更多通用特效
+})();
