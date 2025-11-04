@@ -1,3 +1,4 @@
+// /js/dialogue.js
 window.addEventListener('DOMContentLoaded', () => {
   const form  = document.getElementById('chatform');
   const input = document.getElementById('msg');
@@ -11,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function addBubble(text, who) {
     const div = document.createElement('div');
-    div.className = 'bubble ' + (who || 'you');
+    div.className = 'bubble ' + (who || 'you'); // you / ai
     div.textContent = text;
     panel.appendChild(div);
     panel.scrollTop = panel.scrollHeight;
@@ -21,17 +22,22 @@ window.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     const message = input.value.trim();
     if (!message) return;
+
+    // 先顯示使用者訊息
     addBubble(message, 'you');
     input.value = '';
 
     try {
+      // 呼叫後端 /api/chat
       const r = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ persona: currentPersona(), message })
       });
+
+      // 取回覆並顯示
       const data = await r.json();
-      addBubble(data.reply || '…', 'ai');
+      addBubble(data.reply || '（……）', 'ai');
     } catch (err) {
       addBubble('（系統忙碌，請稍後再試）', 'ai');
     }
