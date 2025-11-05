@@ -1,101 +1,116 @@
-(()=>{
-  const nebula = document.createElement('div'); nebula.id='nebula'; document.body.appendChild(nebula);
-  const par = document.createElement('div'); par.id='par'; document.body.appendChild(par);
-  addEventListener('pointermove', (e)=>{
-    const x = (e.clientX / innerWidth - .5) * 2;
-    const y = (e.clientY / innerHeight - .5) * 2;
-    par.style.transform = `translate(${x*8}px, ${y*6}px)`;
-    nebula.style.transform = `translate(${x*4}px, ${y*3}px)`;
-  }, {passive:true});
+// === Cosmic Post Station（升級版）：星空粒子 + 發光字 + 打字音效 + 三鳥輪流插話 ===
+(() => {
+  // 0) 啟動/音樂
+  const bgm = document.getElementById('bgm');
+  const once = () => { try{ bgm.volume = 0.35; bgm.play(); }catch{} window.removeEventListener('pointerdown', once); };
+  window.addEventListener('pointerdown', once);
 
-  const AudioCtx = window.AudioContext || window.webkitAudioContext;
-  let actx;
-  const bgmEl = document.getElementById('bgm');
-  function ensureAudio(){ if(!actx) actx = new AudioCtx(); }
-  function sfx(type){
-    ensureAudio();
-    const o = actx.createOscillator();
-    const g = actx.createGain();
-    o.connect(g).connect(actx.destination);
-    const now = actx.currentTime;
-    if(type==='send'){ o.type='triangle'; o.frequency.setValueAtTime(520, now); g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(0.22, now+.02); g.gain.exponentialRampToValueAtTime(0.0001, now+.16); }
-    if(type==='recv'){ o.type='sine'; o.frequency.setValueAtTime(740, now); g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(0.25, now+.01); g.gain.exponentialRampToValueAtTime(0.0001, now+.22); }
-    if(type==='type'){ o.type='square'; o.frequency.setValueAtTime(240, now); g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(0.12, now+.005); g.gain.exponentialRampToValueAtTime(0.0001, now+.06); }
-    o.start(); o.stop(now+.25);
+  // 1) 粒子星空（GPU 友善的簡易版）
+  const cvs = document.getElementById('stars');
+  const ctx = cvs.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let W=0, H=0, stars=[];
+  function resize(){
+    W = cvs.width = innerWidth*DPR;
+    H = cvs.height = innerHeight*DPR;
+    cvs.style.width = innerWidth+'px';
+    cvs.style.height = innerHeight+'px';
+    // 依螢幕大小調整星數
+    const N = Math.floor((innerWidth*innerHeight)/8000);
+    stars = new Array(N).fill().map(()=>({
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*1.6 + .4,
+      a: Math.random()*1,
+      v: Math.random()*0.35 + 0.15
+    }));
   }
-  function startBGM(){
-    ensureAudio();
-    if(bgmEl){
-      bgmEl.volume = 0.35; bgmEl.loop = true;
-      bgmEl.play().catch(()=>{});
-    }else{
-      const n = actx.createBufferSource();
-      const len = actx.sampleRate * 2;
-      const buf = actx.createBuffer(1, len, actx.sampleRate);
-      const ch = buf.getChannelData(0);
-      for(let i=0;i<len;i++){ ch[i] = (Math.random()*2-1) * 0.02; }
-      n.buffer = buf; n.loop = true;
-      const flt = actx.createBiquadFilter(); flt.type='lowpass'; flt.frequency.value=800;
-      const g = actx.createGain(); g.gain.value = 0.2;
-      n.connect(flt).connect(g).connect(actx.destination);
-      n.start();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const s of stars){
+      s.a += s.v*0.01;
+      const tw = (Math.sin(s.a)+1)/2; // 0~1
+      ctx.globalAlpha = 0.35 + tw*0.65;
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r*DPR, 0, Math.PI*2); ctx.fill();
     }
+    requestAnimationFrame(draw);
   }
-  document.body.addEventListener('pointerdown', ()=>{ startBGM(); }, {once:true});
+  resize(); draw();
+  addEventListener('resize', resize);
 
-  const ip  = document.getElementById('cps-input');
-  const box = document.getElementById('cps-chat');
+  // 2) 打字音效（WebAudio，不用音檔）
+  const AC = window.AudioContext || window.webkitAudioContext;
+  const audio = new AC();
+  function keyClick(){
+    const o = audio.createOscillator();
+    const g = audio.createGain();
+    o.connect(g); g.connect(audio.destination);
+    o.frequency.value = 380 + Math.random()*60;
+    g.gain.setValueAtTime(0.0001, audio.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.05, audio.currentTime + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 0.07);
+    o.start(); o.stop(audio.currentTime + 0.08);
+  }
+
+  // 3) 介面元素
+  const input = document.getElementById('cps-input');
+  const stream = document.getElementById('chat');
+  const aj = document.getElementById('aj');
+  const mi = document.getElementById('mi');
+  const gu = document.getElementById('gu');
+
+  // 4) 三鳥 persona 設定（仍呼叫 /api/chat.js）
   const personas = [
-    { key:'ajin',   name:'💛阿金',   cls:'msg ajin'  },
-    { key:'migou',  name:'🩷米果',   cls:'msg migou' },
-    { key:'gungun', name:'🩵滾滾',   cls:'msg gungun'}
+    { id:'aj', tag:'aj', name:'阿金 AJIN', tone:'rebellion',
+      sys: '你是阿金：行動派、先做再說，語氣直、敢嗆但熱血；每句不超過35字，口頭禪包含「快一點啦」、「怕什麼？」' },
+    { id:'mi', tag:'mi', name:'米果 MIGOU', tone:'worth',
+      sys: '你是米果：自我價值與主權女王，溫柔但不妥協；每句不超過35字，語氣自信、邊界清晰。' },
+    { id:'gu', tag:'gu', name:'滾滾 GUNGUN', tone:'safety',
+      sys: '你是滾滾：安靜的傾聽者，給穩定的陪伴與洞察；每句不超過35字，語速慢、語氣穩。' }
   ];
-  let turn = 0;
 
-  function bubble(who, text){
-    const div = document.createElement('div');
-    div.className = who.cls;
-    div.innerHTML = `<span>${who.name}</span><span>${text}</span>`;
-    box.appendChild(div);
-    box.scrollTo({top:box.scrollHeight, behavior:'smooth'});
-    sfx('recv');
-  }
-  function mybubble(text){
-    const div = document.createElement('div');
-    div.className = 'msg me';
-    div.textContent = text;
-    box.appendChild(div);
-    box.scrollTo({top:box.scrollHeight, behavior:'smooth'});
+  // 工具：插入訊息
+  function pushMsg(html, klass='me'){
+    const d = document.createElement('div');
+    d.className = `msg ${klass}`;
+    d.innerHTML = html;
+    stream.appendChild(d);
+    stream.scrollTo({top: stream.scrollHeight, behavior:'smooth'});
   }
 
-  async function askOne(who, q){
-    try{
-      sfx('type');
-      const res  = await fetch('/api/chat.js', {
-        method:'POST',
-        headers:{'content-type':'application/json'},
-        body:JSON.stringify({ persona: who.key, q })
-      });
-      const data = await res.json();
-      bubble(who, (data.reply||''));
-    }catch{
-      bubble(who, '（宇宙風暴干擾，稍後再連線）');
+  // 5) 送出訊息（Enter）
+  input.addEventListener('keydown', async e=>{
+    if(e.key !== 'Enter') return;
+    const q = input.value.trim(); if(!q) return;
+    input.value='';
+    pushMsg(q, 'me');
+
+    const use = personas.filter(p => (p.id==='aj'&&aj.checked)||(p.id==='mi'&&mi.checked)||(p.id==='gu'&&gu.checked));
+    if(use.length===0) return;
+
+    // 輪流插話
+    for(const p of use){
+      try{
+        const res = await fetch('/api/chat.js', {
+          method:'POST',
+          headers:{'content-type':'application/json'},
+          body: JSON.stringify({
+            messages:[
+              {role:'system', content:p.sys},
+              {role:'user', content:q}
+            ]
+          })
+        });
+        const data = await res.json();
+        const text = (data?.choices?.[0]?.message?.content || '').trim() || '…';
+        pushMsg(`<div class="from">${p.name}</div><div>${text}</div>`, `ai ${p.tag}`);
+      }catch{
+        pushMsg(`<div class="from">${p.name}</div><div>（訊號微弱，稍後再試）</div>`, `ai ${p.tag}`);
+      }
+      await new Promise(r=>setTimeout(r, 180)); // 彼此錯開一點
     }
-  }
-
-  ip.addEventListener('keydown', async e=>{
-    if(e.key!=='Enter') return;
-    const q = ip.value.trim(); if(!q) return;
-    ip.value='';
-    mybubble(q);
-    sfx('send');
-
-    const first = turn;
-    for(let i=0;i<personas.length;i++){
-      const who = personas[(first+i)%personas.length];
-      await askOne(who, q);
-      await new Promise(r=>setTimeout(r, 240));
-    }
-    turn = (turn+1)%personas.length;
   });
+
+  // 6) 輸入時做打字音效＆小發光
+  input.addEventListener('input', ()=>{ keyClick(); });
 })();
