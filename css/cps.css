@@ -105,3 +105,159 @@ body{
   .v{height:56vh}
   .h{width:44vw}
 }
+:root{
+  --ink:#e4f1ff;          /* 細白藍字 */
+  --glow:#96c9ff;         /* 外發光 */
+  --soft:rgba(255,255,255,.08);
+  --glass:rgba(10,18,38,.55);
+  --accent:#8aa8ff;
+  --ajin:#ffd54f;         /* 💛阿金 */
+  --migou:#ff8fb3;        /* 🩷米果 */
+  --gungun:#8fd3ff;       /* 🩵滾滾 */
+}
+
+html,body{height:100%;}
+body{
+  margin:0;
+  overflow-x:hidden;
+  font-family: "Noto Sans TC", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  color:var(--ink);
+  background: radial-gradient(80% 120% at 50% 0%, #071124 0%, #0b1430 60%, #0a1228 100%);
+}
+
+/* —— 背景星雲層：對應 universe.js (stars/nebula/aur) —— */
+#stars,#nebula,#aur{
+  position:fixed; inset:0; z-index:-1;
+}
+
+/* —— 頂部訊號條 —— */
+.com-status{
+  position: sticky;
+  top: 0; padding: 18px 24px 8px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(180deg, rgba(15,26,45,.55), transparent);
+}
+.com-status .en{
+  font-family: "Orbitron", system-ui, sans-serif;
+  letter-spacing:.14em;
+  font-weight:300;
+}
+.com-status .en em{
+  font-style: italic;
+  opacity:.9;
+  text-shadow: 0 0 12px var(--glow);
+}
+.com-status .en.sub{font-size:12px; opacity:.75; margin-top:4px}
+
+/* —— 不規則拼貼 —— */
+.collage{
+  margin: 6vh auto 2vh;
+  width: min(1200px, 92vw);
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: 8vw;
+  gap: clamp(8px,1.4vw,16px);
+}
+.collage img{
+  width:100%; height:100%; object-fit:cover;
+  border-radius: 18px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,.35));
+  animation: floatZ 10s ease-in-out infinite;
+}
+
+/* 橫圖兩張 */
+.collage .h1{ grid-column: 1 / span 7; grid-row: 1 / span 3; }
+.collage .h2{ grid-column: 6 / span 7; grid-row: 3 / span 3; }
+
+/* 直圖三張（各自靠不同邊，形成錯落） */
+.collage .v{ grid-row: span 4; }
+.v-ajin   { grid-column: 2 / span 3; animation-delay: .2s;}
+.v-migou  { grid-column: 8 / span 3; animation-delay: .6s;}
+.v-gungun { grid-column: 5 / span 3; animation-delay: .4s;}
+
+@keyframes floatZ{
+  0%{ transform: translateY(0) }
+  50%{ transform: translateY(-6px) }
+  100%{ transform: translateY(0) }
+}
+
+/* —— 對話區 —— */
+.chat-zone{
+  width: min(1100px, 92vw);
+  margin: 3vh auto 8vh;
+}
+
+.chat-stream{
+  min-height: 28vh;
+  padding: clamp(14px,2vw,20px);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(255,255,255,.05), transparent 50%),
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow:
+    inset 0 0 40px rgba(150,210,255,.06),
+    0 10px 40px rgba(0,0,0,.35);
+}
+
+/* 雲狀訊息泡（無邊框） */
+.msg{
+  margin: 10px 0;
+  display: inline-block;
+  max-width: 92%;
+  padding: 10px 14px;
+  border-radius: 16px 16px 16px 12px;
+  background: radial-gradient(120% 140% at 0% 0%, rgba(255,255,255,.12), rgba(255,255,255,.04));
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 16px rgba(150,200,255,.12);
+  line-height: 1.6;
+}
+.msg.me{ background: radial-gradient(140% 160% at 100% 0%, rgba(255,255,255,.14), rgba(255,255,255,.05)); border-radius:16px 16px 12px 16px}
+
+/* 不同人格的淡色光暈 */
+.msg.ajin   { box-shadow: 0 0 24px rgba(255,213,79,.25)}
+.msg.migou  { box-shadow: 0 0 24px rgba(255,143,179,.25)}
+.msg.gungun { box-shadow: 0 0 24px rgba(143,211,255,.25)}
+
+/* 角色小籤（細英文 + 中文名） */
+.tag{
+  display:inline-block; margin: 2px 8px 6px 2px;
+  font: 300 11px/1 "Orbitron", system-ui;
+  letter-spacing:.12em;
+  opacity:.85;
+}
+.tag b{ font-weight:600; }
+.tag.zh{ font: 500 11px/1 "Noto Sans TC"; margin-left:6px; opacity:.85}
+
+/* 打字列（無邊框、玻璃感） */
+.dock{
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow: inset 0 0 24px rgba(150,210,255,.06);
+}
+.dock input{
+  width:100%;
+  padding: 14px 16px;
+  border:none; outline:none;
+  border-radius:14px;
+  color:var(--ink);
+  background: rgba(255,255,255,.06);
+  font-size: 14px;
+}
+.dock .hint{
+  margin-top:6px;
+  font: 300 11px/1.4 "Orbitron";
+  opacity:.7;
+}
+
+/* RWD 微調 */
+@media (max-width: 768px){
+  .collage{ grid-auto-rows: 16vw; }
+  .collage .h1{ grid-column: 1 / span 12; grid-row: 1 / span 3;}
+  .collage .h2{ grid-column: 1 / span 12; grid-row: 4 / span 3;}
+  .v-ajin  { grid-column: 2 / span 4;}
+  .v-migou { grid-column: 7 / span 4;}
+  .v-gungun{ grid-column: 4 / span 4;}
+}
