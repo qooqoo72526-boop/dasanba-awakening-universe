@@ -1,159 +1,63 @@
-:root{
-  --fg:#EAF2FF; --fg-dim:#B8C4FF;
-  --glass:rgba(16,24,48,.30); --glass-strong:rgba(16,24,48,.45);
-  --stroke:rgba(255,255,255,.12);
-  --pulse:#ffd18b;
-}
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cosmic Post Station</title>
 
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
-body{
-  margin:0; color:var(--fg);
-  font-family:"Noto Sans TC", system-ui, -apple-system, "Segoe UI", Arial;
-  background:radial-gradient(1100px 760px at 50% 16%, #0b1230 0%, #050814 60%, #03040a 100%);
-  overflow-x:hidden;
-}
+  <!-- 字體：英 Orbitron / 中 Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
 
-/* 星塵背景 */
-#stars{ position:fixed; inset:0; z-index:0; }
+  <link rel="stylesheet" href="css/cps.css">
+</head>
+<body data-universe="cps">
 
-/* 音樂按鈕（右上） */
-.cosmic-ui{ position:fixed; top:12px; right:12px; z-index:10; }
-.btn-audio{
-  border:0; background:var(--glass); color:var(--fg);
-  padding:8px 12px; border-radius:14px; backdrop-filter: blur(10px);
-  box-shadow:0 4px 18px rgba(0,0,0,.25); cursor:pointer; transition:opacity .2s;
-}
-.btn-audio.muted{ opacity:.55 }
+  <!-- 星空粒子 -->
+  <canvas id="stars"></canvas>
 
-/* 標題（上中文、下英文細字） */
-.cps-header{ position:relative; z-index:2; text-align:center; margin-top:24px; }
-.cps-header .zh{ font-size:14px; letter-spacing:.02em; opacity:.85; }
-.cps-header .en{ font-family:"Orbitron", monospace; font-size:12px; letter-spacing:.14em; opacity:.78;
-  text-shadow:0 0 6px rgba(170,220,255,.35); }
-.cps-header .en.sub{ margin-top:4px; font-size:11px; opacity:.72; }
+  <!-- 頁首微字（英/中，細字體、會發光） -->
+  <header class="cps-header" aria-live="polite">
+    <div class="en"><i>Communicating with the Cosmos…</i></div>
+    <div class="zh">與宇宙連線中…</div>
+  </header>
 
-/* 拼貼區：2 橫 + 3 直 */
-.collage{
-  position:relative; z-index:1;
-  width:min(1180px, 92vw); margin:6vh auto 18vh;
-  display:grid; gap: min(2.2vw, 22px);
-  grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(180px, auto);
-}
-.h{ width:100%; height:100%; object-fit:cover; border-radius:22px;
-  filter: drop-shadow(0 12px 28px rgba(0,0,0,.35)); }
-.h1{ grid-column:1/3; aspect-ratio: 16/6; }
-.h2{ grid-column:1/3; aspect-ratio: 16/6; }
+  <!-- 次標：三鳥訊號（細字） -->
+  <div class="cps-sub" aria-live="polite">
+    <i>Receiving signals from</i> <b>Ajin</b> / <b>Migou</b> / <b>Gungun</b> ✨
+  </div>
 
-/* 三鳥（直式，絕對定位到畫面上） */
-.v{
-  position:absolute; width:min(28vw, 320px); height:auto; object-fit:contain; pointer-events:none;
-  filter: drop-shadow(0 18px 40px rgba(0,0,0,.45)) drop-shadow(0 0 12px rgba(255,245,200,.20));
-  /* 若暫時圖仍殘邊，可先軟化邊緣；換成真透明圖後可移除： */
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 72%, rgba(0,0,0,0) 105%);
-          mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 72%, rgba(0,0,0,0) 105%);
-}
-.v-ajin   { left:2%;   top:18%; transform-origin:40% 60%; }
-.v-migou  { right:3%;  top:26%; transform-origin:60% 60%; }
-.v-gungun { left:28%;  top:56%; transform-origin:50% 60%; }
+  <!-- 拼貼區：2 橫背景 + 3 透明鳥 -->
+  <section class="collage">
+    <!-- 橫式背景 (16:9) 兩張 -->
+    <img src="assets/trio_post1.webp" alt="Trio Cosmic 1" class="h h1" loading="lazy">
+    <img src="assets/trio_post2.webp" alt="Trio Cosmic 2" class="h h2" loading="lazy">
 
-/* 漂浮、光暈、脈動 */
-.float{ animation:float 7s ease-in-out infinite; }
-.glow::after{
-  content:""; position:absolute; inset:-6% -6%; border-radius:50%;
-  box-shadow:0 0 60px 20px rgba(255,210,120,.18), inset 0 0 80px rgba(170,210,255,.20);
-  animation: haloSpin 22s linear infinite; pointer-events:none; z-index:-1;
-}
-.pulse{ animation:float 7s ease-in-out infinite; }
+    <!-- 三隻去背透明 (9:16 任意尺寸) -->
+    <img src="assets/ajin_clear_post.webp"   alt="AJIN"   class="v v-ajin"   loading="lazy">
+    <img src="assets/migou_clear_post.webp"  alt="MIGOU"  class="v v-migou"  loading="lazy">
+    <img src="assets/gungun_clear_post.webp" alt="GUNGUN" class="v v-gungun" loading="lazy">
+  </section>
 
-/* 叼著信封（可調位置的 CSS 版） */
-.collage{
-  --aj-x: 16%; --aj-y: 39%;
-  --mi-x: 78%; --mi-y: 35%;
-  --gu-x: 39%; --gu-y: 70%;
-}
-.letter{
-  position:absolute; z-index:3;
-  width:min(58px, 7vw); height:min(40px, 4.8vw);
-  background:rgba(255,255,255,.96);
-  border:1px solid rgba(255,255,255,.65);
-  border-radius:6px;
-  box-shadow:
-    0 8px 24px rgba(0,0,0,.35),
-    0 0 18px rgba(255,240,210,.45),
-    inset 0 0 8px rgba(255,255,255,.6);
-  animation: letterFloat 6s ease-in-out infinite;
-  transform: translate(-50%, -50%);
-}
-.l-ajin  { left:var(--aj-x);  top:var(--aj-y);  animation-duration:6s; }
-.l-migou { left:var(--mi-x);  top:var(--mi-y);  animation-duration:7.5s; }
-.l-gungun{ left:var(--gu-x);  top:var(--gu-y);  animation-duration:8.5s; }
-.letter::before,
-.letter::after{
-  content:""; position:absolute; inset:0; border-radius:6px;
-  background:
-    linear-gradient(135deg, transparent 49.5%, rgba(255,210,150,.9) 50.5%) top/100% 50% no-repeat,
-    linear-gradient(225deg, transparent 49.5%, rgba(255,210,150,.9) 50.5%) bottom/100% 50% no-repeat;
-  mix-blend-mode:screen; opacity:.9;
-}
-.letter > .ring::before{
-  content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  width:10px; height:10px; border-radius:50%;
-  background:radial-gradient(circle, #ffd9a8 0%, #ffb668 60%, #ff9e3a 100%);
-  box-shadow:0 0 8px rgba(255,180,90,.9);
-}
-.letter .ring{
-  position:absolute; inset:-26px; border-radius:50%;
-  box-shadow:
-    0 0 36px 14px rgba(255,200,140,.22),
-    inset 0 0 80px rgba(170,210,255,.25);
-  animation: haloSpin 12s linear infinite;
-  pointer-events:none;
-}
+  <!-- 中央特製聊天框（玻璃發光、英中混排） -->
+  <section class="cosmic-dialog" role="dialog" aria-live="polite">
+    <div class="persona-toggle">
+      <label><input type="checkbox" id="aj" checked> 💛阿金</label>
+      <label><input type="checkbox" id="mi" checked> 🩷米果</label>
+      <label><input type="checkbox" id="gu" checked> 🩵滾滾</label>
+    </div>
 
-/* 聊天玻璃卡（置中、無硬框） */
-.chat-zone{ position:fixed; inset: 10vh 0 0; display:grid; place-items:center; z-index:2; pointer-events:none; }
-.chat{ width:min(880px, 92vw); padding:22px; border-radius:20px; pointer-events:auto; }
-.glass{
-  background:var(--glass-strong);
-  backdrop-filter: blur(14px) saturate(1.2);
-  border:1px solid var(--stroke);
-  box-shadow: 0 8px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
-}
-.personas{
-  display:flex; gap:14px; justify-content:flex-end; list-style:none; padding:0; margin:0 0 8px;
-  font-size:13px; opacity:.9;
-}
-.chat-stream{ min-height:110px; max-height:42vh; overflow:auto; padding:6px 2px; }
-.bubble{ margin:8px 0; line-height:1.6; }
-.bubble.system{ opacity:.75; font-size:14px; }
-.input-row{ display:flex; gap:10px; margin-top:10px; }
-.chat-input{
-  flex:1; background:rgba(255,255,255,.06); border:1px solid var(--stroke);
-  border-radius:14px; padding:12px 14px; color:var(--fg);
-  outline:none;
-}
-#sendBtn{
-  min-width:56px; border-radius:14px; border:1px solid var(--stroke);
-  background:rgba(255,255,255,.08); color:#fff; cursor:pointer;
-}
+    <div id="chat" class="chat-stream" aria-live="polite"></div>
 
-/* 動畫 */
-@keyframes float{ 0%,100%{ transform:translateY(0)} 50%{ transform:translateY(-12px)} }
-@keyframes haloSpin{ 0%{ transform:rotate(0)} 100%{ transform:rotate(360deg)} }
-@keyframes letterFloat{ 0%,100% { transform:translate(-50%,-50%) translateY(0); } 50% { transform:translate(-50%,-50%) translateY(-10px); } }
+    <div class="composer">
+      <input id="cps-input" type="text" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" autocomplete="off">
+      <button id="send">傳送</button>
+    </div>
+  </section>
 
-/* RWD：行動版留兩隻，畫面更乾淨 */
-@media (max-width:900px){
-  .v-gungun{ display:none; }
-  .h1,.h2{ aspect-ratio: 16/9; }
-  .v{ width:min(40vw, 240px); }
-  .collage{
-    width: 94vw; margin:4vh auto 16vh;
-  }
-  .collage{
-    --aj-x: 22%; --aj-y: 42%;
-    --mi-x: 76%; --mi-y: 36%;
-    --gu-x: 39%; --gu-y: 70%;
-  }
-}
+  <!-- 背景音樂（互動後播放） -->
+  <audio id="bgm" src="assets/bgm_universe.wav" preload="auto"></audio>
+
+  <script src="js/cps.js"></script>
+</body>
+</html>
