@@ -1,13 +1,13 @@
 {
-  "version": 2,
+  "regions": [
+    "sin1",
+    "hnd1",
+    "icn1"
+  ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "src": "/api/chat.js",
+      "dest": "/api/chat.js"
     }
   ]
 }
