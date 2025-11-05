@@ -4,12 +4,54 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cosmic Post Station</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- 只留這個 css，其他亂入的 CSS 文字都不要放在 HTML 內 -->
   <link rel="stylesheet" href="css/cps.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Orbitron:wght@200;300;400&display=swap" rel="stylesheet">
 </head>
 
 <body data-universe="cps">
+  <!-- 星空粒子畫布 -->
+  <canvas id="stars"></canvas>
+
+  <!-- 頁首狀態：英/中 小字 斜體、會發光 -->
+  <header class="cps-header" aria-live="polite">
+    <div class="en"><i>Communicating with the Cosmos...</i></div>
+    <div class="zh">與宇宙通訊中…</div>
+  </header>
+
+  <!-- 次標：三鳥訊號（細字、會閃爍） -->
+  <div class="cps-sub" aria-live="polite">
+    <i>Receiving signals from</i> <b>Ajin</b> / <b>Migou</b> / <b>Gungun</b> 🕊️
+  </div>
+
+  <!-- 拼貼區：2 橫 + 3 直（透明去背圖） -->
+  <section class="collage">
+    <!-- 橫式 (16:9，二張) -->
+    <img src="assets/trio_post1.webp" alt="Trio Cosmic 1" class="h h1" loading="lazy">
+    <img src="assets/trio_post2.webp" alt="Trio Cosmic 2" class="h h2" loading="lazy">
+    <!-- 直式 (9:16 三隻透明) -->
+    <img src="assets/ajin_clear_post.webp"   alt="AJIN"   class="v v-ajin"   loading="lazy">
+    <img src="assets/migou_clear_post.webp"  alt="MIGOU"  class="v v-migou"  loading="lazy">
+    <img src="assets/gungun_clear_post.webp" alt="GUNGUN" class="v v-gungun" loading="lazy">
+  </section>
+
+  <!-- 對話區（置中、宇宙膠囊） -->
+  <section class="chat-zone">
+    <div class="persona-toggle">
+      <label><input type="checkbox" id="aj" checked> 💛阿金</label>
+      <label><input type="checkbox" id="mi" checked> 🩷米果</label>
+      <label><input type="checkbox" id="gu" checked> 🩵滾滾</label>
+    </div>
+    <div id="chat" class="chat-stream dome" aria-live="polite"></div>
+    <input id="cps-input" type="text" maxlength="300" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" />
+  </section>
+
+  <audio id="bgm" src="assets/bgm_universe.wav" preload="auto"></audio>
+
+  <script src="js/universe.js" defer></script>
+  <script src="js/cps.js" defer></script>
+</body>
   <!-- 星雲粒子畫布（在最底層） -->
   <canvas id="stars"></canvas>
 
