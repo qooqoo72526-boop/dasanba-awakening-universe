@@ -1,10 +1,39 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cosmic Post Station</title><link rel="stylesheet" href="css/universe.css"></head>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cosmic Post Station</title>
+  <link rel="stylesheet" href="css/cps.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Orbitron:wght@200;300;400&family=Space+Grotesk:wght@300;400;500&family=Exo+2:ital,wght@0,300;0,400;1,300;1,400&family=JetBrains+Mono:ital,wght@0,300&display=swap" rel="stylesheet">
+</head>
 <body data-universe="cps">
-<header class="nav"><a href="index.html"><i>Home</i></a><a href="soulmirror.html"><i>SOUL MIRROR</i>｜靈魂照妖鏡🪞</a></header>
-<div class="container"><h2 class="big-en" style="font-style:italic">Cosmic Post Station</h2>
-<p class="zh" style="text-align:center;opacity:.9">把心事寄給宇宙，阿金・米果・滾滾會搶著回你。</p>
-<div class="cloud-chat"><div class="bubble">雲層值班官：歡迎進站，輸入訊息按 Enter。</div></div>
-<div class="cloud-input"><input placeholder="在這裡說話（Enter 送出）"><button>Send</button></div></div>
-<script src="js/universe.js" defer></script></body></html>
+  <canvas id="stars"></canvas>
+  <div class="energy-rings"></div>
+
+  <div class="comm-status" aria-live="polite">
+    <div class="zh">與宇宙通訊中⋯</div>
+    <div class="en">Receiving signals from <i>Ajin / Migou / Gungun</i> 🕊️</div>
+  </div>
+
+  <section class="collage">
+    <img src="assets/trio_post1.webp" alt="Trio Cosmic 1" class="h h1">
+    <img src="assets/trio_post2.webp" alt="Trio Cosmic 2" class="h h2">
+    <img src="assets/ajin_clear_post.webp"   alt="Ajin"   class="v v-ajin">
+    <img src="assets/migou_clear_post.webp"  alt="Migou"  class="v v-migou">
+    <img src="assets/gungun_clear_post.webp" alt="Gungun" class="v v-gungun">
+  </section>
+
+  <div class="chat-dock">
+    <input id="cps-input" type="text" maxlength="300" placeholder="在星際頻道說一句話…（Enter）">
+  </div>
+
+  <div id="cps-chat" class="chat-stream" aria-live="polite"></div>
+
+  <audio id="bgm" src="assets/bgm_cosmic.mp3" preload="auto"></audio>
+
+  <script src="js/universe.js" defer></script>
+  <script src="js/cps.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+DaSanBa | Cosmic Post Station v9.2 (星動宇宙)
+=================================================
+
+放圖說明（請把你的素材放進 assets/）：
+
+[宇宙郵局｜Cosmic Post Station]
+- ajin_clear_post.webp        （阿金 去背 9:16 1080x1920）
+- migou_clear_post.webp       （米果 去背 9:16 1080x1920）
+- gungun_clear_post.webp      （滾滾 去背 9:16 1080x1920）
+- trio_post1.webp             （三鳥 16:9 1600x900）
+- trio_post2.webp             （三鳥 16:9 1600x900）
+- bgm_cosmic.mp3              （可選；沒有也會自動用 WebAudio 合成底噪）
+
+[三間房｜5 秒循環影片]
+- ajin_5s.mp4                 （5 秒循環影片）
+- migou_5s.mp4
+- gungun_5s.mp4
+
+部署提示：
+1) 覆蓋整包到你的專案根目錄（保留 /api/chat.js 不變）。
+2) GitHub commit → Vercel redeploy（取消 Use existing Build Cache）。
+3) 若台灣/港區域限制，請確保 vercel.json 中 regions = ["sin1","hnd1","icn1"]。
