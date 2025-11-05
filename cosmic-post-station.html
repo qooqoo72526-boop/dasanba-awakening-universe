@@ -3,60 +3,60 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cosmic Post Station｜宇宙郵局</title>
-
-  <!-- 字體：小英文細體 + 中文 -->
+  <title>Cosmic Post Station</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-  <!-- 宇宙底層（共用） -->
-  <link rel="stylesheet" href="css/universe.css">
-  <!-- 這頁的樣式 -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/cps.css">
 </head>
 
-<!-- 給宇宙底層 JS 判斷：這頁是 cps -->
 <body data-universe="cps">
-  <!-- 動態星雲粒子（canvas） -->
+  <!-- 星雲粒子畫布（在最底層） -->
   <canvas id="stars"></canvas>
-  <div id="nebula"></div>
-  <div id="aur"></div>
 
-  <!-- 頂部：細字斜體訊號條 -->
-  <div class="com-status" aria-live="polite">
-    <div class="en"><em>Communicating with the Cosmos…</em></div>
-    <div class="en sub"><em>Receiving signals from <i>Ajin</i> / <i>Migou</i> / <i>Gungun</i> 🕊️</em></div>
+  <!-- 頁首狀態：英/中，小字、斜體、會發光 -->
+  <header class="cps-header" aria-live="polite">
+    <div class="en"><i>Communicating with the Cosmos…</i></div>
+    <div class="zh">與宇宙通訊中…</div>
+  </header>
+
+  <!-- 次標：三鳥訊號（細字、會閃爍） -->
+  <div class="cps-sub" aria-live="polite">
+    <i>Receiving signals from</i> <b>Ajin</b> / <b>Migou</b> / <b>Gungun</b> 🕊️
   </div>
 
-  <!-- 不規則拼貼（你已準備好的 2 橫 + 3 直；檔名依你最新） -->
+  <!-- 不規則拼貼：2 橫 + 3 直，會緩慢漂浮 -->
   <section class="collage">
-    <img src="assets/trio_post1.webp"  alt="Trio Cosmic 1" class="h h1">
-    <img src="assets/trio_post2.webp"  alt="Trio Cosmic 2" class="h h2">
+    <!-- 橫式（16:9，三鳥） -->
+    <img src="assets/trio_post1.webp" alt="Trio Cosmic 1" class="h h1" loading="lazy">
+    <img src="assets/trio_post2.webp" alt="Trio Cosmic 2" class="h h2" loading="lazy">
 
-    <img src="assets/ajin_clear_post.webp"   alt="Ajin"   class="v v-ajin">
-    <img src="assets/migou_clear_post.webp"  alt="Migou"  class="v v-migou">
-    <img src="assets/gungun_clear_post.webp" alt="Gungun" class="v v-gungun">
+    <!-- 直式（9:16，單鳥去背） -->
+    <img src="assets/ajin_clear_post.webp"   alt="AJIN"   class="v v-ajin"   loading="lazy">
+    <img src="assets/migou_clear_post.webp"  alt="MIGOU"  class="v v-migou"  loading="lazy">
+    <img src="assets/gungun_clear_post.webp" alt="GUNGUN" class="v v-gungun" loading="lazy">
   </section>
 
   <!-- 對話區（無邊框、雲狀光暈） -->
   <section class="chat-zone">
-    <div id="chat-stream" class="chat-stream" aria-live="polite"></div>
-
-    <div class="dock">
-      <input id="cps-input" type="text" maxlength="300"
-             placeholder="在星際間說點什麼吧…（按 Enter）">
-      <div class="hint en"><em>Tip: one message → three replies (Ajin / Migou / Gungun)</em></div>
+    <div class="persona-toggle">
+      <label><input type="checkbox" id="aj" checked> 💛阿金</label>
+      <label><input type="checkbox" id="mi" checked> 🩷米果</label>
+      <label><input type="checkbox" id="gu" checked> 🩵滾滾</label>
     </div>
+
+    <div id="chat" class="chat-stream" aria-live="polite"></div>
+
+    <!-- 隱形輸入列：按 Enter 就送出。placeholder 小字不俗套 -->
+    <input id="cps-input" class="ghost-input" type="text"
+           maxlength="300"
+           placeholder="在星際隧道投遞一句話，按 Enter 傳訊…">
   </section>
 
-  <!-- 細小環境音（可先放你暫存檔名 bgm_cosmic.mp3） -->
-  <audio id="bgm" src="assets/bgm_cosmic.mp3" preload="auto" loop></audio>
-  <audio id="sfx-typing" src="assets/sfx_typing.mp3" preload="auto"></audio>
-  <audio id="sfx-reply"  src="assets/sfx_reply.mp3"  preload="auto"></audio>
+  <!-- 背景音樂（你已上傳 bgm_universe.wav） -->
+  <audio id="bgm" src="assets/bgm_universe.wav" preload="auto" loop></audio>
 
-  <!-- 共用宇宙特效（若你已在首頁用過，這頁仍可共用） -->
+  <!-- 動態背景 + 本頁腳本 -->
   <script src="js/universe.js" defer></script>
-  <!-- 這頁的互動 -->
   <script src="js/cps.js" defer></script>
 </body>
 </html>
