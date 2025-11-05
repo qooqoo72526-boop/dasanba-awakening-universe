@@ -3,125 +3,201 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cosmic Post Station</title>
-  <!-- 只留這個 css，其他亂入的 CSS 文字都不要放在 HTML 內 -->
-  <link rel="stylesheet" href="css/cps.css">
+  <title>Cosmic Post Station ✉️ | 大三巴覺醒宇宙</title>
+
+  <!-- 字體 & 樣式 -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Orbitron:wght@200;300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Orbitron:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cps.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: radial-gradient(ellipse at center, #050510 0%, #020208 100%);
+      font-family: 'Noto Sans TC', sans-serif;
+      color: #fff;
+    }
+
+    canvas#stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    header {
+      text-align: center;
+      margin-top: 4vh;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      z-index: 10;
+      position: relative;
+    }
+
+    .cps-sub {
+      font-size: 0.9rem;
+      color: #b0b0ff;
+    }
+
+    section.collage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3vh;
+      gap: 3vh;
+      z-index: 5;
+      position: relative;
+      animation: cosmic-float 6s ease-in-out infinite alternate;
+    }
+
+    section.collage img {
+      border-radius: 1.5rem;
+      box-shadow: 0 0 20px rgba(255,255,255,0.15);
+      max-width: 70%;
+      transition: transform 3s ease-in-out;
+    }
+
+    .v-ajin { animation: floatAjin 5s ease-in-out infinite alternate; }
+    .v-migou { animation: floatMigou 6s ease-in-out infinite alternate; }
+    .v-gungun { animation: floatGungun 7s ease-in-out infinite alternate; }
+
+    @keyframes cosmic-float {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-10px); }
+    }
+
+    @keyframes floatAjin {
+      from { transform: translateY(0px) rotate(-2deg); }
+      to { transform: translateY(-15px) rotate(2deg); }
+    }
+    @keyframes floatMigou {
+      from { transform: translateY(0px) rotate(2deg); }
+      to { transform: translateY(-20px) rotate(-2deg); }
+    }
+    @keyframes floatGungun {
+      from { transform: translateY(0px) rotate(0deg); }
+      to { transform: translateY(-12px) rotate(3deg); }
+    }
+
+    .chat-bubble {
+      margin-top: 5vh;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 25px rgba(200,200,255,0.25);
+      border-radius: 30px;
+      padding: 2rem 3rem;
+      max-width: 600px;
+      text-align: center;
+      backdrop-filter: blur(18px);
+      font-size: 1rem;
+      color: #e0e0ff;
+      animation: pulseLight 6s infinite ease-in-out;
+    }
+
+    @keyframes pulseLight {
+      0%, 100% { box-shadow: 0 0 25px rgba(200,200,255,0.25); }
+      50% { box-shadow: 0 0 50px rgba(255,255,255,0.4); }
+    }
+
+    .character-select {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2vh;
+    }
+    .character-select label {
+      cursor: pointer;
+      font-weight: bold;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    .character-select label:hover { opacity: 1; }
+
+  </style>
 </head>
 
 <body data-universe="cps">
-  <!-- 星空粒子畫布 -->
+
   <canvas id="stars"></canvas>
 
-  <!-- 頁首狀態：英/中 小字 斜體、會發光 -->
-  <header class="cps-header" aria-live="polite">
-    <div class="en"><i>Communicating with the Cosmos...</i></div>
-    <div class="zh">與宇宙通訊中…</div>
+  <header>
+    <div class="en"><i>Communicating with the Cosmos.</i></div>
+    <div class="zh">與宇宙通訊中...</div>
+    <div class="cps-sub"><i>Receiving signals from Ajin / Migou / Gungun ✦</i></div>
   </header>
 
-  <!-- 次標：三鳥訊號（細字、會閃爍） -->
-  <div class="cps-sub" aria-live="polite">
-    <i>Receiving signals from</i> <b>Ajin</b> / <b>Migou</b> / <b>Gungun</b> 🕊️
-  </div>
-
-  <!-- 拼貼區：2 橫 + 3 直（透明去背圖） -->
   <section class="collage">
-    <!-- 橫式 (16:9，二張) -->
     <img src="assets/trio_post1.webp" alt="Trio Cosmic 1" class="h h1" loading="lazy">
     <img src="assets/trio_post2.webp" alt="Trio Cosmic 2" class="h h2" loading="lazy">
-    <!-- 直式 (9:16 三隻透明) -->
-    <img src="assets/ajin_clear_post.webp"   alt="AJIN"   class="v v-ajin"   loading="lazy">
-    <img src="assets/migou_clear_post.webp"  alt="MIGOU"  class="v v-migou"  loading="lazy">
+
+    <img src="assets/ajin_clear_post.webp" alt="AJIN" class="v v-ajin" loading="lazy">
+    <img src="assets/migou_clear_post.webp" alt="MIGOU" class="v v-migou" loading="lazy">
     <img src="assets/gungun_clear_post.webp" alt="GUNGUN" class="v v-gungun" loading="lazy">
   </section>
 
-  <!-- 對話區（置中、宇宙膠囊） -->
-  <section class="chat-zone">
-    <div class="persona-toggle">
-      <label><input type="checkbox" id="aj" checked> 💛阿金</label>
-      <label><input type="checkbox" id="mi" checked> 🩷米果</label>
-      <label><input type="checkbox" id="gu" checked> 🩵滾滾</label>
+  <div class="chat-bubble">
+    <div class="character-select">
+      <label style="color:#FFD86B;">💛 阿金 AJIN</label>
+      <label style="color:#FF99C8;">🩷 米果 MIGOU</label>
+      <label style="color:#9FD9FF;">🩵 滾滾 GUNGUN</label>
     </div>
-    <div id="chat" class="chat-stream dome" aria-live="polite"></div>
-    <input id="cps-input" type="text" maxlength="300" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" />
-  </section>
-
-  <audio id="bgm" src="assets/bgm_universe.wav" preload="auto"></audio>
-
-  <script src="js/universe.js" defer></script>
-  <script src="js/cps.js" defer></script>
-</body>
-  <!-- 星雲粒子畫布（在最底層） -->
-  <canvas id="stars"></canvas>
-
-  <!-- 頁首狀態：英/中，小字、斜體、會發光 -->
-  <header class="cps-header" aria-live="polite">
-    <div class="en"><i>Communicating with the Cosmos…</i></div>
-    <div class="zh">與宇宙通訊中…</div>
-  </header>
-
-  <!-- 次標：三鳥訊號（細字、會閃爍） -->
-  <div class="cps-sub" aria-live="polite">
-    <i>Receiving signals from</i> <b>Ajin</b> / <b>Migou</b> / <b>Gungun</b> 🕊️
+    <p>🌌 在星際間傳送你的訊息中...</p>
   </div>
 
-  <!-- 不規則拼貼：2 橫 + 3 直，會緩慢漂浮 -->
- <!-- 拼貼區：2 橫 + 3 直（透明去背圖） -->
-<section class="collage">
-  <!-- 橫式 (16:9，二張) -->
-  <img src="assets/trio_post1.webp" alt="Trio Cosmic 1" class="h h1" loading="lazy">
-  <img src="assets/trio_post2.webp" alt="Trio Cosmic 2" class="h h2" loading="lazy">
+  <script>
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    const stars = [];
+    const numStars = 200;
+    resizeCanvas();
 
-  <!-- 直式 (9:16 三隻透明) -->
-  <img src="assets/ajin_clear_post.webp"   alt="AJIN"   class="v v-ajin"   loading="lazy">
-  <img src="assets/migou_clear_post.webp"  alt="MIGOU"  class="v v-migou"  loading="lazy">
-  <img src="assets/gungun_clear_post.webp" alt="GUNGUN" class="v v-gungun" loading="lazy">
-</section>
+    for (let i = 0; i < numStars; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        z: Math.random() * canvas.width
+      });
+    }
 
-  <!-- 對話區（無邊框、雲狀光暈） -->
-  <section class="chat-zone">
-    <div class="persona-toggle">
-      <label><input type="checkbox" id="aj" checked> 💛阿金</label>
-      <label><input type="checkbox" id="mi" checked> 🩷米果</label>
-      <label><input type="checkbox" id="gu" checked> 🩵滾滾</label>
-    </div>
+    function drawStars() {
+      ctx.fillStyle = "black";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      for (let star of stars) {
+        const k = 128.0 / star.z;
+        const x = star.x * k + canvas.width / 2;
+        const y = star.y * k + canvas.height / 2;
+        if (x >= 0 && x <= canvas.width && y >= 0 && y <= canvas.height) {
+          const size = (1 - star.z / canvas.width) * 2;
+          ctx.beginPath();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
 
-    <div id="chat" class="chat-stream dome" aria-live="polite"></div>
+    function moveStars() {
+      for (let star of stars) {
+        star.z -= 0.8;
+        if (star.z <= 0) star.z = canvas.width;
+      }
+    }
 
-    <!-- 隱形輸入列：按 Enter 就送出。placeholder 小字不俗套 -->
-    <input id="cps-input" class="ghost-input" type="text"
-           maxlength="300"
-           placeholder="在星際隧道投遞一句話，按 Enter 傳訊…">
-  </section>
+    function animate() {
+      moveStars();
+      drawStars();
+      requestAnimationFrame(animate);
+    }
 
-  <!-- 背景音樂（你已上傳 bgm_universe.wav） -->
-  <audio id="bgm" src="assets/bgm_universe.wav" preload="auto" loop></audio>
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
 
-  <!-- 動態背景 + 本頁腳本 -->
-  <script src="js/universe.js" defer></script>
-  <script src="js/cps.js" defer></script>
+    window.addEventListener('resize', resizeCanvas);
+    animate();
+  </script>
 </body>
 </html>
-/* 圖層：讓漂浮鳥永遠在聊天卡片上層，但在標題下層 */
-.collage{ position:fixed; inset:auto 0 18vh 0; height:58vh; z-index:3; 
-  display:grid; place-items:center; grid-template-columns: 28vw 20vw 22vw 18vw;
-  grid-auto-rows: 26vh; gap:2.2vw; padding:0 6vw; pointer-events:none;
-}
-.collage img{ width:100%; height:100%; object-fit:contain; border-radius:20px;
-  background:transparent; image-rendering:auto; filter:drop-shadow(0 10px 30px rgba(0,0,0,.35));
-  opacity:.95; transform:translateY(0); animation:float 8s ease-in-out infinite alternate;
-}
-@keyframes float { to{ transform:translateY(-14px) } }
-
-/* 版位：兩張橫圖 + 三張直圖 */
-.h{ aspect-ratio:16/9 }
-.v{ aspect-ratio:9/16 }
-.h1{ grid-column:1 / span 2; grid-row:1 }
-.h2{ grid-column:3 / span 2; grid-row:2 }
-.v-ajin  { grid-column:1; grid-row:2 }
-.v-migou { grid-column:2; grid-row:1 }
-.v-gungun{ grid-column:4; grid-row:1 }
-
-/* 聊天卡片層級再降一階，避免遮住鳥 */
-.chat-zone, .chat-stream{ z-index:2; }
