@@ -1,0 +1,36 @@
+.cps-stage{position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden}
+.cps-stage .cps{position:absolute; will-change:transform; filter:brightness(.98) contrast(1.04)}
+.cps-stage .horiz{width:min(86vw,1600px); left:50%; transform:translateX(-50%); opacity:.85; border-radius:24px}
+.cps-stage .layer-1{top:8vh; animation:parallaxH 26s linear infinite alternate}
+.cps-stage .layer-2{bottom:8vh; animation:parallaxH 32s linear infinite reverse}
+@keyframes parallaxH {from{transform:translateX(-56%)} to{transform:translateX(-44%)}}
+.cps-stage .vert{height:min(70vh,900px); object-fit:contain; mix-blend-mode:screen; opacity:.92; filter:drop-shadow(0 10px 28px rgba(0,0,0,.35))}
+.cps-stage .v-ajin{left:4vw; top:50%; transform:translateY(-50%); animation:floatA 12s ease-in-out infinite}
+.cps-stage .v-migou{left:calc(50% - 12vw); top:52%; transform:translate(-50%,-50%); animation:floatB 14s ease-in-out infinite}
+.cps-stage .v-gungun{right:4vw; top:50%; transform:translateY(-50%); animation:floatC 13s ease-in-out infinite}
+@keyframes floatA {50%{transform:translateY(calc(-50% - 8px)) scale(1.02)}}
+@keyframes floatB {50%{transform:translate(-50%,calc(-50% - 10px)) scale(1.02)}}
+@keyframes floatC {50%{transform:translateY(calc(-50% - 6px)) scale(1.02)}}
+.panel{display:grid; place-items:center; padding:2vh 4vw; z-index:10}
+.ink{display:flex; gap:10px; align-items:center; background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.04));
+  border:1px solid rgba(255,255,255,.14); border-radius:18px; backdrop-filter:blur(12px); padding:12px 14px; width:min(900px,92vw)}
+#note{flex:1; background:#0b1222; color:#e9eefb; resize:vertical; min-height:72px; max-height:180px;
+  border:1px solid rgba(255,255,255,.14); border-radius:14px; padding:12px 14px; font-family:"Noto Sans TC","Inter",system-ui; font-size:16px}
+#note::placeholder{color:#7c8aa6}
+.icon-btn{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:#0b1222;color:#a8d4ff;
+  border:1px solid rgba(255,255,255,.14);cursor:pointer;transition:transform .2s ease, box-shadow .2s ease}
+.icon-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.flight{position:fixed; inset:0; display:grid; place-items:center; pointer-events:none; opacity:0; transition:opacity .5s ease}
+.flight.active{opacity:1}
+.envelope{width:100px; height:70px; border-radius:10px; background:linear-gradient(180deg,#eaf6ff,#cde7ff);
+  box-shadow:0 10px 40px rgba(97,169,255,.35); position:relative; transform:translateY(20px); animation:lift 1.6s ease forwards}
+.envelope::before{content:""; position:absolute; inset:0; background:conic-gradient(from 225deg at 50% 50%, #9ed2ff, #fff 55%, #9ed2ff);
+  -webkit-mask: linear-gradient(135deg, transparent 49%, #000 50%) top left / 50% 50% no-repeat,
+                linear-gradient(225deg, transparent 49%, #000 50%) top right / 50% 50% no-repeat,
+                linear-gradient(315deg, transparent 49%, #000 50%) bottom right / 50% 50% no-repeat,
+                linear-gradient(45deg,  transparent 49%, #000 50%) bottom left / 50% 50% no-repeat}
+.seal{position:absolute; width:16px; height:16px; background:#ffd36a; border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%)}
+.trail{position:absolute; width:60vmax; height:60vmax; border-radius:50%; background:radial-gradient(closest-side, #6fb9ff33, transparent);
+  filter:blur(20px); animation:pulse 1.6s ease}
+@keyframes lift{to{transform:translateY(-160px) scale(0.9)}}
+@keyframes pulse{from{opacity:1}to{opacity:0}}
