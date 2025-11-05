@@ -1,1 +1,36 @@
-<!doctype html><html><body>Individual bird room with video loop and text</body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>滾滾 的星艦</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-universe="gungun">
+  <div class="bg-grad"></div>
+  <canvas id="stars"></canvas>
+
+  <header class="site-header">
+    <h1 class="site-title">滾滾 | GUNGUN</h1>
+    <nav class="ghost-nav">
+      <a href="../index.html" data-tip="Home">⌂</a>
+      <a href="../cosmic-post-station.html" data-tip="Cosmic Post">✉</a>
+    </nav>
+  </header>
+
+  <main class="room">
+    <video autoplay muted loop playsinline>
+      <source src="../assets/gungun_5s.mp4" type="video/mp4">
+    </video>
+    <div class="pane">
+      <h1>滾滾 的星艦</h1>
+      <p>被理解才有安全感；我慢慢來，但會到。</p>
+      <p style="opacity:.8">右側面板預留：角色故事、特性、簽名語、互動按鈕。</p>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
