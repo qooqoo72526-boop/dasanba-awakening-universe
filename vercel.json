@@ -3,11 +3,5 @@
     "sin1",
     "hnd1",
     "icn1"
-  ],
-  "routes": [
-    {
-      "src": "/api/chat.js",
-      "dest": "/api/chat.js"
-    }
   ]
 }
