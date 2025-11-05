@@ -114,3 +114,86 @@
   // 6) 輸入時做打字音效＆小發光
   input.addEventListener('input', ()=>{ keyClick(); });
 })();
+// 星空粒子
+(() => {
+  const c = document.getElementById('stars');
+  const ctx = c.getContext('2d');
+  const DPR = Math.max(1, devicePixelRatio || 1);
+  function size(){ c.width = innerWidth * DPR; c.height = innerHeight * DPR; }
+  size(); addEventListener('resize', size);
+  const N = 150; const stars = Array.from({length:N}, _ => ({
+    x: Math.random()*c.width, y: Math.random()*c.height, r: Math.random()*1.6 + .4, s: Math.random()*0.4 + 0.05
+  }));
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.fillStyle = 'white';
+    for(const st of stars){
+      st.y += st.s; if(st.y > c.height) st.y = -10;
+      ctx.globalAlpha = 0.45 + 0.55*Math.sin((st.x+st.y)/120);
+      ctx.beginPath(); ctx.arc(st.x, st.y, st.r*DPR, 0, Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// 音樂切換（第一次互動後播放）
+(() => {
+  const bgm = document.getElementById('bgm');
+  const btn = document.getElementById('audioToggle');
+  let armed = false;
+  function arm(){
+    if(armed) return; armed = true;
+    const play = () => { bgm.volume = 0.35; bgm.play().catch(()=>{}); removeEventListener('pointerdown', play); removeEventListener('keydown', play); };
+    addEventListener('pointerdown', play); addEventListener('keydown', play);
+  }
+  arm();
+  btn.addEventListener('click', () => {
+    if(bgm.paused){ bgm.play(); btn.classList.remove('muted'); }
+    else{ bgm.pause(); btn.classList.add('muted'); }
+  });
+})();
+
+// 簡易對話串接（保留你現有 /api/chat.js，regions 已在 server 設定）
+(() => {
+  const chat = document.getElementById('chat');
+  const input = document.getElementById('userInput');
+  const btn = document.getElementById('sendBtn');
+
+  function bubble(text, cls='assistant'){
+    const div = document.createElement('div');
+    div.className = `bubble ${cls}`;
+    div.textContent = text;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  async function send(){
+    const msg = input.value.trim();
+    if(!msg) return;
+    input.value = '';
+    bubble(msg, 'user');
+    bubble('…與宇宙同步中', 'system');
+
+    try{
+      const res = await fetch('/api/chat.js', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          personas: ['AJIN','MIGOU','GUNGUN'],
+          message: msg,
+          page: 'cosmic-post-station'
+        })
+      });
+      const data = await res.json();
+      const text = Array.isArray(data.reply) ? data.reply.join('\n') : (data.reply || '（雲層太厚，暫時收不到訊號）');
+      chat.lastChild.remove();
+      bubble(text, 'assistant');
+    }catch(e){
+      chat.lastChild.remove();
+      bubble('（雲層太厚，暫時收不到訊號）', 'system');
+    }
+  }
+  btn.addEventListener('click', send);
+  input.addEventListener('keydown', e => { if(e.key === 'Enter') send(); });
+})();
