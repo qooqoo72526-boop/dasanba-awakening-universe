@@ -1,59 +1,74 @@
-// api/chat.js
+// api/chat.js  —— 穩定可用版（Edge Runtime）
 export const config = { runtime: 'edge' };
 
 const SYSTEM = {
-  Ajin: "你是阿金：行動 × 反骨 × 熱情。語氣直接、有勁，會鼓動對方採取行動。",
-  Migou: "你是米果：自我價值 × 邊界。語氣優雅但不客套，懂得拒絕，堅定而溫柔。",
-  Gungun: "你是滾滾：被理解 × 安全感。語氣誠懇穩定，先共感再給方向。"
+  Ajin:  "你是阿金：自由、反骨、直接、激勵人，口吻帥、節奏快、敢講重話。",
+  Migou: "你是米果：自我價值與邊界女王，語氣高冷但溫柔，擅長提醒自尊與界線。",
+  Gungun:"你是滾滾：被理解才有安全感，語氣真誠穩定，先共感再給方向。"
 };
 
 export default async function handler(req) {
   try {
+    // 只接受 POST
     if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'POST only' }), { status: 405 });
+      return new Response(JSON.stringify({ error: 'POST only' }), {
+        status: 405, headers: { 'Content-Type': 'application/json' }
+      });
     }
 
+    // 讀取 body
     const { persona = 'Migou', message = '' } = await req.json();
     if (!message || !message.trim()) {
-      return new Response(JSON.stringify({ error: 'Empty message' }), { status: 400 });
+      return new Response(JSON.stringify({ error: 'Empty message' }), {
+        status: 400, headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    const apikey = process.env.OPENAI_API_KEY;
-    if (!apikey) {
-      return new Response(JSON.stringify({ error: 'Missing OPENAI_API_KEY' }), { status: 500 });
+    // 讀環境變數（你已在 Vercel 設定 OPENAI_API_KEY：Production）
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: 'Missing OPENAI_API_KEY' }), {
+        status: 500, headers: { 'Content-Type': 'application/json' }
+      });
     }
 
+    // 組 OpenAI 請求
     const body = {
-      model: 'gpt-4o-mini',           // 你要用哪個就填哪個，這個是性價比佳的聊天模型
-      temperature: 0.8,
+      model: 'gpt-4o-mini',
+      temperature: 0.7,
       messages: [
         { role: 'system', content: SYSTEM[persona] || SYSTEM.Migou },
-        { role: 'user', content: message }
+        { role: 'user',   content: message }
       ]
     };
 
     const r = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': Bearer ${apikey}
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type' : 'application/json'
       },
       body: JSON.stringify(body)
     });
 
-    // OpenAI 可能回 4xx/5xx，直接回給前端看清楚
+    const j = await r.json();
+
+    // OpenAI 失敗 → 把 detail 回傳前端好排查
     if (!r.ok) {
-      const errText = await r.text();
-      return new Response(JSON.stringify({ error: 'OpenAI error', status: r.status, detail: errText }), { status: 502 });
+      return new Response(JSON.stringify({ ok: false, error: 'OpenAI error', detail: j }), {
+        status: r.status, headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    const data = await r.json();
-    const reply = data.choices?.[0]?.message?.content?.trim() || '（…）';
+    const reply = j?.choices?.[0]?.message?.content?.trim() || '...';
+    return new Response(JSON.stringify({ ok: true, reply }), {
+      headers: { 'Content-Type': 'application/json' }
+    });
 
-    return new Response(JSON.stringify({ ok: true, reply }), { status: 200 });
-
-  } catch (e) {
-    // 任何未預期錯誤 → 回傳訊息方便你排查
-    return new Response(JSON.stringify({ error: 'Server crash', detail: String(e) }), { status: 502 });
+  } catch (err) {
+    // 最保險的兜底
+    return new Response(JSON.stringify({
+      error: 'Server error', detail: String(err?.message || err)
+    }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
 }
