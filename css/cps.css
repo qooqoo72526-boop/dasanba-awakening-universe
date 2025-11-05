@@ -102,3 +102,60 @@ body{
   font-size:14px;
 }
 .ghost-input::placeholder{color:rgba(234,241,255,.55)}
+/* --- Center + Cosmic Dome --- */
+/* 整個聊天區域置中、限制最大寬度 */
+.chat-zone{
+  position: fixed; left: 50%; top: 20vh; transform: translateX(-50%);
+  width: min(86vw, 980px);
+  z-index: 4;  /* 在漂浮鳥上層：若想讓鳥在上面，這裡改 2 */
+  pointer-events: auto;
+}
+
+/* 膠囊視窗（不再是直角框） */
+.chat-stream.dome{
+  min-height: 180px; max-height: 48vh; overflow: auto;
+  padding: 22px 24px;
+  border-radius: 28px; 
+  backdrop-filter: blur(12px) saturate(120%);
+  background:
+    radial-gradient(120% 160% at 20% 10%, rgba(155,205,255,.07), transparent 60%),
+    radial-gradient(120% 140% at 80% 90%, rgba(255,205,245,.08), transparent 60%),
+    rgba(12,20,40,.42);
+  box-shadow:
+    0 10px 36px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.06) inset;
+  position: relative;
+}
+
+/* 環形發光邊（柔和、非硬框） */
+.chat-stream.dome::before{
+  content:''; position:absolute; inset:-2px; border-radius:inherit;
+  background: conic-gradient(from 180deg,
+    rgba(255,240,180,.55), rgba(170,210,255,.55), rgba(255,200,245,.55), rgba(255,240,180,.55));
+  filter: blur(10px) saturate(120%);
+  opacity:.35; z-index:-1;
+}
+
+/* 微微呼吸亮點（不規則、去方形感） */
+.chat-stream.dome::after{
+  content:''; position:absolute; inset:0; border-radius:inherit;
+  background-image:
+    radial-gradient(6px 6px at 12% 18%, rgba(255,255,255,.45), transparent 60%),
+    radial-gradient(5px 5px at 78% 22%, rgba(255,255,255,.35), transparent 60%),
+    radial-gradient(4px 4px at 36% 70%, rgba(255,255,255,.25), transparent 60%),
+    radial-gradient(3px 3px at 66% 56%, rgba(255,255,255,.25), transparent 60%);
+  animation: domeTwinkle 3.6s ease-in-out infinite alternate;
+  opacity:.6; pointer-events:none;
+}
+@keyframes domeTwinkle { to{ opacity:.2; transform: translateY(-2px) } }
+
+/* 氣泡微圓角＋半透明（讓膠囊看起來更一體） */
+.msg{ 
+  border-radius: 16px;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* 標題區一起置中對齊（上方英/中兩行） */
+.cps-header, .cps-sub{ left:50%; transform:translateX(-50%); text-align:center; }
