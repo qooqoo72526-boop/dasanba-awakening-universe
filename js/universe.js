@@ -1,18 +1,26 @@
-(function(){
-  const canvas = document.createElement('canvas'); canvas.className='universe-stars'; document.body.appendChild(canvas);
-  const grad = document.createElement('div'); grad.className='universe-gradient'; document.body.appendChild(grad);
-  const grid = document.createElement('div'); grid.className='universe-grid'; document.body.appendChild(grid);
-  if(document.body.dataset.universe === 'home'){
-    const intro = document.createElement('div'); intro.className='intro';
-    intro.innerHTML = '<h1 class="big-en">EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</h1>';
-    document.body.appendChild(intro);
+(()=>{
+  const cvs = document.getElementById('stars'); if(!cvs) return;
+  const ctx = cvs.getContext('2d');
+  let W,H,stars=[];
+
+  function resize(){
+    W = cvs.width  = innerWidth  * devicePixelRatio;
+    H = cvs.height = innerHeight * devicePixelRatio;
+    stars = Array.from({length: Math.min(320, Math.floor(W*H/45000))}, ()=>
+      ({x:Math.random()*W, y:Math.random()*H, z:Math.random()*0.6+0.4, s:Math.random()*1.4+0.3, p:Math.random()*6.28})
+    );
   }
-  const ctx = canvas.getContext('2d'); let w=0,h=0,stars=[];
-  function resize(){ w=canvas.width=innerWidth; h=canvas.height=innerHeight;
-    const count=Math.min(180,Math.floor(w*h/8000)); stars=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,
-      z:Math.random()*0.6+0.4,vx:(Math.random()-0.5)*0.06,vy:(Math.random()-0.5)*0.06}));}
-  function draw(){ ctx.clearRect(0,0,w,h); for(const s of stars){ s.x+=s.vx; s.y+=s.vy;
-    if(s.x<0||s.x>w)s.vx*=-1; if(s.y<0||s.y>h)s.vy*=-1; const r=s.z*1.4; ctx.beginPath(); ctx.arc(s.x,s.y,r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(220,240,255,${0.35+s.z*0.45})`; ctx.fill(); } requestAnimationFrame(draw); }
-  addEventListener('resize',resize); resize(); draw();
+  addEventListener('resize', resize,{passive:true}); resize();
+
+  function draw(t){
+    ctx.clearRect(0,0,W,H);
+    for(const st of stars){
+      const tw = (Math.sin((t*0.001 + st.p))*0.5+0.5);
+      ctx.globalAlpha = 0.25 + tw*0.7;
+      ctx.fillStyle = '#eaf2ff';
+      ctx.beginPath(); ctx.arc(st.x, st.y, st.s*devicePixelRatio, 0, Math.PI*2); ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
 })();

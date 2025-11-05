@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Orbitron:wght@200;300;400&family=Space+Grotesk:wght@300;400;500&family=Exo+2:ital,wght@0,300;0,400;1,300;1,400&family=JetBrains+Mono:ital,wght@0,300&display=swap');
+
+:root{
+  --bg0:#0a0f25; --bg1:#10183a; --ink:#eaf1ff;
+  --gold:#ffd98a; --pink:#ffb7d5; --blue:#a9d4ff;
+  --soft: rgba(255,255,255,.06);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; color:var(--ink); overflow-x:hidden; background:#0b0f22;
+  font-family:"Noto Sans TC","Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
+
+/* ——— 全畫面宇宙層 ——— */
+#stars, #nebula, #par{
+  position:fixed; inset:0; z-index:0;
+}
+#nebula{
+  background:
+    radial-gradient(1200px 900px at 70% 20%, rgba(180,210,255,.10), transparent 60%),
+    radial-gradient(1000px 800px at 20% 70%, rgba(255,190,230,.08), transparent 65%),
+    radial-gradient(900px 900px at 50% 50%, rgba(255,255,255,.05), transparent 70%);
+  filter: blur(18px) saturate(110%);
+  animation: nebulaPulse 8s ease-in-out infinite;
+}
+@keyframes nebulaPulse { 0%,100%{opacity:.65; transform:scale(1)} 50%{opacity:.9; transform:scale(1.03)} }
+
+#par{
+  pointer-events:none;
+  background:
+    radial-gradient(600px 600px at 15% 85%, rgba(255,217,138,.12), transparent 60%),
+    radial-gradient(700px 700px at 85% 30%, rgba(169,212,255,.12), transparent 65%),
+    radial-gradient(800px 800px at 50% 10%, rgba(255,183,213,.10), transparent 70%);
+  mix-blend-mode:screen; opacity:.55;
+}
+
+/* ——— 開場提示：極簡細字（hover 才顯示英文） ——— */
+.comm-status{
+  position:fixed; left:50%; top:42%; transform:translate(-50%,-50%);
+  z-index:3; text-align:center; user-select:none;
+}
+.comm-status .zh{
+  font-weight:300; opacity:.85; letter-spacing:.02em;
+  text-shadow:0 0 10px rgba(200,230,255,.25);
+}
+.comm-status .en{
+  font-family:"Orbitron","Exo 2","JetBrains Mono",monospace;
+  font-weight:200; letter-spacing:.08em; font-style:italic;
+  color:transparent; background:linear-gradient(90deg,#e6f2ff,#c6d6ff,#ffd6f0,#e6f2ff);
+  -webkit-background-clip:text; background-clip:text; opacity:0; transition:opacity .35s ease;
+}
+.comm-status:hover .en{ opacity:.9 }
+.comm-status .zh, .comm-status .en{ animation:breath 3s ease-in-out infinite }
+@keyframes breath{ 0%,100%{opacity:.6} 50%{opacity:1} }
+
+/* ——— 不規則拼貼（2橫3直） ——— */
+.collage{
+  position:relative; z-index:2; margin:16vh auto 12vh;
+  width:min(1200px,92vw); height:72vh; filter: drop-shadow(0 12px 40px rgba(0,0,0,.45));
+}
+.collage img{position:absolute; user-select:none; pointer-events:none;}
+.h{width:36vw; max-width:620px; border-radius:18px; opacity:.88}
+.h1{left:2vw; top:2vh; transform:rotate(-2deg)}
+.h2{right:2vw; top:10vh; transform:rotate(1.5deg)}
+.v{height:62vh; border-radius:22px; opacity:.95; filter: drop-shadow(0 10px 30px rgba(0,0,0,.45))}
+.v-ajin  {left:6vw;  bottom:1vh; transform:rotate(-1deg)}
+.v-migou {left:calc(50% - 17vw); bottom:-3vh; transform:rotate(0.6deg)}
+.v-gungun{right:6vw; bottom:0; transform:rotate(-0.4deg)}
+
+/* ——— 無框輸入 Dock（極簡） ——— */
+.chat-dock{
+  position:fixed; left:50%; bottom:6vh; transform:translateX(-50%);
+  width:min(920px,92vw); z-index:3;
+}
+#cps-input{
+  width:100%; padding:18px 22px; border:none; outline:none; border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow:0 0 0 1px rgba(255,255,255,.08) inset, 0 12px 40px rgba(0,0,0,.25);
+  color:#eaf1ff; font-weight:300; backdrop-filter: blur(8px);
+  font-family:"Space Grotesk","Noto Sans TC"; font-size:16px;
+}
+
+/* ——— 對話流：無框、浮動、多字體 ——— */
+.chat-stream{
+  position:fixed; left:50%; bottom:14vh; transform:translateX(-50%);
+  width:min(920px,92vw); display:flex; flex-direction:column; gap:10px; z-index:3;
+}
+.msg{display:inline-flex; align-items:center; gap:10px; padding:8px 14px;
+  border-radius:14px; background:rgba(255,255,255,.04);
+  backdrop-filter: blur(6px); width:max-content; max-width:100%;
+  animation:drop .35s ease-out both;
+}
+@keyframes drop{from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:translateY(0)}}
+
+.me{color:#d8e7ff; font-family:"Space Grotesk"}
+.ajin  {color:#ffe0a6; text-shadow:0 0 8px rgba(255,217,138,.25); font-family:"Orbitron"; letter-spacing:.06em}
+.migou {color:#ffd1e6; text-shadow:0 0 8px rgba(255,183,213,.25); font-family:"Noto Sans TC"; font-weight:300}
+.gungun{color:#cfe5ff; text-shadow:0 0 8px rgba(169,212,255,.25); font-family:"Exo 2"; font-style:italic}
+
+/* ——— RWD ——— */
+@media (max-width:900px){
+  .collage{height:68vh}
+  .v{height:56vh}
+  .h{width:44vw}
+}
