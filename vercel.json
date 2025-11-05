@@ -1,19 +1,13 @@
 {
-  "rewrites": [
+  "version": 2,
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api/$1"
-    }
-  ],
-  "headers": [
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js"
+    },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
