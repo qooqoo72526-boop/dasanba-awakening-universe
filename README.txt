@@ -1,5 +1,10 @@
-DaSanBa Awakening Universe v8.8 | 衝擊宇宙
-- 自動播放音樂 (使用你瀏覽器互動後啟動)
-- 三鳥房間與雲間信件已連接 /api/chat.js（請在 Vercel 設定 OPENAI_API_KEY）
-- 開場英文動畫位於 index.html 最上層 .intro
-部署：整包 ZIP 上傳到 GitHub，Commit 後 Vercel 會自動部署。
+DaSanBa Awakening Universe v9.1.2 — Starfield Universe (FULL SITE)
+Generated: 2025-11-05T05:49:08.335491
+
+放圖：/assets
+- 首頁三卡：ajin.webp / migou.webp / gungun.webp
+- 觀星畫廊：trio.webp ~ trio10.webp（16:9）
+- 宇宙郵局：直式 9:16 -> ajin_post.webp / migou_post.webp / gungun_post.webp；橫式 16:9 -> trio_post1.webp / trio_post2.webp
+
+每頁已載入 js/universe.js；每頁 <body> 有 data-universe。
+API：沿用 /api/chat.js（你的 OpenAI key 與 regions sin1/hnd1/icn1 不改）。
