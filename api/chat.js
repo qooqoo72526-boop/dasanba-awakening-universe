@@ -1,4 +1,13 @@
-export const config = { runtime: 'edge' };
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'POST only' });
+  }
+
+  const { persona, message } = req.body;
+
+  if (!process.env.OPENAI_API_KEY) {
+    return res.status(500).json({ error: 'Missing OPENAI_API_KEY' });
+  }
 
 const SYSTEM = {
   Ajin:  "你是阿金：自由｜反骨｜行動派。語氣熱血但暖心，像朋友，短句有力，絕不官腔。",
