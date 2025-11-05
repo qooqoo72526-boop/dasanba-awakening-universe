@@ -1,242 +1,159 @@
 :root{
-  --ink:#eaf1ff; --soft:rgba(255,255,255,.08);
-  --pink:#ffb7d5; --blue:#90a4ff; --vio:#c9b9ff; --cyan:#9ff3ff;
-  --glow:0 0 12px rgba(160,190,255,.8), 0 0 36px rgba(120,180,255,.35);
+  --fg:#EAF2FF; --fg-dim:#B8C4FF;
+  --glass:rgba(16,24,48,.30); --glass-strong:rgba(16,24,48,.45);
+  --stroke:rgba(255,255,255,.12);
+  --pulse:#ffd18b;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
 body{
-  margin:0; overflow:hidden; color:var(--ink);
-  font-family: "Noto Sans TC","Segoe UI",system-ui,Arial; 
-  background: radial-gradient(1200px 900px at 70% 25%, rgba(160,180,255,.10), transparent 60%),
-              radial-gradient(900px 800px  at 20% 70%, rgba(255,200,230,.08), transparent 65%),
-              radial-gradient(900px 500px  at 50% 50%, rgba(255,255,255,.05), transparent 70%),
-              #061733;
+  margin:0; color:var(--fg);
+  font-family:"Noto Sans TC", system-ui, -apple-system, "Segoe UI", Arial;
+  background:radial-gradient(1100px 760px at 50% 16%, #0b1230 0%, #050814 60%, #03040a 100%);
+  overflow-x:hidden;
 }
 
-/* 發光小字標頭 */
-.cps-header{
-  position:fixed; left:50%; top:26px; transform:translateX(-50%);
-  text-align:center; line-height:1.2; letter-spacing:.08em;
-  filter: drop-shadow(0 0 10px rgba(120,180,255,.5));
-  z-index:5;
-}
-.cps-header .en{font-family:Orbitron,monospace; font-size:13px; opacity:.9; text-shadow:var(--glow)}
-.cps-header .zh{font-size:12px; opacity:.8; margin-top:4px; text-shadow:var(--glow)}
-
-/* 次標：會隨機閃爍 */
-.cps-sub{
-  position:fixed; left:50%; top:70px; transform:translateX(-50%);
-  font: 300 12px/1.2 Orbitron,monospace; letter-spacing:.08em;
-  opacity:.85; animation: twinkle 2.8s infinite ease-in-out;
-  z-index:5;
-}
-@keyframes twinkle{
-  0%,100%{opacity:.85; text-shadow:none}
-  50%{opacity:1; text-shadow:0 0 12px rgba(255,255,255,.6)}
-}
-
-/* 星點畫布鋪滿 */
-#stars{position:fixed; inset:0; z-index:0}
-
-/* 不規則拼貼 */
-.collage{
-  position:fixed; inset:auto 0 18vh 0; height:58vh; z-index:1;
-  display:grid; place-items:center;
-  grid-template-columns: 28vw 20vw 22vw 18vw;
-  grid-auto-rows: 26vh;
-  gap:2.2vw;
-  padding:0 6vw;
-}
-.collage img{
-  width:100%; height:100%; object-fit:cover; border-radius:20px;
-  box-shadow:0 12px 40px rgba(0,0,0,.35);
-  filter:saturate(108%) contrast(105%) brightness(103%);
-  opacity:.95; transform:translateY(0);
-  animation: float 8s ease-in-out infinite alternate;
-}
-.h{aspect-ratio:16/9}
-.v{aspect-ratio:9/16}
-.h1{grid-column:1/span 2; grid-row:1}
-.h2{grid-column:3/span 2; grid-row:2}
-.v-ajin{grid-column:1; grid-row:2}
-.v-migou{grid-column:2; grid-row:1}
-.v-gungun{grid-column:4; grid-row:1}
-@keyframes float{
-  to{ transform:translateY(-14px) }
-}
-
-/* 對話區（無框、雲狀光暈） */
-.chat-zone{
-  position:fixed; left:50%; top:18vh; transform:translateX(-50%);
-  width:min(820px,88vw); z-index:3;
-}
-.persona-toggle{
-  display:flex; gap:14px; justify-content:center; margin-bottom:12px;
-  font: 400 13px/1 Orbitron,monospace;
-  opacity:.85;
-}
-.persona-toggle input{accent-color:#ffd54f}
-
-.chat-stream{
-  min-height:160px; max-height:42vh; overflow:auto; padding:18px 20px;
-  border-radius:28px; backdrop-filter: blur(10px) saturate(120%);
-  background: radial-gradient(600px 300px at 40% 10%, rgba(255,255,255,.08), transparent 60%),
-              radial-gradient(500px 240px at 70% 90%, rgba(160,190,255,.08), transparent 60%),
-              rgba(255,255,255,.06);
-  box-shadow: inset 0 0 40px rgba(255,255,255,.06), 0 14px 50px rgba(0,0,0,.35);
-}
-.msg{margin:10px 0; line-height:1.6; font-size:14px}
-.me{opacity:.95}
-.ai{opacity:.95}
-.ai .from{font: 700 12px/1 Orbitron,monospace; letter-spacing:.08em; opacity:.9}
-.ai.aj  .from{color:#ffd54f}
-.ai.mi  .from{color:#ff9cc6}
-.ai.gu  .from{color:#9fd2ff}
-
-.ghost-input{
-  width:100%; margin-top:12px; padding:14px 16px; border:0; outline:0;
-  border-radius:16px; color:#eaf1ff; background:rgba(255,255,255,.05);
-  box-shadow: inset 0 0 24px rgba(255,255,255,.06);
-  font-size:14px;
-}
-.ghost-input::placeholder{color:rgba(234,241,255,.55)}
-/* --- Center + Cosmic Dome --- */
-/* 整個聊天區域置中、限制最大寬度 */
-.chat-zone{
-  position: fixed; left: 50%; top: 20vh; transform: translateX(-50%);
-  width: min(86vw, 980px);
-  z-index: 4;  /* 在漂浮鳥上層：若想讓鳥在上面，這裡改 2 */
-  pointer-events: auto;
-}
-
-/* 膠囊視窗（不再是直角框） */
-.chat-stream.dome{
-  min-height: 180px; max-height: 48vh; overflow: auto;
-  padding: 22px 24px;
-  border-radius: 28px; 
-  backdrop-filter: blur(12px) saturate(120%);
-  background:
-    radial-gradient(120% 160% at 20% 10%, rgba(155,205,255,.07), transparent 60%),
-    radial-gradient(120% 140% at 80% 90%, rgba(255,205,245,.08), transparent 60%),
-    rgba(12,20,40,.42);
-  box-shadow:
-    0 10px 36px rgba(0,0,0,.35),
-    0 0 0 1px rgba(255,255,255,.06) inset;
-  position: relative;
-}
-
-/* 環形發光邊（柔和、非硬框） */
-.chat-stream.dome::before{
-  content:''; position:absolute; inset:-2px; border-radius:inherit;
-  background: conic-gradient(from 180deg,
-    rgba(255,240,180,.55), rgba(170,210,255,.55), rgba(255,200,245,.55), rgba(255,240,180,.55));
-  filter: blur(10px) saturate(120%);
-  opacity:.35; z-index:-1;
-}
-
-/* 微微呼吸亮點（不規則、去方形感） */
-.chat-stream.dome::after{
-  content:''; position:absolute; inset:0; border-radius:inherit;
-  background-image:
-    radial-gradient(6px 6px at 12% 18%, rgba(255,255,255,.45), transparent 60%),
-    radial-gradient(5px 5px at 78% 22%, rgba(255,255,255,.35), transparent 60%),
-    radial-gradient(4px 4px at 36% 70%, rgba(255,255,255,.25), transparent 60%),
-    radial-gradient(3px 3px at 66% 56%, rgba(255,255,255,.25), transparent 60%);
-  animation: domeTwinkle 3.6s ease-in-out infinite alternate;
-  opacity:.6; pointer-events:none;
-}
-@keyframes domeTwinkle { to{ opacity:.2; transform: translateY(-2px) } }
-
-/* 氣泡微圓角＋半透明（讓膠囊看起來更一體） */
-.msg{ 
-  border-radius: 16px;
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(6px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-}
-
-/* 標題區一起置中對齊（上方英/中兩行） */
-.cps-header, .cps-sub{ left:50%; transform:translateX(-50%); text-align:center; }
-/* === Cosmic Post Station 專用（置中膠囊 + 漂浮拼貼） === */
-
-/* 頁首小字 */
-.cps-header{ position:fixed; left:50%; top:26px; transform:translateX(-50%); text-align:center; line-height:1.2; letter-spacing:.08em; z-index:5; }
-.cps-header .en{ font-family:Orbitron,monospace; font-size:13px; opacity:.9; text-shadow:0 0 10px rgba(160,190,255,.35); }
-.cps-header .zh{ font-size:12px; opacity:.8; margin-top:4px; text-shadow:0 0 10px rgba(160,190,255,.35); }
-
-/* 次標：會微微閃爍 */
-.cps-sub{ position:fixed; left:50%; top:70px; transform:translateX(-50%); font:300 12px/1.2 Orbitron,monospace; letter-spacing:.08em; opacity:.85; animation:twinkle 2.8s infinite ease-in-out; z-index:5; }
-@keyframes twinkle{ 0%,100%{opacity:.85; text-shadow:none} 50%{opacity:1; text-shadow:0 0 12px rgba(255,255,255,.6)} }
-
-/* 星空畫布鋪滿 */
+/* 星塵背景 */
 #stars{ position:fixed; inset:0; z-index:0; }
 
-/* 不規則拼貼：2 橫 + 3 直 */
+/* 音樂按鈕（右上） */
+.cosmic-ui{ position:fixed; top:12px; right:12px; z-index:10; }
+.btn-audio{
+  border:0; background:var(--glass); color:var(--fg);
+  padding:8px 12px; border-radius:14px; backdrop-filter: blur(10px);
+  box-shadow:0 4px 18px rgba(0,0,0,.25); cursor:pointer; transition:opacity .2s;
+}
+.btn-audio.muted{ opacity:.55 }
+
+/* 標題（上中文、下英文細字） */
+.cps-header{ position:relative; z-index:2; text-align:center; margin-top:24px; }
+.cps-header .zh{ font-size:14px; letter-spacing:.02em; opacity:.85; }
+.cps-header .en{ font-family:"Orbitron", monospace; font-size:12px; letter-spacing:.14em; opacity:.78;
+  text-shadow:0 0 6px rgba(170,220,255,.35); }
+.cps-header .en.sub{ margin-top:4px; font-size:11px; opacity:.72; }
+
+/* 拼貼區：2 橫 + 3 直 */
 .collage{
-  position:fixed; inset:auto 0 18vh 0; height:58vh; z-index:1;
-  display:grid; place-items:center;
-  grid-template-columns: 28vw 20vw 22vw 18vw;
-  grid-auto-rows: 26vh;
-  gap:2.2vw; padding:0 6vw;
+  position:relative; z-index:1;
+  width:min(1180px, 92vw); margin:6vh auto 18vh;
+  display:grid; gap: min(2.2vw, 22px);
+  grid-template-columns: 1fr 1fr; grid-auto-rows: minmax(180px, auto);
 }
-.collage img{
-  width:100%; height:100%; object-fit:cover; border-radius:20px;
-  box-shadow:12px 40px 48px rgba(0,0,0,.35);
-  filter:saturate(108%) contrast(105%) brightness(103%);
-  opacity:.95; transform:translateY(0);
-  animation:float 8s ease-in-out infinite alternate;
+.h{ width:100%; height:100%; object-fit:cover; border-radius:22px;
+  filter: drop-shadow(0 12px 28px rgba(0,0,0,.35)); }
+.h1{ grid-column:1/3; aspect-ratio: 16/6; }
+.h2{ grid-column:1/3; aspect-ratio: 16/6; }
+
+/* 三鳥（直式，絕對定位到畫面上） */
+.v{
+  position:absolute; width:min(28vw, 320px); height:auto; object-fit:contain; pointer-events:none;
+  filter: drop-shadow(0 18px 40px rgba(0,0,0,.45)) drop-shadow(0 0 12px rgba(255,245,200,.20));
+  /* 若暫時圖仍殘邊，可先軟化邊緣；換成真透明圖後可移除： */
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 72%, rgba(0,0,0,0) 105%);
+          mask-image: radial-gradient(circle at 50% 50%, rgba(0,0,0,1) 72%, rgba(0,0,0,0) 105%);
 }
-@keyframes float{ to{ transform:translateY(-14px) } }
+.v-ajin   { left:2%;   top:18%; transform-origin:40% 60%; }
+.v-migou  { right:3%;  top:26%; transform-origin:60% 60%; }
+.v-gungun { left:28%;  top:56%; transform-origin:50% 60%; }
 
-/* 版位（可調整） */
-.h{ aspect-ratio:16/9 }
-.v{ aspect-ratio:9/16 }
-.h1{ grid-column:1 / span 2; grid-row:1 }
-.h2{ grid-column:3 / span 2; grid-row:2 }
-.v-ajin{   grid-column:1; grid-row:2 }
-.v-migou{  grid-column:2; grid-row:1 }
-.v-gungun{ grid-column:4; grid-row:1 }
+/* 漂浮、光暈、脈動 */
+.float{ animation:float 7s ease-in-out infinite; }
+.glow::after{
+  content:""; position:absolute; inset:-6% -6%; border-radius:50%;
+  box-shadow:0 0 60px 20px rgba(255,210,120,.18), inset 0 0 80px rgba(170,210,255,.20);
+  animation: haloSpin 22s linear infinite; pointer-events:none; z-index:-1;
+}
+.pulse{ animation:float 7s ease-in-out infinite; }
 
-/* 對話區（置中、宇宙膠囊） */
-.chat-zone{ position:fixed; left:50%; top:18vh; transform:translateX(-50%); width:min(88vw,980px); z-index:3; }
-.persona-toggle{ display:flex; gap:10px; justify-content:center; margin-bottom:12px; font:400 13px/1 Orbitron,monospace; letter-spacing:.08em; opacity:.9; }
-
-/* 膠囊視窗 */
-.chat-stream.dome{
-  min-height:180px; max-height:48vh; overflow:auto; padding:22px 24px;
-  border-radius:28px; backdrop-filter:blur(12px) saturate(120%);
+/* 叼著信封（可調位置的 CSS 版） */
+.collage{
+  --aj-x: 16%; --aj-y: 39%;
+  --mi-x: 78%; --mi-y: 35%;
+  --gu-x: 39%; --gu-y: 70%;
+}
+.letter{
+  position:absolute; z-index:3;
+  width:min(58px, 7vw); height:min(40px, 4.8vw);
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(255,255,255,.65);
+  border-radius:6px;
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.35),
+    0 0 18px rgba(255,240,210,.45),
+    inset 0 0 8px rgba(255,255,255,.6);
+  animation: letterFloat 6s ease-in-out infinite;
+  transform: translate(-50%, -50%);
+}
+.l-ajin  { left:var(--aj-x);  top:var(--aj-y);  animation-duration:6s; }
+.l-migou { left:var(--mi-x);  top:var(--mi-y);  animation-duration:7.5s; }
+.l-gungun{ left:var(--gu-x);  top:var(--gu-y);  animation-duration:8.5s; }
+.letter::before,
+.letter::after{
+  content:""; position:absolute; inset:0; border-radius:6px;
   background:
-    radial-gradient(120% 160% at 20% 10%, rgba(155,205,255,.07), transparent 60%),
-    radial-gradient(120% 140% at 80% 90%, rgba(255,205,245,.08), transparent 60%),
-    rgba(12,20,40,.42);
-  box-shadow:0 10px 36px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
-  position:relative;
+    linear-gradient(135deg, transparent 49.5%, rgba(255,210,150,.9) 50.5%) top/100% 50% no-repeat,
+    linear-gradient(225deg, transparent 49.5%, rgba(255,210,150,.9) 50.5%) bottom/100% 50% no-repeat;
+  mix-blend-mode:screen; opacity:.9;
 }
-.chat-stream.dome::before{
-  content:''; position:absolute; inset:-2px; border-radius:inherit;
-  background:conic-gradient(from 180deg, rgba(255,240,180,.55), rgba(170,210,255,.55), rgba(255,200,245,.55), rgba(255,240,180,.55));
-  filter:blur(10px) saturate(120%); opacity:.35; z-index:-1;
+.letter > .ring::before{
+  content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:10px; height:10px; border-radius:50%;
+  background:radial-gradient(circle, #ffd9a8 0%, #ffb668 60%, #ff9e3a 100%);
+  box-shadow:0 0 8px rgba(255,180,90,.9);
 }
-.chat-stream.dome::after{
-  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-  background-image:
-    radial-gradient(6px 6px at 12% 18%, rgba(255,255,255,.45), transparent 60%),
-    radial-gradient(5px 5px at 78% 22%, rgba(255,255,255,.35), transparent 60%),
-    radial-gradient(4px 4px at 36% 70%, rgba(255,255,255,.25), transparent 60%),
-    radial-gradient(3px 3px at 66% 56%, rgba(255,255,255,.25), transparent 60%);
-  animation:domeTwinkle 3.6s ease-in-out infinite alternate; opacity:.6;
+.letter .ring{
+  position:absolute; inset:-26px; border-radius:50%;
+  box-shadow:
+    0 0 36px 14px rgba(255,200,140,.22),
+    inset 0 0 80px rgba(170,210,255,.25);
+  animation: haloSpin 12s linear infinite;
+  pointer-events:none;
 }
-@keyframes domeTwinkle{ to{ opacity:.2; transform:translateY(-2px) } }
 
-/* 訊息泡泡微玻璃 */
-.msg{ margin:10px 0; line-height:1.6; font-size:14px; border-radius:16px;
-  background:rgba(255,255,255,.06); backdrop-filter:blur(6px);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+/* 聊天玻璃卡（置中、無硬框） */
+.chat-zone{ position:fixed; inset: 10vh 0 0; display:grid; place-items:center; z-index:2; pointer-events:none; }
+.chat{ width:min(880px, 92vw); padding:22px; border-radius:20px; pointer-events:auto; }
+.glass{
+  background:var(--glass-strong);
+  backdrop-filter: blur(14px) saturate(1.2);
+  border:1px solid var(--stroke);
+  box-shadow: 0 8px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
 }
-.me{ opacity:.95; }
-.ai{ opacity:.95; }
-.ai.aj { color:#ffd54f }
-.ai.mi { color:#ff9ccc }
-.ai.gu { color:#9bd2ff }
+.personas{
+  display:flex; gap:14px; justify-content:flex-end; list-style:none; padding:0; margin:0 0 8px;
+  font-size:13px; opacity:.9;
+}
+.chat-stream{ min-height:110px; max-height:42vh; overflow:auto; padding:6px 2px; }
+.bubble{ margin:8px 0; line-height:1.6; }
+.bubble.system{ opacity:.75; font-size:14px; }
+.input-row{ display:flex; gap:10px; margin-top:10px; }
+.chat-input{
+  flex:1; background:rgba(255,255,255,.06); border:1px solid var(--stroke);
+  border-radius:14px; padding:12px 14px; color:var(--fg);
+  outline:none;
+}
+#sendBtn{
+  min-width:56px; border-radius:14px; border:1px solid var(--stroke);
+  background:rgba(255,255,255,.08); color:#fff; cursor:pointer;
+}
+
+/* 動畫 */
+@keyframes float{ 0%,100%{ transform:translateY(0)} 50%{ transform:translateY(-12px)} }
+@keyframes haloSpin{ 0%{ transform:rotate(0)} 100%{ transform:rotate(360deg)} }
+@keyframes letterFloat{ 0%,100% { transform:translate(-50%,-50%) translateY(0); } 50% { transform:translate(-50%,-50%) translateY(-10px); } }
+
+/* RWD：行動版留兩隻，畫面更乾淨 */
+@media (max-width:900px){
+  .v-gungun{ display:none; }
+  .h1,.h2{ aspect-ratio: 16/9; }
+  .v{ width:min(40vw, 240px); }
+  .collage{
+    width: 94vw; margin:4vh auto 16vh;
+  }
+  .collage{
+    --aj-x: 22%; --aj-y: 42%;
+    --mi-x: 76%; --mi-y: 36%;
+    --gu-x: 39%; --gu-y: 70%;
+  }
+}
