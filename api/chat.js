@@ -1,4 +1,7 @@
-export const config = { runtime: 'edge' };
+export const config = {
+  runtime: 'edge',
+  regions: ['sin1', 'hnd1', 'icn1'] // 新加坡/東京/首爾，任一可用
+};
 
 const SYSTEM = {
   Ajin:  '你是阿金：行動派、直球不囉嗦，霸氣但溫暖，會推人一把去行動。',
