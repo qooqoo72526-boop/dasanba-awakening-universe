@@ -1,66 +1,47 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Cosmic Post Station</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;600;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/universe_v921.css">
-<script defer src="js/cps_v921.js"></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Cosmic Post Station</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/universe_v921.css"/>
 </head>
-<body class="cosmic cps-sky">
-<nav class="topbar small"><a href="index.html">⟵ 返回</a><span>Cosmic Post Station</span></nav>
+<body>
+  <canvas id="stars"></canvas>
+  <nav class="toolbar">
+    <a href="index.html">首頁</a>
+    <a href="cosmic-post-station.html">宇宙郵局</a>
+    <a href="soulmirror.html">靈魂照妖鏡</a>
+    <a href="about-universe.html">關於宇宙</a>
+  </nav>
 
-<!-- side arts (2 land + 3 port) -->
-<div class="cps-wrap">
-  <div class="side-art left">
-    <img class="land" src="assets/trio_post1.webp" alt="scene1">
-    <img class="land" src="assets/trio_post2.webp" alt="scene2">
-    <img class="port" src="assets/ajin_post.webp" alt="a">
-    <img class="port" src="assets/migou_post.webp" alt="m">
-    <img class="port" src="assets/gungun_post.webp" alt="g">
-  </div>
+  <section class="post-wrap">
+    <aside class="side-album">
+      <img class="landscape" src="assets/trio_post1.webp" alt=""/>
+      <img class="landscape" src="assets/trio_post2.webp" alt=""/>
+      <img class="portrait" src="assets/ajin_post.webp" alt=""/>
+      <img class="portrait" src="assets/migou_post.webp" alt=""/>
+      <img class="portrait" src="assets/gungun_post.webp" alt=""/>
+    </aside>
 
-  <div class="dialog-col">
-    <div class="birds">
-      <img class="bird b-ajin"  src="assets/ajin_clear_post.webp"  alt="Ajin">
-      <img class="bird b-migou" src="assets/migou_clear_post.webp" alt="Migou">
-      <img class="bird b-gungun"src="assets/gungun_clear_post.webp"alt="Gungun">
-      <div class="envelope"></div>
-    </div>
+    <main class="chat">
+      <div class="birds">
+        <div class="bird"><img src="assets/ajin_clear_post.webp" alt="ajin"></div>
+        <div class="bird"><img src="assets/migou_clear_post.webp" alt="migou"></div>
+        <div class="bird"><img src="assets/gungun_clear_post.webp" alt="gungun"></div>
+      </div>
 
-    <div class="bubble-card" id="aj">
-      <div class="title">💛 阿金 AJIN</div>
-      <div class="list" id="ajList"></div>
-    </div>
-    <div class="bubble-card" id="mi">
-      <div class="title">🩷 米果 MIGOU</div>
-      <div class="list" id="miList"></div>
-    </div>
-    <div class="bubble-card" id="gu">
-      <div class="title">🩵 滾滾 GUNGUN</div>
-      <div class="list" id="guList"></div>
-    </div>
+      <div id="aj" class="bubble"></div>
+      <div id="mi" class="bubble"></div>
+      <div id="gu" class="bubble"></div>
 
-    <form id="composer" class="composer" autocomplete="off">
-      <input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…">
-    </form>
-  </div>
+      <div class="input"><input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…"/></div>
+    </main>
+  </section>
 
-  <div class="side-art right">
-    <img class="land" src="assets/trio_post1.webp" alt="scene1b">
-    <img class="land" src="assets/trio_post2.webp" alt="scene2b">
-    <img class="port" src="assets/ajin_post.webp" alt="ab">
-    <img class="port" src="assets/migou_post.webp" alt="mb">
-    <img class="port" src="assets/gungun_post.webp" alt="gb">
-  </div>
-</div>
-
-<audio id="s_click" src="assets/sound/click_star.wav" preload="auto"></audio>
-<audio id="s_send"  src="assets/sound/send_cosmic.wav" preload="auto"></audio>
-<audio id="s_aj"    src="assets/sound/reply_ajin.wav" preload="auto"></audio>
-<audio id="s_mi"    src="assets/sound/reply_migou.wav" preload="auto"></audio>
-<audio id="s_gu"    src="assets/sound/reply_gungun.wav" preload="auto"></audio>
+  <script src="js/main_v921.js"></script>
+  <script src="js/cps_v921.js"></script>
 </body>
 </html>
