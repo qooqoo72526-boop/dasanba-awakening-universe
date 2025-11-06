@@ -1,0 +1,49 @@
+/* universe_v923.css | v9.2.3 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;500;700&display=swap');
+:root{
+  --cosmic-deep:#0a0f1e;
+  --cosmic-mid:#0f1e3a;
+  --cosmic-silver:#9fb6ff;
+  --cosmic-ice:#dee9ff;
+  --cosmic-glow:rgba(159,182,255,.65);
+  --glass-bg:rgba(14,20,36,.48);
+  --glass-edge:rgba(200,220,255,.35);
+  --pill-bg:rgba(20,28,50,.55);
+  --text-en:#b9d0ff;
+  --text-cn:#e8eeff;
+  --muted:#a9b4d6;
+  --accent:#7db6ff;
+}
+html,body{
+  margin:0; padding:0;
+  font-family:'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial;
+  background:
+    radial-gradient(1200px 900px at 20% -10%, rgba(85,120,255,.22), transparent 70%),
+    radial-gradient(1000px 700px at 90% 10%, rgba(180,220,255,.18), transparent 70%),
+    linear-gradient(160deg, #0a0f1e 0%, #121b33 45%, #0b1022 100%);
+  color:var(--text-cn);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+.nav-micro{
+  position:fixed; top:14px; left:18px; z-index:30;
+  display:flex; gap:10px; align-items:center;
+  font-size:13px; letter-spacing:.4px;
+}
+.nav-micro a{
+  color:var(--text-en); text-decoration:none; opacity:.85;
+  padding:6px 10px; border-radius:999px;
+  background:rgba(255,255,255,.04);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+  transition:all .25s ease;
+}
+.nav-micro a:hover{ opacity:1; transform:translateY(-1px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 8px 20px rgba(80,120,255,.12);
+}
+.small-banner{ position:relative; margin:70px auto 12px; text-align:center; font-size:12.5px; color:var(--muted); }
+.small-banner .en{ color:var(--text-en) }
+.small-banner .cn{ color:var(--muted) }
+#cosmic-sky, #meteor-sky{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+.page{ position:relative; z-index:1; width:min(1200px, 92vw); margin:80px auto 100px; padding-bottom:60px; }

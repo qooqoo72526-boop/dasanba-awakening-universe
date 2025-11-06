@@ -2,71 +2,67 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Cosmic Post Station</title>
-  <link rel="stylesheet" href="css/universe_v916.css">
-  <link rel="stylesheet" href="css/style_v916.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cosmic Post Station | 大三巴覺醒宇宙</title>
+  <link rel="stylesheet" href="css/universe_v923.css" />
+  <link rel="stylesheet" href="css/cps_v923.css" />
 </head>
-<body data-universe="home">
-  <div class="cosmic-bg"></div>
-  <canvas id="stars"></canvas>
+<body data-universe="cps">
+  <canvas id="cosmic-sky"></canvas>
+  <canvas id="meteor-sky"></canvas>
+
   <nav class="nav-micro">
     <a href="index.html">首頁</a>
     <a href="cosmic-post-station.html">宇宙郵局</a>
     <a href="soulmirror.html">靈魂照妖鏡</a>
+    <a href="about-universe.html">關於宇宙</a>
   </nav>
 
-  <main style="max-width:1100px;margin:110px auto 60px;padding:0 16px;display:grid;grid-template-columns:280px 1fr;gap:18px;">
-    <aside class="glass" style="padding:12px;border-radius:18px;">
-      <img src="assets/trio_post1.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
-      <img src="assets/trio_post2.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
-      <img src="assets/ajin_post.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
-      <img src="assets/migou_post.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
-      <img src="assets/gungun_post.webp" alt="" style="width:100%;display:block;border-radius:14px;">
-    </aside>
+  <div class="page">
+    <div class="small-banner">
+      <div class="en">Communicating with the Cosmos…</div>
+      <div class="cn">與宇宙聯繫中…　<span class="en">Receiving signals from Ajin · Migou · Gungun ✧</span></div>
+    </div>
 
-    <section>
-      <div class="glass" style="padding:14px 16px;border-radius:18px;margin-bottom:12px;">
-        <div style="display:flex;gap:12px;align-items:center;">
-          <img src="assets/ajin_clear_post.webp" alt="" style="height:52px;">
-          <img src="assets/migou_clear_post.webp" alt="" style="height:52px;">
-          <img src="assets/gungun_clear_post.webp" alt="" style="height:52px;">
+    <section class="cps-grid">
+      <aside class="poster-stack" aria-label="漂浮海報">
+        <img class="poster p1" src="assets/ajin_post.webp" alt="AJIN Poster" />
+        <img class="poster p2" src="assets/migou_post.webp" alt="MIGOU Poster" />
+        <img class="poster p3" src="assets/gungun_post.webp" alt="GUNGUN Poster" />
+        <img class="poster land1" src="assets/trio_post1.webp" alt="TRIO Poster 1" />
+        <img class="poster land2" src="assets/trio_post2.webp" alt="TRIO Poster 2" />
+      </aside>
+
+      <main class="chat-stack" aria-label="星海訊息">
+        <div class="cps-head"><div class="en">All three parrots reply together · 同步回覆</div></div>
+
+        <article class="chat-card glass" data-bird="ajin">
+          <div class="pill"><input type="checkbox" checked id="p-ajin"/><label for="p-ajin" class="name">💛 阿金 AJIN</label></div>
+          <h4 class="title">早安！準備好迎接挑戰了嗎？</h4>
+          <div class="dots">…</div>
+        </article>
+
+        <article class="chat-card glass" data-bird="migou">
+          <div class="pill"><input type="checkbox" checked id="p-migou"/><label for="p-migou" class="name">🩷 米果 MIGOU</label></div>
+          <h4 class="title">希望你今天能找到屬於自己的節奏。</h4>
+          <div class="dots">…</div>
+        </article>
+
+        <article class="chat-card glass" data-bird="gungan">
+          <div class="pill"><input type="checkbox" checked id="p-gungun"/><label for="p-gungun" class="name">🩵 滾滾 GUNGUN</label></div>
+          <h4 class="title">慢慢來沒關係，我一直都在。</h4>
+          <div class="dots">…</div>
+        </article>
+
+        <div class="cps-input">
+          <div class="box">
+            <input id="ask" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" />
+          </div>
         </div>
-      </div>
-
-      <div id="thread" style="display:grid;gap:10px"></div>
-
-      <div class="glass" style="display:flex;gap:8px;padding:10px 12px;border-radius:18px;margin-top:8px;">
-        <input id="msg" placeholder="在星際隧道投遞一句話；按 Enter 傳訊..." style="flex:1;background:transparent;border:none;color:#e6f0ff;outline:none;font:400 14px 'Noto Sans TC'"/>
-        <button id="send" class="nav-btn">→</button>
-      </div>
+      </main>
     </section>
-  </main>
+  </div>
 
-  <script src="js/main.js"></script>
-  <script>
-  const personaOrder = ['Ajin','Migou','Gungun'];
-  async function sendOnce(text){
-    for(const who of personaOrder){
-      const r = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona:who,message:text})});
-      const j = await r.json().catch(()=>({ok:false,reply:'(星際訊號暫時失真，稍後再試)'}));
-      bubble(who, j.ok ? j.reply : '(星際訊號暫時失真，稍後再試)');
-    }
-    thread.scrollTo({top:thread.scrollHeight,behavior:'smooth'});
-  }
-  const thread = document.getElementById('thread');
-  function bubble(who, text){
-    const box = document.createElement('div');
-    box.className = 'glass';
-    box.style.padding='12px 14px'; box.style.borderRadius='18px'; box.style.color='#e6f0ff';
-    const title = {Ajin:'💛 阿金 AJIN', Migou:'🩷 米果 MIGOU', Gungun:'🩵 滾滾 GUNGUN'}[who];
-    box.innerHTML = '<div style="font-weight:900;margin-bottom:4px">'+title+'</div><div style="opacity:.95">'+text+'</div>';
-    thread.appendChild(box);
-  }
-  const input = document.getElementById('msg');
-  const btn = document.getElementById('send');
-  input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const v=input.value.trim(); if(v){ sendOnce(v); input.value=''; } } });
-  btn.addEventListener('click',()=>{ const v=input.value.trim(); if(v){ sendOnce(v); input.value=''; } });
-  </script>
+  <script src="js/cosmic-post-station_v923.js" defer></script>
 </body>
 </html>
