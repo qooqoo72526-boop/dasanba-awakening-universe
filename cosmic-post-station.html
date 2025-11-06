@@ -1,56 +1,72 @@
-
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Cosmic Post Station</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/universe_v922.css"/>
+  <link rel="stylesheet" href="css/universe_v916.css">
+  <link rel="stylesheet" href="css/style_v916.css">
 </head>
-<body>
-  <nav class="nav">
+<body data-universe="home">
+  <div class="cosmic-bg"></div>
+  <canvas id="stars"></canvas>
+  <nav class="nav-micro">
     <a href="index.html">首頁</a>
-    <a href="cosmic-post-station.html">Cosmic Post Station</a>
+    <a href="cosmic-post-station.html">宇宙郵局</a>
     <a href="soulmirror.html">靈魂照妖鏡</a>
   </nav>
 
-  <h1 class="big-title">COSMIC POST STATION</h1>
-  <div class="sub-cn">與宇宙聯繫中… <span class="sep">｜</span> Receiving signals from Ajin, Migou, Gungun ✦</div>
-
-  <section class="cps">
-    <aside class="thumbs">
-      <img src="assets/trio_post1.webp" alt="bg1"/>
-      <img src="assets/trio_post2.webp" alt="bg2"/>
-      <img src="assets/ajin_post.webp" alt="bg3"/>
-      <img src="assets/migou_post.webp" alt="bg4"/>
-      <img src="assets/gungun_post.webp" alt="bg5" style="grid-column:span 2"/>
+  <main style="max-width:1100px;margin:110px auto 60px;padding:0 16px;display:grid;grid-template-columns:280px 1fr;gap:18px;">
+    <aside class="glass" style="padding:12px;border-radius:18px;">
+      <img src="assets/trio_post1.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
+      <img src="assets/trio_post2.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
+      <img src="assets/ajin_post.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
+      <img src="assets/migou_post.webp" alt="" style="width:100%;display:block;border-radius:14px;margin-bottom:8px;">
+      <img src="assets/gungun_post.webp" alt="" style="width:100%;display:block;border-radius:14px;">
     </aside>
 
-    <div class="chat">
-      <div class="bird-fleet">
-        <img class="bird b1" src="assets/ajin_clear_post.webp" alt="ajin"/>
-        <img class="bird b2" src="assets/migou_clear_post.webp" alt="migou"/>
-        <img class="bird b3" src="assets/gungun_clear_post.webp" alt="gungun"/>
+    <section>
+      <div class="glass" style="padding:14px 16px;border-radius:18px;margin-bottom:12px;">
+        <div style="display:flex;gap:12px;align-items:center;">
+          <img src="assets/ajin_clear_post.webp" alt="" style="height:52px;">
+          <img src="assets/migou_clear_post.webp" alt="" style="height:52px;">
+          <img src="assets/gungun_clear_post.webp" alt="" style="height:52px;">
+        </div>
       </div>
 
-      <div id="m-ajin" class="panel" style="max-height:180px; overflow:auto;"></div>
-      <div id="m-migou" class="panel" style="max-height:180px; overflow:auto;"></div>
-      <div id="m-gungun" class="panel" style="max-height:180px; overflow:auto;"></div>
+      <div id="thread" style="display:grid;gap:10px"></div>
 
-      <div class="input">
-        <input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…"/>
-        <button id="send">Send</button>
+      <div class="glass" style="display:flex;gap:8px;padding:10px 12px;border-radius:18px;margin-top:8px;">
+        <input id="msg" placeholder="在星際隧道投遞一句話；按 Enter 傳訊..." style="flex:1;background:transparent;border:none;color:#e6f0ff;outline:none;font:400 14px 'Noto Sans TC'"/>
+        <button id="send" class="nav-btn">→</button>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <audio id="sfx-ajin" src="assets/sound/reply_ajin.wav" preload="auto"></audio>
-  <audio id="sfx-migou" src="assets/sound/reply_migou.wav" preload="auto"></audio>
-  <audio id="sfx-gungun" src="assets/sound/reply_gungun.wav" preload="auto"></audio>
-  <audio id="sfx-send" src="assets/sound/send_cosmic.wav" preload="auto"></audio>
-  <script src="js/cps_v922.js"></script>
-  <script src="js/main_v922.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  const personaOrder = ['Ajin','Migou','Gungun'];
+  async function sendOnce(text){
+    for(const who of personaOrder){
+      const r = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona:who,message:text})});
+      const j = await r.json().catch(()=>({ok:false,reply:'(星際訊號暫時失真，稍後再試)'}));
+      bubble(who, j.ok ? j.reply : '(星際訊號暫時失真，稍後再試)');
+    }
+    thread.scrollTo({top:thread.scrollHeight,behavior:'smooth'});
+  }
+  const thread = document.getElementById('thread');
+  function bubble(who, text){
+    const box = document.createElement('div');
+    box.className = 'glass';
+    box.style.padding='12px 14px'; box.style.borderRadius='18px'; box.style.color='#e6f0ff';
+    const title = {Ajin:'💛 阿金 AJIN', Migou:'🩷 米果 MIGOU', Gungun:'🩵 滾滾 GUNGUN'}[who];
+    box.innerHTML = '<div style="font-weight:900;margin-bottom:4px">'+title+'</div><div style="opacity:.95">'+text+'</div>';
+    thread.appendChild(box);
+  }
+  const input = document.getElementById('msg');
+  const btn = document.getElementById('send');
+  input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ const v=input.value.trim(); if(v){ sendOnce(v); input.value=''; } } });
+  btn.addEventListener('click',()=>{ const v=input.value.trim(); if(v){ sendOnce(v); input.value=''; } });
+  </script>
 </body>
 </html>

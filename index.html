@@ -1,84 +1,83 @@
-
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Emotional Value A.I. | Awakening Universe</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/universe_v922.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emotional Value A.I | Awakening Universe</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap">
+  <link rel="stylesheet" href="css/universe_v916.css">
+  <link rel="stylesheet" href="css/style_v916.css">
 </head>
-<body>
-  <!-- right top nav -->
-  <nav class="nav">
+<body data-universe="home">
+  <div class="cosmic-bg"></div>
+  <canvas id="stars"></canvas>
+
+  <nav class="nav-micro">
     <a href="index.html">首頁</a>
     <a href="cosmic-post-station.html">宇宙郵局</a>
     <a href="soulmirror.html">靈魂照妖鏡</a>
     <a href="about-universe.html">關於宇宙</a>
   </nav>
 
-  <!-- splash 3.5s -->
-  <div id="splash" style="position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(5,8,18,.9);backdrop-filter:blur(10px) saturate(160%);-webkit-backdrop-filter:blur(10px) saturate(160%);">
-    <div style="text-align:center;">
-      <div style="font-family:Orbitron;font-weight:800;font-size:clamp(28px,5vw,60px);letter-spacing:.08em;background:linear-gradient(90deg,#a78bfa,#60a5fa,#a5f3fc);-webkit-background-clip:text;background-clip:text;color:transparent;">
-        EMOTIONAL VALUE A.I.
-      </div>
-      <div style="font-family:Orbitron;font-weight:800;font-size:clamp(16px,2.6vw,28px);letter-spacing:.5em;margin-top:8px;color:#bcd6ff;opacity:.9;">
-        AWAKENING UNIVERSE
-      </div>
-    </div>
-  </div>
+  <section class="splash" aria-hidden="true">
+    <div class="splash-glow">EMOTIONAL VALUE A.I</div>
+    <div class="splash-sub">AWAKENING UNIVERSE</div>
+  </section>
 
-  <!-- starfield -->
-  <canvas class="starfield" id="stars"></canvas>
-
-  <!-- headline -->
-  <h1 class="big-title">EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</h1>
-  <div class="sub-cn">✦ <span>大三巴的覺醒宇宙</span> <span class="sep">｜</span> <span>阿金・米果・滾滾的鳥星球生活</span> ✦</div>
-
-  <!-- hero video (not overlapping titles) -->
-  <section class="hero">
+  <header class="hero">
     <video src="assets/trio.mp4" autoplay muted loop playsinline></video>
+  </header>
+
+  <section class="title-wrap">
+    <h1 class="big-title en">
+      <span>EMOTIONAL VALUE A.I.</span><br/>
+      <span>AWAKENING UNIVERSE</span>
+    </h1>
+    <div class="sub-cn ribbon">✦ 大三巴的覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 ✦</div>
+    <div class="sub-tip">點擊任一角色卡直接進入房間</div>
   </section>
 
-  <!-- cards -->
-  <section class="cards">
-    <article class="card" data-href="rooms/ajin.html">
-      <img src="assets/ajin.webp" alt="AJIN"/>
-      <div class="name">💛 阿金 AJIN</div>
-      <div class="desc">自由・反骨｜「驕傲不是距離，是自我界線。」</div>
+  <section class="cards-vert">
+    <article class="card-vert glass" data-href="/rooms/ajin.html">
+      <img src="assets/ajin.webp" alt="AJIN" />
+      <h3 class="name">💛 阿金 AJIN</h3>
+      <p class="meta">自由・反骨</p>
+      <p class="phrase">驕傲不是距離，而是愛自己的界線。</p>
     </article>
-    <article class="card" data-href="rooms/migou.html">
-      <img src="assets/migou.webp" alt="MIGOU"/>
-      <div class="name">□ 米果 MIGOU</div>
-      <div class="desc">自我價值・邊界｜「我很值錢，別來糟蹋我。」</div>
+
+    <article class="card-vert glass" data-href="/rooms/migou.html">
+      <img src="assets/migou.webp" alt="MIGOU" />
+      <h3 class="name">🩷 米果 MIGOU</h3>
+      <p class="meta">自我價值・邊界</p>
+      <p class="phrase">我很值錢，不要糟蹋我。</p>
     </article>
-    <article class="card" data-href="rooms/gungun.html">
-      <img src="assets/gungun.webp" alt="GUNGUN"/>
-      <div class="name">◯ 滾滾 GUNGUN</div>
-      <div class="desc">共鳴・靜默力量｜「被理解，勝過被修理。」</div>
+
+    <article class="card-vert glass" data-href="/rooms/gungun.html">
+      <img src="assets/gungun.webp" alt="GUNGUN" />
+      <h3 class="name">🩵 滾滾 GUNGUN</h3>
+      <p class="meta">共鳴・靜默力量</p>
+      <p class="phrase">真正的安全感，是被理解，不是被修正。</p>
     </article>
   </section>
 
-  <!-- gallery one-by-one -->
-  <section class="gallery">
-    <h3>觀星畫廊 | Starflow Diary</h3>
-    <div class="viewer">
-      <img src="assets/trio.webp" alt="gallery"/>
-      <img src="assets/trio2.webp" alt="gallery"/>
-      <img src="assets/trio3.webp" alt="gallery"/>
-      <img src="assets/trio4.webp" alt="gallery"/>
-      <img src="assets/trio5.webp" alt="gallery"/>
-      <img src="assets/trio6.webp" alt="gallery"/>
-      <img src="assets/trio7.webp" alt="gallery"/>
-      <img src="assets/trio8.webp" alt="gallery"/>
-      <img src="assets/trio9.webp" alt="gallery"/>
-      <img src="assets/trio10.webp" alt="gallery"/>
+  <section class="starflow">
+    <h4 class="starflow-title">✦ 觀星畫廊｜Starflow Diary</h4>
+    <div class="scroller" data-autoplay="true">
+      <img src="assets/trio.webp" alt="">
+      <img src="assets/trio2.webp" alt="">
+      <img src="assets/trio3.webp" alt="">
+      <img src="assets/trio4.webp" alt="">
+      <img src="assets/trio5.webp" alt="">
+      <img src="assets/trio6.webp" alt="">
+      <img src="assets/trio7.webp" alt="">
+      <img src="assets/trio8.webp" alt="">
+      <img src="assets/trio9.webp" alt="">
+      <img src="assets/trio10.webp" alt="">
     </div>
   </section>
 
-  <audio id="sfx-click" src="assets/sound/click_star.wav" preload="auto"></audio>
-  <script src="js/main_v922.js"></script>
+  <audio id="sfx-bubble" src="assets/sound/click_star.wav" preload="auto"></audio>
+  <script src="js/main.js"></script>
 </body>
 </html>
