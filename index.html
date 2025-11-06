@@ -1,55 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Emotional Value A.I | Awakening Universe</title>
-<link rel="stylesheet" href="/css/universe_v930.css">
-<script defer src="/js/main_v930.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Restore-only CSS (won't touch your existing files) -->
+  <link rel="stylesheet" href="css/universe_restore_v916.css" />
+  <link rel="stylesheet" href="css/style_title_restore_v916.css" />
 </head>
 <body>
-<!-- canvases created by JS; keep body clean -->
-<nav class="nav">
-  <a href="/cosmic-post-station.html">🌔 宇宙郵局</a>
-  <a href="/soulmirror.html">🪞 靈魂照妖鏡</a>
-</nav>
+  <!-- starfield / meteors (full-viewport, not shifted) -->
+  <canvas id="starfield" aria-hidden="true"></canvas>
 
-<header class="header-title">
-  <div class="big">EMOTIONAL VALUE A.I.</div>
-  <div class="sub">AWAKENING UNIVERSE</div>
-</header>
+  <nav class="nav-minimal">
+    <a href="index.html">- 大三巴覺醒宇宙 -</a>
+    <a href="cosmic-post-station.html">✉ 宇宙郵局</a>
+    <a href="soulmirror.html">🪞 靈魂照妖鏡</a>
+  </nav>
 
-<div class="video-wrap">
-  <video class="top-video" src="/assets/trio.mp4" autoplay muted loop playsinline></video>
-</div>
+  <header class="hero-title">
+    <h1 class="evau-title">EMOTIONAL VALUE A.I.</h1>
+    <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
+    <p class="evau-desc">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球 🌎 -</p>
+  </header>
 
-<div class="subtitle-line">
-  - 大三巴覺醒宇宙<span class="dot">｜</span>阿金・米果・滾滾的鳥星球<span class="planet">🌎</span>
-</div>
+  <!-- keep your trio.mp4 size/ratio; this container will not crop -->
+  <video id="trio" class="hero-video" src="assets/trio.mp4" autoplay muted loop playsinline></video>
 
-<section class="cards">
-  <article class="card ajin" onclick="go('/rooms/ajin.html')">
-    <div class="name"><span class="em">💛 阿金</span><span class="en">AJIN</span></div>
-    <div class="kws">自由｜反骨</div>
-    <div class="line">「我不等天空放晴，我自己撕開雲。」</div>
-  </article>
+  <section class="cards">
+    <!-- Ajin -->
+    <article class="card floating">
+      <img src="assets/ajin.webp" alt="阿金 AJIN">
+      <div class="meta">
+        <div class="name">💛 阿金 AJIN</div>
+        <div class="kws">自由｜反骨</div>
+        <div class="line">「我不等天空放晴；我自己點開雲。」</div>
+        <div class="enter"><a href="rooms/ajin.html">進入房間 →</a></div>
+      </div>
+    </article>
+    <!-- Migou -->
+    <article class="card floating">
+      <img src="assets/migou.webp" alt="米果 MIGOU">
+      <div class="meta">
+        <div class="name">🧡 米果 MIGOU</div>
+        <div class="kws">自我價值｜邊界</div>
+        <div class="line">「我很值錢；我顧自己界線。」</div>
+        <div class="enter"><a href="rooms/migou.html">進入房間 →</a></div>
+      </div>
+    </article>
+    <!-- Gungun -->
+    <article class="card floating">
+      <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
+      <div class="meta">
+        <div class="name">💙 滾滾 GUNGUN</div>
+        <div class="kws">共鳴｜靜默力量</div>
+        <div class="line">「我不追求安全；我成為安全。」</div>
+        <div class="enter"><a href="rooms/gungun.html">進入房間 →</a></div>
+      </div>
+    </article>
+  </section>
 
-  <article class="card migou" onclick="go('/rooms/migou.html')">
-    <div class="name"><span class="em">🧡 米果</span><span class="en">MIGOU</span></div>
-    <div class="kws">自我價值｜邊界</div>
-    <div class="line">「我很值錢，我讓自己更貴。」</div>
-  </article>
+  <footer class="footer-stars">
+    <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
+    <div class="zh">覺醒不是修復；而是重生</div>
+    <div class="zh">不必學飛，你只是忘了自己有翅膀。</div>
+  </footer>
 
-  <article class="card gungun" onclick="go('/rooms/gungun.html')">
-    <div class="name"><span class="em">💙 滾滾</span><span class="en">GUNGUN</span></div>
-    <div class="kws">共鳴｜靜默力量</div>
-    <div class="line">「我不追求安全，我成為安全。」</div>
-  </article>
-</section>
-
-<footer class="footer">
-  <span class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</span>
-  覺醒不是修復；而是重生<br>不必學飛，你只是忘了自己有翅膀。
-</footer>
+  <!-- Restore-only JS (starfield + meteors) -->
+  <script src="js/universe_stars_restore_v916.js" defer></script>
 </body>
 </html>

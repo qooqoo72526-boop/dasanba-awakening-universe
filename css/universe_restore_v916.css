@@ -1,0 +1,80 @@
+/* ===== Universe Restore v9.1.6 (layout) ===== */
+:root{
+  --silver: rgba(210,225,255,.92);
+  --silver-dim: rgba(200,220,255,.78);
+  --ink: #0F1E2C;
+  --blue-deep: #0C2244;
+  --card-bg: rgba(20,26,48,.54);
+  --card-glow: 0 20px 50px rgba(120,160,255,.22);
+}
+
+/* background gradient similar to previous */
+body{
+  margin:0; padding:0;
+  font-family: "Noto Sans TC", ui-sans-serif, system-ui;
+  color: #dfe6ff;
+  background: radial-gradient(1200px 700px at 50% -10%, #1b2f55 0%, #0f1e2c 60%, #0b1420 100%);
+  overflow-x:hidden;
+}
+
+/* star canvas pinned to viewport (NO SHIFT) */
+#starfield{
+  position:fixed; inset:0; width:100vw; height:100vh;
+  z-index:0; pointer-events:none;
+}
+
+/* minimal nav */
+.nav-minimal{
+  position:fixed; top:10px; left:50%; transform:translateX(-50%);
+  z-index:5; display:flex; gap:16px; font-size:12px; opacity:.9;
+}
+.nav-minimal a{ color:var(--silver-dim); text-decoration:none; }
+.nav-minimal a:hover{ color:var(--silver); text-shadow:0 0 8px rgba(150,200,255,.6); }
+
+/* hero title center */
+.hero-title{ text-align:center; margin:64px auto 12px; z-index:3; position:relative; }
+.evau-title{
+  font-family:"Orbitron", ui-sans-serif; font-weight:700;
+  font-size:clamp(28px,4.6vw,56px); letter-spacing:.10em;
+  background: linear-gradient(180deg,#EAF3FF 0%, #BFD4FF 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 2px 18px rgba(140,190,255,.30);
+}
+.evau-sub{
+  margin-top:6px;
+  font-family:"Orbitron", ui-sans-serif; font-weight:600;
+  font-size:clamp(22px,3.6vw,44px); letter-spacing:.08em;
+  background: linear-gradient(180deg,#DDEBFF 0%, #B3CCFF 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 2px 14px rgba(140,190,255,.28);
+}
+.evau-desc{
+  margin-top:6px; font-size:12px; color:var(--silver-dim);
+  text-shadow:0 0 10px rgba(150,200,255,.35);
+}
+
+/* hero video sizing unchanged */
+.hero-video{
+  display:block; width:min(1120px,94vw); max-height:56vh;
+  margin:28px auto 18px; object-fit:cover; border-radius:18px;
+  box-shadow: 0 8px 40px rgba(120,160,255,.25);
+}
+
+/* cards float with soft glow, no borders */
+.cards{ display:grid; grid-template-columns:repeat(3,minmax(220px,1fr));
+  gap:18px; width:min(1120px,94vw); margin:10px auto 28px; position:relative; z-index:2; }
+.card{ background:var(--card-bg); border-radius:18px; padding:12px 14px 14px;
+  backdrop-filter: blur(8px); box-shadow: var(--card-glow); }
+.card img{ display:block; width:100%; border-radius:14px; }
+.card .meta{ padding:8px 4px 2px; text-align:center; }
+.card .name{ font-weight:700; margin-top:2px; }
+.card .kws{ opacity:.85; font-size:13px; margin-top:2px; }
+.card .line{ opacity:.85; font-size:12px; margin-top:6px; }
+.card .enter{ margin-top:6px; font-size:12px; }
+.card.floating{ animation:floatY 6s ease-in-out infinite; }
+@keyframes floatY{ 0%,100%{ transform:translateY(0) } 50%{ transform:translateY(-6px) } }
+
+/* footer */
+.footer-stars{ text-align:center; margin:18px 0 80px; font-family:"Orbitron"; }
+.footer-stars .en{ font-size:12px; letter-spacing:.06em; color:var(--silver); }
+.footer-stars .zh{ font-size:12px; color:var(--silver-dim); margin-top:4px; }
