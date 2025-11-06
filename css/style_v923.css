@@ -1,0 +1,58 @@
+
+/* style_v923.css — 首頁排版、角色卡置中、觀星畫廊🔭、工具列、輸入框 */
+.nav-micro{ position:fixed; top:14px; left:18px; z-index:20; display:flex; gap:14px }
+.nav-micro a{ font:600 12px/1.4 'Noto Sans TC',system-ui; letter-spacing:.08em; opacity:.8; text-decoration:none; color:#bcd2ff }
+.nav-micro a:hover{ opacity:1; text-shadow:0 0 12px rgba(170,210,255,.6) }
+
+/* 3.5s 開場（置中、偏紫調） */
+.splash-923{
+  position:fixed; inset:0; display:grid; place-items:center;
+  background: radial-gradient(900px 400px at 50% 30%, rgba(160,130,255,.18), transparent 60%),
+              linear-gradient(180deg, #0b0f2a 0%, #11153a 100%);
+  color:#e9e6ff; z-index:999; animation: fadeOut923 3.5s ease forwards;
+}
+.splash-words{ text-align:center; filter: drop-shadow(0 6px 22px rgba(140,120,255,.35)) }
+.splash-words .en-big{ font-family:Orbitron,system-ui; font-weight:800; font-size: clamp(28px, 6vw, 56px); letter-spacing:.12em }
+.splash-words .en-sub{ font-family:Orbitron; font-weight:700; font-size: clamp(18px, 3.5vw, 34px); opacity:.9 }
+.splash-words .zh{ margin-top:.6rem; font:500 clamp(13px, 2.2vw, 18px)/1.6 'Noto Sans TC'; opacity:.9 }
+@keyframes fadeOut923{ 0%{opacity:1} 75%{opacity:1} 100%{opacity:0; visibility:hidden} }
+
+/* 首頁角色卡 */
+.cards-vert{ display:grid; grid-template-columns: repeat(3, minmax(220px, 1fr)); gap:22px; width:min(1100px, 92%); margin:24px auto }
+.card-vert{ cursor:pointer; padding:12px 12px 16px; border-radius:22px }
+.card-vert img{ width:100%; border-radius:16px }
+.card-vert .name{ margin:.5rem 0 .25rem; text-align:center; font-weight:800; letter-spacing:.06em }
+.card-vert .meta{ text-align:center; font-size:13px; opacity:.9 }
+.card-vert .phrase{ text-align:center; font-size:12px; opacity:.85 }
+
+/* 色彩（阿金🟡、米果🟠、滾滾🔵） */
+.card-vert[data-bird="ajin"]  .name{ color:#ffd76a }
+.card-vert[data-bird="migou"] .name{ color:#ffb36a }
+.card-vert[data-bird="gungun"].name{ color:#7ab3ff }
+.card-vert[data-bird="gungun"] .name{ color:#7ab3ff }
+
+/* 觀星畫廊 */
+.starflow{ width:min(1100px,92%); margin:30px auto }
+.starflow-title{ text-align:center; margin-bottom:10px; letter-spacing:.1em }
+.starflow-title::after{ content:" 🔭"; }
+.starflow [data-track]{ display:flex; gap:16px; overflow:hidden }
+.starflow [data-track] img{ width:100%; flex:0 0 100%; border-radius:14px }
+
+/* 宇宙郵局面板與輸入框 */
+.cps-panel{ width:min(980px,92%); margin:14px auto; padding:10px; }
+.cps-row{ margin:10px 0; padding:12px 14px; border-radius:18px }
+.cps-input{ display:flex; align-items:center; gap:10px; margin-top:12px; padding:10px 14px; border-radius:999px }
+.cps-input input{ flex:1; background:transparent; border:0; outline:0; color:#e9f2ff; font:500 14px/1.6 'Noto Sans TC' }
+
+/* 房間標題區塊（右側文案） */
+.room-wrap{ width:min(1100px,92%); margin:32px auto; display:grid; grid-template-columns: 1.1fr .9fr; gap:28px }
+.room-video{ border-radius:18px; overflow:hidden }
+.room-panel{ padding:18px; border-radius:18px }
+.room-panel h1{ font:900 24px/1.2 Orbitron }
+.room-panel h2{ font:800 18px/1.4 'Noto Sans TC' }
+.room-panel p{ font:500 14px/1.8 'Noto Sans TC'; opacity:.92 }
+
+/* 各房間顏色 */
+body[data-universe="ajin"] .room-panel{ background:linear-gradient(180deg, rgba(255,206,102,.14), rgba(255,206,102,.06)) }
+body[data-universe="migou"] .room-panel{ background:linear-gradient(180deg, rgba(255,170,170,.14), rgba(255,170,170,.06)) }
+body[data-universe="gungun"] .room-panel{ background:linear-gradient(180deg, rgba(140,200,255,.18), rgba(140,200,255,.07)) }
