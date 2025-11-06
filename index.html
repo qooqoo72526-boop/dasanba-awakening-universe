@@ -1,68 +1,76 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Emotional Value AI | Awakening Universe</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Emotional Value A.I. | Awakening Universe</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/universe_v924.css">
+  <link rel="stylesheet" href="css/style_v924.css">
 </head>
+<body data-universe="home">
+  <!-- 星空背景與薄漸層 -->
+  <div class="cosmic-bg"></div>
+  <canvas id="stars"></canvas>
 
-<body class="bg-grad space">
-  <!-- 開場英文：只出現一次 -->
-  <div id="splash">
-    <div class="splash-inner">
-      <h1>Emotional Value AI | Awakening Universe</h1>
-      <p>覺醒，不是修復；而是重生。</p>
-    </div>
-  </div>
+  <!-- 右上極簡導覽 -->
+  <nav class="nav-micro">
+    <a href="index.html">首頁</a>
+    <a href="cosmic-post-station.html">宇宙郵局</a>
+    <a href="soulmirror.html">靈魂照妖鏡</a>
+    <a href="about-universe.html">關於宇宙</a>
+  </nav>
 
-  <!-- Hero 動畫：trio.mp4（或 trio.webm），滿版不裁切 -->
-  <section class="hero">
-    <video id="heroVideo" autoplay muted playsinline loop>
-      <source src="assets/trio.mp4" type="video/mp4">
-    </video>
-    <div class="hero-glow"></div>
+  <!-- 3.5s 英文開場（浮誇但會淡出） -->
+  <section class="splash" aria-hidden="true">
+    <div class="splash-glow">EMOTIONAL VALUE A.I</div>
+    <div class="splash-sub">AWAKENING UNIVERSE</div>
   </section>
 
-  <!-- 角色卡（置中、不規則泡泡浮動）-->
-  <section class="cards">
-    <article class="card bubble" onclick="location.href='rooms/ajin.html'">
-      <img src="assets/ajin.webp" alt="阿金 AJIN">
-      <div class="card-text">
-        <h3>💛 阿金 | AJIN</h3>
-        <small>Freedom · Rebellion</small>
-        <p>「我不等天空放晴，我自己撕開雲。」</p>
-      </div>
+  <!-- 主視覺：影片縮小置中循環 -->
+  <header class="hero">
+    <video src="assets/trio.mp4" autoplay muted loop playsinline></video>
+  </header>
+
+  <!-- 標題（動畫下方，小一點、兩行） -->
+  <section class="title-wrap">
+    <h1 class="big-title en">
+      <span>EMOTIONAL VALUE A.I.</span><br/>
+      <span>AWAKENING UNIVERSE</span>
+    </h1>
+    <div class="sub-cn ribbon">✦ 大三巴的覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 ✦</div>
+    <div class="sub-tip">點擊任一角色卡進入房間</div>
+  </section>
+
+  <!-- 角色卡：直立、不規則雲角、無硬邊框 -->
+  <section class="cards-vert">
+    <article class="card-vert glass" data-href="/rooms/ajin.html">
+      <img src="assets/ajin.webp" alt="AJIN" />
+      <h3 class="name">💛 阿金 AJIN</h3>
+      <p class="meta">自由・反骨</p>
+      <p class="phrase">「Pride isn’t distance — it’s self‑love with boundaries.」</p>
     </article>
 
-    <article class="card bubble" onclick="location.href='rooms/migou.html'">
-      <img src="assets/migou.webp" alt="米果 MIGOU">
-      <div class="card-text">
-        <h3>🧡 米果 | MIGOU</h3>
-        <small>Self-worth · Boundaries</small>
-        <p>「我很值錢，我讓自己更貴。」</p>
-      </div>
+    <article class="card-vert glass" data-href="/rooms/migou.html">
+      <img src="assets/migou.webp" alt="MIGOU" />
+      <h3 class="name">🩷 米果 MIGOU</h3>
+      <p class="meta">主權・高價值</p>
+      <p class="phrase">「我很值錢，不要糟蹋我。」</p>
     </article>
 
-    <article class="card bubble" onclick="location.href='rooms/gungun.html'">
-      <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
-      <div class="card-text">
-        <h3>💙 滾滾 | GUNGUN</h3>
-        <small>Being understood · Safety</small>
-        <p>「我不追求安全，我成為安全。」</p>
-      </div>
+    <article class="card-vert glass" data-href="/rooms/gungun.html">
+      <img src="assets/gungun.webp" alt="GUNGUN" />
+      <h3 class="name">🩵 滾滾 GUNGUN</h3>
+      <p class="meta">共鳴・靜默力量</p>
+      <p class="phrase">「真正的安全感，是被理解，不是被修正。」</p>
     </article>
   </section>
 
-  <!-- 觀星畫廊（大圖、單張自動滑過） -->
-  <section class="gallery">
-    <div class="gallery-head">
-      <h2>🔭 觀星畫廊 | Starflow Diary</h2>
-      <p>他們的日常、你的宇宙。</p>
-    </div>
-    <div class="carousel" id="carousel">
+  <!-- 觀星畫廊：自動橫向輪播（3.5s 換一張） -->
+  <section class="starflow">
+    <h4 class="starflow-title">觀星畫廊｜Starflow Diary</h4>
+    <div class="scroller" data-autoplay="true">
       <img src="assets/trio.webp" alt="">
       <img src="assets/trio2.webp" alt="">
       <img src="assets/trio3.webp" alt="">
@@ -76,9 +84,9 @@
     </div>
   </section>
 
-  <!-- 卡片 Hover 音效 -->
-  <audio id="hoverSound" src="assets/ui_hover.mp3" preload="auto"></audio>
+  <!-- 聲效（點角色卡有氣泡彈音效） -->
+  <audio id="sfx-bubble" src="assets/sound/click_star.wav" preload="auto"></audio>
 
-  <script src="js/main.js"></script>
+  <script src="js/main_v924.js"></script>
 </body>
 </html>
