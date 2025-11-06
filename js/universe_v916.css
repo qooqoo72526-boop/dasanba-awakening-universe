@@ -1,0 +1,64 @@
+/* v9.2.2 extend tokens */
+:root{
+  --glass-bg: rgba(255,255,255,.08);
+  --glass-brd: rgba(255,255,255,.18);
+  --glass-blur: 14px;
+  --grad-home: radial-gradient(1200px 600px at 20% -10%, rgba(167,134,255,.28), transparent),
+               radial-gradient(900px 500px at 90% 0%, rgba(0,220,255,.18), transparent),
+               linear-gradient(180deg, #0b0e1a 0%, #101829 100%);
+  --grad-ajin: radial-gradient(800px 400px at 10% 0%, rgba(255,188,80,.25), transparent),
+               radial-gradient(900px 500px at 90% 10%, rgba(255,255,160,.20), transparent),
+               linear-gradient(180deg,#0b0e1a,#141b2b);
+  --grad-migou: radial-gradient(800px 400px at 15% 0%, rgba(255,140,180,.22), transparent),
+                radial-gradient(900px 500px at 85% 10%, rgba(255,220,240,.16), transparent),
+                linear-gradient(180deg,#0b0e1a,#162036);
+  --grad-gungun: radial-gradient(800px 400px at 15% 0%, rgba(120,200,255,.22), transparent),
+                 radial-gradient(900px 500px at 85% 10%, rgba(180,240,255,.16), transparent),
+                 linear-gradient(180deg,#0b0e1a,#0f1c2c);
+  --title-grad: linear-gradient(90deg,#b37cff 0%, #7ad7ff 60%, #e9f7ff 100%);
+}
+body{margin:0;background:#0b0e1a}
+.cosmic-bg{position:fixed;inset:0;z-index:-2}
+#stars{position:fixed;inset:0;z-index:-1}
+body[data-universe="home"] .cosmic-bg{background:var(--grad-home)}
+body[data-universe="ajin"] .cosmic-bg{background:var(--grad-ajin)}
+body[data-universe="migou"] .cosmic-bg{background:var(--grad-migou)}
+body[data-universe="gungun"] .cosmic-bg{background:var(--grad-gungun)}
+
+.nav-micro{position:fixed;top:14px;right:18px;z-index:20;display:flex;gap:10px;padding:6px 8px;background:var(--glass-bg);border:1px solid var(--glass-brd);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur));border-radius:18px}
+.nav-micro a{font:700 12px Orbitron,system-ui;letter-spacing:.08em;text-decoration:none;color:#cfe9ff;opacity:.95;padding:6px 10px;border-radius:14px;position:relative}
+.nav-micro a:hover::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);border-radius:inherit;animation:sweep .8s linear}
+@keyframes sweep{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+
+.splash{position:fixed;inset:0;display:grid;place-content:center;pointer-events:none;animation:fadeOut 3.5s forwards}
+.splash-glow{font:900 28px Orbitron;letter-spacing:.18em;text-align:center;opacity:.95}
+.splash-sub{font:800 20px Orbitron;text-align:center;opacity:.85;margin-top:.4rem}
+@keyframes fadeOut{0%{opacity:1}75%{opacity:1}100%{opacity:0}}
+
+.hero{max-width:1100px;margin:84px auto 12px;padding:0 16px}
+.hero video{width:100%;border-radius:22px;display:block;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+
+.title-wrap{text-align:center;margin:10px 0 24px}
+.big-title.en span{display:inline-block;font:900 34px Orbitron;background:var(--title-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub-cn.ribbon{color:#cdd6ff;font:700 14px "Noto Sans TC";letter-spacing:.2em;margin-top:8px}
+.sub-tip{color:#9fb9ff;font:400 13px "Noto Sans TC";margin-top:2px;opacity:.85}
+
+.cards-vert{display:grid;grid-template-columns:repeat(3,minmax(220px,1fr));gap:20px;max-width:1080px;margin:0 auto 26px;padding:0 16px}
+.card-vert{padding:14px;border-radius:20px;background:var(--glass-bg);border:1px solid var(--glass-brd);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur));transition:transform .25s ease,box-shadow .25s ease;cursor:pointer}
+.card-vert:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.card-vert img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;display:block}
+.card-vert .name{margin:.6rem 0 .1rem;color:#e6f0ff;font:900 18px "Noto Sans TC";letter-spacing:.08em}
+.card-vert .meta{color:#ffd27a;font:700 13px "Noto Sans TC"}
+.card-vert .phrase{color:#cfe9ff;font:400 13px "Noto Sans TC";opacity:.9}
+
+.starflow{max-width:1080px;margin:20px auto 60px;padding:0 16px}
+.starflow-title{color:#cfe9ff;font:700 14px Orbitron;letter-spacing:.2em;text-align:center;margin-bottom:12px}
+.scroller{position:relative;overflow:hidden;border-radius:20px;border:1px solid var(--glass-brd);background:rgba(255,255,255,.04)}
+.scroller img{width:100%;height:420px;object-fit:cover;display:block}
+
+.room{max-width:1100px;margin:110px auto 60px;display:grid;grid-template-columns:520px 1fr;gap:22px;padding:0 16px}
+.room-media video{width:100%;border-radius:22px;display:block;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.room-panel{padding:18px;border-radius:18px;background:var(--glass-bg);border:1px solid var(--glass-brd);-webkit-backdrop-filter:blur(var(--glass-blur));backdrop-filter:blur(var(--glass-blur))}
+.room-name{margin:.2rem 0 .4rem;color:#e6f0ff;font:900 22px "Noto Sans TC"}
+.room-one{color:#ffd27a;font:700 14px "Noto Sans TC"}
+.room-meta{color:#cfe9ff;font:400 13px "Noto Sans TC";opacity:.9}
