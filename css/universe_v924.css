@@ -1,132 +1,30 @@
-/* v9.2.4 藍銀宇宙底：薄漸層＋星點（不斷層、不死色） */
-:root{
-  --bg1:#0d1230;
-  --bg2:#101a4a;
-  --bg3:#1d2a66;
-  --glow:#8fb3ff;
-  --glass:rgba(255,255,255,.08);
-  --glass-2:rgba(180,210,255,.14);
-  --text-en:#9ec3ff;
-  --text-cn:#d8e4ff;
-  --card-shadow: 0 10px 35px rgba(25,40,90,.35);
-}
-
-*{box-sizing:border-box}
-html,body{height:100%;}
-body{
-  margin:0;
-  font-family:'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  color:var(--text-cn);
-  overflow-x:hidden;
-  background: radial-gradient(1200px 800px at 70% -10%, rgba(160,190,255,.22), transparent 60%),
-              radial-gradient(900px 600px at 0% 100%, rgba(140,170,255,.18), transparent 60%),
-              linear-gradient(180deg, var(--bg2), var(--bg1));
-}
-
-.cosmic-bg::before,
-.cosmic-bg::after{
-  content:''; position:fixed; inset:0; pointer-events:none;
-}
-/* 微星塵 */
-.cosmic-bg::before{
-  background:
-    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6), transparent 60%),
-    radial-gradient(1px 1px at 35% 40%, rgba(255,255,255,.5), transparent 60%),
-    radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,.4), transparent 60%),
-    radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,.55), transparent 60%),
-    radial-gradient(1px 1px at 30% 80%, rgba(255,255,255,.45), transparent 60%);
-  opacity:.6;
-}
-/* 漸層光圈 */
-.cosmic-bg::after{
-  background:
-    radial-gradient(600px 500px at 85% 30%, rgba(120,160,255,.15), transparent 60%),
-    radial-gradient(800px 600px at 15% 70%, rgba(90,140,255,.12), transparent 60%);
-  filter: blur(0.2px);
-}
-
-/* 右上極簡導覽 */
-.nav-micro{
-  position:fixed; top:18px; right:22px; z-index:30;
-  display:flex; gap:12px; font-size:12px; letter-spacing:.08em;
-}
-.nav-micro a{
-  text-decoration:none; color:#dfe9ff; opacity:.8; padding:6px 10px;
-  background:rgba(255,255,255,.06);
-  border-radius:18px;
-  backdrop-filter: blur(8px) saturate(120%);
-}
-.nav-micro a:hover{ opacity:1 }
-
-/* 3.5s 英文開場 */
-.splash{
-  position:fixed; inset:0; display:grid; place-items:center; z-index:50;
-  background:radial-gradient(1000px 600px at 50% 0%, rgba(170,200,255,.12), transparent 60%),
-             radial-gradient(1200px 800px at 50% 100%, rgba(160,190,255,.1), transparent 60%),
-             linear-gradient(180deg, rgba(13,18,48,.98), rgba(16,26,74,.98));
-  animation: splashOut 3.5s ease forwards;
-}
-@keyframes splashOut{ 0%{opacity:1} 80%{opacity:1} 100%{opacity:0; visibility:hidden} }
-.splash-glow{
-  font-family:'Orbitron', sans-serif; font-weight:700; font-size:34px; letter-spacing:.16em;
-  color:var(--text-en);
-  text-shadow: 0 0 18px rgba(130,170,255,.7);
-}
-.splash-sub{ margin-top:8px; font-family:'Orbitron'; font-size:14px; color:#bcd4ff; letter-spacing:.3em }
-
-/* Hero 影片（小尺寸、置中） */
-.hero{ display:grid; place-items:center; padding:36px 0 8px }
-.hero video{
-  width:min(900px, 78vw); height:auto; aspect-ratio:16/9;
-  border-radius:28px;
-  background: rgba(255,255,255,.06);
-  box-shadow: var(--card-shadow);
-  backdrop-filter: blur(8px) saturate(120%);
-}
-
-/* 標題兩行 */
-.title-wrap{ text-align:center; margin:8px auto 24px }
-.big-title{ font-family:'Orbitron'; font-weight:700; line-height:1.15 }
-.big-title span{ display:inline-block; font-size: clamp(22px, 4vw, 44px);
-  background: linear-gradient(90deg, #b6d3ff, #7ea9ff);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.sub-cn{ margin-top:6px; font-size:14px; opacity:.9 }
-.sub-tip{ margin-top:2px; font-size:12px; opacity:.7 }
-
-/* 星星 canvas 預留（若要 JS 画流星）*/
-#stars{ position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.65 }
-
-/* 角色卡（直立雲角） */
-.cards-vert{
-  display:grid; grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap:18px; width:min(1100px, 92vw); margin:0 auto 26px; position:relative; z-index:2;
-}
-.card-vert{
-  padding:14px 14px 16px; border-radius:24px;
-  background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-  backdrop-filter: blur(12px) saturate(140%);
-  box-shadow: var(--card-shadow);
-  cursor:pointer; transition: transform .35s ease, box-shadow .35s ease;
-}
-.card-vert img{ width:100%; height:auto; border-radius:18px; display:block }
-.card-vert .name{ margin:.6em 0 .1em; font-size:16px; letter-spacing:.02em }
-.card-vert .meta{ margin:0 0 .35em; font-size:12px; opacity:.8 }
-.card-vert .phrase{ margin:0; font-size:12px; opacity:.85 }
-.card-vert:hover{ transform: translateY(-4px) }
-
-/* 觀星畫廊 */
-.starflow{ width:min(1200px, 94vw); margin: 10px auto 60px }
-.starflow-title{ font-size:14px; opacity:.8; margin:0 0 10px 4px }
-.scroller{ display:flex; gap:12px; overflow:hidden; border-radius:20px }
-.scroller img{
-  width:min(900px, 90vw); height:auto; flex: 0 0 auto; border-radius:20px;
-  background: rgba(255,255,255,.04);
-  box-shadow: 0 10px 30px rgba(20,30,70,.35);
-}
-
-/* 小裝置排版 */
-@media (max-width: 960px){
-  .cards-vert{ grid-template-columns: 1fr; width:min(580px, 92vw) }
-  .hero video{ width:min(720px, 90vw) }
-}
+/* v9.2.4 universe: blue-silver night with soft gradients; tiny twinkles behind content */
+:root{ --ink:#EAF0FF; --ink-sub:#AFC3FF; --accent:#9FB9FF; --glassA:rgba(255,255,255,.08); --glassB:rgba(255,255,255,.04); }
+html,body{margin:0;padding:0;min-height:100%;}
+body.cosmic{font-family:"Noto Sans TC", system-ui, Segoe UI, Arial, sans-serif;color:var(--ink);}
+body[data-universe="home"]{background:
+  radial-gradient(1200px 700px at 20% -10%, rgba(120,160,255,.20), transparent 65%),
+  radial-gradient(900px 600px at 85% 10%, rgba(170,120,255,.18), transparent 65%),
+  linear-gradient(180deg,#0A1130 0%, #0B1336 40%, #0E1A45 100%);}
+body[data-universe="cps"]{background:
+  radial-gradient(1100px 600px at 15% -10%, rgba(160,200,255,.22), transparent 60%),
+  radial-gradient(900px 550px at 80% 0%, rgba(120,180,255,.18), transparent 62%),
+  linear-gradient(180deg,#0A1232 0%, #0B1842 100%);}
+body[data-universe="ajin"]{background:
+  radial-gradient(900px 520px at 20% 0%, rgba(255,208,96,.18), transparent 60%),
+  linear-gradient(180deg,#0B1028, #121A42 60%, #0E1638);}
+body[data-universe="migou"]{background:
+  radial-gradient(900px 520px at 70% 0%, rgba(255,150,130,.18), transparent 60%),
+  linear-gradient(180deg,#0B0F26, #12183A 60%, #111633);}
+body[data-universe="gungun"]{background:
+  radial-gradient(900px 520px at 50% 0%, rgba(150,210,255,.18), transparent 60%),
+  linear-gradient(180deg,#0A1026, #0E1835 60%, #0C1530);}
+#stars,#shooting{position:fixed;inset:0;z-index:0;pointer-events:none;display:block}
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:24px 18px 100px;}
+.nav-micro{display:flex;gap:16px;justify-content:flex-start;align-items:center;opacity:.85;margin:2px 0 8px}
+.nav-micro a{color:var(--ink-sub);text-decoration:none;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.nav-micro a .ico{font-size:15px;line-height:1}
+.nav-micro a:hover{opacity:1}
+.footer-spirit{margin:80px auto 10px;text-align:center}
+.footer-spirit .en{font-size:18px;background:linear-gradient(90deg,#D8E5FF,#F3F6FF);-webkit-background-clip:text;color:transparent}
+.footer-spirit .cn{margin-top:6px;font-size:14px;color:#DCE6FF;opacity:.9}
