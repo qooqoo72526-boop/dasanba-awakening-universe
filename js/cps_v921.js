@@ -1,44 +1,35 @@
-(()=>{
-  const sounds = {
-    click: new Audio('assets/sound/click_star.wav'),
-    send: new Audio('assets/sound/send_cosmic.wav'),
-    ajin: new Audio('assets/sound/reply_ajin.wav'),
-    migou: new Audio('assets/sound/reply_migou.wav'),
-    gungun: new Audio('assets/sound/reply_gungun.wav')
-  };
-  Object.values(sounds).forEach(a=>{ a.volume = .55; });
 
-  const aj = document.getElementById('aj');
-  const mi = document.getElementById('mi');
-  const gu = document.getElementById('gu');
-  const msg = document.getElementById('msg');
+const sClick = document.getElementById('s_click');
+const sSend  = document.getElementById('s_send');
+const sAj = document.getElementById('s_aj');
+const sMi = document.getElementById('s_mi');
+const sGu = document.getElementById('s_gu');
 
-  function setBubble(el, text){ el.textContent = text; el.style.animation = 'pop .3s ease'; setTimeout(()=>el.style.animation='',300); }
-  document.addEventListener('click', ()=>sounds.click.play().catch(()=>{}));
+function bubble(el, text){
+  const b = document.createElement('div');
+  b.className='bubble';
+  b.textContent = text;
+  el.appendChild(b);
+  el.scrollTop = el.scrollHeight;
+}
 
-  setBubble(aj,'早安！今天準備好挑戰你的小目標了嗎？🚀 我們一起加熱！');
-  setBubble(mi,'早安！希望你今天能認真對齊自己的價值與邊界；每個時刻都值得被尊重。');
-  setBubble(gu,'早安！也許一點微光或許會帶來新的安穩能量。需要我就叫我～');
+async function talk(msg){
+  sSend.currentTime=0; sSend.play().catch(()=>{});
+  try{
+    const res = await fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({message: msg, personas:['ajin','migou','gungun']})});
+    if(!res.ok) throw new Error('no-signal');
+    const data = await res.json();
+    bubble(document.getElementById('ajList'), data.ajin || '...');
+    bubble(document.getElementById('miList'), data.migou || '...');
+    bubble(document.getElementById('guList'), data.gungun || '...');
+    sAj.play().catch(()=>{}); setTimeout(()=>sMi.play().catch(()=>{}), 120); setTimeout(()=>sGu.play().catch(()=>{}), 240);
+  }catch(e){
+    ['ajList','miList','guList'].forEach(id => bubble(document.getElementById(id),'（星際訊號暫時失真，稍後再試）'));
+  }
+}
 
-  msg?.addEventListener('keydown', async (e)=>{
-    if(e.key!=='Enter') return;
-    const content = msg.value.trim(); if(!content) return;
-    sounds.send.play().catch(()=>{});
-    msg.value='';
-    try{
-      const r = await fetch('/api/chat',{
-        method:'POST',headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ message: content })
-      });
-      const j = await r.json().catch(()=>({}));
-      const text = j.reply || j.content || j.text || '收到～我在。';
-      setBubble(aj,text); sounds.ajin.play().catch(()=>{});
-      setBubble(mi,text); sounds.migou.play().catch(()=>{});
-      setBubble(gu,text); sounds.gungun.play().catch(()=>{});
-    }catch(err){
-      setBubble(aj,'（星際訊號暫時失真，稍後再試）');
-      setBubble(mi,'（星際訊號暫時失真，稍後再試）');
-      setBubble(gu,'（星際訊號暫時失真，稍後再試）');
-    }
-  });
-})();
+document.getElementById('composer').addEventListener('submit', e=>{ e.preventDefault();
+  const v = document.getElementById('msg').value.trim(); if(!v) return; document.getElementById('msg').value='';
+  sClick.currentTime=0; sClick.play().catch(()=>{});
+  talk(v);
+});
