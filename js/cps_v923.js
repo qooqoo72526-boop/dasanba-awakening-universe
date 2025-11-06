@@ -1,25 +1,37 @@
-
-// cps_v923.js — 宇宙郵局：泡泡音 + 人設回覆 + 輸入框樣式
+// v9.2.3 — Cosmic Post Station refinements
 (function(){
-  const panel = document.querySelector('.cps-panel');
-  if(!panel) return;
+  // nicer bubble sound
+  const bubble = new Audio('assets/sound/click_star.wav');
+  bubble.preload = 'auto';
+  function play(){ try{ bubble.currentTime = 0; bubble.play(); }catch(e){} }
 
-  // bubble sfx
-  const pop = new Audio('assets/sound/click_star.wav');
-  pop.volume = 0.35;
+  // style input placeholder if exist
+  const input = document.querySelector('.cps-input') || document.querySelector('input[type="text"]');
+  if(input){
+    input.placeholder = input.placeholder || '在星際隧道投遞一句話，按 Enter 傳訊…';
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        play();
+      }
+    });
+  }
 
-  panel.querySelectorAll('.cps-row').forEach(row=>{
-    row.classList.add('glass-923');
-    row.addEventListener('click', ()=>{ try{ pop.currentTime=0; pop.play(); }catch(e){} });
+  // persona hint labels (non-invasive; shows small tip)
+  const blocks = document.querySelectorAll('[data-persona]');
+  blocks.forEach(b=>{
+    const who = b.getAttribute('data-persona');
+    const hint = {
+      AJIN: '速度感｜行動派｜不繞彎',
+      MIGOU:'自我價值｜界線｜直白',
+      GUNGUN:'溫柔｜共鳴｜被理解'
+    }[who] || '';
+    if(hint){
+      const tag = document.createElement('div');
+      tag.textContent = hint;
+      tag.style.fontSize = '.85rem';
+      tag.style.opacity = .75;
+      tag.style.margin = '4px 0 0 8px';
+      b.appendChild(tag);
+    }
   });
-
-  const inputWrap = document.querySelector('.cps-input');
-  if(inputWrap){ inputWrap.classList.add('glass-923'); }
-
-  // inject persona prompts (frontend hint; backend仍由 /api/chat 控制)
-  window.personaHints = {
-    AJIN:   "語氣俐落、敢衝敢言、鼓勵突破舒適圈。",
-    MIGOU:  "語氣溫柔但堅定、圍繞自我價值與邊界。",
-    GUNGUN: "語氣慢與穩、重視被理解與安全感。"
-  };
 })();

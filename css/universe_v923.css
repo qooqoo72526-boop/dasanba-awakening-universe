@@ -1,55 +1,112 @@
-
-/* universe_v923.css — 藍銀星空、不斷層輕薄漸層、微閃星點、流星 */
+/* v9.2.3 — Universe (Blue-Silver, light gradient) */
 :root{
-  --u923-bg-a:#0b1630;
-  --u923-bg-b:#0e2450;
-  --u923-bg-c:#1a2a64;
-  --u923-star:rgba(255,255,255,.85);
-  --u923-tint:rgba(180,200,255,.12);
+  --blue-1:#0b1a2e;
+  --blue-2:#132c4a;
+  --blue-3:#1c3e66;
+  --silver:#cfe4ff;
+  --glass-bg:rgba(255,255,255,.06);
+  --glass-brd:rgba(255,255,255,.18);
+  --glow:0 0 24px rgba(160,200,255,.45);
 }
+html,body{height:100%;}
 body.cosmic{
-  background: radial-gradient(1200px 600px at 20% -10%, rgba(140,170,255,.12) 0%, transparent 60%),
-              linear-gradient(180deg, var(--u923-bg-a) 0%, var(--u923-bg-b) 40%, var(--u923-bg-c) 100%);
-  background-attachment: fixed;
-  color:#cfe3ff;
+  background:
+    radial-gradient(1200px 600px at 15% -10%, rgba(120,170,255,.35), transparent 55%),
+    radial-gradient(900px 500px at 85% 10%, rgba(200,230,255,.25), transparent 60%),
+    linear-gradient(180deg, var(--blue-3), var(--blue-2) 45%, var(--blue-1));
+  color:#e9f1ff;
+  overflow-x:hidden;
 }
-/* 微閃星點 */
-#stars, .stars-923{
-  position:fixed; inset:0; pointer-events:none;
-  background-image: radial-gradient(1px 1px at 20% 30%, var(--u923-star), transparent 60%),
-                    radial-gradient(1px 1px at 70% 60%, var(--u923-star), transparent 60%),
-                    radial-gradient(1px 1px at 40% 80%, var(--u923-star), transparent 60%);
-  opacity:.45; animation: tw-923 4s infinite alternate ease-in-out;
+/* tiny star specks (behind canvas) */
+body.cosmic:before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.8), transparent 55%),
+    radial-gradient(2px 2px at 40% 30%, rgba(255,255,255,.7), transparent 55%),
+    radial-gradient(1.5px 1.5px at 70% 15%, rgba(255,255,255,.7), transparent 55%),
+    radial-gradient(1.7px 1.7px at 85% 70%, rgba(255,255,255,.7), transparent 55%),
+    radial-gradient(1.2px 1.2px at 25% 75%, rgba(255,255,255,.7), transparent 55%);
+  opacity:.45;
+  z-index:0;
 }
-@keyframes tw-923{ from{opacity:.35} to{opacity:.55} }
-
-/* 真流星（可多顆） */
-.shooting-923{
-  position:fixed; top:-10vh; width:2px; height:2px; background: white;
-  box-shadow: 0 0 8px 2px rgba(255,255,255,.9);
-  transform: translate3d(0,0,0) rotate(45deg);
-  filter: drop-shadow(0 0 6px rgba(180,220,255,.8));
-  pointer-events:none; opacity:.9;
-  animation: shoot-923 1.8s linear forwards;
-}
-@keyframes shoot-923{
-  0%{ transform:translate(-10vw,-10vh) rotate(45deg); opacity:1 }
-  100%{ transform:translate(110vw,110vh) rotate(45deg); opacity:0 }
-}
-
-/* 玻璃面板與按鈕 */
+/* shared glass */
 .glass-923{
-  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-  border: 1px solid rgba(255,255,255,.14);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: var(--glass-bg);
+  border:1px solid var(--glass-brd);
+  box-shadow: var(--glow);
+  border-radius: 16px;
 }
-.btn-923{
-  display:inline-flex; align-items:center; gap:.6rem;
-  padding:.6rem 1rem; border-radius:999px; border:1px solid rgba(255,255,255,.25);
-  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
-  backdrop-filter: blur(8px); text-decoration:none; color:#d7e5ff;
+/* title zone (centered) */
+.big-title-923{
+  text-align:center;
+  letter-spacing:.06em;
+  line-height:1.1;
 }
-.btn-923:hover{ box-shadow:0 0 18px rgba(150,200,255,.35) }
+.big-title-923 .en{font-family:"Orbitron", system-ui, sans-serif;font-weight:800;font-size:clamp(28px,4.4vw,48px);}
+.big-title-923 .sub{font-family:"Noto Sans TC", system-ui, sans-serif;font-weight:500;opacity:.9;margin-top:8px;}
+
+/* gallery bar */
+.starflow{
+  width:min(1200px, 92vw);
+  margin:48px auto;
+}
+.starflow .title{
+  text-align:center;
+  font-weight:700;
+  margin-bottom:12px;
+}
+.scroller{
+  overflow:hidden; white-space:nowrap; border-radius:18px;
+  position:relative;
+}
+.scroller img{
+  display:inline-block; width:auto; height:260px; margin-right:12px; border-radius:14px;
+  object-fit:cover;
+}
+
+/* nav micro (subtle) */
+.nav-micro a{color:#cfe4ff;text-decoration:none;opacity:.8;margin-right:14px;font-size:.92rem}
+.nav-micro a:hover{opacity:1;text-shadow:0 0 10px rgba(200,230,255,.7)}
+
+/* splash overlay */
+.splash-923{
+  position:fixed;inset:0;display:grid;place-items:center;
+  background:radial-gradient(1000px 400px at 50% -20%, rgba(150,120,255,.35), transparent 60%), rgba(8,10,24,.92);
+  z-index:9999;color:#e9e6ff;text-align:center;
+}
+.splash-923 .wrap{transform:translateY(0);animation:popIn .45s ease-out both}
+.splash-923 .l1{font:800 clamp(28px,6vw,64px)/1.05 "Orbitron",system-ui,sans-serif; letter-spacing:.08em; filter:drop-shadow(0 2px 0 rgba(0,0,0,.25));}
+.splash-923 .l2{font:700 clamp(18px,3.2vw,28px)/1.2 "Orbitron",system-ui,sans-serif; opacity:.9; margin-top:6px}
+.splash-923 .l3{font:500 clamp(14px,2.6vw,18px)/1.6 "Noto Sans TC",system-ui,sans-serif; opacity:.92; margin-top:12px}
+@keyframes popIn{from{transform:translateY(12px);opacity:0} to{transform:translateY(0);opacity:1}}
+
+/* CPS (Cosmic Post Station) panel & input */
+.cps-panel{ padding:12px; border-radius:16px; }
+.cps-input{
+  height:46px; padding:0 16px; border:none; width:100%;
+  border-radius:999px; background:rgba(255,255,255,.07); color:#eaf1ff;
+  outline:none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+}
+
+/* Rooms layout */
+.room-wrap{
+  display:grid; grid-template-columns: minmax(260px, 520px) 1fr;
+  gap:28px; align-items:flex-start; width:min(1200px,92vw); margin:48px auto;
+}
+.room-video{border-radius:18px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.room-panel{padding:18px 20px}
+.room-panel h1{margin:0 0 8px; font:800 clamp(22px,4vw,34px)/1.1 "Orbitron",system-ui,sans-serif}
+.room-panel p{margin:6px 0 0; opacity:.92}
+
+/* per-universe tint */
+body[data-universe="ajin"] .room-panel h1{color:#ffd26a}
+body[data-universe="migou"] .room-panel h1{color:#ff83c2}
+body[data-universe="gungun"] .room-panel h1{color:#9bd1ff}
+
+/* subtle per-universe particles */
+body[data-universe="ajin"] .room-panel{box-shadow:0 0 20px rgba(255,210,106,.15) inset}
+body[data-universe="migou"] .room-panel{box-shadow:0 0 20px rgba(255,131,194,.15) inset}
+body[data-universe="gungun"] .room-panel{box-shadow:0 0 20px rgba(155,209,255,.15) inset}
