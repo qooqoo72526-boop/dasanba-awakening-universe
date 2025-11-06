@@ -1,171 +1,101 @@
 
-/* v9.2.5_extend — universe (global starfield + section theming). 
-   Safe to include in addition to your current universe_v9xx.css. */
-
+/* universe_v925_extend.css — 星銀宇宙＋流星（自然過渡、無斷層） */
 :root{
-  --cosmic-bg: radial-gradient(1200px 600px at 10% -10%, rgba(180,180,255,.08), transparent 55%),
-               radial-gradient(900px 450px at 90% -20%, rgba(150,200,255,.06), transparent 60%),
-               linear-gradient(180deg,#0A0F24 0%, #0B1230 35%, #0A1028 100%);
-  --card-glass: rgba(255,255,255,.06);
-  --card-border: rgba(255,255,255,.18);
-  --chip: rgba(255,255,255,.16);
-  --title: #cfe6ff;
-  --subtitle: #9db7ff;
-  --glow: 0 10px 40px rgba(90,140,255,.25), inset 0 0 0 1px rgba(255,255,255,.08);
-  --round: 16px;
+  --silver:#cbd7ff;--silver-soft:#a9b8ff;--orchid:#a88bff;--nebula:#6ea6ff;
+  --glass:rgba(40,55,93,.35);--glass-strong:rgba(40,55,93,.55);
+  --border-soft:1px solid rgba(200,220,255,.14);
+  --shadow-soft:0 8px 40px rgba(60,110,220,.20);
+  --shadow-card:0 10px 30px rgba(14,16,35,.45);
+  --gold:#ffbf66;--pink:#ff7fb7;--sky:#66c7ff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%;background:#0b1224;color:var(--silver);
+  font-family:'Noto Sans TC',system-ui,"Segoe UI",Roboto}
+a{color:var(--silver);text-decoration:none}
+a:hover{opacity:.9}
+
+.cosmic{
+  min-height:100dvh;position:relative;overflow-x:hidden;
+  background-image:
+   radial-gradient(1200px 800px at 50% 20%, rgba(80,110,180,.25), rgba(10,16,35,.9) 60%),
+   radial-gradient(900px 600px at 10% 80%, rgba(120,150,210,.18), rgba(6,10,24,.95) 70%),
+   linear-gradient(180deg,#0b1224,#0b1224);
 }
 
-html,body{background:#070b19; color:#e7efff;}
+/* 星點 */
+.twinkle{position:absolute;inset:0;pointer-events:none}
+.twinkle i{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+  opacity:.7;filter:drop-shadow(0 0 6px rgba(255,255,255,.6));animation:tw 3.5s linear infinite}
+@keyframes tw{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:.95;transform:scale(1)}}
 
-body.cosmic{
-  min-height:100vh;
-  background: var(--cosmic-bg);
-  background-attachment: fixed;
-  overflow-x:hidden;
-}
-
-/* Tiny twinkling stars */
-#stars, #meteors{
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-}
-.twinkle{
-  position:absolute; width:2px; height:2px; border-radius:50%;
-  background:#eaf4ff; opacity:.3; animation:twinkle 3s infinite;
-  box-shadow:0 0 8px 2px rgba(200,230,255,.5);
-}
-@keyframes twinkle{
-  0%,100%{ transform:scale(.6); opacity:.2;}
-  50%{ transform:scale(1.4); opacity:.9;}
+/* 流星 */
+.meteors{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.meteors i{position:absolute;width:160px;height:2px;
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.9),rgba(255,255,255,0));
+  transform:rotate(-15deg);opacity:0;filter:blur(.3px);animation:fall 2.6s ease-in-out infinite}
+@keyframes fall{
+  0%{opacity:0;transform:translate3d(20vw,-10vh,0) rotate(-15deg)}
+  10%{opacity:.9}
+  100%{opacity:0;transform:translate3d(-20vw,40vh,0) rotate(-15deg)}
 }
 
-/* Splash (opening 3.5s) */
-.splash{
-  position:fixed; inset:0; display:grid; place-items:center;
-  background: linear-gradient(135deg, rgba(163,120,255,.18), rgba(84,120,255,.10)),
-              radial-gradient(600px 320px at 50% -20%, rgba(225,190,255,.28), transparent 70%),
-              #0a0f20;
-  z-index:9999;
-  animation:splashFade 3.6s ease forwards;
-}
-.splash .s1{
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-weight:800; letter-spacing:.08em; text-align:center;
-  font-size: clamp(28px, 5vw, 64px);
-  background: linear-gradient(90deg, #e7d5ff 0%, #c7b7ff 30%, #9ab0ff 60%, #d9b9ff 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  filter: drop-shadow(0 8px 30px rgba(160,120,255,.35));
-}
-.splash .s2{
-  margin-top:.6rem;
-  font-size: clamp(14px, 2.2vw, 18px);
-  letter-spacing:.3em; opacity:.85;
-}
-@keyframes splashFade{
-  0%{ opacity:1}
-  80%{ opacity:1}
-  100%{ opacity:0; visibility:hidden}
-}
+/* 導覽列 */
+.nav-micro{position:fixed;top:18px;left:20px;right:20px;z-index:40;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  font-size:14px;letter-spacing:.6px}
+.nav-micro .links a{margin-left:14px;padding:8px 12px;border-radius:12px;backdrop-filter:blur(6px);
+  background:linear-gradient(180deg,rgba(140,160,240,.15),rgba(40,55,93,.25));
+  border:var(--border-soft);box-shadow:var(--shadow-soft);font-size:12px}
+.nav-micro .links a.active{outline:1px solid rgba(200,220,255,.35)}
 
-/* Tool bar (top-right) */
-.nav-micro{
-  position:fixed; top:14px; right:18px; z-index:5;
-  display:flex; gap:12px; flex-wrap:wrap;
-}
-.nav-micro a{
-  text-decoration:none; font-size:13px; letter-spacing:.12em;
-  padding:7px 10px; border-radius:999px;
-  color:#dfe9ff; background:var(--chip);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
-  backdrop-filter: blur(8px);
-}
-.nav-micro a:hover{ box-shadow:0 0 0 2px rgba(160,200,255,.4) inset;}
+/* 3.5 秒開場 */
+.splash{position:fixed;inset:0;display:grid;place-items:center;z-index:60;
+  background:radial-gradient(1200px 800px at 50% 30%, rgba(60,80,140,.35), rgba(10,16,35,.98) 70%);
+  animation:splashOut 3.5s ease forwards}
+@keyframes splashOut{0%{opacity:1}75%{opacity:1}100%{opacity:0;visibility:hidden}}
+.splash-title{font-family:'Orbitron',sans-serif;font-size:clamp(26px,5vw,54px);
+  line-height:1.05;text-align:center;letter-spacing:2px;
+  background:linear-gradient(135deg,#cfd7ff,#a58bff 40%,#7bb1ff 70%,#cfd7ff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 20px rgba(140,150,255,.35);filter:drop-shadow(0 4px 18px rgba(160,160,255,.22))}
+.splash-sub{margin-top:10px;font-size:12px;opacity:.85;letter-spacing:.8px}
 
-/* Hero video frame (smaller, auto loop) */
-.hero{
-  margin:110px auto 28px;
-  width:min(940px, 92vw);
-  padding:0; border-radius:22px; overflow:hidden;
-  background:rgba(255,255,255,.02); box-shadow: var(--glow);
-}
-.hero video{ width:100%; display:block; aspect-ratio: 16/9; }
+/* Hero 影片（自動矯正，不過大） */
+.hero{padding-top:90px;display:grid;place-items:center}
+.hero video{width:min(1200px,88vw);max-height:56vh;object-fit:contain;border-radius:22px;box-shadow:var(--shadow-card)}
 
-/* Big Center Title (homepage) */
-.big-title{
-  font-family:"Orbitron", system-ui, sans-serif; text-align:center;
-  font-weight:800; letter-spacing:.06em; line-height:1.14;
-  margin:18px auto 8px;
-  font-size:clamp(28px, 5vw, 62px);
-  color:#cfe6ff; text-shadow:0 6px 32px rgba(110,160,255,.35);
-}
-.big-sub{ text-align:center; color:#b8c9ff; opacity:.9; margin-bottom:24px;}
+/* 標題 */
+.title-wrap{margin:22px auto 6px;text-align:center}
+.title-main{font-family:'Orbitron',sans-serif;letter-spacing:2px;font-size:clamp(28px,4.6vw,54px)}
+.title-sub{margin-top:8px;font-size:12px;opacity:.86;letter-spacing:.8px}
 
-/* Cards row */
-.cards{
-  width:min(1080px, 94vw); margin:18px auto 24px; display:grid;
-  grid-template-columns: repeat(3, 1fr); gap:22px;
-}
-.card{
-  background:rgba(255,255,255,.035); border-radius:18px; overflow:hidden;
-  position:relative; padding-bottom:16px; box-shadow: var(--glow);
-}
-.card img{ width:100%; display:block; }
-.card .meta{ padding:10px 14px 0; text-align:center;}
-.card .name{ margin:.2rem 0 .2rem; font-weight:800; font-size:18px;}
-.card .badge{ font-size:13px; letter-spacing:.06em; opacity:.95; }
-.card .phrase{ margin-top:.25rem; font-size:14px; opacity:.9}
-.card:hover{ transform:translateY(-2px); transition:.25s ease; }
+/* 角色卡 */
+.cards{width:min(1200px,92vw);margin:18px auto 10px;display:grid;gap:18px;
+  grid-template-columns:repeat(3,1fr)}
+.card{background:linear-gradient(180deg,rgba(140,160,240,.08),rgba(30,40,70,.30));
+  border:var(--border-soft);border-radius:22px;overflow:hidden;box-shadow:var(--shadow-card);
+  transition:transform .25s ease,box-shadow .25s ease;position:relative}
+.card:hover{transform:translateY(-6px);box-shadow:0 18px 60px rgba(40,90,200,.35)}
+.card img{display:block;width:100%;height:300px;object-fit:cover}
+.card .meta{padding:14px 16px 18px;text-align:center}
+.badge{font-size:14px}.badge.gold{color:#ffbf66}.badge.pink{color:#ff7fb7}.badge.sky{color:#66c7ff}
+.tag{margin-top:4px;font-size:13px;opacity:.95}
+.slogan{margin-top:6px;font-size:13px;opacity:.88}
 
-.badge .ajin{ color:#ffd36b;}
-.badge .migou{ color:#ff9b6b;}
-.badge .gungun{ color:#8bc6ff;}
+/* 畫廊 */
+.gallery{width:min(1200px,92vw);margin:34px auto 48px}
+.gallery h3{font-size:16px;letter-spacing:.8px;margin:0 0 12px}
+.gallery .rail{display:flex;gap:14px;overflow:auto;scroll-snap-type:x mandatory;padding-bottom:6px}
+.gallery .rail img{width:360px;height:202px;object-fit:cover;border-radius:18px;scroll-snap-align:start;flex:0 0 auto}
 
-/* Gallery — snap per full card; 3.5s per slide */
-.starflow{ width:min(1080px, 94vw); margin:18px auto 60px;}
-.starflow-title{ text-align:center; margin: 10px auto 10px; font-weight:800;}
-.scroller{ display:flex; overflow:hidden; position:relative; border-radius:18px; }
-.scroller img{ flex:0 0 100%; width:100%; height:auto; display:block; }
+/* 頁尾 */
+.footer{padding:36px 16px 80px;text-align:center;font-family:'Orbitron',sans-serif}
+.footer .line1{font-size:14px;letter-spacing:1.4px}
+.footer .line2,.footer .line3{font-size:13px;opacity:.9;margin-top:6px}
 
-/* Footer brand motto */
-.footer-cosmic{
-  width:min(980px, 92vw); margin:60px auto 120px; text-align:center;
-  color:#d5e4ff;
-}
-.footer-cosmic .en{
-  font-family:"Orbitron"; font-weight:800; letter-spacing:.18em;
-  font-size:clamp(12px, 2.2vw, 16px); opacity:.9;
-}
-.footer-cosmic .zh{ margin-top:6px; opacity:.92}
-/* --- rooms theming --- */
-body[data-universe="ajin"]{ --accent: #ffd36b; }
-body[data-universe="migou"]{ --accent: #ff9b9b; }
-body[data-universe="gungun"]{ --accent: #8bc6ff; }
-
-.room-wrap{ width:min(1080px,94vw); margin:120px auto; 
-  display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center;
-}
-.room-video, .room-panel{ background:rgba(255,255,255,.04); border-radius:20px; box-shadow:var(--glow); overflow:hidden;}
-.room-video video{ width:100%; display:block; aspect-ratio: 9/16; object-fit:cover;}
-.room-panel{ padding:20px 22px; }
-.room-panel h2{ margin:0 0 6px; font-size:24px;}
-.room-panel .kv{ color: var(--accent); font-weight:800; margin-bottom:10px;}
-.room-panel p{ margin:.25rem 0; opacity:.95}
-
-/* Per-room subtle overlays */
-body[data-universe="ajin"] .room-video{ box-shadow:0 0 0 1px rgba(255,211,107,.28) inset, var(--glow);}
-body[data-universe="migou"] .room-video{ box-shadow:0 0 0 1px rgba(255,155,155,.25) inset, var(--glow);}
-body[data-universe="gungun"] .room-video{ box-shadow:0 0 0 1px rgba(139,198,255,.26) inset, var(--glow);}
-
-/* Meteors layer */
-.meteor{ position:absolute; width:2px; height:2px; background:#fff; box-shadow:0 0 12px 6px rgba(170,210,255,.9);
-  transform: translate3d(0,0,0) rotate(40deg); border-radius:50%;
-  animation:shoot 1.6s linear forwards;
-}
-.meteor::after{ content:""; position:absolute; right:2px; top:0; width:160px; height:2px; 
-  background:linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
-  transform:translateY(-50%);
-}
-@keyframes shoot{
-  from{ opacity:0; transform:translate3d(-10vw,-10vh,0) rotate(40deg); }
-  10%{ opacity:1;}
-  to{ opacity:0; transform:translate3d(110vw, 110vh,0) rotate(40deg); }
-}
+.cps-tone{--glass:rgba(60,70,120,.28);--glass-strong:rgba(60,70,120,.50);
+  background-image:
+    radial-gradient(1200px 800px at 60% 10%, rgba(140,160,240,.20), rgba(10,16,35,.95) 65%),
+    radial-gradient(900px 600px at 20% 80%, rgba(180,140,255,.16), rgba(8,10,26,.95) 70%),
+    linear-gradient(180deg,#0b1224,#0b1224)}
+@media(max-width:960px){.cards{grid-template-columns:1fr}.hero video{max-height:40vh}}

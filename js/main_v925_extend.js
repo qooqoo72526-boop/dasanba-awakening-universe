@@ -1,57 +1,11 @@
 
-// v9.2.5_extend — homepage: splash, twinkle stars, gallery snap, meteors
+// main_v925_extend.js — 星點、流星（1~2/分鐘）、開場與畫廊慢滑
 (function(){
-  const body = document.body;
-
-  // ensure cosmic class
-  body.classList.add('cosmic');
-
-  // splash
-  const splash = document.querySelector('.splash');
-  if(splash){
-    setTimeout(()=>{ splash.style.display = 'none'; }, 3600);
+  const tw=document.querySelector('.twinkle'); if(tw){for(let i=0;i<80;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=(Math.random()*3)+'s';tw.appendChild(s);}}
+  const met=document.querySelector('.meteors'); if(met){
+    for(let i=0;i<3;i++){const m=document.createElement('i');m.style.left=(30+Math.random()*50)+'vw';m.style.top=(-5+Math.random()*10)+'vh';m.style.animationDelay=(Math.random()*6)+'s';m.style.animationDuration=(2.2+Math.random()*1.8)+'s';met.appendChild(m);}
+    setInterval(()=>{const m=document.createElement('i');m.style.left=(30+Math.random()*50)+'vw';m.style.top=(-5+Math.random()*10)+'vh';m.style.animationDuration=(2.2+Math.random()*1.8)+'s';met.appendChild(m);setTimeout(()=>m.remove(),3200)},45000);
   }
-
-  // twinkles
-  const stars = document.getElementById('stars');
-  if(stars){
-    const n = 80;
-    for(let i=0;i<n;i++){
-      const s = document.createElement('div');
-      s.className = 'twinkle';
-      s.style.left = (Math.random()*100)+'vw';
-      s.style.top = (Math.random()*100)+'vh';
-      s.style.animationDelay = (Math.random()*3)+'s';
-      stars.appendChild(s);
-    }
-  }
-
-  // meteors occasionally
-  const meteors = document.getElementById('meteors');
-  if(meteors){
-    setInterval(()=>{
-      const m = document.createElement('div');
-      m.className = 'meteor';
-      m.style.left = (-10 + Math.random()*20) + 'vw';
-      m.style.top = (-10 + Math.random()*20) + 'vh';
-      meteors.appendChild(m);
-      setTimeout(()=>m.remove(), 1800);
-      const audio = document.getElementById('sfx-meteor');
-      if(audio) { audio.currentTime=0; audio.play().catch(()=>{}); }
-    }, 5200);
-  }
-
-  // gallery — snap per 3.5s, full frame
-  const scroller = document.querySelector('.scroller');
-  if(scroller){
-    let i=0;
-    const imgs = scroller.querySelectorAll('img');
-    function go(){
-      i = (i+1)%imgs.length;
-      scroller.scrollTo({ left: scroller.clientWidth*i, behavior: 'smooth' });
-    }
-    setInterval(go, 3500);
-    // ensure each image fits exactly 100%
-    window.addEventListener('resize',()=> scroller.scrollTo({left:scroller.clientWidth*i}));
-  }
+  const rail=document.querySelector('.gallery .rail'); if(rail){let dir=1;setInterval(()=>{rail.scrollBy({left:dir*380,behavior:'smooth'});if(rail.scrollLeft+rail.clientWidth>=rail.scrollWidth-10)dir=-1;else if(rail.scrollLeft<=10)dir=1;},6000)}
+  const splash=document.querySelector('.splash'); if(splash){setTimeout(()=>splash.remove(),3600);}
 })();

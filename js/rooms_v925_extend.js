@@ -1,62 +1,11 @@
 
-// v9.2.5_extend — subtle per-room effects
+// rooms_v925_extend.js — 每間房的色調與小動畫（縮小25%）
 (function(){
-  document.body.classList.add('cosmic');
-  const u = document.body.getAttribute('data-universe')||'';
-
-  // common twinkles
-  const stars = document.getElementById('stars');
-  if(stars){
-    const n = 60;
-    for(let i=0;i<n;i++){
-      const s = document.createElement('div');
-      s.className = 'twinkle';
-      s.style.left = (Math.random()*100)+'vw';
-      s.style.top = (Math.random()*100)+'vh';
-      s.style.animationDelay = (Math.random()*3)+'s';
-      stars.appendChild(s);
-    }
-  }
-
-  // themed overlay
-  const meteors = document.getElementById('meteors');
-  setInterval(()=>{
-    const m = document.createElement('div');
-    m.className = 'meteor';
-    m.style.left = (-10 + Math.random()*20) + 'vw';
-    m.style.top = (-10 + Math.random()*20) + 'vh';
-    meteors.appendChild(m);
-    setTimeout(()=>m.remove(), 1800);
-  }, 6500);
-
-  // micro specials
-  if(u==='ajin'){
-    // lightning-like glints on panel
-    const panel = document.querySelector('.room-panel');
-    if(panel){
-      setInterval(()=>{
-        panel.style.boxShadow = '0 0 0 1px rgba(255,211,107,.35) inset, 0 0 40px rgba(255,211,107,.25)';
-        setTimeout(()=> panel.style.boxShadow='', 220);
-      }, 3800);
-    }
-  }else if(u==='migou'){
-    // floating crystals shimmer
-    const panel = document.querySelector('.room-panel');
-    if(panel){
-      let i=0;
-      setInterval(()=>{
-        panel.style.filter = i%2 ? 'drop-shadow(0 8px 24px rgba(255,150,180,.35))' : 'none';
-        i++;
-      }, 1600);
-    }
-  }else if(u==='gungun'){
-    // gentle ripple glow
-    const video = document.querySelector('.room-video');
-    if(video){
-      setInterval(()=>{
-        video.style.boxShadow = '0 0 0 1px rgba(139,198,255,.32) inset, 0 0 50px rgba(139,198,255,.35)';
-        setTimeout(()=> video.style.boxShadow='', 520);
-      }, 4200);
-    }
-  }
+  const theme=document.body.dataset.theme||'ajin';
+  const tw=document.querySelector('.twinkle'), met=document.querySelector('.meteors');
+  const presets={ajin:{t:'rgba(255,180,90,.18)',tw:70,meteor:2},migou:{t:'rgba(255,160,210,.14)',tw:70,meteor:1},gungun:{t:'rgba(120,170,255,.16)',tw:70,meteor:1}};
+  const p=presets[theme];
+  const ov=document.createElement('div');ov.style.position='absolute';ov.style.inset='0';ov.style.background=`radial-gradient(600px 400px at 50% 0%, ${p.t}, transparent)`;ov.style.pointerEvents='none';document.querySelector('.cosmic')?.appendChild(ov);
+  if(tw){for(let i=0;i<p.tw;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=(Math.random()*3)+'s';tw.appendChild(s);}}
+  if(met){for(let i=0;i<p.meteor;i++){const m=document.createElement('i');m.style.left=(35+Math.random()*40)+'vw';m.style.top=(-3+Math.random()*8)+'vh';m.style.animationDuration=(2.2+Math.random()*1.5)+'s';met.appendChild(m);}}
 })();

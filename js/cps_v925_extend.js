@@ -1,69 +1,13 @@
 
-// v9.2.5_extend — 3-parrot concurrent reply with persona prompts
+// cps_v925_extend.js — 宇宙郵局：三鳥輪流一句，玻璃氣泡＋柔泡泡聲
 (function(){
-  document.body.classList.add('cosmic','cps');
-
-  // twinkles
-  const stars = document.getElementById('stars');
-  if(stars){
-    for(let i=0;i<60;i++){
-      const s = document.createElement('div');
-      s.className='twinkle';
-      s.style.left=(Math.random()*100)+'vw';
-      s.style.top=(Math.random()*100)+'vh';
-      s.style.animationDelay=(Math.random()*3)+'s';
-      stars.appendChild(s);
-    }
-  }
-
-  const input = document.getElementById('cps-input');
-  const formBtn = document.getElementById('cps-send');
-  const checks = {
-    ajin: document.getElementById('p-ajin'),
-    migou: document.getElementById('p-migou'),
-    gungun: document.getElementById('p-gungun')
-  };
-  const boxes = {
-    ajin: document.getElementById('box-ajin'),
-    migou: document.getElementById('box-migou'),
-    gungun: document.getElementById('box-gungun')
-  };
-
-  async function askOne(key, system, msg){
-    const target = boxes[key].querySelector('.content');
-    target.textContent = '...';
-    try{
-      const res = await fetch('/api/chat', {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ system, user: msg })
-      });
-      const data = await res.json();
-      const text = (data.text || data.reply || JSON.stringify(data));
-      target.textContent = text.trim();
-    }catch(e){
-      target.textContent = '（信號微弱，再試一次）';
-    }
-  }
-
-  function playBubble(){
-    const a = document.getElementById('sfx-bubble');
-    if(a){ a.currentTime=0; a.play().catch(()=>{}); }
-  }
-
-  formBtn?.addEventListener('click', ()=>{
-    const msg = input.value.trim();
-    if(!msg) return;
-    playBubble();
-    if(checks.ajin.checked) askOne('ajin',
-      '你是阿金 AJIN：自由．反骨。口吻俐落、帶行動力。「我不等天空放晴，我自己撕開雲。」別用官腔，回覆要短而有力。', msg);
-    if(checks.migou.checked) askOne('migou',
-      '你是米果 MIGOU：主權．高價值。口吻優雅有界線。「我很值錢，我讓自己更貴。」別說教，回覆溫柔但清楚堅定。', msg);
-    if(checks.gungun.checked) askOne('gungun',
-      '你是滾滾 GUNGUN：共鳴．靜默力量。口吻安定、被理解的感覺。「我不追求安全，我成為安全。」語速慢、溫暖。', msg);
-  });
-
-  input?.addEventListener('keydown', (e)=>{
-    if(e.key==='Enter'){ e.preventDefault(); formBtn.click(); }
-  });
+  const tw=document.querySelector('.twinkle'); if(tw){for(let i=0;i<70;i++){const s=document.createElement('i');s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=(Math.random()*3)+'s';tw.appendChild(s);}}
+  const met=document.querySelector('.meteors'); if(met){for(let i=0;i<2;i++){const m=document.createElement('i');m.style.left=(25+Math.random()*55)+'vw';m.style.top=(-5+Math.random()*12)+'vh';m.style.animationDelay=(Math.random()*5)+'s';met.appendChild(m);}}
+  const form=document.querySelector('#cps-form'), input=document.querySelector('#cps-input');
+  const lanes={ajin:document.querySelector('#lane-ajin'),migou:document.querySelector('#lane-migou'),gungun:document.querySelector('#lane-gungun')};
+  const pop=new Audio('assets/sound/bubble_soft.wav'); pop.volume=.35;
+  function bubble(t,who){const d=document.createElement('div');d.className='msg';d.innerHTML=`<div class="b">${t}</div>`;lanes[who].appendChild(d);lanes[who].scrollTop=lanes[who].scrollHeight;try{pop.currentTime=0;pop.play()}catch(e){}}
+  function persona(w){if(w==='ajin')return '（阿金）我不等天空放晴——我自己撕開雲。';if(w==='migou')return '（米果）我很值錢，我讓自己更貴。';return '（滾滾）我不追求安全，我成為安全。'}
+  async function callAPI(content){try{const r=await fetch('/api/chat.js',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({messages:[{role:'user',content}],mode:'cosmic-post-station'})});const data=await r.json();return data?.reply||content}catch(e){return content}}
+  form&&form.addEventListener('submit',async e=>{e.preventDefault();const v=(input.value||'').trim();if(!v)return;input.value='';for(const who of ['ajin','migou','gungun']){bubble(v,who);const bot=await callAPI(`${persona(who)} 回覆：${v}`);bubble(bot,who);await new Promise(r=>setTimeout(r,350));}});
 })();
