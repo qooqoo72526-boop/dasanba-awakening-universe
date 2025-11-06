@@ -1,45 +1,51 @@
-
 <!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>宇宙郵局 ✉️</title>
-  <link rel="stylesheet" href="css/universe_v915.css"/>
-  <link rel="stylesheet" href="css/universe_v916.css"/>
-  <link rel="stylesheet" href="css/cps_v915.css"/>
-  <link rel="stylesheet" href="css/cps_v916.css"/>
+  <title>Cosmic Post Station</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/universe_v920.css"/>
 </head>
-<body>
-  <div class="cosmic-bg"></div>
-  <div class="starfield"><canvas id="starfield"></canvas></div>
+<body data-universe="cps">
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <header class="glass-nav"><nav>
+    <a href="index.html" class="nav-link">🏠 回到宇宙</a>
+    <span class="nav-label">🌔 Cosmic Post Station</span>
+  </nav></header>
 
   <main class="cps-wrap">
-    <div class="title-wrap">
-      <h1 class="big-title">COSMIC POST STATION</h1>
-      <div class="glow-band"></div>
-    </div>
-    <div class="sub-cn ribbon">✦ 同步接收三位鸚鵡的回信（自然語氣、無官方腔）</div>
+    <img class="bird b-ajin"   src="assets/ajin_clear_post.webp"   alt="Ajin"/>
+    <img class="bird b-migou"  src="assets/migou_clear_post.webp"  alt="Migou"/>
+    <img class="bird b-gungun" src="assets/gungun_clear_post.webp" alt="Gungun"/>
 
-    <section class="cps-grid">
-      <div class="cps-panel glass" id="panel-ajin">
-        <div class="head"><div class="sub-cn" style="font-weight:800">💛 阿金｜AJIN · 自由 · 反骨</div></div>
-      </div>
-      <div class="cps-panel glass" id="panel-migou">
-        <div class="head"><div class="sub-cn" style="font-weight:800">🩷 米果｜MIGOU · 主權 · 高價值</div></div>
-      </div>
-      <div class="cps-panel glass" id="panel-gungun">
-        <div class="head"><div class="sub-cn" style="font-weight:800">🩵 滾滾｜GUNGUN · 共鳴 · 靜默力量</div></div>
-      </div>
+    <div class="cps-art">
+      <img src="assets/trio_post1.webp" alt="scene1"/>
+      <img src="assets/trio_post2.webp" alt="scene2"/>
+      <img src="assets/ajin_post.webp"  alt="ajin scene"/>
+      <img src="assets/migou_post.webp" alt="migou scene"/>
+      <img src="assets/gungun_post.webp" alt="gungun scene"/>
+    </div>
+
+    <section class="bubbles">
+      <div class="bubble-card a" id="pane-ajin"><h3>💛 阿金 AJIN</h3><div class="list"></div></div>
+      <div class="bubble-card m" id="pane-migou"><h3>🩷 米果 MIGOU</h3><div class="list"></div></div>
+      <div class="bubble-card g" id="pane-gungun"><h3>🩵 滾滾 GUNGUN</h3><div class="list"></div></div>
     </section>
 
-    <form id="cps-form" class="controls">
-      <textarea id="cps-input" placeholder="在這裡寫給他們的話…（送出後三位會同時回覆）"></textarea>
-      <button class="ribbon" style="border:0; cursor:pointer; font-weight:800;">送出</button>
-    </form>
+    <section class="composer glass">
+      <input id="prompt" class="input" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" maxlength="400"/>
+    </section>
   </main>
 
-  <script src="js/main_v915.js"></script>
-  <script type="module" src="js/cps_v916.js"></script>
+  <audio id="sfx-click" src="assets/sound/click_star.wav" preload="auto"></audio>
+  <audio id="sfx-send"  src="assets/sound/send_cosmic.wav" preload="auto"></audio>
+  <audio id="sfx-ajin"  src="assets/sound/reply_ajin.wav" preload="auto"></audio>
+  <audio id="sfx-migou" src="assets/sound/reply_migou.wav" preload="auto"></audio>
+  <audio id="sfx-gungun"src="assets/sound/reply_gungun.wav" preload="auto"></audio>
+
+  <script src="js/cps_v920.js"></script>
 </body>
 </html>
