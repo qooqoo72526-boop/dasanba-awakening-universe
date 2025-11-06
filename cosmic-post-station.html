@@ -1,28 +1,40 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cosmic Post Station | 大三巴覺醒宇宙</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/universe_v927_extend.css"><link rel="stylesheet" href="css/cps_v927_extend.css">
-<script src="js/stars_v927_extend.js" defer></script><script src="js/cps_v927_extend.js" defer></script>
-</head><body>
-<canvas id="starfield" aria-hidden="true"></canvas>
-<nav class="tool-rail"><a href="index.html">🏠</a><span class="tick"></span><a href="cosmic-post-station.html">📮</a><span class="tick"></span><a href="soulmirror.html">🪞</a></nav>
-<main>
-<header class="hero-title">
-  <h1 class="evau-title">COSMIC POST STATION</h1>
-  <h2 class="evau-sub">Receiving signals from Ajin · Migou · Gungun ✦</h2>
-  <p class="evau-desc">與宇宙聯繫中... 感應你的心句，三鳥會同時回應（自然口吻）。</p>
-</header>
-<section class="cps-wrap">
-  <div class="float-arts">
-    <img src="assets/trio_post1.webp" class="art a1" alt=""><img src="assets/trio_post2.webp" class="art a2" alt=""><img src="assets/ajin_post.webp" class="art a3" alt=""><img src="assets/migou_post.webp" class="art a4" alt=""><img src="assets/gungun_post.webp" class="art a5" alt="">
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>宇宙郵局 Cosmic Post Station</title>
+<link rel="stylesheet" href="/css/universe_v930.css">
+<script defer src="/js/main_v930.js"></script>
+<script defer src="/js/cosmic_post.js"></script>
+</head>
+<body>
+<div class="cps-wrap">
+  <div class="cps-title">
+    <div class="tw">宇宙郵局🌔</div>
+    <div class="en">Cosmic Post Station</div>
   </div>
-  <div class="chat glass">
-    <div class="chat-row"><label><input type="checkbox" checked> 💛 阿金 AJIN</label><div class="bubble" id="b-ajin">...</div></div>
-    <div class="chat-row"><label><input type="checkbox" checked> 🧡 米果 MIGOU</label><div class="bubble" id="b-migou">...</div></div>
-    <div class="chat-row"><label><input type="checkbox" checked> 💙 滾滾 GUNGUN</label><div class="bubble" id="b-gungun">...</div></div>
-    <input id="prompt" class="prompt" placeholder="在星際隧道投遞一句話；按 Enter 傳訊…">
+
+  <div class="cps-signal">
+    <div class="row">與宇宙聯繫中⋯</div>
+    <div class="row">Communicating with the Cosmos…</div>
+    <div class="row">Receiving signals from Ajin · Migou · Gungun ✦</div>
   </div>
-</section>
-</main></body></html>
+
+  <div class="cps-photos">
+    <div class="p v1"><img src="/assets/ajin_post.webp" alt=""></div>
+    <div class="p v2"><img src="/assets/migou_post.webp" alt=""></div>
+    <div class="p v3"><img src="/assets/gungun_post.webp" alt=""></div>
+    <div class="p h1"><img src="/assets/trio_post1.webp" alt=""></div>
+    <div class="p h2"><img src="/assets/trio_post2.webp" alt=""></div>
+  </div>
+
+  <div id="chat-list" class="chat"></div>
+
+  <div class="input-row">
+    <input id="cps-input" placeholder="寫下你此刻的心聲…">
+    <button id="cps-send">送出</button>
+  </div>
+</div>
+</body>
+</html>
