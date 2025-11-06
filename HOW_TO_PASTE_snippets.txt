@@ -1,0 +1,9 @@
+
+<!-- HEAD: add after existing css -->
+<link rel="stylesheet" href="css/universe_v923.css">
+<link rel="stylesheet" href="css/style_v923.css">
+
+<!-- BODY END: add before </body> -->
+<script src="js/main_v923.js"></script>
+<!-- (cosmic-post-station.html also add) -->
+<script src="js/cps_v923.js"></script>
