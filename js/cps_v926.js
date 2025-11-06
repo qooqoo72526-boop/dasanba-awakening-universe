@@ -15,11 +15,30 @@ document.addEventListener('DOMContentLoaded', ()=>{
     list.appendChild(b); list.scrollTop=list.scrollHeight; snd.currentTime=0; snd.play().catch(()=>{});
   }
   async function send(){
-    const msg=(input.value||'').trim(); if(!msg) return; input.value='';
-    const who=turn%3; turn++;
-    pushBubble(msg, who);
-    setTimeout(()=>pushBubble('收到，星訊已同步。', who), 450);
+  const msg=(input.value||'').trim(); 
+  if(!msg) return; 
+  input.value='';
+  const who=turn%3; 
+  turn++;
+  pushBubble(msg, who);
+
+  // 呼叫你的 OpenAI API（後端是 /api/chat.js）
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: 你是${personas[who].id}，請用自然口吻回答，語氣輕鬆、真誠，約一句到兩句話，不要太長。 },
+          { role: 'user', content: msg }
+        ]
+      })
+    });
+    const data = await res.json();
+    const reply = data.reply || (data.choices?.[0]?.message?.content ?? '⋯星塵干擾，暫時無法接收。');
+    pushBubble(reply, who);
+  } catch (e) {
+    pushBubble('（訊號微弱，再試一次看看～）', who);
+    console.error(e);
   }
-  btn.addEventListener('click',send);
-  input.addEventListener('keydown',e=>{ if(e.key==='Enter') send();});
-});
+}
