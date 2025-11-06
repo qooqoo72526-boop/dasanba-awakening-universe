@@ -1,0 +1,20 @@
+
+/* Bubble feel upgrade + subtle pop animation */
+@import url('cps_v915.css');
+
+.bubble{
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+  border: 1px solid rgba(255,255,255,.18);
+  box-shadow:
+    0 6px 24px rgba(0,0,0,.28),
+    0 0 30px rgba(200,230,255,.22) inset;
+  border-radius: 18px !important;
+  animation: popIn .22s ease;
+}
+.bubble.you{
+  background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.10));
+}
+@keyframes popIn{
+  0%{ transform: scale(.92); opacity:.0 }
+  100%{ transform: scale(1); opacity:1 }
+}

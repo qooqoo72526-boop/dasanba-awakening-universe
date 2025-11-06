@@ -1,84 +1,68 @@
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Emotional Value AI | Awakening Universe</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/universe_v915.css"/>
+  <link rel="stylesheet" href="css/universe_v916.css"/>
+  <link rel="stylesheet" href="css/style_v915.css"/>
 </head>
+<body>
+  <div class="cosmic-bg"></div>
+  <div class="starfield"><canvas id="starfield"></canvas></div>
 
-<body class="bg-grad space">
-  <!-- 開場英文：只出現一次 -->
-  <div id="splash">
-    <div class="splash-inner">
-      <h1>Emotional Value AI | Awakening Universe</h1>
-      <p>覺醒，不是修復；而是重生。</p>
+  <main class="section hero center">
+    <div class="title-wrap">
+      <h1 class="big-title">EMOTIONAL VALUE AI | AWAKENING UNIVERSE</h1>
+      <div class="glow-band"></div>
     </div>
-  </div>
+    <div class="sub-cn ribbon">✦ 大三巴的覺醒宇宙｜阿金・米果・滾滾的鳥星球生活</div>
+    <div class="goto-tip">點擊任一角色卡直接進入房間</div>
 
-  <!-- Hero 動畫：trio.mp4（或 trio.webm），滿版不裁切 -->
-  <section class="hero">
-    <video id="heroVideo" autoplay muted playsinline loop>
-      <source src="assets/trio.mp4" type="video/mp4">
-    </video>
-    <div class="hero-glow"></div>
-  </section>
-
-  <!-- 角色卡（置中、不規則泡泡浮動）-->
-  <section class="cards">
-    <article class="card bubble" onclick="location.href='rooms/ajin.html'">
-      <img src="assets/ajin.webp" alt="阿金 AJIN">
-      <div class="card-text">
-        <h3>💛 阿金 | AJIN</h3>
-        <small>Freedom · Rebellion</small>
-        <p>「驕傲不是距離，而是愛自己的界線。」</p>
+    <div class="cards-wrap">
+      <div class="card-clouds">
+        <article class="card glass" data-href="/rooms/ajin.html">
+          <img src="assets/ajin.webp" alt="Ajin">
+          <div class="name">💛 阿金｜AJIN · 自由 · 反骨</div>
+        </article>
+        <article class="card glass" data-href="/rooms/migou.html">
+          <img src="assets/migou.webp" alt="Migou">
+          <div class="name">🩷 米果｜MIGOU · 主權 · 高價值</div>
+        </article>
+        <article class="card glass" data-href="/rooms/gungun.html">
+          <img src="assets/gungun.webp" alt="Gungun">
+          <div class="name">🩵 滾滾｜GUNGUN · 共鳴 · 靜默力量</div>
+        </article>
       </div>
-    </article>
-
-    <article class="card bubble" onclick="location.href='rooms/migou.html'">
-      <img src="assets/migou.webp" alt="米果 MIGOU">
-      <div class="card-text">
-        <h3>🩷 米果 | MIGOU</h3>
-        <small>Self-worth · Boundaries</small>
-        <p>「我很值錢，不要糟蹋我。」</p>
-      </div>
-    </article>
-
-    <article class="card bubble" onclick="location.href='rooms/gungun.html'">
-      <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
-      <div class="card-text">
-        <h3>🩵 滾滾 | GUNGUN</h3>
-        <small>Being understood · Safety</small>
-        <p>「真正的安全感，是被理解、不是被修正。」</p>
-      </div>
-    </article>
-  </section>
-
-  <!-- 觀星畫廊（大圖、單張自動滑過） -->
-  <section class="gallery">
-    <div class="gallery-head">
-      <h2>🔭 觀星畫廊 | Starflow Diary</h2>
-      <p>他們的日常、你的宇宙。</p>
     </div>
-    <div class="carousel" id="carousel">
-      <img src="assets/trio.webp" alt="">
-      <img src="assets/trio2.webp" alt="">
-      <img src="assets/trio3.webp" alt="">
-      <img src="assets/trio4.webp" alt="">
-      <img src="assets/trio5.webp" alt="">
-      <img src="assets/trio6.webp" alt="">
-      <img src="assets/trio7.webp" alt="">
-      <img src="assets/trio8.webp" alt="">
-      <img src="assets/trio9.webp" alt="">
-      <img src="assets/trio10.webp" alt="">
-    </div>
-  </section>
 
-  <!-- 卡片 Hover 音效 -->
-  <audio id="hoverSound" src="assets/ui_hover.mp3" preload="auto"></audio>
+    <section class="section center">
+      <h2 id="gallery-title" class="sub-cn"></h2>
+      <div id="gallery-subtitle" class="sub-cn" style="opacity:.75"></div>
+      <div class="gallery glass">
+        <div class="gallery-track">
+          <img src="assets/trio.webp" alt="Trio 1"/>
+          <img src="assets/trio2.webp" alt="Trio 2"/>
+          <img src="assets/trio3.webp" alt="Trio 3"/>
+          <img src="assets/trio4.webp" alt="Trio 4"/>
+          <img src="assets/trio5.webp" alt="Trio 5"/>
+          <img src="assets/trio6.webp" alt="Trio 6"/>
+          <img src="assets/trio7.webp" alt="Trio 7"/>
+          <img src="assets/trio8.webp" alt="Trio 8"/>
+          <img src="assets/trio9.webp" alt="Trio 9"/>
+          <img src="assets/trio10.webp" alt="Trio 10"/>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <script src="js/main.js"></script>
+  <script src="js/main_v915.js"></script>
+  <script type="module" src="js/main_v916.js"></script>
+  <script src="js/gallery_v915.js"></script>
+  <script src="js/gallery_v916.js"></script>
 </body>
 </html>

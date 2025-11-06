@@ -1,36 +1,29 @@
+
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-universe="ajin">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>阿金 的星艦</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>💛 阿金｜AJIN — 星艙</title>
+  <link rel="stylesheet" href="../css/universe_v915.css"/>
+  <link rel="stylesheet" href="../css/universe_v916.css"/>
 </head>
-<body data-universe="ajin">
-  <div class="bg-grad"></div>
-  <canvas id="stars"></canvas>
-
-  <header class="site-header">
-    <h1 class="site-title">阿金 | AJIN</h1>
-    <nav class="ghost-nav">
-      <a href="../index.html" data-tip="Home">⌂</a>
-      <a href="../cosmic-post-station.html" data-tip="Cosmic Post">✉</a>
-    </nav>
-  </header>
-
-  <main class="room">
-    <video autoplay muted loop playsinline>
-      <source src="../assets/ajin_5s.mp4" type="video/mp4">
-    </video>
-    <div class="pane">
-      <h1>阿金 的星艦</h1>
-      <p>行動型覺醒者；怕你不敢動，所以先動給你看。</p>
-      <p style="opacity:.8">右側面板預留：角色故事、特性、簽名語、互動按鈕。</p>
-    </div>
-  </main>
-
-  <script src="../js/main.js"></script>
+<body>
+  <div class="room room-sky">
+    <div class="particles"></div>
+    <section class="section center">
+      <h1 class="big-title">💛 阿金｜AJIN</h1>
+      <div class="sub-cn" style="margin-top:8px;">自由 ・ 反骨</div>
+      <a href="/" class="ribbon" style="position:fixed;top:16px;right:16px;text-decoration:none;color:#fff;">返回宇宙</a>
+      <div class="glass" style="padding:18px; max-width:860px">
+        <p class="sub-cn">房間已啟用 v9.1.6 進階特效與聲音提示。</p>
+      </div>
+    </section>
+  </div>
+  <script type="module">
+    import { mountRoomEffects } from '../js/room_effects_v915.js';
+    import { audioBus } from '../js/audio_v916.js';
+    // 可視需要在互動點 play 專屬音效
+  </script>
 </body>
 </html>

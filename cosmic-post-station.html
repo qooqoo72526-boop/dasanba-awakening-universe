@@ -1,49 +1,45 @@
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cosmic Post Station</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/cps.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>宇宙郵局 ✉️</title>
+  <link rel="stylesheet" href="css/universe_v915.css"/>
+  <link rel="stylesheet" href="css/universe_v916.css"/>
+  <link rel="stylesheet" href="css/cps_v915.css"/>
+  <link rel="stylesheet" href="css/cps_v916.css"/>
 </head>
-<body class="bg-grad cps">
+<body>
+  <div class="cosmic-bg"></div>
+  <div class="starfield"><canvas id="starfield"></canvas></div>
 
-  <!-- 星空 + 流星 -->
-  <canvas id="stars" aria-hidden="true"></canvas>
-
-  <!-- 頁首：英/中（細字/斜體，小小的，不會蓋主圖） -->
-  <header class="cps-header" aria-live="polite">
-    <div class="en"><i>Communicating with the Cosmos…</i></div>
-    <div class="zh">與宇宙通訊中…</div>
-  </header>
-
-  <!-- 拼貼場景（兩橫 + 三直去背） -->
-  <section class="collage">
-    <img src="assets/trio_post1.webp" class="h h1" alt="">
-    <img src="assets/trio_post2.webp" class="h h2" alt="">
-    <img src="assets/ajin_clear_post.webp"   class="v v-ajin"   alt="">
-    <img src="assets/migou_clear_post.webp"  class="v v-migou"  alt="">
-    <img src="assets/gungun_clear_post.webp" class="v v-gungun" alt="">
-  </section>
-
-  <!-- 中央聊天視窗（玻璃、群組：阿金/米果/滾滾 全部會回） -->
-  <section class="chat-wrap">
-    <div id="chat" class="chat">
-      <div class="slot aj">阿金 AJIN：...</div>
-      <div class="slot mi">米果 MIGOU：...</div>
-      <div class="slot gu">滾滾 GUNGUN：...</div>
+  <main class="cps-wrap">
+    <div class="title-wrap">
+      <h1 class="big-title">COSMIC POST STATION</h1>
+      <div class="glow-band"></div>
     </div>
-    <div class="input">
-      <input id="cps-input" placeholder="在星際陣列投遞一句話，按 Enter 傳訊…"/>
-    </div>
-  </section>
+    <div class="sub-cn ribbon">✦ 同步接收三位鸚鵡的回信（自然語氣、無官方腔）</div>
 
-  <!-- 介面音效 -->
-  <audio id="bgm" src="assets/amb_starfield.mp3" preload="auto"></audio>
-  <audio id="click" src="assets/ui_click.mp3" preload="auto"></audio>
+    <section class="cps-grid">
+      <div class="cps-panel glass" id="panel-ajin">
+        <div class="head"><div class="sub-cn" style="font-weight:800">💛 阿金｜AJIN · 自由 · 反骨</div></div>
+      </div>
+      <div class="cps-panel glass" id="panel-migou">
+        <div class="head"><div class="sub-cn" style="font-weight:800">🩷 米果｜MIGOU · 主權 · 高價值</div></div>
+      </div>
+      <div class="cps-panel glass" id="panel-gungun">
+        <div class="head"><div class="sub-cn" style="font-weight:800">🩵 滾滾｜GUNGUN · 共鳴 · 靜默力量</div></div>
+      </div>
+    </section>
 
-  <script src="js/cps.js"></script>
+    <form id="cps-form" class="controls">
+      <textarea id="cps-input" placeholder="在這裡寫給他們的話…（送出後三位會同時回覆）"></textarea>
+      <button class="ribbon" style="border:0; cursor:pointer; font-weight:800;">送出</button>
+    </form>
+  </main>
+
+  <script src="js/main_v915.js"></script>
+  <script type="module" src="js/cps_v916.js"></script>
 </body>
 </html>
