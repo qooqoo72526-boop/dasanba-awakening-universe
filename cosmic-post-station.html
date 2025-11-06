@@ -1,47 +1,56 @@
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Cosmic Post Station</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/universe_v921.css"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/universe_v922.css"/>
 </head>
 <body>
-  <canvas id="stars"></canvas>
-  <nav class="toolbar">
+  <nav class="nav">
     <a href="index.html">首頁</a>
-    <a href="cosmic-post-station.html">宇宙郵局</a>
+    <a href="cosmic-post-station.html">Cosmic Post Station</a>
     <a href="soulmirror.html">靈魂照妖鏡</a>
-    <a href="about-universe.html">關於宇宙</a>
   </nav>
 
-  <section class="post-wrap">
-    <aside class="side-album">
-      <img class="landscape" src="assets/trio_post1.webp" alt=""/>
-      <img class="landscape" src="assets/trio_post2.webp" alt=""/>
-      <img class="portrait" src="assets/ajin_post.webp" alt=""/>
-      <img class="portrait" src="assets/migou_post.webp" alt=""/>
-      <img class="portrait" src="assets/gungun_post.webp" alt=""/>
+  <h1 class="big-title">COSMIC POST STATION</h1>
+  <div class="sub-cn">與宇宙聯繫中… <span class="sep">｜</span> Receiving signals from Ajin, Migou, Gungun ✦</div>
+
+  <section class="cps">
+    <aside class="thumbs">
+      <img src="assets/trio_post1.webp" alt="bg1"/>
+      <img src="assets/trio_post2.webp" alt="bg2"/>
+      <img src="assets/ajin_post.webp" alt="bg3"/>
+      <img src="assets/migou_post.webp" alt="bg4"/>
+      <img src="assets/gungun_post.webp" alt="bg5" style="grid-column:span 2"/>
     </aside>
 
-    <main class="chat">
-      <div class="birds">
-        <div class="bird"><img src="assets/ajin_clear_post.webp" alt="ajin"></div>
-        <div class="bird"><img src="assets/migou_clear_post.webp" alt="migou"></div>
-        <div class="bird"><img src="assets/gungun_clear_post.webp" alt="gungun"></div>
+    <div class="chat">
+      <div class="bird-fleet">
+        <img class="bird b1" src="assets/ajin_clear_post.webp" alt="ajin"/>
+        <img class="bird b2" src="assets/migou_clear_post.webp" alt="migou"/>
+        <img class="bird b3" src="assets/gungun_clear_post.webp" alt="gungun"/>
       </div>
 
-      <div id="aj" class="bubble"></div>
-      <div id="mi" class="bubble"></div>
-      <div id="gu" class="bubble"></div>
+      <div id="m-ajin" class="panel" style="max-height:180px; overflow:auto;"></div>
+      <div id="m-migou" class="panel" style="max-height:180px; overflow:auto;"></div>
+      <div id="m-gungun" class="panel" style="max-height:180px; overflow:auto;"></div>
 
-      <div class="input"><input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…"/></div>
-    </main>
+      <div class="input">
+        <input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…"/>
+        <button id="send">Send</button>
+      </div>
+    </div>
   </section>
 
-  <script src="js/main_v921.js"></script>
-  <script src="js/cps_v921.js"></script>
+  <audio id="sfx-ajin" src="assets/sound/reply_ajin.wav" preload="auto"></audio>
+  <audio id="sfx-migou" src="assets/sound/reply_migou.wav" preload="auto"></audio>
+  <audio id="sfx-gungun" src="assets/sound/reply_gungun.wav" preload="auto"></audio>
+  <audio id="sfx-send" src="assets/sound/send_cosmic.wav" preload="auto"></audio>
+  <script src="js/cps_v922.js"></script>
+  <script src="js/main_v922.js"></script>
 </body>
 </html>
