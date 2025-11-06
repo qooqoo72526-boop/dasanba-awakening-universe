@@ -1,0 +1,43 @@
+/* ajin_extend.css — 阿金：金橘燃燒能流（左下→右上），自動循環 */
+/* 作用條件：<body data-universe="ajin"> 存在即可；不改動原 HTML */
+body[data-universe="ajin"] .universe-bg,
+body[data-universe="ajin"] { position: relative; }
+
+body[data-universe="ajin"]::before,
+body[data-universe="ajin"]::after{
+  content:"";
+  position: fixed; inset:0;
+  pointer-events:none;
+  z-index:-1;
+}
+
+/* 背景銀藍星空基底，保持與站內一致的漸層 */
+body[data-universe="ajin"]::before{
+  background: radial-gradient(100% 120% at 30% -10%, rgba(170,190,255,.18), rgba(0,0,0,0) 60%),
+              radial-gradient(80% 100% at 90% 10%, rgba(130,170,255,.14), rgba(0,0,0,0) 70%),
+              linear-gradient(180deg, #0b1630 0%, #0c1b3a 45%, #0f1e2c 100%);
+  animation: ajinGlow 4s ease-in-out infinite;
+  filter: saturate(115%);
+}
+
+/* 斜向金橘能流（左下→右上掃過） */
+body[data-universe="ajin"]::after{
+  background: conic-gradient(from 210deg at 0% 100%, transparent 0 40%, rgba(255,170,60,.22) 55%, rgba(255,230,170,.28) 62%, rgba(255,140,0,.18) 70%, transparent 85% 100%);
+  mix-blend-mode: screen;
+  animation: ajinSweep 3.6s cubic-bezier(.3,.7,.2,1) infinite;
+  opacity:.8;
+}
+
+@keyframes ajinGlow {
+  0%,100% { filter: saturate(115%) brightness(1); }
+  50%     { filter: saturate(135%) brightness(1.08); }
+}
+@keyframes ajinSweep {
+  0%   { transform: translate(-20%,10%) rotate(-6deg) scale(1.1); opacity:.0; }
+  15%  { opacity:.85; }
+  60%  { transform: translate(20%,-15%) rotate(-6deg) scale(1.08); opacity:.75; }
+  100% { transform: translate(45%,-35%) rotate(-6deg) scale(1.05); opacity:0; }
+}
+
+/* 星點閃爍（與 JS 畫布共存） */
+.astro-star{ position:fixed; inset:0; pointer-events:none; z-index:-2; }

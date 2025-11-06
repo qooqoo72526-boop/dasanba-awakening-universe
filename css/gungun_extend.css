@@ -1,0 +1,33 @@
+/* gungun_extend.css — 滾滾：銀藍水波＋安定呼吸（自上→下），自動循環 */
+body[data-universe="gungun"] .universe-bg,
+body[data-universe="gungun"] { position: relative; }
+
+body[data-universe="gungun"]::before,
+body[data-universe="gungun"]::after{
+  content:""; position: fixed; inset:0; pointer-events:none; z-index:-1;
+}
+
+/* 銀藍深海漸層 */
+body[data-universe="gungun"]::before{
+  background: radial-gradient(90% 120% at 50% -10%, rgba(140,190,255,.18), rgba(0,0,0,0) 60%),
+              linear-gradient(180deg, #0b1630 0%, #0c1b3a 40%, #0f1e2c 100%);
+  animation: gungunBreath 8s ease-in-out infinite;
+}
+
+body[data-universe="gungun"]::after{
+  background: repeating-radial-gradient( circle at 50% -10%,
+     rgba(180,220,255,.10) 0 12px, rgba(180,220,255,0) 12px 24px);
+  mix-blend-mode: screen;
+  animation: gungunWave 8s ease-in-out infinite;
+  opacity:.5;
+}
+
+@keyframes gungunBreath {
+  0%,100% { filter: brightness(1); }
+  50%     { filter: brightness(1.06); }
+}
+@keyframes gungunWave {
+  0%   { transform: translateY(-6%) scale(1.02); }
+  50%  { transform: translateY(3%)  scale(1.03); }
+  100% { transform: translateY(-6%) scale(1.02); }
+}
