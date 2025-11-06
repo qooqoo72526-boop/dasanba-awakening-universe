@@ -1,29 +1,20 @@
-
 <!doctype html>
-<html lang="zh-Hant" data-universe="migou">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>🩷 米果｜MIGOU — 星艙</title>
-  <link rel="stylesheet" href="../css/universe_v915.css"/>
-  <link rel="stylesheet" href="../css/universe_v916.css"/>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>米果的星艙</title>
+<link rel="stylesheet" href="../css/universe_v921.css">
 </head>
-<body>
-  <div class="room room-sky">
-    <div class="particles"></div>
-    <section class="section center">
-      <h1 class="big-title">🩷 米果｜MIGOU</h1>
-      <div class="sub-cn" style="margin-top:8px;">主權 ・ 高價值</div>
-      <a href="/" class="ribbon" style="position:fixed;top:16px;right:16px;text-decoration:none;color:#fff;">返回宇宙</a>
-      <div class="glass" style="padding:18px; max-width:860px">
-        <p class="sub-cn">房間已啟用 v9.1.6 進階特效與聲音提示。</p>
-      </div>
-    </section>
+<body class="cosmic room room-migou" data-universe="migou">
+<nav class="topbar small"><a href="../index.html">⟵ 返回</a><span>米果的星艙</span></nav>
+<div class="room-wrap">
+  <video class="room-v" src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video>
+  <div class="room-bio">
+    <h3>🩷 米果｜MIGOU</h3>
+    <p class="tag">自我價值・邊界</p>
+    <p class="line">我很值錢，不要糟蹋我。</p>
   </div>
-  <script type="module">
-    import { mountRoomEffects } from '../js/room_effects_v915.js';
-    import { audioBus } from '../js/audio_v916.js';
-    // 可視需要在互動點 play 專屬音效
-  </script>
-</body>
-</html>
+</div>
+<script>
+// 這裡不綁 API，沿用你的 /api/chat.js
+</script>
+</body></html>
