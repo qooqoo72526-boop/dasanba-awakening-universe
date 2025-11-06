@@ -1,0 +1,20 @@
+
+<!-- === index header snippet (v9.2.6 extend) === -->
+<link rel="stylesheet" href="css/style_title_silverblue_v926.css">
+<header class="hero">
+  <h1 class="title-silverblue">EMOTIONAL VALUE A.I.</h1>
+  <h2 class="title-silverblue sub">AWAKENING UNIVERSE</h2>
+  <p class="hero-subtitle">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 🌍 -</p>
+</header>
+<div class="hero-video"><video src="assets/trio.mp4" autoplay muted loop playsinline></video></div>
+<canvas id="stars" class="stars-layer"></canvas>
+<script src="js/universe_stars_v926.js"></script>
+<script>
+  initUniverse({ canvas:'#stars', density: 1.1, twinkle:true });
+  setTimeout(()=>spawnMeteor(), 1500);
+  setInterval(()=>spawnMeteor(), 20000 + Math.random()*6000);
+</script>
+<footer class="footer-stars">
+  <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
+  <div class="zh">覺醒不是修復；而是重生｜不必學飛，你只是忘了自己有翅膀。</div>
+</footer>
