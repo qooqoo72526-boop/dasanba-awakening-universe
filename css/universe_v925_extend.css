@@ -1,0 +1,171 @@
+
+/* v9.2.5_extend — universe (global starfield + section theming). 
+   Safe to include in addition to your current universe_v9xx.css. */
+
+:root{
+  --cosmic-bg: radial-gradient(1200px 600px at 10% -10%, rgba(180,180,255,.08), transparent 55%),
+               radial-gradient(900px 450px at 90% -20%, rgba(150,200,255,.06), transparent 60%),
+               linear-gradient(180deg,#0A0F24 0%, #0B1230 35%, #0A1028 100%);
+  --card-glass: rgba(255,255,255,.06);
+  --card-border: rgba(255,255,255,.18);
+  --chip: rgba(255,255,255,.16);
+  --title: #cfe6ff;
+  --subtitle: #9db7ff;
+  --glow: 0 10px 40px rgba(90,140,255,.25), inset 0 0 0 1px rgba(255,255,255,.08);
+  --round: 16px;
+}
+
+html,body{background:#070b19; color:#e7efff;}
+
+body.cosmic{
+  min-height:100vh;
+  background: var(--cosmic-bg);
+  background-attachment: fixed;
+  overflow-x:hidden;
+}
+
+/* Tiny twinkling stars */
+#stars, #meteors{
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+}
+.twinkle{
+  position:absolute; width:2px; height:2px; border-radius:50%;
+  background:#eaf4ff; opacity:.3; animation:twinkle 3s infinite;
+  box-shadow:0 0 8px 2px rgba(200,230,255,.5);
+}
+@keyframes twinkle{
+  0%,100%{ transform:scale(.6); opacity:.2;}
+  50%{ transform:scale(1.4); opacity:.9;}
+}
+
+/* Splash (opening 3.5s) */
+.splash{
+  position:fixed; inset:0; display:grid; place-items:center;
+  background: linear-gradient(135deg, rgba(163,120,255,.18), rgba(84,120,255,.10)),
+              radial-gradient(600px 320px at 50% -20%, rgba(225,190,255,.28), transparent 70%),
+              #0a0f20;
+  z-index:9999;
+  animation:splashFade 3.6s ease forwards;
+}
+.splash .s1{
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-weight:800; letter-spacing:.08em; text-align:center;
+  font-size: clamp(28px, 5vw, 64px);
+  background: linear-gradient(90deg, #e7d5ff 0%, #c7b7ff 30%, #9ab0ff 60%, #d9b9ff 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter: drop-shadow(0 8px 30px rgba(160,120,255,.35));
+}
+.splash .s2{
+  margin-top:.6rem;
+  font-size: clamp(14px, 2.2vw, 18px);
+  letter-spacing:.3em; opacity:.85;
+}
+@keyframes splashFade{
+  0%{ opacity:1}
+  80%{ opacity:1}
+  100%{ opacity:0; visibility:hidden}
+}
+
+/* Tool bar (top-right) */
+.nav-micro{
+  position:fixed; top:14px; right:18px; z-index:5;
+  display:flex; gap:12px; flex-wrap:wrap;
+}
+.nav-micro a{
+  text-decoration:none; font-size:13px; letter-spacing:.12em;
+  padding:7px 10px; border-radius:999px;
+  color:#dfe9ff; background:var(--chip);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);
+  backdrop-filter: blur(8px);
+}
+.nav-micro a:hover{ box-shadow:0 0 0 2px rgba(160,200,255,.4) inset;}
+
+/* Hero video frame (smaller, auto loop) */
+.hero{
+  margin:110px auto 28px;
+  width:min(940px, 92vw);
+  padding:0; border-radius:22px; overflow:hidden;
+  background:rgba(255,255,255,.02); box-shadow: var(--glow);
+}
+.hero video{ width:100%; display:block; aspect-ratio: 16/9; }
+
+/* Big Center Title (homepage) */
+.big-title{
+  font-family:"Orbitron", system-ui, sans-serif; text-align:center;
+  font-weight:800; letter-spacing:.06em; line-height:1.14;
+  margin:18px auto 8px;
+  font-size:clamp(28px, 5vw, 62px);
+  color:#cfe6ff; text-shadow:0 6px 32px rgba(110,160,255,.35);
+}
+.big-sub{ text-align:center; color:#b8c9ff; opacity:.9; margin-bottom:24px;}
+
+/* Cards row */
+.cards{
+  width:min(1080px, 94vw); margin:18px auto 24px; display:grid;
+  grid-template-columns: repeat(3, 1fr); gap:22px;
+}
+.card{
+  background:rgba(255,255,255,.035); border-radius:18px; overflow:hidden;
+  position:relative; padding-bottom:16px; box-shadow: var(--glow);
+}
+.card img{ width:100%; display:block; }
+.card .meta{ padding:10px 14px 0; text-align:center;}
+.card .name{ margin:.2rem 0 .2rem; font-weight:800; font-size:18px;}
+.card .badge{ font-size:13px; letter-spacing:.06em; opacity:.95; }
+.card .phrase{ margin-top:.25rem; font-size:14px; opacity:.9}
+.card:hover{ transform:translateY(-2px); transition:.25s ease; }
+
+.badge .ajin{ color:#ffd36b;}
+.badge .migou{ color:#ff9b6b;}
+.badge .gungun{ color:#8bc6ff;}
+
+/* Gallery — snap per full card; 3.5s per slide */
+.starflow{ width:min(1080px, 94vw); margin:18px auto 60px;}
+.starflow-title{ text-align:center; margin: 10px auto 10px; font-weight:800;}
+.scroller{ display:flex; overflow:hidden; position:relative; border-radius:18px; }
+.scroller img{ flex:0 0 100%; width:100%; height:auto; display:block; }
+
+/* Footer brand motto */
+.footer-cosmic{
+  width:min(980px, 92vw); margin:60px auto 120px; text-align:center;
+  color:#d5e4ff;
+}
+.footer-cosmic .en{
+  font-family:"Orbitron"; font-weight:800; letter-spacing:.18em;
+  font-size:clamp(12px, 2.2vw, 16px); opacity:.9;
+}
+.footer-cosmic .zh{ margin-top:6px; opacity:.92}
+/* --- rooms theming --- */
+body[data-universe="ajin"]{ --accent: #ffd36b; }
+body[data-universe="migou"]{ --accent: #ff9b9b; }
+body[data-universe="gungun"]{ --accent: #8bc6ff; }
+
+.room-wrap{ width:min(1080px,94vw); margin:120px auto; 
+  display:grid; grid-template-columns: 1.1fr .9fr; gap:24px; align-items:center;
+}
+.room-video, .room-panel{ background:rgba(255,255,255,.04); border-radius:20px; box-shadow:var(--glow); overflow:hidden;}
+.room-video video{ width:100%; display:block; aspect-ratio: 9/16; object-fit:cover;}
+.room-panel{ padding:20px 22px; }
+.room-panel h2{ margin:0 0 6px; font-size:24px;}
+.room-panel .kv{ color: var(--accent); font-weight:800; margin-bottom:10px;}
+.room-panel p{ margin:.25rem 0; opacity:.95}
+
+/* Per-room subtle overlays */
+body[data-universe="ajin"] .room-video{ box-shadow:0 0 0 1px rgba(255,211,107,.28) inset, var(--glow);}
+body[data-universe="migou"] .room-video{ box-shadow:0 0 0 1px rgba(255,155,155,.25) inset, var(--glow);}
+body[data-universe="gungun"] .room-video{ box-shadow:0 0 0 1px rgba(139,198,255,.26) inset, var(--glow);}
+
+/* Meteors layer */
+.meteor{ position:absolute; width:2px; height:2px; background:#fff; box-shadow:0 0 12px 6px rgba(170,210,255,.9);
+  transform: translate3d(0,0,0) rotate(40deg); border-radius:50%;
+  animation:shoot 1.6s linear forwards;
+}
+.meteor::after{ content:""; position:absolute; right:2px; top:0; width:160px; height:2px; 
+  background:linear-gradient(90deg, rgba(255,255,255,1), rgba(255,255,255,0));
+  transform:translateY(-50%);
+}
+@keyframes shoot{
+  from{ opacity:0; transform:translate3d(-10vw,-10vh,0) rotate(40deg); }
+  10%{ opacity:1;}
+  to{ opacity:0; transform:translate3d(110vw, 110vh,0) rotate(40deg); }
+}

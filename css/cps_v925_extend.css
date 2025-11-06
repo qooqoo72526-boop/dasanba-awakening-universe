@@ -1,0 +1,39 @@
+
+/* v9.2.5_extend — Cosmic Post Station layout + bubble glass */
+.cps-wrap{ width:min(1080px,94vw); margin:110px auto 60px; display:grid; grid-template-columns:.9fr 1.1fr; gap:26px;}
+.cps-left{ display:grid; gap:16px;}
+.cps-card{
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border-radius:22px; padding:0; overflow:hidden; box-shadow:0 15px 60px rgba(60,80,140,.28), inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.cps-card img{ display:block; width:100%; height:auto; }
+.bubbles{ background:rgba(255,255,255,.04); border-radius:20px; padding:12px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 40px rgba(80,120,200,.25);}
+.bubble{ background:rgba(255,255,255,.08); border-radius:16px; padding:12px 12px; margin:10px 0; 
+  backdrop-filter: blur(10px); box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);
+}
+.bubble .name{ font-weight:800; opacity:.95; margin-bottom:4px;}
+.bubble .content{ opacity:.95}
+
+.cps-input{
+  margin-top:10px; display:flex; align-items:center; gap:10px;
+  background:rgba(255,255,255,.07); border-radius:999px; padding:8px 12px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+}
+.cps-input input{
+  flex:1; background:transparent; border:none; outline:none; color:#e7efff; 
+  padding:8px 6px; font-size:15px; letter-spacing:.02em;
+}
+.cps-input button{
+  border:none; border-radius:999px; padding:8px 14px; background:#a4b8ff; color:#091226; font-weight:800; cursor:pointer;
+}
+.cps-topnote{ text-align:center; color:#bcd4ff; opacity:.9; margin:-8px auto 10px;}
+
+.personas{ display:flex; gap:12px; margin-bottom:8px; align-items:center; flex-wrap:wrap;}
+.personas label{ display:flex; gap:8px; align-items:center; background:rgba(255,255,255,.08); padding:6px 10px; border-radius:999px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.16); }
+.personas input{ transform:scale(1.1); }
+
+/* softer starry backdrop on cps page */
+body.cosmic.cps{ background:
+  radial-gradient(800px 400px at 15% -10%, rgba(170,200,255,.14), transparent 60%),
+  radial-gradient(900px 500px at 85% -15%, rgba(195,170,255,.10), transparent 65%),
+  linear-gradient(180deg,#0A0F24 0%, #0B1230 35%, #0A1028 100%); }
