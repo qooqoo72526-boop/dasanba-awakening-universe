@@ -1,32 +1,46 @@
+
 <!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>MIGOU 房間</title>
+  <title>MIGOU 房</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../css/universe_v923.css">
-  <link rel="stylesheet" href="../css/style_v923.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;600;800&display=swap">
+  <link rel="stylesheet" href="../css/universe_v924.css">
+  <link rel="stylesheet" href="../css/style_v924.css">
+  <style>
+    .room{display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:center;margin-top:40px}
+    .room video{width:100%;border-radius:20px;box-shadow:0 10px 36px rgba(0,0,0,.35)}
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+           border-radius:20px;padding:20px 18px;box-shadow:0 10px 32px rgba(0,0,0,.32)}
+    .panel h2{margin:0 0 6px 0;font-family:Orbitron,sans-serif;letter-spacing:.02em}
+    .panel .meta{opacity:.92;color:#D7E1FF;margin:6px 0 10px 0}
+    .panel .phrase{color:#fff;opacity:.96}
+  </style>
 </head>
 <body class="cosmic" data-universe="migou">
   <canvas id="stars"></canvas>
-
-  <nav class="nav-micro">
-    <a href="../index.html">首頁</a>
-    <a href="../cosmic-post-station.html">宇宙郵局</a>
-    <a href="../soulmirror.html">靈魂照妖鏡</a>
-    <a href="../about-universe.html">關於宇宙</a>
-  </nav>
-
-  <section class="hero" style="max-width:980px;margin:40px auto;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:0 16px">
-    <video src="../assets/migou_5s.mp4" autoplay muted loop playsinline style="width:100%;border-radius:18px;box-shadow:0 12px 28px rgba(0,0,0,.35)"></video>
-    <div class="glass" style="padding:18px 16px;border-radius:18px">
-      <h2 style="margin:6px 0 10px">🧡 米果 MIGOU｜主權・高價值</h2>
-      <p style="opacity:.95">「我很值錢，我讓自己更貴。」</p>
-    </div>
-  </section>
-
-  <script src="../js/main_v923.js"></script>
+  <canvas id="shooting"></canvas>
+  <div class="wrap">
+    <nav class="nav-micro">
+      <a href="../index.html"><span class="ico">🏠</span><span>首頁</span></a>
+      <a href="../cosmic-post-station.html"><span class="ico">✉️</span><span>宇宙郵局</span></a>
+      <a href="../soulmirror.html"><span class="ico">🪞</span><span>靈魂照妖鏡</span></a>
+    </nav>
+    <section class="room">
+      <video src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video>
+      <article class="panel">
+        <h2>🧡 MIGOU｜主權・高價值</h2>
+        <div class="meta">我很值錢，我讓自己更貴。</div>
+        <div class="phrase">Boundaries are how I love myself.</div>
+      </article>
+    </section>
+    <footer class="footer-spirit">
+      <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
+      <div class="cn">不必學飛，你只是忘了自己有翅膀。</div>
+    </footer>
+  </div>
+  <script src="../js/main_v924.js"></script>
 </body>
 </html>

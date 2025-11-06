@@ -3,35 +3,39 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Cosmic Post Station｜宇宙郵局</title>
+  <title>Cosmic Post Station | DaSanBa</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="css/universe_v923.css">
-  <link rel="stylesheet" href="css/style_v923.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;600;800&display=swap">
+  <link rel="stylesheet" href="css/universe_v924.css">
+  <link rel="stylesheet" href="css/style_v924.css">
 </head>
 <body class="cosmic" data-universe="cps">
   <canvas id="stars"></canvas>
-
-  <nav class="nav-micro">
-    <a href="index.html">首頁</a>
-    <a href="cosmic-post-station.html">宇宙郵局</a>
-    <a href="soulmirror.html">靈魂照妖鏡</a>
-    <a href="about-universe.html">關於宇宙</a>
-  </nav>
-
-  <section class="cps-art" style="max-width:980px;margin:24px auto 18px;padding:0 16px">
-    <img src="assets/trio_post1.webp" alt="">
-    <img src="assets/trio_post2.webp" alt="">
-    <img src="assets/ajin_post.webp" alt="">
-    <img src="assets/migou_post.webp" alt="">
-    <img src="assets/gungun_post.webp" alt="">
-  </section>
-
-  <div class="glass" style="max-width:980px;margin:12px auto;padding:14px;border-radius:18px">
-    <input id="cps-input" type="text">
+  <canvas id="shooting"></canvas>
+  <div class="wrap">
+    <nav class="nav-micro">
+      <a href="index.html"><span class="ico">🏠</span><span>首頁</span></a>
+      <a href="cosmic-post-station.html"><span class="ico">✉️</span><span>宇宙郵局</span></a>
+      <a href="soulmirror.html"><span class="ico">🪞</span><span>靈魂照妖鏡</span></a>
+    </nav>
+    <section class="cps-grid">
+      <img class="tall" src="assets/trio2.webp" alt="">
+      <img class="tall" src="assets/trio3.webp" alt="">
+      <img src="assets/trio4.webp" alt="">
+      <img src="assets/trio5.webp" alt="">
+      <img src="assets/trio6.webp" alt="">
+    </section>
+    <section class="chat">
+      <div class="msg">與宇宙聯繫中… 三鳥將同時回覆（自然口吻）</div>
+      <div class="input"><input placeholder="在星際隧道投遞一句話，按 Enter 傳訊…"/></div>
+    </section>
+    <footer class="footer-spirit">
+      <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
+      <div class="cn">不必學飛，你只是忘了自己有翅膀。</div>
+    </footer>
   </div>
-
-  <script src="js/main_v923.js"></script>
-  <script src="js/cps_v923.js"></script>
+  <audio id="sfx-bubble" src="assets/sound/click_star.wav" preload="auto"></audio>
+  <script src="js/main_v924.js"></script>
+  <script src="js/cps_v924.js"></script>
 </body>
 </html>
