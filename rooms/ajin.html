@@ -1,20 +1,33 @@
 <!doctype html>
-<html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>阿金的星艙</title>
-<link rel="stylesheet" href="../css/universe_v921.css">
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>阿金 AJIN</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/universe_v921.css"/>
 </head>
-<body class="cosmic room room-ajin" data-universe="ajin">
-<nav class="topbar small"><a href="../index.html">⟵ 返回</a><span>阿金的星艙</span></nav>
-<div class="room-wrap">
-  <video class="room-v" src="../assets/ajin_5s.mp4" autoplay muted loop playsinline></video>
-  <div class="room-bio">
-    <h3>💛 阿金｜AJIN</h3>
-    <p class="tag">自由・反骨</p>
-    <p class="line">驕傲不是距離，而是愛自己的界線。</p>
-  </div>
-</div>
-<script>
-// 這裡不綁 API，沿用你的 /api/chat.js
-</script>
-</body></html>
+<body data-universe="ajin">
+  <canvas id="stars"></canvas>
+  <nav class="toolbar">
+    <a href="../index.html">首頁</a>
+    <a href="../cosmic-post-station.html">宇宙郵局</a>
+    <a href="../soulmirror.html">靈魂照妖鏡</a>
+    <a href="../about-universe.html">關於宇宙</a>
+  </nav>
+
+  <section class="room">
+    <div class="panel video">
+      <video autoplay muted loop playsinline>
+        <source src="../assets/ajin_5s.mp4" type="video/mp4"/>
+      </video>
+    </div>
+    <div class="panel">
+      <h2>阿金 AJIN</h2>
+      <p>自由・反骨｜驕傲不是距離，而是愛自己的界線。</p>
+    </div>
+  </section>
+  <script src="../js/main_v921.js"></script>
+</body>
+</html>
