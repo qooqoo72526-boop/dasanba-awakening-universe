@@ -1,40 +1,28 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cosmic Post Station｜大三巴</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/universe_v926.css">
-  <link rel="stylesheet" href="css/cps_v926.css">
-  <script src="js/universe_v926.js" defer></script>
-  <script src="js/cps_v926.js" defer></script>
-</head>
-<body data-universe="cps">
-  <canvas id="starfield" aria-hidden="true"></canvas>
-  <nav class="nav-minimal">
-    <a href="index.html">🌍 大三巴覺醒宇宙</a>
-    <a class="active" href="cosmic-post-station.html">✉️ 宇宙郵局</a>
-    <a href="soulmirror.html">🪞 靈魂照妖鏡</a>
-  </nav>
-  <header class="cps-head">
-    <div class="title-tw">與宇宙聯繫中⋯</div>
-    <div class="title-en">Communicating with the Cosmos… 接收阿金・米果・滾滾訊號 ✨</div>
-  </header>
-  <main class="cps-wrap">
-    <aside class="cps-art">
-      <img src="assets/ajin_post.webp" alt="AJIN">
-      <img src="assets/migou_post.webp" alt="MIGOU">
-      <img src="assets/gungun_post.webp" alt="GUNGUN">
-    </aside>
-    <section class="cps-chat">
-      <div class="cps-input">
-        <input id="cps-text" type="text" placeholder="在星際隧道送出一句話，按 Enter 傳訊…">
-        <button id="cps-send">送出</button>
-      </div>
-      <ul id="cps-log" class="cps-log" aria-live="polite"></ul>
-      <p class="cps-tip">STAR MAIL — gently delivered. 柔光流動的宇宙信；三鳥輪流回覆。</p>
-    </section>
-  </main>
-</body>
-</html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmic Post Station | 大三巴覺醒宇宙</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/universe_v927_extend.css"><link rel="stylesheet" href="css/cps_v927_extend.css">
+<script src="js/stars_v927_extend.js" defer></script><script src="js/cps_v927_extend.js" defer></script>
+</head><body>
+<canvas id="starfield" aria-hidden="true"></canvas>
+<nav class="tool-rail"><a href="index.html">🏠</a><span class="tick"></span><a href="cosmic-post-station.html">📮</a><span class="tick"></span><a href="soulmirror.html">🪞</a></nav>
+<main>
+<header class="hero-title">
+  <h1 class="evau-title">COSMIC POST STATION</h1>
+  <h2 class="evau-sub">Receiving signals from Ajin · Migou · Gungun ✦</h2>
+  <p class="evau-desc">與宇宙聯繫中... 感應你的心句，三鳥會同時回應（自然口吻）。</p>
+</header>
+<section class="cps-wrap">
+  <div class="float-arts">
+    <img src="assets/trio_post1.webp" class="art a1" alt=""><img src="assets/trio_post2.webp" class="art a2" alt=""><img src="assets/ajin_post.webp" class="art a3" alt=""><img src="assets/migou_post.webp" class="art a4" alt=""><img src="assets/gungun_post.webp" class="art a5" alt="">
+  </div>
+  <div class="chat glass">
+    <div class="chat-row"><label><input type="checkbox" checked> 💛 阿金 AJIN</label><div class="bubble" id="b-ajin">...</div></div>
+    <div class="chat-row"><label><input type="checkbox" checked> 🧡 米果 MIGOU</label><div class="bubble" id="b-migou">...</div></div>
+    <div class="chat-row"><label><input type="checkbox" checked> 💙 滾滾 GUNGUN</label><div class="bubble" id="b-gungun">...</div></div>
+    <input id="prompt" class="prompt" placeholder="在星際隧道投遞一句話；按 Enter 傳訊…">
+  </div>
+</section>
+</main></body></html>
