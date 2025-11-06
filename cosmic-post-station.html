@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cosmic Post Station | 大三巴覺醒宇宙</title>
-  <link rel="stylesheet" href="css/universe_v923.css" />
-  <link rel="stylesheet" href="css/cps_v923.css" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Cosmic Post Station｜宇宙郵局</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/universe_v923.css">
+  <link rel="stylesheet" href="css/style_v923.css">
 </head>
-<body data-universe="cps">
-  <canvas id="cosmic-sky"></canvas>
-  <canvas id="meteor-sky"></canvas>
+<body class="cosmic" data-universe="cps">
+  <canvas id="stars"></canvas>
 
   <nav class="nav-micro">
     <a href="index.html">首頁</a>
@@ -18,52 +19,19 @@
     <a href="about-universe.html">關於宇宙</a>
   </nav>
 
-  <div class="page">
-    <div class="small-banner">
-      <div class="en">Communicating with the Cosmos…</div>
-      <div class="cn">與宇宙聯繫中…　<span class="en">Receiving signals from Ajin · Migou · Gungun ✧</span></div>
-    </div>
+  <section class="cps-art" style="max-width:980px;margin:24px auto 18px;padding:0 16px">
+    <img src="assets/trio_post1.webp" alt="">
+    <img src="assets/trio_post2.webp" alt="">
+    <img src="assets/ajin_post.webp" alt="">
+    <img src="assets/migou_post.webp" alt="">
+    <img src="assets/gungun_post.webp" alt="">
+  </section>
 
-    <section class="cps-grid">
-      <aside class="poster-stack" aria-label="漂浮海報">
-        <img class="poster p1" src="assets/ajin_post.webp" alt="AJIN Poster" />
-        <img class="poster p2" src="assets/migou_post.webp" alt="MIGOU Poster" />
-        <img class="poster p3" src="assets/gungun_post.webp" alt="GUNGUN Poster" />
-        <img class="poster land1" src="assets/trio_post1.webp" alt="TRIO Poster 1" />
-        <img class="poster land2" src="assets/trio_post2.webp" alt="TRIO Poster 2" />
-      </aside>
-
-      <main class="chat-stack" aria-label="星海訊息">
-        <div class="cps-head"><div class="en">All three parrots reply together · 同步回覆</div></div>
-
-        <article class="chat-card glass" data-bird="ajin">
-          <div class="pill"><input type="checkbox" checked id="p-ajin"/><label for="p-ajin" class="name">💛 阿金 AJIN</label></div>
-          <h4 class="title">早安！準備好迎接挑戰了嗎？</h4>
-          <div class="dots">…</div>
-        </article>
-
-        <article class="chat-card glass" data-bird="migou">
-          <div class="pill"><input type="checkbox" checked id="p-migou"/><label for="p-migou" class="name">🩷 米果 MIGOU</label></div>
-          <h4 class="title">希望你今天能找到屬於自己的節奏。</h4>
-          <div class="dots">…</div>
-        </article>
-
-        <article class="chat-card glass" data-bird="gungan">
-          <div class="pill"><input type="checkbox" checked id="p-gungun"/><label for="p-gungun" class="name">🩵 滾滾 GUNGUN</label></div>
-          <h4 class="title">慢慢來沒關係，我一直都在。</h4>
-          <div class="dots">…</div>
-        </article>
-
-        <div class="cps-input">
-          <div class="box">
-            <input id="ask" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" />
-          </div>
-        </div>
-      </main>
-    </section>
+  <div class="glass" style="max-width:980px;margin:12px auto;padding:14px;border-radius:18px">
+    <input id="cps-input" type="text">
   </div>
 
-  <script src="js/cosmic-post-station_v923.js" defer></script>
+  <script src="js/main_v923.js"></script>
   <script src="js/cps_v923.js"></script>
 </body>
 </html>
