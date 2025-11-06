@@ -1,0 +1,9 @@
+
+.cps-wrap{ position:relative; width:min(1120px,94vw); margin:18px auto 80px; }
+.float-arts{ position:absolute; inset:-20px 0 -20px 0; pointer-events:none; }
+.art{ position:absolute; width:30%; opacity:.9; filter: drop-shadow(0 8px 24px rgba(100,140,200,.35)); }
+.a1{ left:-2%; top:-6%; }.a2{ right:-4%; top:12% }.a3{ left:2%; bottom:18% }.a4{ right:2%; bottom:10% }.a5{ left:24%; bottom:-8% }
+.chat{ padding:16px; } .chat-row{ margin:14px 8px; }
+.chat-row label{ display:block; font-size:13px; color:#d9e9ff; margin-bottom:6px; opacity:.9 }
+.bubble{ padding:14px 16px; border-radius:14px; background: linear-gradient(180deg, rgba(210,230,255,.12), rgba(120,160,220,.08)); box-shadow: 0 10px 30px rgba(80,120,180,.35) inset; min-height:48px; }
+.prompt{ margin:12px 6px 6px; width:calc(100% - 12px); padding:14px 16px; border-radius:14px; border:none; outline:none; background: linear-gradient(180deg, rgba(220,240,255,.16), rgba(140,170,230,.10)); color:#e9f3ff; box-shadow:0 12px 32px rgba(80,120,180,.35) inset; }
