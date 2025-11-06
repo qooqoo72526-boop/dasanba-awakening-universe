@@ -1,63 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Cosmic Post Station | 大三巴覺醒宇宙</title>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="css/universe_v925_extend.css">
-<link rel="stylesheet" href="css/style_v925_extend.css">
-<style>
-.layout{width:min(1200px,94vw);margin:110px auto 60px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
-.posters{display:grid;gap:16px}
-.poster{border-radius:22px;overflow:hidden;background:rgba(255,255,255,.04);border:var(--border-soft);box-shadow:var(--shadow-card)}
-.poster img{display:block;width:100%;height:auto}
-.chat{display:grid;gap:12px}
-.lane{height:180px;overflow:auto;padding:10px;border-radius:14px;background:var(--glass);border:var(--border-soft)}
-.msg{padding:6px 0}.msg .b{display:inline-block;padding:8px 12px;border-radius:14px;background:rgba(220,230,255,.10);border:1px solid rgba(220,230,255,.18)}
-form{display:flex;gap:8px;margin-top:8px}input{flex:1;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(220,230,255,.18);color:var(--silver)}
-button{padding:10px 14px;border-radius:14px;border:var(--border-soft);background:linear-gradient(180deg,rgba(200,210,255,.16),rgba(70,90,150,.28));color:var(--silver)}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cosmic Post Station｜宇宙郵局</title>
+  <link rel="stylesheet" href="css/universe_v926.css">
+  <link rel="stylesheet" href="css/cps_v926.css">
+  <script src="js/universe_v926.js" defer></script>
+  <script src="js/cps_v926.js" defer></script>
 </head>
-<body class="cosmic cps-tone">
-<nav class="nav-micro">
-  <div class="brand"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#b7c2ff,#6ea6ff)"></span><span>Cosmic Post Station</span></div>
-  <div class="links">
-    <a href="index.html">首頁</a>
-    <a href="cosmic-post-station.html" class="active">宇宙郵局 🌔</a>
-  </div>
-</nav>
-
-<div class="twinkle"></div><div class="meteors"></div>
-
-<section class="layout">
-  <div class="posters">
-    <div class="poster"><img src="assets/ajin_post.webp" alt=""></div>
-    <div class="poster"><img src="assets/migou_post.webp" alt=""></div>
-    <div class="poster"><img src="assets/gungun_post.webp" alt=""></div>
-    <div class="poster"><img src="assets/trio_post1.webp" alt=""></div>
-    <div class="poster"><img src="assets/trio_post2.webp" alt=""></div>
-  </div>
-  <div class="chat">
-    <div class="panel strong" style="padding:12px 14px;font-size:12px;letter-spacing:.6px;text-align:center">
-      Communicating with the Cosmos...  接收阿金・米果・滾滾訊號 ✨
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <nav class="nav-minimal">
+    <a href="index.html">🌍 大三巴覺醒宇宙</a>
+    <a href="cosmic-post-station.html">🌔 宇宙郵局</a>
+  </nav>
+  <section class="cps-wrap">
+    <div class="cps-left">
+      <div class="ph v"><img src="assets/trio_post1.webp" alt=""></div>
+      <div class="ph h"><img src="assets/trio_post2.webp" alt=""></div>
+      <div class="ph v"><img src="assets/ajin_post.webp" alt=""></div>
+      <div class="ph v"><img src="assets/migou_post.webp" alt=""></div>
+      <div class="ph v"><img src="assets/gungun_post.webp" alt=""></div>
     </div>
-    <div class="lane" id="lane-ajin" aria-label="阿金 AJIN"></div>
-    <div class="lane" id="lane-migou" aria-label="米果 MIGOU"></div>
-    <div class="lane" id="lane-gungun" aria-label="滾滾 GUNGUN"></div>
-    <form id="cps-form">
-      <input id="cps-input" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" />
-      <button type="submit">送出</button>
-    </form>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="line1">STAR MAIL — gently delivered.</div>
-  <div class="line2">柔光氣泡的宇宙回音，三鳥輪流回覆。</div>
-</footer>
-
-<audio src="assets/sound/bubble_soft.wav" preload="auto"></audio>
-<script src="js/cps_v925_extend.js"></script>
+    <div class="cps-panel">
+      <div style="text-align:center;opacity:.9;margin-bottom:6px">Communicating with the Cosmos… 接收阿金・米果・滾滾訊號 ✨</div>
+      <div class="cps-list" style="max-height:56vh;overflow:auto"></div>
+      <div class="cps-input">
+        <input placeholder="在星際隧道投遞一句話，按 Enter 傳訊…">
+        <button>送出</button>
+      </div>
+      <div class="cps-footer">STAR MAIL – gently delivered. 柔光鋼琴的宇宙音，三鳥輪流回應。</div>
+    </div>
+  </section>
 </body>
 </html>

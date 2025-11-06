@@ -1,0 +1,8 @@
+
+資產對應（此包不包含媒體檔，沿用你 repo 內既有檔案）
+- 首頁影片：assets/trio.mp4
+- 首頁畫廊：assets/trio.webp ~ assets/trio10.webp
+- 房間影片：assets/ajin_5s.mp4、assets/migou_5s.mp4、assets/gungun_5s.mp4
+- 角色圖片：assets/ajin.webp、assets/migou.webp、assets/gungun.webp
+- 宇宙郵局圖片：assets/trio_post1.webp、trio_post2.webp、ajin_post.webp、migou_post.webp、gungun_post.webp
+- 聲音：assets/sound/bubble_soft.wav
