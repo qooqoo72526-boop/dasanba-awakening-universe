@@ -1,51 +1,66 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Cosmic Post Station</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/universe_v920.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Cosmic Post Station</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/universe_v921.css">
+<script defer src="js/cps_v921.js"></script>
 </head>
-<body data-universe="cps">
-  <canvas id="starfield" aria-hidden="true"></canvas>
+<body class="cosmic cps-sky">
+<nav class="topbar small"><a href="index.html">⟵ 返回</a><span>Cosmic Post Station</span></nav>
 
-  <header class="glass-nav"><nav>
-    <a href="index.html" class="nav-link">🏠 回到宇宙</a>
-    <span class="nav-label">🌔 Cosmic Post Station</span>
-  </nav></header>
+<!-- side arts (2 land + 3 port) -->
+<div class="cps-wrap">
+  <div class="side-art left">
+    <img class="land" src="assets/trio_post1.webp" alt="scene1">
+    <img class="land" src="assets/trio_post2.webp" alt="scene2">
+    <img class="port" src="assets/ajin_post.webp" alt="a">
+    <img class="port" src="assets/migou_post.webp" alt="m">
+    <img class="port" src="assets/gungun_post.webp" alt="g">
+  </div>
 
-  <main class="cps-wrap">
-    <img class="bird b-ajin"   src="assets/ajin_clear_post.webp"   alt="Ajin"/>
-    <img class="bird b-migou"  src="assets/migou_clear_post.webp"  alt="Migou"/>
-    <img class="bird b-gungun" src="assets/gungun_clear_post.webp" alt="Gungun"/>
-
-    <div class="cps-art">
-      <img class="land" src="assets/trio_post1.webp" alt="scene1"/>
-      <img class="land" src="assets/trio_post2.webp" alt="scene2"/>
-      <img class="port" src="assets/ajin_post.webp"  alt="ajin scene"/>
-      <img class="port" src="assets/migou_post.webp" alt="migou scene"/>
-      <img class="port" src="assets/gungun_post.webp" alt="gungun scene"/>
+  <div class="dialog-col">
+    <div class="birds">
+      <img class="bird b-ajin"  src="assets/ajin_clear_post.webp"  alt="Ajin">
+      <img class="bird b-migou" src="assets/migou_clear_post.webp" alt="Migou">
+      <img class="bird b-gungun"src="assets/gungun_clear_post.webp"alt="Gungun">
+      <div class="envelope"></div>
     </div>
 
-    <section class="bubbles">
-      <div class="bubble-card a" id="pane-ajin"><h3>💛 阿金 AJIN</h3><div class="list"></div></div>
-      <div class="bubble-card m" id="pane-migou"><h3>🩷 米果 MIGOU</h3><div class="list"></div></div>
-      <div class="bubble-card g" id="pane-gungun"><h3>🩵 滾滾 GUNGUN</h3><div class="list"></div></div>
-    </section>
+    <div class="bubble-card" id="aj">
+      <div class="title">💛 阿金 AJIN</div>
+      <div class="list" id="ajList"></div>
+    </div>
+    <div class="bubble-card" id="mi">
+      <div class="title">🩷 米果 MIGOU</div>
+      <div class="list" id="miList"></div>
+    </div>
+    <div class="bubble-card" id="gu">
+      <div class="title">🩵 滾滾 GUNGUN</div>
+      <div class="list" id="guList"></div>
+    </div>
 
-    <section class="composer glass">
-      <input id="prompt" class="input" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…" maxlength="400"/>
-    </section>
-  </main>
+    <form id="composer" class="composer" autocomplete="off">
+      <input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…">
+    </form>
+  </div>
 
-  <audio id="sfx-click" src="assets/sound/click_star.wav" preload="auto"></audio>
-  <audio id="sfx-send"  src="assets/sound/send_cosmic.wav" preload="auto"></audio>
-  <audio id="sfx-ajin"  src="assets/sound/reply_ajin.wav" preload="auto"></audio>
-  <audio id="sfx-migou" src="assets/sound/reply_migou.wav" preload="auto"></audio>
-  <audio id="sfx-gungun"src="assets/sound/reply_gungun.wav" preload="auto"></audio>
+  <div class="side-art right">
+    <img class="land" src="assets/trio_post1.webp" alt="scene1b">
+    <img class="land" src="assets/trio_post2.webp" alt="scene2b">
+    <img class="port" src="assets/ajin_post.webp" alt="ab">
+    <img class="port" src="assets/migou_post.webp" alt="mb">
+    <img class="port" src="assets/gungun_post.webp" alt="gb">
+  </div>
+</div>
 
-  <script src="js/cps_v920.js"></script>
+<audio id="s_click" src="assets/sound/click_star.wav" preload="auto"></audio>
+<audio id="s_send"  src="assets/sound/send_cosmic.wav" preload="auto"></audio>
+<audio id="s_aj"    src="assets/sound/reply_ajin.wav" preload="auto"></audio>
+<audio id="s_mi"    src="assets/sound/reply_migou.wav" preload="auto"></audio>
+<audio id="s_gu"    src="assets/sound/reply_gungun.wav" preload="auto"></audio>
 </body>
 </html>
