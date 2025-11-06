@@ -1,1 +1,5 @@
-/* reserved for future room extras */
+.room-title{text-align:center;margin:70px 0 8px 0}.room-title h1{font-family:'Orbitron';margin:0;font-size:30px;color:#DDEBFF}.room-title h2{margin:4px 0 0 0;opacity:.9}
+.room-wrap{max-width:980px;margin:10px auto 32px auto;display:grid;grid-template-columns:1fr 320px;gap:18px;align-items:center;padding:0 18px}
+.room-video{width:100%;max-width:520px;border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.room-meta{background:rgba(255,255,255,.06);backdrop-filter:blur(6px);border-radius:14px;padding:14px}.room-meta .kws{font-weight:700;margin-bottom:6px}.room-meta .phrase{font-size:14px;opacity:.92}
+@media(max-width:900px){.room-wrap{grid-template-columns:1fr}.room-video{max-width:500px;margin:0 auto}}

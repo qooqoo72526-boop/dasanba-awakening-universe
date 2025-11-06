@@ -1,0 +1,1 @@
+(() => { const listEl=document.getElementById('gallery-list'); const img=document.getElementById('gallery-img'); if(!listEl||!img) return; const files=JSON.parse(listEl.getAttribute('data-files')); let i=0; function show(){ img.src=files[i]; i=(i+1)%files.length; } setInterval(show,3000); })();

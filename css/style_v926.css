@@ -1,1 +1,1 @@
-/* optional page tweaks */
+.floating{animation:float 6s ease-in-out infinite}@keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
