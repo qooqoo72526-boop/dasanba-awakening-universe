@@ -1,1 +1,38 @@
-<!doctype html><html><body>Soul Mirror page with 25 questions + AI analysis</body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>🪞 靈魂照妖鏡 | Soul Mirror</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/universe_v920.css"/>
+</head>
+<body data-universe="mirror">
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <header class="glass-nav"><nav>
+    <a href="index.html" class="nav-link">🏠 回到宇宙</a>
+    <span class="nav-label">🪞 Soul Mirror</span>
+  </nav></header>
+
+  <main class="mirror-wrap">
+    <section class="glass panel" id="question-panel">
+      <h2 class="title-gradient small">🪞 靈魂照妖鏡｜25 題宇宙測驗</h2>
+      <form id="quiz"></form>
+      <button id="submitQuiz" class="btn-ghost">送出測驗</button>
+    </section>
+
+    <section class="glass panel hide" id="result-panel">
+      <div class="ring"></div>
+      <div id="analysis" class="analysis"></div>
+      <div class="birds-lines">
+        <p>💛 阿金：<span id="quote-ajin"></span></p>
+        <p>🩷 米果：<span id="quote-migou"></span></p>
+        <p>🩵 滾滾：<span id="quote-gungun"></span></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/soulmirror_v920.js"></script>
+</body>
+</html>
