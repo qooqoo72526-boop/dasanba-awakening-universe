@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" data-room="migou">
+<html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>米果｜MIGOU</title>
-<link rel="stylesheet" href="/css/universe_v930.css">
-<script defer src="/js/main_v930.js"></script>
-<script defer src="/js/rooms_v930.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🧡 米果 MIGOU STARSHIP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/universe_v916_gallery.css">
+  <style>
+    body{background: radial-gradient(900px 500px at 60% 10%, rgba(255,140,200,.26), transparent 60%), #0b1b34;}
+    .room{ padding:24px 0 120px; text-align:center; }
+    .room h1{ font-family:"Orbitron"; letter-spacing:.22em; margin:10px 0 4px; }
+    .room h2{ margin:0 0 14px; font-size:14px; opacity:.9 }
+    .loop{ width:min(980px,92vw); aspect-ratio:16/9; border-radius:18px; box-shadow:0 8px 40px rgba(255,170,210,.18); object-fit:cover }
+  </style>
 </head>
 <body>
-<div class="rooms-wrap" data-room="migou">
-  <div class="room-title">MIGOU · 自我價值｜邊界</div>
-  <div class="room-sub">「我很值錢，我讓自己更貴。」</div>
-  <video class="room-video" src="/assets/migou_5s.mp4" autoplay muted loop playsinline></video>
-</div>
+  <canvas id="starfield"></canvas>
+  <section class="room">
+    <h1>🧡 米果 MIGOU STARSHIP</h1>
+    <h2>自我價值・邊界</h2>
+    <video class="loop" src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video>
+  </section>
+  <script src="../js/universe_v916_starfield.js" defer></script>
 </body>
 </html>
