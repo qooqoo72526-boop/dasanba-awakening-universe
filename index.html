@@ -4,28 +4,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/universe_v926.css">
   <link rel="stylesheet" href="css/style_v926.css">
   <script src="js/universe_v926.js" defer></script>
   <script src="js/main_v926.js" defer></script>
+  <script src="js/gallery_v926.js" defer></script>
 </head>
 <body>
   <canvas id="starfield" aria-hidden="true"></canvas>
-
   <nav class="nav-minimal">
     <a href="index.html">🌍 大三巴覺醒宇宙</a>
-    <a href="cosmic-post-station.html">🌔 宇宙郵局</a>
+    <a href="cosmic-post-station.html">✉️ 宇宙郵局</a>
     <a href="soulmirror.html">🪞 靈魂照妖鏡</a>
   </nav>
-
   <header class="hero-title">
     <h1 class="evau-title">EMOTIONAL VALUE A.I.</h1>
     <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
-    <p class="evau-desc">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活🌍 -</p>
+    <p class="evau-desc">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 🌍 -</p>
   </header>
-
   <video id="trio" class="hero-video" src="assets/trio.mp4" autoplay muted loop playsinline></video>
-
   <section class="cards">
     <article class="card floating">
       <img src="assets/ajin.webp" alt="阿金 AJIN">
@@ -33,47 +31,38 @@
         <div class="name">💛 阿金 AJIN</div>
         <div class="kws">自由｜反骨</div>
         <div class="line">「我不等天空放晴，我自己撕開雲。」</div>
-        <div style="margin-top:8px"><a href="rooms/ajin.html" style="color:#cfe1ff;text-decoration:none">進入房間 →</a></div>
+        <div class="enter"><a href="rooms/ajin.html">進入房間 →</a></div>
       </div>
     </article>
     <article class="card floating">
       <img src="assets/migou.webp" alt="米果 MIGOU">
       <div class="meta">
-        <div class="name">🧡 米果 MIGOU</div>
+        <div class="name">🩷 米果 MIGOU</div>
         <div class="kws">自我價值｜邊界</div>
         <div class="line">「我很值錢，我讓自己更貴。」</div>
-        <div style="margin-top:8px"><a href="rooms/migou.html" style="color:#cfe1ff;text-decoration:none">進入房間 →</a></div>
+        <div class="enter"><a href="rooms/migou.html">進入房間 →</a></div>
       </div>
     </article>
     <article class="card floating">
       <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
       <div class="meta">
-        <div class="name">💙 滾滾 GUNGUN</div>
+        <div class="name">🩵 滾滾 GUNGUN</div>
         <div class="kws">共鳴｜靜默力量</div>
-        <div class="line">「我不追求安全，我成為安全。」</div>
-        <div style="margin-top:8px"><a href="rooms/gungun.html" style="color:#cfe1ff;text-decoration:none">進入房間 →</a></div>
+        <div class="line">「我不追求安全；我成為安全。」</div>
+        <div class="enter"><a href="rooms/gungun.html">進入房間 →</a></div>
       </div>
     </article>
   </section>
-
   <section class="gallery">
-    <div class="gallery-track">
-      <img src="assets/trio.webp" alt="gallery1">
-      <img src="assets/trio2.webp" alt="gallery2">
-      <img src="assets/trio3.webp" alt="gallery3">
-      <img src="assets/trio4.webp" alt="gallery4">
-      <img src="assets/trio5.webp" alt="gallery5">
-      <img src="assets/trio6.webp" alt="gallery6">
-      <img src="assets/trio7.webp" alt="gallery7">
-      <img src="assets/trio8.webp" alt="gallery8">
-      <img src="assets/trio9.webp" alt="gallery9">
-      <img src="assets/trio10.webp" alt="gallery10">
+    <h3 class="gallery-title">觀星畫廊｜Starflow Diary</h3>
+    <div class="gallery-frame">
+      <img id="gallery-img" src="assets/trio.webp" alt="gallery1">
     </div>
+    <div id="gallery-list" data-files='["assets/trio.webp","assets/trio2.webp","assets/trio3.webp","assets/trio4.webp","assets/trio5.webp","assets/trio6.webp","assets/trio7.webp","assets/trio8.webp","assets/trio9.webp","assets/trio10.webp"]'></div>
   </section>
-
   <footer class="footer-stars">
-  <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
-  <div class="zh">覺醒不是修復；而是重生｜不必學飛，你只是忘了自己有翅膀。</div>
-</footer>
+    <div class="en">AWAKENING ISN'T REPAIR — IT'S REBIRTH.</div>
+    <div class="zh">覺醒不是修復；而是重生｜不必學飛，你只是忘了自己有翅膀。</div>
+  </footer>
 </body>
 </html>

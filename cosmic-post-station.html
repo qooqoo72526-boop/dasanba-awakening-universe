@@ -3,35 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Cosmic Post Station｜宇宙郵局</title>
+  <title>Cosmic Post Station｜大三巴</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/universe_v926.css">
   <link rel="stylesheet" href="css/cps_v926.css">
   <script src="js/universe_v926.js" defer></script>
   <script src="js/cps_v926.js" defer></script>
 </head>
-<body>
+<body data-universe="cps">
   <canvas id="starfield" aria-hidden="true"></canvas>
   <nav class="nav-minimal">
     <a href="index.html">🌍 大三巴覺醒宇宙</a>
-    <a href="cosmic-post-station.html">🌔 宇宙郵局</a>
+    <a class="active" href="cosmic-post-station.html">✉️ 宇宙郵局</a>
+    <a href="soulmirror.html">🪞 靈魂照妖鏡</a>
   </nav>
-  <section class="cps-wrap">
-    <div class="cps-left">
-      <div class="ph v"><img src="assets/trio_post1.webp" alt=""></div>
-      <div class="ph h"><img src="assets/trio_post2.webp" alt=""></div>
-      <div class="ph v"><img src="assets/ajin_post.webp" alt=""></div>
-      <div class="ph v"><img src="assets/migou_post.webp" alt=""></div>
-      <div class="ph v"><img src="assets/gungun_post.webp" alt=""></div>
-    </div>
-    <div class="cps-panel">
-      <div style="text-align:center;opacity:.9;margin-bottom:6px">Communicating with the Cosmos… 接收阿金・米果・滾滾訊號 ✨</div>
-      <div class="cps-list" style="max-height:56vh;overflow:auto"></div>
+  <header class="cps-head">
+    <div class="title-tw">與宇宙聯繫中⋯</div>
+    <div class="title-en">Communicating with the Cosmos… 接收阿金・米果・滾滾訊號 ✨</div>
+  </header>
+  <main class="cps-wrap">
+    <aside class="cps-art">
+      <img src="assets/ajin_post.webp" alt="AJIN">
+      <img src="assets/migou_post.webp" alt="MIGOU">
+      <img src="assets/gungun_post.webp" alt="GUNGUN">
+    </aside>
+    <section class="cps-chat">
       <div class="cps-input">
-        <input placeholder="在星際隧道投遞一句話，按 Enter 傳訊…">
-        <button>送出</button>
+        <input id="cps-text" type="text" placeholder="在星際隧道送出一句話，按 Enter 傳訊…">
+        <button id="cps-send">送出</button>
       </div>
-      <div class="cps-footer">STAR MAIL – gently delivered. 柔光鋼琴的宇宙音，三鳥輪流回應。</div>
-    </div>
-  </section>
+      <ul id="cps-log" class="cps-log" aria-live="polite"></ul>
+      <p class="cps-tip">STAR MAIL — gently delivered. 柔光流動的宇宙信；三鳥輪流回覆。</p>
+    </section>
+  </main>
 </body>
 </html>
