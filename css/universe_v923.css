@@ -1,112 +1,76 @@
-/* v9.2.3 — Universe (Blue-Silver, light gradient) */
+/* v9.2.3 — Universe layer (light gradients, stars, meteors) */
 :root{
-  --blue-1:#0b1a2e;
-  --blue-2:#132c4a;
-  --blue-3:#1c3e66;
-  --silver:#cfe4ff;
-  --glass-bg:rgba(255,255,255,.06);
-  --glass-brd:rgba(255,255,255,.18);
-  --glow:0 0 24px rgba(160,200,255,.45);
+  --glass: rgba(255,255,255,.08);
+  --glass-2: rgba(255,255,255,.14);
+  --ink: rgba(226,238,255,.96);
 }
-html,body{height:100%;}
+
 body.cosmic{
-  background:
-    radial-gradient(1200px 600px at 15% -10%, rgba(120,170,255,.35), transparent 55%),
-    radial-gradient(900px 500px at 85% 10%, rgba(200,230,255,.25), transparent 60%),
-    linear-gradient(180deg, var(--blue-3), var(--blue-2) 45%, var(--blue-1));
-  color:#e9f1ff;
+  min-height:100dvh;
+  color:#cfe5ff;
   overflow-x:hidden;
-}
-/* tiny star specks (behind canvas) */
-body.cosmic:before{
-  content:"";
-  position:fixed;inset:0;pointer-events:none;
   background:
-    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,.8), transparent 55%),
-    radial-gradient(2px 2px at 40% 30%, rgba(255,255,255,.7), transparent 55%),
-    radial-gradient(1.5px 1.5px at 70% 15%, rgba(255,255,255,.7), transparent 55%),
-    radial-gradient(1.7px 1.7px at 85% 70%, rgba(255,255,255,.7), transparent 55%),
-    radial-gradient(1.2px 1.2px at 25% 75%, rgba(255,255,255,.7), transparent 55%);
-  opacity:.45;
-  z-index:0;
-}
-/* shared glass */
-.glass-923{
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  background: var(--glass-bg);
-  border:1px solid var(--glass-brd);
-  box-shadow: var(--glow);
-  border-radius: 16px;
-}
-/* title zone (centered) */
-.big-title-923{
-  text-align:center;
-  letter-spacing:.06em;
-  line-height:1.1;
-}
-.big-title-923 .en{font-family:"Orbitron", system-ui, sans-serif;font-weight:800;font-size:clamp(28px,4.4vw,48px);}
-.big-title-923 .sub{font-family:"Noto Sans TC", system-ui, sans-serif;font-weight:500;opacity:.9;margin-top:8px;}
-
-/* gallery bar */
-.starflow{
-  width:min(1200px, 92vw);
-  margin:48px auto;
-}
-.starflow .title{
-  text-align:center;
-  font-weight:700;
-  margin-bottom:12px;
-}
-.scroller{
-  overflow:hidden; white-space:nowrap; border-radius:18px;
-  position:relative;
-}
-.scroller img{
-  display:inline-block; width:auto; height:260px; margin-right:12px; border-radius:14px;
-  object-fit:cover;
+    radial-gradient(1200px 800px at 20% -10%, rgba(255,255,255,.06), transparent 60%),
+    radial-gradient(900px 700px at 120% 20%, rgba(255,255,255,.05), transparent 60%),
+    linear-gradient(180deg, #0a0f24 0%, #0b1030 40%, #0b133a 100%);
 }
 
-/* nav micro (subtle) */
-.nav-micro a{color:#cfe4ff;text-decoration:none;opacity:.8;margin-right:14px;font-size:.92rem}
-.nav-micro a:hover{opacity:1;text-shadow:0 0 10px rgba(200,230,255,.7)}
+/* canvas for twinkle + meteors (in main_v923.js) */
+#stars{position:fixed; inset:0; z-index:0; pointer-events:none}
 
-/* splash overlay */
-.splash-923{
-  position:fixed;inset:0;display:grid;place-items:center;
-  background:radial-gradient(1000px 400px at 50% -20%, rgba(150,120,255,.35), transparent 60%), rgba(8,10,24,.92);
-  z-index:9999;color:#e9e6ff;text-align:center;
+/* Per-page soft gradients (no hard bands) */
+body[data-universe="home"]{
+  --accent:#7ec8ff;
+  background-image:
+    radial-gradient(900px 600px at 30% -10%, rgba(190,220,255,.10), transparent 60%),
+    linear-gradient(180deg,#0d1540 0%,#0b1134 55%,#0b0f2e 100%);
 }
-.splash-923 .wrap{transform:translateY(0);animation:popIn .45s ease-out both}
-.splash-923 .l1{font:800 clamp(28px,6vw,64px)/1.05 "Orbitron",system-ui,sans-serif; letter-spacing:.08em; filter:drop-shadow(0 2px 0 rgba(0,0,0,.25));}
-.splash-923 .l2{font:700 clamp(18px,3.2vw,28px)/1.2 "Orbitron",system-ui,sans-serif; opacity:.9; margin-top:6px}
-.splash-923 .l3{font:500 clamp(14px,2.6vw,18px)/1.6 "Noto Sans TC",system-ui,sans-serif; opacity:.92; margin-top:12px}
-@keyframes popIn{from{transform:translateY(12px);opacity:0} to{transform:translateY(0);opacity:1}}
-
-/* CPS (Cosmic Post Station) panel & input */
-.cps-panel{ padding:12px; border-radius:16px; }
-.cps-input{
-  height:46px; padding:0 16px; border:none; width:100%;
-  border-radius:999px; background:rgba(255,255,255,.07); color:#eaf1ff;
-  outline:none; box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+body[data-universe="ajin"]{
+  --accent:#ffd978;
+  background-image:
+    radial-gradient(800px 520px at 15% -5%, rgba(255,217,120,.08), transparent 60%),
+    linear-gradient(180deg,#10122e 0%,#121332 45%,#0b0f2b 100%);
+}
+body[data-universe="migou"]{
+  --accent:#ffb17a;
+  background-image:
+    radial-gradient(820px 560px at 85% -5%, rgba(255,210,235,.08), transparent 60%),
+    linear-gradient(180deg,#101a3a 0%,#0f1a44 50%,#0e163b 100%);
+}
+body[data-universe="gungun"]{
+  --accent:#8ec5ff;
+  background-image:
+    radial-gradient(840px 580px at 50% -10%, rgba(191,227,255,.10), transparent 60%),
+    linear-gradient(180deg,#0b1632 0%,#0b193a 55%,#0b1a40 100%);
+}
+body[data-universe="cps"]{
+  --accent:#bcd8ff;
+  background-image:
+    radial-gradient(900px 620px at 70% -10%, rgba(120,180,255,.10), transparent 60%),
+    linear-gradient(180deg,#0b1532 0%,#0b1839 55%,#0b1b42 100%);
+}
+body[data-universe="mirror"]{
+  --accent:#c7dbff;
+  background-image:
+    radial-gradient(880px 600px at 30% -10%, rgba(160,200,255,.10), transparent 60%),
+    linear-gradient(180deg,#0c1536 0%,#0b173c 55%,#0b1a44 100%);
 }
 
-/* Rooms layout */
-.room-wrap{
-  display:grid; grid-template-columns: minmax(260px, 520px) 1fr;
-  gap:28px; align-items:flex-start; width:min(1200px,92vw); margin:48px auto;
+/* Glass bubbles / cards */
+.glass{
+  background: linear-gradient(180deg, var(--glass-2), var(--glass));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.08);
 }
-.room-video{border-radius:18px; overflow:hidden; box-shadow:0 10px 40px rgba(0,0,0,.35)}
-.room-panel{padding:18px 20px}
-.room-panel h1{margin:0 0 8px; font:800 clamp(22px,4vw,34px)/1.1 "Orbitron",system-ui,sans-serif}
-.room-panel p{margin:6px 0 0; opacity:.92}
 
-/* per-universe tint */
-body[data-universe="ajin"] .room-panel h1{color:#ffd26a}
-body[data-universe="migou"] .room-panel h1{color:#ff83c2}
-body[data-universe="gungun"] .room-panel h1{color:#9bd1ff}
-
-/* subtle per-universe particles */
-body[data-universe="ajin"] .room-panel{box-shadow:0 0 20px rgba(255,210,106,.15) inset}
-body[data-universe="migou"] .room-panel{box-shadow:0 0 20px rgba(255,131,194,.15) inset}
-body[data-universe="gungun"] .room-panel{box-shadow:0 0 20px rgba(155,209,255,.15) inset}
+/* Micro nav (top-right) */
+.nav-micro{
+  position:fixed; right:20px; top:16px; z-index:10;
+  display:flex; gap:16px; font:500 12px/1.2 "Orbitron","Noto Sans TC",system-ui;
+  letter-spacing:.12em;
+}
+.nav-micro a{color:#a9c7ff;text-decoration:none;opacity:.9}
+.nav-micro a:hover{opacity:1; text-shadow:0 0 8px rgba(160,200,255,.55)}

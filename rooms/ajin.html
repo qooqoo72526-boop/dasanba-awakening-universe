@@ -1,26 +1,32 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>阿金 AJIN 房</title>
-<link rel="stylesheet" href="../css/universe_v923.css">
-<link rel="stylesheet" href="../css/style_v923.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>AJIN 房間</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="../css/universe_v923.css">
+  <link rel="stylesheet" href="../css/style_v923.css">
 </head>
 <body class="cosmic" data-universe="ajin">
-<nav class="nav-micro" style="padding:12px 14px"><a href="../index.html">首頁</a><a href="../cosmic-post-station.html">宇宙郵局</a><a href="../soulmirror.html">靈魂照妖鏡</a></nav>
+  <canvas id="stars"></canvas>
 
-<div class="room-wrap">
-  <div class="room-video">
-    <video src="../assets/ajin_5s.mp4" autoplay muted loop playsinline style="width:100%;height:auto"></video>
-  </div>
-  <div class="room-panel glass-923">
-    <h1>阿金 AJIN</h1>
-    <div class="tag">自由・反骨</div>
-    <p>「我不等天空放晴，我自己撕開雲。」</p>
-  </div>
-</div>
+  <nav class="nav-micro">
+    <a href="../index.html">首頁</a>
+    <a href="../cosmic-post-station.html">宇宙郵局</a>
+    <a href="../soulmirror.html">靈魂照妖鏡</a>
+    <a href="../about-universe.html">關於宇宙</a>
+  </nav>
 
-<canvas id="stars"></canvas>
-<script src="../js/main_v923.js"></script>
-</body></html>
+  <section class="hero" style="max-width:980px;margin:40px auto;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:0 16px">
+    <video src="../assets/ajin_5s.mp4" autoplay muted loop playsinline style="width:100%;border-radius:18px;box-shadow:0 12px 28px rgba(0,0,0,.35)"></video>
+    <div class="glass" style="padding:18px 16px;border-radius:18px">
+      <h2 style="margin:6px 0 10px">💛 阿金 AJIN｜自由・反骨</h2>
+      <p style="opacity:.95">「我不等天空放晴，我自己撕開雲。」</p>
+    </div>
+  </section>
+
+  <script src="../js/main_v923.js"></script>
+</body>
+</html>

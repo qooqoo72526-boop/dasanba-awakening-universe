@@ -1,25 +1,69 @@
-/* v9.2.3 — Homepage refinements (cards centered, captions colors) */
-.cards-row{
-  display:grid; grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap:22px; width:min(1200px, 92vw); margin:22px auto 12px;
-}
-.card{
-  border-radius:18px; overflow:hidden; background:rgba(0,0,0,.25);
-  box-shadow:0 10px 40px rgba(0,0,0,.25);
-}
-.card img{display:block; width:100%; height:260px; object-fit:cover;}
-.card .meta{padding:12px 14px}
-.card .name{font-weight:800; letter-spacing:.02em}
-.card .tag{font-size:.92rem; opacity:.9}
-.card .line{font-size:.92rem; opacity:.9; margin-top:2px}
+/* v9.2.3 — Layout & components */
 
-/* colors */
-.name.ajin{ color:#ffd26a;}
-.name.migou{ color:#ff83c2;}
-.name.gungun{ color:#9bd1ff;}
+/* Opening splash — gradient PURPLE (only for opening EN title) */
+.splash{position:fixed; inset:0; display:grid; place-items:center; z-index:3; pointer-events:none}
+.splash .en{
+  font:700 clamp(26px,4vw,56px)/1.05 "Orbitron","Noto Sans TC";
+  letter-spacing:.16em;
+  background: linear-gradient(90deg,#b6b2ff,#c6b8ff,#e5caff);
+  -webkit-background-clip:text; color:transparent;
+  text-shadow: 0 0 22px rgba(170,150,255,.35);
+}
 
-/* center block titles */
-.centered-hero{ margin:36px auto 14px; width:min(1100px,92vw); text-align:center;}
-.centered-hero .en{ font:800 clamp(26px,4.6vw,44px)/1.08 "Orbitron", system-ui, sans-serif;}
-.centered-hero .cn{ margin-top:6px; font-weight:500; opacity:.9}
-.centered-hero .tip{ margin-top:4px; font-size:.95rem; opacity:.85}
+/* HOME main title — keep previous blue look */
+.title-wrap{margin:48px auto 8px; text-align:center; z-index:2; position:relative; max-width:1080px}
+.big-title.en{
+  font:700 clamp(28px,3.6vw,48px)/1.05 "Orbitron","Noto Sans TC";
+  letter-spacing:.12em; 
+  background: linear-gradient(90deg,#93c7ff,#a6d4ff,#c7e1ff);
+  -webkit-background-clip:text; color:transparent;
+  text-shadow: 0 0 20px rgba(120,170,255,.25);
+}
+.sub-tip{
+  margin-top:8px; font:500 12px/1.6 "Noto Sans TC";
+  opacity:.9; color:#cfe5ff;
+}
+
+/* Cards */
+.cards-vert{
+  margin:28px auto 24px; display:grid; grid-template-columns:repeat(3,minmax(240px,1fr));
+  gap:22px; max-width:1080px; padding:0 20px; position:relative; z-index:2;
+}
+.card-vert{
+  cursor:pointer; padding:12px 12px 14px; border-radius:22px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.04));
+  box-shadow: 0 12px 26px rgba(0,0,0,.35);
+}
+.card-vert img{width:100%; height:auto; border-radius:16px; display:block}
+.card-vert .name{
+  margin:10px 8px 2px;
+  font:700 15px/1.2 "Noto Sans TC";
+}
+.card-vert .meta{margin:0 8px 2px; font:600 12px/1.6 "Noto Sans TC"; opacity:.95}
+.card-vert .phrase{margin:2px 8px 0; font:500 12px/1.7 "Noto Sans TC"; opacity:.9}
+
+/* Name badges */
+.name .badge{margin-right:6px}
+.badge.ajin{color:#ffd978}
+.badge.migou{color:#ffb17a}
+.badge.gungun{color:#8ec5ff}
+
+/* Star gallery */
+.starflow{max-width:1120px; margin:22px auto 60px; padding:0 20px}
+.starflow-title{ text-align:center; margin:6px 0 8px; color:#cfe5ff }
+.starflow-title:after{content:" 🔭"}
+.scroller{display:flex; gap:18px; overflow:hidden; scroll-behavior:smooth}
+.scroller img{width:100%; max-width:520px; height:auto; flex:0 0 100%; border-radius:18px}
+
+/* Spirit footer */
+.footer-spirit{
+  max-width:980px; margin:56px auto 80px; text-align:center; padding:24px 16px;
+  color:#d9e6ff; opacity:.95
+}
+.footer-spirit .en{
+  font:700 14px/1.35 "Orbitron","Noto Sans TC";
+  letter-spacing:.18em;
+  background: linear-gradient(90deg,#b1b4ff,#c9d7ff);
+  -webkit-background-clip:text; color:transparent;
+}
+.footer-spirit .cn{ margin-top:10px; font:500 13px/1.9 "Noto Sans TC"; }

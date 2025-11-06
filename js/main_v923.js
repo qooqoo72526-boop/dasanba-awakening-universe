@@ -1,81 +1,46 @@
-// v9.2.3 — splash + stars + gallery + shooting stars
+/* v9.2.3 — stars + meteors + home behaviors */
 (function(){
-  // Splash (3.5s)
-  const SPLASH_MS = 3500;
-  const has = sessionStorage.getItem('dsb_splash_v923_done');
-  if(!has){
-    const s = document.createElement('div');
-    s.className = 'splash-923';
-    s.innerHTML = '<div class="wrap">'
-      + '<div class="l1">EMOTIONAL VALUE A.I.</div>'
-      + '<div class="l2">Awakening Universe</div>'
-      + '<div class="l3">覺醒不是修復，而是重生。</div>'
-      + '</div>';
-    document.body.appendChild(s);
-    setTimeout(()=>{
-      s.style.transition = 'opacity .6s ease';
-      s.style.opacity = '0';
-      setTimeout(()=>s.remove(), 800);
-      sessionStorage.setItem('dsb_splash_v923_done','1');
-    }, SPLASH_MS);
-  }
-
-  // Canvas stars + shooting stars
-  const canvas = document.getElementById('stars') || (function(){
-    const c = document.createElement('canvas'); c.id='stars'; document.body.appendChild(c); return c;
+  const c = document.getElementById('stars') || (function(){
+    const el=document.createElement('canvas'); el.id='stars'; document.body.appendChild(el); return el;
   })();
-  const ctx = canvas.getContext('2d');
-  let W,H,stars=[],shooting=[];
-  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
-  window.addEventListener('resize', resize); resize();
-  for(let i=0;i<120;i++){
-    stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.3,a:Math.random()*1});
-  }
-  function spawnShoot(){
-    if(shooting.length>3) return;
-    const y = Math.random()*H*0.6 + 20;
-    shooting.push({x:-80,y, vx:6+Math.random()*4, vy:1.5+Math.random()*1.5, life:0});
-  }
-  setInterval(()=>Math.random()<0.5 && spawnShoot(), 2500);
-
-  function tick(){
-    ctx.clearRect(0,0,W,H);
-    // tiny stars
-    for(const s of stars){
-      s.a += (Math.random()*0.08 - 0.04);
-      if(s.a<0.2) s.a=0.2; if(s.a>1) s.a=1;
-      ctx.fillStyle = `rgba(255,255,255,${s.a})`;
+  const ctx = c.getContext('2d'); let w,h,stars=[];
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight; gen()}
+  function gen(){ stars = Array.from({length:140},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.1+0.2,a:Math.random()})) }
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+    stars.forEach(s=>{
+      s.a += (Math.random()-.5)*0.08;
+      const al = .5 + .5*Math.sin(s.a);
+      ctx.fillStyle = `rgba(200,220,255,${.25+al*.45})`;
       ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2); ctx.fill();
+    });
+    // meteor
+    if(Math.random()<.012){
+      const mx = Math.random()*w*0.8+ w*0.1, my= -20, len=120+Math.random()*80;
+      let t=0; const id=setInterval(()=>{
+        t+=14; ctx.strokeStyle='rgba(190,220,255,.55)';
+        ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(mx+t*.4, my+t*.28);
+        ctx.lineTo(mx+t*.4-len, my+t*.28-len*.35); ctx.stroke();
+        if(t>260) clearInterval(id);
+      },16);
     }
-    // shooting
-    ctx.strokeStyle='rgba(210,230,255,.85)';
-    ctx.lineWidth=2;
-    shooting = shooting.filter(sh=> sh.x < W+120 && sh.y < H+80);
-    for(const sh of shooting){
-      sh.x += sh.vx; sh.y += sh.vy; sh.life++;
-      ctx.beginPath(); ctx.moveTo(sh.x-60, sh.y-20);
-      ctx.lineTo(sh.x, sh.y);
-      ctx.stroke();
-    }
-    requestAnimationFrame(tick);
+    requestAnimationFrame(draw);
   }
-  requestAnimationFrame(tick);
+  addEventListener('resize',resize); resize(); draw();
+})();
 
-  // gallery auto scroll (3.5s)
-  const sc = document.querySelector('.scroller[data-autoplay]');
-  if(sc){
-    let dir=1;
-    setInterval(()=>{
-      const max = sc.scrollWidth - sc.clientWidth;
-      if(sc.scrollLeft>=max-2) dir=-1;
-      else if(sc.scrollLeft<=2) dir=1;
-      sc.scrollBy({left: dir* (sc.clientWidth*0.8), behavior:'smooth'});
-    }, 3500);
-  }
+// card click
+document.querySelectorAll('.card-vert[data-href]')?.forEach(el=>{
+  el.addEventListener('click',()=>location.href = el.getAttribute('data-href'));
+});
 
-  // card click shortcut (data-href)
-  document.addEventListener('click', (e)=>{
-    const a = e.target.closest('[data-href]');
-    if(a){ location.href = a.getAttribute('data-href'); }
-  });
+// 3.5s gallery auto-scroll
+(function(){
+  const sc = document.querySelector('.scroller');
+  if(!sc) return;
+  let i=0;
+  setInterval(()=>{
+    i = (i+1) % sc.children.length;
+    sc.scrollTo({left: sc.clientWidth * i, behavior:'smooth'});
+  }, 3500);
 })();
