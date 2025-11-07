@@ -74,3 +74,4 @@ section.cards .meta .line,
   [data-card] img{ aspect-ratio: 3 / 4; }
 }
 /* === end minimal card/layout fix ======================================================= */
+@import url("style_patch_v917.css");
