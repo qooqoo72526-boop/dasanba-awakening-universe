@@ -1,40 +1,42 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>宇宙郵局 Cosmic Post Station</title>
-<link rel="stylesheet" href="/css/universe_v930.css">
-<script defer src="/js/main_v930.js"></script>
-<script defer src="/js/cosmic_post.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>宇宙郵局 ✉️ | Cosmic Post Station</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="cps-wrap">
-  <div class="cps-title">
-    <div class="tw">宇宙郵局🌔</div>
-    <div class="en">Cosmic Post Station</div>
-  </div>
+  <div class="cps-bg" aria-hidden="true"></div>
+  <header class="uv-nav">
+    <div class="uv-nav__inner">
+      <div class="uv-brand">EMOTIONAL VALUE A.I.</div>
+      <nav class="uv-links">
+        <a href="/">Home</a>
+        <a href="/cosmic-post-station.html">✉️ Cosmic Post Station</a>
+        <a href="/soulmirror.html">🪞 Soul Mirror</a>
+      </nav>
+      <div class="uv-glowline" aria-hidden="true"></div>
+    </div>
+  </header>
 
-  <div class="cps-signal">
-    <div class="row">與宇宙聯繫中⋯</div>
-    <div class="row">Communicating with the Cosmos…</div>
-    <div class="row">Receiving signals from Ajin · Migou · Gungun ✦</div>
-  </div>
+  <main class="cps-wrap" style="padding-top:64px">
+    <section class="cps-title">
+      <h1>宇宙郵局 ✉️ ｜ Cosmic Post Station</h1>
+      <p>Communicating with the Cosmos… Receiving signals… Ajin ・ Migou ・ Gungun ✦</p>
+    </section>
 
-  <div class="cps-photos">
-    <div class="p v1"><img src="/assets/ajin_post.webp" alt=""></div>
-    <div class="p v2"><img src="/assets/migou_post.webp" alt=""></div>
-    <div class="p v3"><img src="/assets/gungun_post.webp" alt=""></div>
-    <div class="p h1"><img src="/assets/trio_post1.webp" alt=""></div>
-    <div class="p h2"><img src="/assets/trio_post2.webp" alt=""></div>
-  </div>
+    <section id="cps-feed" style="height:50vh; overflow:auto; padding-right:2px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02)"></section>
 
-  <div id="chat-list" class="chat"></div>
+    <div class="controls">
+      <input id="cps-input" type="text" placeholder="想對三隻靈魂鳥說什麼？">
+      <button onclick="cpsSend(document.getElementById('cps-input').value);document.getElementById('cps-input').value=''">Send</button>
+    </div>
+  </main>
 
-  <div class="input-row">
-    <input id="cps-input" placeholder="寫下你此刻的心聲…">
-    <button id="cps-send">送出</button>
-  </div>
-</div>
+  <div class="starfield"></div>
+  <div class="shooting-layer"></div>
+
+  <script src="/js/main_v917_addon.js"></script>
 </body>
 </html>

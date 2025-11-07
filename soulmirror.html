@@ -2,20 +2,45 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🪞 靈魂照妖鏡（占位）</title>
-  <link rel="stylesheet" href="css/universe_v926.css">
-  <script src="js/universe_v926.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>靈魂照妖鏡 🪞 | Soul Mirror</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <canvas id="starfield" aria-hidden="true"></canvas>
-  <nav class="nav-minimal">
-    <a href="index.html">🌍 大三巴覺醒宇宙</a>
-    <a href="cosmic-post-station.html">🌔 宇宙郵局</a>
-  </nav>
-  <header class="hero-title">
-    <h2 class="evau-sub">🪞 靈魂照妖鏡</h2>
-    <p class="evau-desc">（之後接上你的 25 題 + 深度分析 API；本頁暫留）</p>
+  <header class="uv-nav">
+    <div class="uv-nav__inner">
+      <div class="uv-brand">EMOTIONAL VALUE A.I.</div>
+      <nav class="uv-links">
+        <a href="/">Home</a>
+        <a href="/cosmic-post-station.html">✉️ Cosmic Post Station</a>
+        <a href="/soulmirror.html">🪞 Soul Mirror</a>
+      </nav>
+      <div class="uv-glowline" aria-hidden="true"></div>
+    </div>
   </header>
+
+  <main class="sm-stage" style="padding-top:64px">
+    <section class="cps-title">
+      <h1>靈魂照妖鏡 🪞 / Soul Mirror</h1>
+      <p>銀白柔光宇宙 · 星環緩旋 · 魔法鏡浮現</p>
+    </section>
+
+    <!-- 進場魔法鏡舞台 -->
+    <div class="sm-mirror"></div>
+
+    <!-- 題區：一次顯示 25 題 -->
+    <section>
+      <div id="sm-questions" class="sm-questions"></div>
+      <div class="sm-actions">
+        <button onclick="smSubmit()">送出，生成 600 字深度解析 + 三鳥自然語</button>
+      </div>
+      <article id="sm-result" class="sm-result"></article>
+    </section>
+  </main>
+
+  <div class="starfield"></div>
+  <div class="shooting-layer"></div>
+
+  <script src="/js/main_v917_addon.js"></script>
 </body>
 </html>
