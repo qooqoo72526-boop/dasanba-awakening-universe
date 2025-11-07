@@ -1,3 +1,0 @@
-/* enforce tiny difference between two title lines */
-.evau-title{ font-size:clamp(28px,4.8vw,56px); }
-.evau-sub{  font-size:clamp(26px,4.6vw,52px); }
