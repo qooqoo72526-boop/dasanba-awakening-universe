@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>💙 滾滾 GUNGUN STARSHIP</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GUNGUN | AWAKENING UNIVERSE</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/universe_v916_gallery.css">
-  <style>
-    body{background: radial-gradient(900px 500px at 60% 10%, rgba(120,190,255,.26), transparent 60%), #0b1b34;}
-    .room{ padding:24px 0 120px; text-align:center; }
-    .room h1{ font-family:"Orbitron"; letter-spacing:.22em; margin:10px 0 4px; }
-    .room h2{ margin:0 0 14px; font-size:14px; opacity:.9 }
-    .loop{ width:min(980px,92vw); aspect-ratio:16/9; border-radius:18px; box-shadow:0 8px 40px rgba(140,200,255,.18); object-fit:cover }
-  </style>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style_patch_v917.css">
 </head>
 <body>
-  <canvas id="starfield"></canvas>
-  <section class="room">
-    <h1>💙 滾滾 GUNGUN STARSHIP</h1>
-    <h2>共鳴・靜默力量</h2>
-    <video class="loop" src="../assets/gungun_5s.mp4" autoplay muted loop playsinline></video>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <aside class="left-toolbar">
+    <a href="../index.html" class="tool" title="Home"><span>Home</span></a>
+    <a href="../cosmic-post-station.html" class="tool" title="Post"><span>Post</span></a>
+    <a href="../soulmirror.html" class="tool" title="Mirror"><span>Mirror</span></a>
+    <a href="../index.html#trioGallery" class="tool" title="Gallery"><span>Gallery</span></a>
+  </aside>
+  <section class="room-hero" data-universe="gungun">
+    <video class="room-loop" src="../assets/gungun_5s.mp4" autoplay muted loop playsinline></video>
   </section>
-  <script src="../js/universe_v916_starfield.js" defer></script>
+  <script>
+  const canvas = document.getElementById('starfield'); const ctx = canvas.getContext('2d');
+  function size(){ canvas.width=innerWidth; canvas.height=innerHeight; } addEventListener('resize',size); size();
+  let s = [...Array(160)].map(()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,t:Math.random()*6}));
+  (function anim(){ ctx.clearRect(0,0,canvas.width,canvas.height);
+    s.forEach(p=>{ p.t+=.05; const o=.6+Math.sin(p.t)*.4; ctx.fillStyle=`rgba(255,255,255,${o})`; ctx.fillRect(p.x,p.y,1.2,1.2); });
+    requestAnimationFrame(anim);
+  })();
+  </script>
 </body>
 </html>
