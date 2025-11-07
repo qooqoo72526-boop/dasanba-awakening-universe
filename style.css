@@ -1,0 +1,4 @@
+/* v9.1.7 主頁樣式修復 */
+body { background: radial-gradient(ellipse at bottom, #020111 0%, #000000 100%); color: #fff; font-family: 'Noto Sans TC', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
+h1, h2, h3, p { text-align: center; }
+.uv-card { background: rgba(255, 255, 255, 0.05); border-radius: 20px; backdrop-filter: blur(20px); box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
