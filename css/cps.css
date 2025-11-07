@@ -1,4 +1,34 @@
-/* 宇宙郵局對話泡泡修復 */
-.chat-bubble { background: rgba(255,255,255,0.08); border-radius: 20px; padding: 12px 18px; margin: 10px auto; width: fit-content; max-width: 70%; color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.1); }
-.chat-bubble.user { background: rgba(255,255,255,0.2); }
-.chat-bubble.bot { background: rgba(255,255,255,0.1); }
+/* ========== v9.1.7 Cosmic Post Station (Blue–Silver) Full Restore ========== */
+#cps-wrap{ width:min(980px,92vw); margin:110px auto 40px }
+#cps-title{ text-align:center; margin-bottom:8px }
+#cps-sub{ text-align:center; font-size:12px; color:#cfe0ff; opacity:.9; margin-bottom:16px }
+#cps-feed{
+  height:min(52vh,520px);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  border:1px solid rgba(220,235,255,.18);
+  border-radius:18px; padding:12px; overflow:auto;
+  backdrop-filter: blur(10px);
+}
+.chat{ display:flex; gap:10px; margin:12px 8px }
+.chat .avatar{ width:36px; height:36px; border-radius:50%; object-fit:cover; flex:0 0 36px;
+  box-shadow:0 0 0 2px rgba(220,235,255,.16), 0 0 12px rgba(220,235,255,.2) }
+.chat .bubble{
+  max-width:68%; padding:10px 12px; line-height:1.6;
+  background: rgba(255,255,255,.12);
+  border:1px solid rgba(220,235,255,.22);
+  border-radius:14px; color:#eaf1ff;
+  backdrop-filter: blur(6px);
+}
+.chat.me{ flex-direction: row-reverse }
+.chat.me .bubble{ background: rgba(159,208,255,.14); border-color: rgba(159,208,255,.28) }
+.typing-dot{ display:inline-block; width:6px; height:6px; border-radius:50%; background:#eaf1ff;
+  opacity:.35; margin:0 2px; animation: cpsBlink 1.2s infinite }
+.typing-dot:nth-child(2){ animation-delay:.2s } .typing-dot:nth-child(3){ animation-delay:.4s }
+@keyframes cpsBlink{ 0%,80%{ opacity:.25 } 40%{ opacity:1 } }
+
+#cps-row{ display:flex; gap:10px; margin-top:10px }
+#cps-input{ flex:1; height:44px; padding:0 12px; border-radius:12px; border:1px solid rgba(220,235,255,.22);
+  background: rgba(255,255,255,.08); color:#eaf1ff; outline:none }
+#cps-send{ height:44px; padding:0 16px; border-radius:12px; border:1px solid rgba(220,235,255,.32);
+  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.08)); color:#fff; cursor:pointer }
+#cps-send:hover{ filter:brightness(1.08) }
