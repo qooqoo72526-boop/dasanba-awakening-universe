@@ -3,30 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MIGOU | AWAKENING UNIVERSE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-  <link rel="stylesheet" href="../css/style_patch_v917.css">
+  <title>Room | Awakening Universe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .room-wrap{width:min(980px,92vw); margin:18px auto 80px}
+    .room-hero{width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:18px; display:block; box-shadow:0 18px 50px rgba(0,0,0,.35)}
+    .room-title{ text-align:center; margin:10px 0 0 }
+  </style>
 </head>
 <body>
   <canvas id="starfield" aria-hidden="true"></canvas>
-  <aside class="left-toolbar">
-    <a href="../index.html" class="tool" title="Home"><span>Home</span></a>
-    <a href="../cosmic-post-station.html" class="tool" title="Post"><span>Post</span></a>
-    <a href="../soulmirror.html" class="tool" title="Mirror"><span>Mirror</span></a>
-    <a href="../index.html#trioGallery" class="tool" title="Gallery"><span>Gallery</span></a>
-  </aside>
-  <section class="room-hero">
-  <video class="room-video" src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video>
-</section>
+  <nav class="toolbox">
+    <a href="../index.html" class="tool"><span>Home</span></a>
+    <a href="../cosmic-post-station.html" class="tool"><span>Post</span></a>
+    <a href="../soulmirror.html" class="tool"><span>Mirror</span></a>
+    <a href="../index.html#triogalley" class="tool"><span>Gallery</span></a>
+  </nav>
+  <section class="room-wrap">
+    <video class="room-hero" src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video>
+    <div class="room-title">
+      <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
+    </div>
+  </section>
   <script>
-  const canvas = document.getElementById('starfield'); const ctx = canvas.getContext('2d');
-  function size(){ canvas.width=innerWidth; canvas.height=innerHeight; } addEventListener('resize',size); size();
-  let s = [...Array(160)].map(()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,t:Math.random()*6}));
-  (function anim(){ ctx.clearRect(0,0,canvas.width,canvas.height);
-    s.forEach(p=>{ p.t+=.05; const o=.6+Math.sin(p.t)*.4; ctx.fillStyle=`rgba(255,255,255,${o})`; ctx.fillRect(p.x,p.y,1.2,1.2); });
-    requestAnimationFrame(anim);
-  })();
+    const c=document.getElementById('starfield'),x=c.getContext('2d');function fit(){c.width=innerWidth;c.height=innerHeight}addEventListener('resize',fit);fit();
+    let s=[...Array(220)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1+.3,t:Math.random()*6.28}));
+    function L(){const g=x.createLinearGradient(0,0,0,c.height);g.addColorStop(0,'#0f1f3f');g.addColorStop(1,'#0a1631');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);
+      s.forEach(o=>{o.t+=.03;const a=.55+.45*Math.sin(o.t);x.fillStyle=`rgba(255,255,255,${a})`;x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(L)}L();
   </script>
 </body>
 </html>
