@@ -1,36 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Room | Awakening Universe</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css" />
-  <style>
-    .room-wrap{width:min(980px,92vw); margin:18px auto 80px}
-    .room-hero{width:100%; aspect-ratio:9/16; object-fit:cover; border-radius:18px; display:block; box-shadow:0 18px 50px rgba(0,0,0,.35)}
-    .room-title{ text-align:center; margin:10px 0 0 }
-  </style>
-</head>
-<body>
-  <canvas id="starfield" aria-hidden="true"></canvas>
-  <nav class="toolbox">
-    <a href="../index.html" class="tool"><span>Home</span></a>
-    <a href="../cosmic-post-station.html" class="tool"><span>Post</span></a>
-    <a href="../soulmirror.html" class="tool"><span>Mirror</span></a>
-    <a href="../index.html#triogalley" class="tool"><span>Gallery</span></a>
-  </nav>
-  <section class="room-wrap">
-    <video class="room-hero" src="../assets/ajin_5s.mp4" autoplay muted loop playsinline></video>
-    <div class="room-title">
-      <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
-    </div>
-  </section>
-  <script>
-    const c=document.getElementById('starfield'),x=c.getContext('2d');function fit(){c.width=innerWidth;c.height=innerHeight}addEventListener('resize',fit);fit();
-    let s=[...Array(220)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1+.3,t:Math.random()*6.28}));
-    function L(){const g=x.createLinearGradient(0,0,0,c.height);g.addColorStop(0,'#0f1f3f');g.addColorStop(1,'#0a1631');x.fillStyle=g;x.fillRect(0,0,c.width,c.height);
-      s.forEach(o=>{o.t+=.03;const a=.55+.45*Math.sin(o.t);x.fillStyle=`rgba(255,255,255,${a})`;x.beginPath();x.arc(o.x,o.y,o.r,0,6.28);x.fill()});requestAnimationFrame(L)}L();
-  </script>
-</body>
-</html>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>AJIN Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/universe.css">
+<style>.room-wrap{width:min(1100px,92%);margin:20px auto}.room-title{text-align:center;font-family:Orbitron,sans-serif;letter-spacing:.12em;background:linear-gradient(90deg,#DDEFFF,#BBD4FF);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:clamp(28px,5vw,46px)}.video{width:100%;margin:12px auto 16px;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px rgba(90,130,200,.25)}</style></head><body>
+<div class="universe"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
+<nav class="nav-rail"><a href="/"><span>🏠</span> Home</a><a href="/cosmic-post-station.html"><span>✉️</span> Post</a><a href="/soulmirror.html"><span>🪞</span> Mirror</a><a href="/#gallery"><span>🔭</span> Gallery</a></nav>
+<section class="room-wrap"><div class="room-title">阿金｜AJIN</div><div class="video"><video src="/assets/ajin_5s.mp4" autoplay muted playsinline loop style="width:100%;height:auto;display:block;"></video></div></section></body></html>
