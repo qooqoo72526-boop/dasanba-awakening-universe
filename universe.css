@@ -1,7 +1,0 @@
-/* v9.1.7 星空與玻璃特效修復 */
-body::before { content: ''; position: fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 70%); z-index:-2; animation: stars 12s ease-in-out infinite alternate; }
-@keyframes stars { 0%{opacity:.4;} 100%{opacity:.9;} }
-.uv-halo-gold { box-shadow: 0 0 40px #ffd166; }
-.uv-halo-rose { box-shadow: 0 0 40px #ff99c8; }
-.uv-halo-blue { box-shadow: 0 0 40px #a8dadc; }
-.uv-footer { text-align:center; color:#aaa; font-size:12px; margin-top:40px; }
