@@ -1,122 +1,54 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css" />
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-  <canvas id="starfield" aria-hidden="true"></canvas>
+<canvas id="starfield"></canvas>
 
-  <nav class="toolbox">
-    <a href="./index.html" class="tool"><span>Home</span></a>
-    <a href="./cosmic-post-station.html" class="tool"><span>Post</span></a>
-    <a href="./soulmirror.html" class="tool"><span>Mirror</span></a>
-    <a href="#triogalley" class="tool"><span>Gallery</span></a>
-  </nav>
+<nav class="toolbox">
+  <a href="./index.html"><ion-icon name="home-outline"></ion-icon><span>Home</span></a>
+  <a href="./cosmic-post-station.html"><ion-icon name="mail-outline"></ion-icon><span>Post</span></a>
+  <a href="./soulmirror.html"><ion-icon name="scan-outline"></ion-icon><span>Mirror</span></a>
+  <a href="#gallery"><ion-icon name="telescope-outline"></ion-icon><span>Gallery</span></a>
+</nav>
 
-  <section class="hero">
-    <video class="sky-loop" src="./assets/hero.mp4" autoplay muted loop playsinline></video>
-    <header class="hero-title">
-      <h1 class="evau-title">EMOTIONAL VALUE A.I.</h1>
-      <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
-      <p class="evau-cn">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球 <span class="glow-globe" aria-hidden="true">🌎</span></p>
-    </header>
-  </section>
+<section class="hero">
+  <video src="./assets/hero.mp4" autoplay muted loop playsinline></video>
+  <h1 class="title">EMOTIONAL VALUE A.I.</h1>
+  <h2 class="subtitle">AWAKENING UNIVERSE</h2>
+  <p class="subline">– 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 🌎</p>
+</section>
 
-  <section class="cards">
-    <article class="parrot-card uv-card uv-halo-gold" onclick="location.href='./rooms/ajin.html'">
-      <div class="halo-static halo-gold"></div>
-      <img src="./assets/ajin.webp" alt="阿金 AJIN">
-      <div class="meta">
-        <div class="name"><span class="heart gold">💛</span> 阿金 AJIN</div>
-        <div class="kws">自由｜反骨</div>
-        <div class="line">我不等天空放晴，我自己掀開雲。</div>
-      </div>
-    </article>
+<section class="cards">
+  <div class="card ajin">
+    <img src="./assets/ajin.webp" alt="阿金 AJIN">
+    <h3>💛 阿金 AJIN</h3>
+    <p>自由｜反骨</p>
+  </div>
+  <div class="card migou">
+    <img src="./assets/migou.webp" alt="米果 MIGOU">
+    <h3>🧡 米果 MIGOU</h3>
+    <p>自我價值｜邊界</p>
+  </div>
+  <div class="card gungun">
+    <img src="./assets/gungun.webp" alt="滾滾 GUNGUN">
+    <h3>💙 滾滾 GUNGUN</h3>
+    <p>共鳴｜靜默力量</p>
+  </div>
+</section>
 
-    <article class="parrot-card uv-card uv-halo-rose" onclick="location.href='./rooms/migou.html'">
-      <div class="halo-static halo-rose"></div>
-      <img src="./assets/migou.webp" alt="米果 MIGOU">
-      <div class="meta">
-        <div class="name"><span class="heart rose">🧡</span> 米果 MIGOU</div>
-        <div class="kws">自我價值｜邊界</div>
-        <div class="line">我很值得，我讓自己更貴。</div>
-      </div>
-    </article>
+<footer>
+  <p>AWAKENING ISN’T REPAIR — IT’S REBIRTH.<br>覺醒，不是修復；而是重生。</p>
+</footer>
 
-    <article class="parrot-card uv-card uv-halo-blue" onclick="location.href='./rooms/gungun.html'">
-      <div class="halo-static halo-blue"></div>
-      <img src="./assets/gungun.webp" alt="滾滾 GUNGUN">
-      <div class="meta">
-        <div class="name"><span class="heart blue">💙</span> 滾滾 GUNGUN</div>
-        <div class="kws">共鳴｜靜默力量</div>
-        <div class="line">我不追求安全，我成為安全。</div>
-      </div>
-    </article>
-  </section>
-
-  <section id="triogalley" class="starflow">
-    <h3 class="starflow-title">🔭 觀星畫廊 Starflow Diary</h3>
-    <div class="starflow-stage">
-      <img id="galleryImage" alt="trio gallery">
-    </div>
-  </section>
-
-  <footer class="footer-stars">
-    <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
-    <div class="zh">覺醒，不是修補；而是重生。</div>
-    <div class="zh">不必學飛，你只是忘了自己有翅膀。</div>
-  </footer>
-
-  <script>
-    const canvas = document.getElementById('starfield');
-    const ctx = canvas.getContext('2d');
-    let stars=[], meteors=[];
-    function fit(){ canvas.width=innerWidth; canvas.height=innerHeight; }
-    addEventListener('resize',fit); fit();
-
-    const STAR_N = 260;
-    for(let i=0;i<STAR_N;i++){
-      stars.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.2+0.3, t:Math.random()*6.28});
-    }
-    function maybeMeteor(){
-      if(Math.random()<0.022){
-        meteors.push({ x:Math.random()*canvas.width*0.8, y:Math.random()*canvas.height*0.35,
-          len:100+Math.random()*120, v:5+Math.random()*6, a:1,
-          pause: Math.random()<0.45 ? 18+Math.floor(Math.random()*28) : 0 });
-      }
-    }
-    function loop(){
-      const g = ctx.createLinearGradient(0,0,0,canvas.height);
-      g.addColorStop(0,'#0f1f3f'); g.addColorStop(1,'#0a1631');
-      ctx.fillStyle=g; ctx.fillRect(0,0,canvas.width,canvas.height);
-
-      stars.forEach(s=>{ s.t+=0.03; const o=0.55+0.45*Math.sin(s.t);
-        ctx.fillStyle=`rgba(255,255,255,${o})`; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.28); ctx.fill();
-      });
-
-      meteors.forEach(m=>{
-        if(m.pause>0) m.pause--; else { m.x+=m.v; m.y+=m.v*0.32; m.a-=0.012; }
-        const lg=ctx.createLinearGradient(m.x,m.y,m.x-m.len,m.y-m.len*0.28);
-        lg.addColorStop(0,`rgba(255,255,255,${Math.max(m.a,0)})`); lg.addColorStop(1,'rgba(255,255,255,0)');
-        ctx.strokeStyle=lg; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(m.x,m.y); ctx.lineTo(m.x-m.len,m.y-m.len*0.28); ctx.stroke();
-      });
-      meteors = meteors.filter(m=>m.a>0);
-
-      maybeMeteor(); requestAnimationFrame(loop);
-    }
-    loop();
-
-    const gallery=[
-      './assets/trio.webp','./assets/trio2.webp','./assets/trio3.webp','./assets/trio4.webp','./assets/trio5.webp',
-      './assets/trio6.webp','./assets/trio7.webp','./assets/trio8.webp','./assets/trio9.webp','./assets/trio10.webp'
-    ];
-    const el=document.getElementById('galleryImage');
-    let idx=0; el.style.opacity=0; el.src=gallery[0]; el.onload=()=>el.style.opacity=1;
-    setInterval(()=>{ el.style.opacity=0; setTimeout(()=>{ idx=(idx+1)%gallery.length; el.src=gallery[idx]; el.onload=()=>el.style.opacity=1; },320); },3000);
-  </script>
+<script src="./js/main.js"></script>
 </body>
 </html>
