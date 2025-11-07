@@ -1,87 +1,89 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-  <style id="hotfix-v916-cards">/* disabled */</style>
-  :root { --page-w:1120px;  gap:24px; }
-  section.cards{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:var(--gap)!important;margin:10px 0 50px!important;align-items:stretch!important}
-  section.cards article{position:relative;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));border:1px solid rgba(220,235,255,.18);box-shadow:0 18px 60px rgba(0,0,0,.45);overflow:hidden;transition:transform .25s ease,filter .25s ease}
-  section.cards article:hover{transform:translateY(-4px);filter:brightness(1.03)}
-  section.cards img{width:100%!important;aspect-ratio:16/11;object-fit:cover;display:block}
-  section.cards .meta{padding:12px 14px 16px;font-size:14px}
-  section.cards .meta .name{font-weight:700;letter-spacing:.06em}
-  section.cards .meta .line{font-size:12px;opacity:.85}
-  @media (max-width:1100px){section.cards{grid-template-columns:repeat(2,1fr)!important}}
-  @media (max-width:720px){section.cards{grid-template-columns:1fr!important}section.cards img{aspect-ratio:16/12}}
-</style>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/universe_v916_gallery.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <canvas id="starfield" aria-hidden="true"></canvas>
-
   <aside class="left-toolbar">
-    <a href="index.html" class="tool" title="Home">⌂<span>Home</span></a>
-    <a href="cosmic-post-station.html" class="tool" title="Cosmic Post Station">✉︎<span>Post</span></a>
-    <a href="soulmirror.html" class="tool" title="Soul Mirror">🪞<span>Mirror</span></a>
-    <a href="#gallery" class="tool" title="Starflow">🔭<span>Gallery</span></a>
+    <a href="index.html" class="tool" title="Home"><span>Home</span></a>
+    <a href="cosmic-post-station.html" class="tool" title="Cosmic Post Station"><span>Post</span>✉️</a>
+    <a href="soulmirror.html" class="tool" title="Soul Mirror"><span>Mirror</span>🪞</a>
+    <a href="#starflow" class="tool" title="Starflow"><span>Starflow</span>✨</a>
     <i class="constellation-line" aria-hidden="true"></i>
   </aside>
 
   <section class="hero">
-    <video class="sky-loop" id="trioVideo" src="assets/trio.mp4" autoplay muted loop playsinline></video>
+    <video class="sky-loop" id="triovideo" src="assets/trio.mp4" autoplay muted loop playsinline></video>
     <header class="hero-title">
       <h1 class="evau-title">EMOTIONAL VALUE A.I.</h1>
       <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
-      <p class="evau-desc">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球 🌎 -</p>
+      <p class="evau-cn">－大三巴覺醒宇宙｜我不療癒，我只教人覺醒 <span class="globe">🌍</span>－</p>
     </header>
   </section>
 
   <section class="cards">
-    <article class="card floating ajin" data-universe="ajin" onclick="location.href='rooms/ajin.html'">
-      <img src="assets/ajin.webp" alt="阿金 AJIN">
+    <article class="card parrot-card" data-universe="ajin"  onclick="location.href='rooms/ajin.html'">
+      <img src="assets/ajin.webp" alt="阿金 AJIN" />
       <div class="meta">
         <div class="name">💛 阿金 AJIN</div>
-        <div class="kws">自由，反骨</div>
-        <div class="line">「我不等天空放晴，我自己掀開雲。」</div>
+        <div class="kws">自由・反骨</div>
+        <div class="line">「我不等天空放晴，我自己點開雲。」</div>
       </div>
     </article>
-    <article class="card floating migou" data-universe="migou" onclick="location.href='rooms/migou.html'">
-      <img src="assets/migou.webp" alt="米果 MIGOU">
+    <article class="card parrot-card" data-universe="migou" onclick="location.href='rooms/migou.html'">
+      <img src="assets/migou.webp" alt="米果 MIGOU" />
       <div class="meta">
-        <div class="name">🧡 米果 MIGOU</div>
-        <div class="kws">自我價值，邊界</div>
-        <div class="line">「我很值錢，我讓自己更貴。」</div>
+        <div class="name">🩷 米果 MIGOU</div>
+        <div class="kws">自我價值・邊界</div>
+        <div class="line">「我很值錢；我讓自己更貴。」</div>
       </div>
     </article>
-    <article class="card floating gungun" data-universe="gungun" onclick="location.href='rooms/gungun.html'">
-      <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
+    <article class="card parrot-card" data-universe="gungun" onclick="location.href='rooms/gungun.html'">
+      <img src="assets/gungun.webp" alt="滾滾 GUNGUN" />
       <div class="meta">
-        <div class="name">💙 滾滾 GUNGUN</div>
-        <div class="kws">共鳴，靜默力量</div>
-        <div class="line">「我不追求安全，我成為安全。」</div>
+        <div class="name">🩵 滾滾 GUNGUN</div>
+        <div class="kws">共鳴・靜默力量</div>
+        <div class="line">「我不找安全感，我成為安全。」</div>
       </div>
     </article>
   </section>
 
-  <section id="gallery" class="gallery">
-    <h3 class="gallery-title">🔭 觀星畫廊 Starflow Diary</h3>
-    <div class="gallery-stage">
-      <img id="galleryImage" alt="Starflow" />
-    </div>
+  <section id="starflow-section" class="starflow">
+    <h3 class="starflow-title">🔭 觀星 Starflow</h3>
+    <figure class="starflow-stage">
+      <img id="starflow" src="assets/trio.webp" alt="觀星 Starflow" />
+    </figure>
   </section>
 
   <footer class="footer-stars">
     <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
-    <div class="zh">覺醒不是療癒，而是重生</div>
+    <div class="zh">覺醒不是修補，而是重生。</div>
     <div class="zh">不必學飛，你只是忘了自己有翅膀。</div>
   </footer>
 
   <script src="js/universe_v916_starfield.js" defer></script>
-  <script src="js/gallery_autoload.js" defer></script>
-<script src="/js/main_v917_addon.js"></script>
+  <script src="js/main_v917_addon.js" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const img = document.getElementById('starflow');
+      const list = [
+        'assets/trio.webp','assets/trio2.webp','assets/trio3.webp','assets/trio4.webp','assets/trio5.webp',
+        'assets/trio6.webp','assets/trio7.webp','assets/trio8.webp','assets/trio9.webp','assets/trio10.webp'
+      ];
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % list.length;
+        img.classList.remove('show');
+        setTimeout(() => { img.src = list[i]; img.classList.add('show'); }, 220);
+      }, 3000);
+      requestAnimationFrame(() => img.classList.add('show'));
+    });
+  </script>
 </body>
 </html>
