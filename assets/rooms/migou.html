@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MIGOU | AWAKENING UNIVERSE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style_patch_v917.css">
+</head>
+<body>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <aside class="left-toolbar">
+    <a href="../index.html" class="tool" title="Home"><span>Home</span></a>
+    <a href="../cosmic-post-station.html" class="tool" title="Post"><span>Post</span></a>
+    <a href="../soulmirror.html" class="tool" title="Mirror"><span>Mirror</span></a>
+    <a href="../index.html#trioGallery" class="tool" title="Gallery"><span>Gallery</span></a>
+  </aside>
+  <section class="room-hero" data-universe="migou">
+    <video class="room-loop" src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video>
+  </section>
+  <script>
+  const canvas = document.getElementById('starfield'); const ctx = canvas.getContext('2d');
+  function size(){ canvas.width=innerWidth; canvas.height=innerHeight; } addEventListener('resize',size); size();
+  let s = [...Array(160)].map(()=>({x:Math.random()*canvas.width,y:Math.random()*canvas.height,t:Math.random()*6}));
+  (function anim(){ ctx.clearRect(0,0,canvas.width,canvas.height);
+    s.forEach(p=>{ p.t+=.05; const o=.6+Math.sin(p.t)*.4; ctx.fillStyle=`rgba(255,255,255,${o})`; ctx.fillRect(p.x,p.y,1.2,1.2); });
+    requestAnimationFrame(anim);
+  })();
+  </script>
+</body>
+</html>

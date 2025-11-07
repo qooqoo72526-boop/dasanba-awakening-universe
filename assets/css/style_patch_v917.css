@@ -1,0 +1,32 @@
+
+/* ===================== v9.1.7 Patch (Blue–Silver) ===================== */
+.left-toolbar{position:fixed;left:16px;top:104px;display:flex;flex-direction:column;gap:12px;z-index:30}
+.left-toolbar .tool{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.06);box-shadow:inset 0 1px 0 rgba(255,255,255,.08);text-decoration:none;opacity:.92;transition:transform .18s ease,opacity .18s ease,background .18s ease;filter:drop-shadow(0 0 10px rgba(150,205,255,.35))}
+.left-toolbar .tool:hover{transform:translateX(2px);opacity:1;background:rgba(255,255,255,.09)}
+.left-toolbar .tool span{font:600 12px/1.1 'Orbitron','Noto Sans TC',system-ui,sans-serif;letter-spacing:.11em;color:rgba(215,235,255,.95)}
+section.cards{width:min(1120px,92vw);margin:34px auto 10px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.parrot-card{position:relative;border-radius:18px;overflow:hidden;background:rgba(10,16,40,.28);box-shadow:0 8px 30px rgba(10,30,80,.36);transition:transform .35s ease,box-shadow .35s ease}
+.parrot-card:hover{transform:translateY(-4px);box-shadow:0 14px 42px rgba(10,30,80,.42)}
+.parrot-card img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top;display:block}
+.parrot-card .meta{text-align:center;padding:12px 12px 16px;color:rgba(224,238,255,.95)}
+.parrot-card .name{font-weight:800;letter-spacing:.06em;font-size:15px}
+.parrot-card .kws{font-weight:700;letter-spacing:.06em;font-size:13px;opacity:.95}
+.parrot-card .line{font-size:12px;opacity:.88}
+.parrot-card::after{content:"";position:absolute;inset:-2px;border-radius:20px;pointer-events:none;mix-blend-mode:screen;opacity:.9;transition:filter .35s ease,opacity .35s ease}
+.parrot-card[data-universe="ajin"]::after{box-shadow:0 0 0 2px rgba(255,230,110,.35),0 0 36px 12px rgba(255,210,80,.26)}
+.parrot-card[data-universe="migou"]::after{box-shadow:0 0 0 2px rgba(255,160,120,.32),0 0 36px 12px rgba(255,115,140,.22)}
+.parrot-card[data-universe="gungun"]::after{box-shadow:0 0 0 2px rgba(150,205,255,.34),0 0 36px 12px rgba(120,190,255,.24)}
+.parrot-card:hover::after{filter:blur(1px);opacity:1}
+@keyframes heartPulse{0%,100%{transform:translateY(0);filter:drop-shadow(0 0 6px currentColor)}50%{transform:translateY(-1px);filter:drop-shadow(0 0 12px currentColor)}}
+.heart{margin-right:6px}
+.heart-ajin{color:#FFD54D;animation:heartPulse 2.2s ease-in-out infinite}
+.heart-migou{color:#FF975F;animation:heartPulse 2.2s ease-in-out infinite}
+.heart-gungun{color:#7EC9FF;animation:heartPulse 2.2s ease-in-out infinite}
+#trioVideo.sky-loop{display:block;width:min(1120px,92vw);height:auto;margin:0 auto 10px;border-radius:14px;box-shadow:0 10px 40px rgba(18,40,88,.35)}
+.footer-stars{width:min(1120px,92vw);margin:40px auto 80px;text-align:center;letter-spacing:.06em}
+.footer-stars .en{font-weight:700;color:#cfeaff;text-shadow:0 0 6px rgba(150,210,255,.55)}
+.footer-stars .zh{opacity:.92}
+.room-hero{width:min(980px,92vw);margin:40px auto 24px;text-align:center}
+.room-hero .room-loop{width:min(420px,46vw);height:auto;display:block;margin:0 auto;border-radius:14px;box-shadow:0 10px 36px rgba(20,40,90,.30)}
+@media (max-width:1100px){section.cards{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:720px){section.cards{grid-template-columns:1fr}.left-toolbar{left:12px;top:90px}}
