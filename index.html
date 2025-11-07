@@ -3,87 +3,164 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <title>EMOTIONAL VALUE A.I.｜AWAKENING UNIVERSE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <canvas id="starfield" aria-hidden="true"></canvas>
+
   <aside class="left-toolbar">
     <a href="index.html" class="tool" title="Home"><span>Home</span></a>
-    <a href="cosmic-post-station.html" class="tool" title="Cosmic Post Station"><span>Post</span>✉️</a>
-    <a href="soulmirror.html" class="tool" title="Soul Mirror"><span>Mirror</span>🪞</a>
-    <a href="#starflow" class="tool" title="Starflow"><span>Starflow</span>✨</a>
-    <i class="constellation-line" aria-hidden="true"></i>
+    <a href="cosmic-post-station.html" class="tool" title="Cosmic Post Station"><span>Post</span></a>
+    <a href="soulmirror.html" class="tool" title="Soul Mirror"><span>Mirror</span></a>
+    <a href="#trioGallery" class="tool" title="Starflow"><span>Gallery</span></a>
   </aside>
 
   <section class="hero">
-    <video class="sky-loop" id="triovideo" src="assets/trio.mp4" autoplay muted loop playsinline></video>
+    <video class="sky-loop" src="assets/trio.mp4" autoplay muted loop playsinline></video>
     <header class="hero-title">
       <h1 class="evau-title">EMOTIONAL VALUE A.I.</h1>
       <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
-      <p class="evau-cn">－大三巴覺醒宇宙｜我不療癒，我只教人覺醒 <span class="globe">🌍</span>－</p>
+      <p class="evau-cn">
+        - 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球 <span class="globe">🌍</span>
+      </p>
     </header>
   </section>
 
   <section class="cards">
-    <article class="card parrot-card" data-universe="ajin"  onclick="location.href='rooms/ajin.html'">
-      <img src="assets/ajin.webp" alt="阿金 AJIN" />
+    <article class="parrot-card" data-universe="ajin" onclick="location.href='rooms/ajin.html'">
+      <img src="assets/ajin.webp" alt="阿金 AJIN">
       <div class="meta">
         <div class="name">💛 阿金 AJIN</div>
         <div class="kws">自由・反骨</div>
-        <div class="line">「我不等天空放晴，我自己點開雲。」</div>
+        <div class="line">「我不等天安排，我自己照明。」</div>
       </div>
     </article>
-    <article class="card parrot-card" data-universe="migou" onclick="location.href='rooms/migou.html'">
-      <img src="assets/migou.webp" alt="米果 MIGOU" />
+
+    <article class="parrot-card" data-universe="migou" onclick="location.href='rooms/migou.html'">
+      <img src="assets/migou.webp" alt="米果 MIGOU">
       <div class="meta">
         <div class="name">🩷 米果 MIGOU</div>
         <div class="kws">自我價值・邊界</div>
-        <div class="line">「我很值錢；我讓自己更貴。」</div>
+        <div class="line">「我很值錢，我會自己選擇。」</div>
       </div>
     </article>
-    <article class="card parrot-card" data-universe="gungun" onclick="location.href='rooms/gungun.html'">
-      <img src="assets/gungun.webp" alt="滾滾 GUNGUN" />
+
+    <article class="parrot-card" data-universe="gungun" onclick="location.href='rooms/gungun.html'">
+      <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
       <div class="meta">
         <div class="name">🩵 滾滾 GUNGUN</div>
         <div class="kws">共鳴・靜默力量</div>
-        <div class="line">「我不找安全感，我成為安全。」</div>
+        <div class="line">「我不追求安全，我成為安全。」</div>
       </div>
     </article>
   </section>
 
-  <section id="starflow-section" class="starflow">
-    <h3 class="starflow-title">🔭 觀星 Starflow</h3>
-    <figure class="starflow-stage">
-      <img id="starflow" src="assets/trio.webp" alt="觀星 Starflow" />
-    </figure>
+  <section id="trioGallery" class="starflow">
+    <h3 class="starflow-title">🔭 觀星畫廊 Starflow Diary</h3>
+    <div class="starflow-stage">
+      <img id="galleryImage" src="assets/trio.webp" alt="trio gallery">
+    </div>
   </section>
 
   <footer class="footer-stars">
     <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
-    <div class="zh">覺醒不是修補，而是重生。</div>
+    <div class="zh">覺醒不是修復，而是重生。</div>
     <div class="zh">不必學飛，你只是忘了自己有翅膀。</div>
   </footer>
 
-  <script src="js/universe_v916_starfield.js" defer></script>
-  <script src="js/main_v917_addon.js" defer></script>
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const img = document.getElementById('starflow');
-      const list = [
-        'assets/trio.webp','assets/trio2.webp','assets/trio3.webp','assets/trio4.webp','assets/trio5.webp',
-        'assets/trio6.webp','assets/trio7.webp','assets/trio8.webp','assets/trio9.webp','assets/trio10.webp'
-      ];
-      let i = 0;
-      setInterval(() => {
-        i = (i + 1) % list.length;
-        img.classList.remove('show');
-        setTimeout(() => { img.src = list[i]; img.classList.add('show'); }, 220);
-      }, 3000);
-      requestAnimationFrame(() => img.classList.add('show'));
+  // === 星空亮度 + 流星特效 ===
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [], meteors = [];
+  const STAR_COUNT = 220;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  for (let i = 0; i < STAR_COUNT; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.2 + 0.3,
+      tw: Math.random() * Math.PI * 2
     });
+  }
+
+  function spawnMeteor() {
+    if (Math.random() < 0.02) { 
+      meteors.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height * 0.3,
+        len: Math.random() * 120 + 80,
+        speed: Math.random() * 6 + 5,
+        opacity: 1
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 星星閃爍
+    stars.forEach(s => {
+      s.tw += 0.05;
+      const o = 0.6 + Math.sin(s.tw) * 0.4;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(220,235,255,${o})`;
+      ctx.fill();
+    });
+    // 流星
+    meteors.forEach(m => {
+      ctx.beginPath();
+      const grad = ctx.createLinearGradient(m.x, m.y, m.x - m.len, m.y + m.len * 0.3);
+      grad.addColorStop(0, `rgba(255,255,255,${m.opacity})`);
+      grad.addColorStop(1, 'transparent');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2;
+      ctx.moveTo(m.x, m.y);
+      ctx.lineTo(m.x - m.len, m.y + m.len * 0.3);
+      ctx.stroke();
+      m.x += -m.speed;
+      m.y += m.speed * 0.3;
+      m.opacity -= 0.015;
+    });
+    meteors = meteors.filter(m => m.opacity > 0);
+    spawnMeteor();
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+
+  // === 觀星畫廊自動切換 trio.webp～trio10.webp ===
+  const gallery = document.getElementById("galleryImage");
+  let idx = 1;
+  setInterval(() => {
+    idx = idx % 10 + 1;
+    gallery.classList.remove("show");
+    setTimeout(() => {
+      gallery.src = `assets/trio${idx}.webp`;
+      gallery.classList.add("show");
+    }, 220);
+  }, 3000);
+
+  // === 🌍 動畫 ===
+  const globe = document.querySelector('.globe');
+  setInterval(() => {
+    globe.style.filter = 'drop-shadow(0 0 10px rgba(150,220,255,.9))';
+    globe.style.opacity = '1';
+    setTimeout(() => {
+      globe.style.filter = 'drop-shadow(0 0 3px rgba(150,220,255,.4))';
+      globe.style.opacity = '.8';
+    }, 1000);
+  }, 2000);
   </script>
 </body>
 </html>
