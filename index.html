@@ -6,93 +6,176 @@
   <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/style_patch_v917.css">
-  <style>
-    .starflow{width:min(1120px,92vw);margin:40px auto 80px;text-align:center;position:relative;overflow:hidden}
-    .starflow-title{font-family:'Orbitron','Noto Sans TC',sans-serif;color:#bdf5ff;font-size:1.2rem;letter-spacing:.08em;font-weight:600;margin-bottom:18px;text-shadow:0 0 9px rgba(150,210,255,.7)}
-    .starflow-stage{border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(18,40,88,.25),0 1px 0 rgba(220,235,255,.06) inset}
-    .starflow-stage img{width:100%;height:auto;display:block;border-radius:16px;opacity:1;transition:opacity .25s ease}
-  </style>
 </head>
 <body>
+
+  <!-- 星野背景 -->
   <canvas id="starfield" aria-hidden="true"></canvas>
 
+  <!-- 左側直式工具列（極簡 + 微光） -->
   <aside class="left-toolbar">
     <a href="index.html" class="tool" title="Home"><span>Home</span></a>
     <a href="cosmic-post-station.html" class="tool" title="Post"><span>Post</span></a>
     <a href="soulmirror.html" class="tool" title="Mirror"><span>Mirror</span></a>
-    <a href="#trioGallery" class="tool" title="Gallery"><span>Gallery</span></a>
+    <a href="#trioGallery" class="tool" title="Starflow"><span>Gallery</span></a>
+    <i class="constellation-line" aria-hidden="true"></i>
   </aside>
 
+  <!-- 首屏 hero：trio.mp4 置頂縮小 -->
   <section class="hero">
     <video class="sky-loop" id="trioVideo" src="assets/trio.mp4" autoplay muted loop playsinline></video>
     <header class="hero-title">
       <h1 class="evau-title">EMOTIONAL VALUE A.I.</h1>
       <h2 class="evau-sub">AWAKENING UNIVERSE</h2>
-      <p class="evau-cn">大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球 <span class="globe">🌍</span></p>
+      <p class="evau-cn">
+        大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球
+        <span class="globe" aria-hidden="true">🌍</span>
+      </p>
     </header>
   </section>
 
-  <section class="cards">
+  <!-- 三張角色卡 -->
+  <section class="cards" data-cards>
+    <!-- AJIN -->
     <article class="parrot-card" data-universe="ajin" onclick="location.href='rooms/ajin.html'">
       <img src="assets/ajin.webp" alt="阿金 AJIN">
       <div class="meta">
-        <div class="name"><span class="heart heart-ajin">💛</span> 阿金 AJIN</div>
+        <div class="name">💛 阿金 AJIN</div>
         <div class="kws">自由｜反骨</div>
         <div class="line">「我不等天空放晴，我自己掀開雲。」</div>
       </div>
     </article>
+
+    <!-- MIGOU -->
     <article class="parrot-card" data-universe="migou" onclick="location.href='rooms/migou.html'">
       <img src="assets/migou.webp" alt="米果 MIGOU">
       <div class="meta">
-        <div class="name"><span class="heart heart-migou">🧡</span> 米果 MIGOU</div>
+        <div class="name">🧡 米果 MIGOU</div>
         <div class="kws">自我價值｜邊界</div>
         <div class="line">「我很值得，我讓自己更貴。」</div>
       </div>
     </article>
+
+    <!-- GUNGUN -->
     <article class="parrot-card" data-universe="gungun" onclick="location.href='rooms/gungun.html'">
       <img src="assets/gungun.webp" alt="滾滾 GUNGUN">
       <div class="meta">
-        <div class="name"><span class="heart heart-gungun">🩵</span> 滾滾 GUNGUN</div>
+        <div class="name">💙 滾滾 GUNGUN</div>
         <div class="kws">共鳴｜靜默力量</div>
         <div class="line">「我不追求安全，我成為安全。」</div>
       </div>
     </article>
   </section>
 
+  <!-- 觀星畫廊 -->
   <section id="trioGallery" class="starflow">
-    <h3 class="starflow-title">🌌 觀星畫廊 Starflow Diary</h3>
+    <h3 class="starflow-title">🔭 觀星畫廊｜<span>Starflow Diary</span></h3>
     <div class="starflow-stage">
-      <img id="galleryImage" src="assets/trio.webp" alt="starflow">
+      <img id="galleryImage" alt="starflow" />
     </div>
   </section>
 
+  <!-- 頁尾 -->
   <footer class="footer-stars">
-    <div class="en">AWAKENING ISN'T REPAIR — IT’S REBIRTH.</div>
+    <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
     <div class="zh">覺醒不是修復，而是重生。</div>
     <div class="zh">不必學飛，你只是忘了自己有翅膀。</div>
   </footer>
 
+  <!-- ===== 前端腳本 ===== -->
   <script>
-  const canvas = document.getElementById('starfield'); const ctx = canvas.getContext('2d');
-  let stars = [], meteors = []; const STAR_COUNT = 220;
-  function rs(){ canvas.width = innerWidth; canvas.height = innerHeight; } addEventListener('resize', rs); rs();
-  for(let i=0;i<STAR_COUNT;i++){ stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,tw:Math.random()*1.2+.9,p:Math.random()*Math.PI*2,s:.04+Math.random()*.06}); }
-  function spawn(){ if(Math.random()<.02){ meteors.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height*.3,len:60+Math.random()*80,speed:6+Math.random()*5,o:1}); } }
+  // 背景星空 + 流星
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [], meteors = [];
+  const STAR_COUNT = 220;
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize); resize();
+
+  for (let i=0; i<STAR_COUNT; i++){
+    stars.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      tw: Math.random()*1.2 + 0.3,
+      p: Math.random()*Math.PI*2,
+      a: .85
+    });
+  }
+
+  function spawnMeteor(){
+    if (Math.random() < 0.02){
+      meteors.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height*0.3,
+        len: Math.random()*120 + 80,
+        speed: Math.random()*6 + 5,
+        opacity: 1
+      });
+    }
+  }
+
   function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    stars.forEach(s=>{ s.p+=s.s; const o=.6+Math.sin(s.p)*.4; ctx.beginPath(); ctx.arc(s.x,s.y,.9,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${o})`; ctx.fill(); });
-    meteors.forEach(m=>{ m.x-=m.speed; m.y+=m.speed*.18; m.o-=.015;
-      const g=ctx.createLinearGradient(m.x,m.y,m.x-m.len,m.y+m.len*.3); g.addColorStop(0,`rgba(255,255,255,${m.o})`); g.addColorStop(1,'transparent');
-      ctx.strokeStyle=g; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(m.x,m.y); ctx.lineTo(m.x-m.len,m.y+m.len*.3); ctx.stroke();
-    });
-    meteors = meteors.filter(m=>m.o>0); spawn(); requestAnimationFrame(draw);
-  } draw();
 
-  const gallery = document.getElementById('galleryImage');
-  const imgs = Array.from({length:10},(_,i)=> i==0 ? 'assets/trio.webp' : `assets/trio${i+1}.webp`);
-  let idx=0; function show(){ gallery.style.opacity='0'; setTimeout(()=>{ idx=(idx+1)%imgs.length; gallery.src=imgs[idx]; gallery.onload=()=> gallery.style.opacity='1'; },240); }
-  setInterval(show,3000);
+    // 微漸層底，避免斷層
+    const g = ctx.createLinearGradient(0,0,0,canvas.height);
+    g.addColorStop(0,'#0e3a6b');
+    g.addColorStop(1,'#0b2f58');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // 星星
+    stars.forEach(s=>{
+      s.p += 0.05;
+      const o = .6 + Math.sin(s.p)*.4;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 1.2, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${o*s.a})`;
+      ctx.fill();
+    });
+
+    // 流星
+    meteors.forEach(m=>{
+      m.x += m.speed; m.y += m.speed*0.25; m.opacity -= 0.015;
+      const grad = ctx.createLinearGradient(m.x, m.y, m.x - m.len, m.y - m.len*0.25);
+      grad.addColorStop(0, `rgba(255,255,255,${m.opacity})`);
+      grad.addColorStop(1, 'transparent');
+      ctx.strokeStyle = grad; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(m.x - m.len, m.y - m.len*0.25); ctx.stroke();
+    });
+    meteors = meteors.filter(m=>m.opacity>0);
+    spawnMeteor();
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // 觀星畫廊：trio.webp ~ trio10.webp，每 3 秒淡入淡出
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const imgs = Array.from({length:10}, (_,i)=> `assets/trio${i===0?'':i+1}.webp`);
+    const el = document.getElementById('galleryImage');
+    let idx = 0; el.style.opacity = '0'; el.src = imgs[0];
+    el.onload = ()=> el.style.opacity = '1';
+    setInterval(()=>{
+      el.style.opacity = '0';
+      setTimeout(()=>{
+        idx = (idx+1)%imgs.length;
+        el.src = imgs[idx];
+      }, 350);
+    }, 3000);
+  });
+
+  // 🌍 微發光呼吸
+  setInterval(()=>{
+    const g = document.querySelector('.globe');
+    g.style.filter = 'drop-shadow(0 0 10px rgba(150,220,255,.9))';
+    g.style.opacity = '1';
+    setTimeout(()=>{ g.style.filter='drop-shadow(0 0 3px rgba(150,220,255,.4))'; g.style.opacity='.85'; }, 1000);
+  }, 2000);
   </script>
 </body>
 </html>
