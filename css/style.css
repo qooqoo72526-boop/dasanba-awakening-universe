@@ -40,7 +40,7 @@ footer.small, .uv-footer { margin: 22px 0 50px; text-align: center; color: #cfe0
 :root{
   --page-w: 1120px;
   --gap: 24px;
-  
+  }
 /* 全頁寬度與置中（就算沒 .container 也吃得到） */
 body > .hero,
 body > .cards,
