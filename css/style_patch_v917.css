@@ -204,3 +204,101 @@
   from { opacity: .38; filter: drop-shadow(0 0 6px rgba(180,220,255,.6)); }
   to { opacity: .75; filter: drop-shadow(0 0 14px rgba(205,235,255,.9)); }
 }
+/* ===== v9.1.7 layout fix — toolbar + 3-column cards ===== */
+
+/* 左側直式工具列（噓噓線風） */
+.left-toolbar{
+  position: fixed;
+  left: 12px;
+  top: 84px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+  width: 56px;
+}
+.left-toolbar::before{
+  content:"";
+  position:absolute;
+  left: 28px; top:-40px; bottom:-80px;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(160,200,255,.0), rgba(160,200,255,.35), rgba(160,200,255,.0));
+  filter: drop-shadow(0 0 6px rgba(140,200,255,.5));
+}
+.left-toolbar a{
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  padding: 10px 6px;
+  border-radius: 12px;
+  background: rgba(0,20,60,.22);
+  box-shadow: 0 0 0 1px rgba(180,220,255,.16) inset, 0 6px 18px rgba(0,10,30,.25);
+  color: #bfe3ff;
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: .12em;
+  backdrop-filter: blur(6px);
+  transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+.left-toolbar a:hover{ background: rgba(90,150,255,.30); color: #fff; transform: translateY(-2px); }
+
+/* 主要卡片區：3欄置中、等高、圖片比例一致 */
+.cards{
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: 28px !important;
+  width: min(1120px, 92vw);
+  margin: 40px auto 28px !important;
+}
+.parrot-card,
+.card,
+[data-card]{
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,30,.14));
+  box-shadow: 0 12px 28px rgba(0,0,0,.36), inset 0 0 0 1px rgba(180,220,255,.12);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.parrot-card:hover{ transform: translateY(-4px); box-shadow: 0 18px 36px rgba(0,0,0,.42), inset 0 0 0 1px rgba(200,235,255,.18); }
+
+/* 圖片統一 4:5 比例，置頂裁切，看起來不會有「阿金比較矮」 */
+.parrot-card img,
+.card img,
+[data-card] img{
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* 文案置中、大小微調 */
+.parrot-card .meta,
+.card .meta,
+[data-card] .meta{
+  padding: 14px 14px 18px;
+  text-align: center;
+  font-size: 14px;
+}
+.parrot-card .name{ font-weight: 700; letter-spacing: .06em; }
+.parrot-card .line{ font-size: 12px; opacity: .85; }
+
+/* 卡片光暈（獨立在卡上） */
+.parrot-card::after{
+  content:"";
+  position:absolute; inset:-2px;
+  pointer-events:none;
+  box-shadow: 0 0 0 1px rgba(150,200,255,.18) inset, 0 0 40px rgba(120,180,255,.15);
+}
+
+/* RWD：兩欄 / 一欄 */
+@media (max-width: 1100px){
+  .cards{ grid-template-columns: repeat(2, minmax(260px,1fr)) !important; }
+}
+@media (max-width: 720px){
+  .cards{ grid-template-columns: 1fr !important; }
+}
+
+/* 英文主標題與中文副標間距（避免壓到卡片） */
+.hero-title{ margin-bottom: 10px; }
+.evau-cn{ margin-top: 4px; }
