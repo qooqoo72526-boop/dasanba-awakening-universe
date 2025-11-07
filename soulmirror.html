@@ -1,46 +1,9 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>靈魂照妖鏡 🪞 | Soul Mirror</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <header class="uv-nav">
-    <div class="uv-nav__inner">
-      <div class="uv-brand">EMOTIONAL VALUE A.I.</div>
-      <nav class="uv-links">
-        <a href="/">Home</a>
-        <a href="/cosmic-post-station.html">✉️ Cosmic Post Station</a>
-        <a href="/soulmirror.html">🪞 Soul Mirror</a>
-      </nav>
-      <div class="uv-glowline" aria-hidden="true"></div>
-    </div>
-  </header>
-
-  <main class="sm-stage" style="padding-top:64px">
-    <section class="cps-title">
-      <h1>靈魂照妖鏡 🪞 / Soul Mirror</h1>
-      <p>銀白柔光宇宙 · 星環緩旋 · 魔法鏡浮現</p>
-    </section>
-
-    <!-- 進場魔法鏡舞台 -->
-    <div class="sm-mirror"></div>
-
-    <!-- 題區：一次顯示 25 題 -->
-    <section>
-      <div id="sm-questions" class="sm-questions"></div>
-      <div class="sm-actions">
-        <button onclick="smSubmit()">送出，生成 600 字深度解析 + 三鳥自然語</button>
-      </div>
-      <article id="sm-result" class="sm-result"></article>
-    </section>
-  </main>
-
-  <div class="starfield"></div>
-  <div class="shooting-layer"></div>
-
-  <script src="/js/main_v917_addon.js"></script>
-</body>
-</html>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Soul Mirror</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/universe.css">
+<style>.wrap{width:min(1100px,92%);margin:24px auto}h2{text-align:center;font-family:Orbitron,sans-serif;letter-spacing:.12em;color:#e9efff}.questions{display:grid;grid-template-columns:1fr 1fr;gap:10px}.q{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 12px}.actions{margin-top:14px;text-align:center}.result{margin-top:18px;background:rgba(255,255,255,.07);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,.12)}@media (max-width:900px){.questions{grid-template-columns:1fr}}</style></head><body>
+<div class="universe"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
+<nav class="nav-rail"><a href="/"><span>🏠</span> Home</a><a href="/cosmic-post-station.html"><span>✉️</span> Post</a><a href="/soulmirror.html"><span>🪞</span> Mirror</a><a href="/#gallery"><span>🔭</span> Gallery</a></nav>
+<section class="wrap"><h2>SOUL MIRROR｜靈魂照妖鏡</h2><div class="questions"></div><div class="actions"><button id="run-analysis" style="padding:10px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.12);color:#eaf4ff;font-family:Orbitron, sans-serif;letter-spacing:.1em;">開始分析</button></div><div class="result"></div></section>
+<script src="/js/soulmirror.js"></script></body></html>

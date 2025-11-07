@@ -1,42 +1,9 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>宇宙郵局 ✉️ | Cosmic Post Station</title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-  <div class="cps-bg" aria-hidden="true"></div>
-  <header class="uv-nav">
-    <div class="uv-nav__inner">
-      <div class="uv-brand">EMOTIONAL VALUE A.I.</div>
-      <nav class="uv-links">
-        <a href="/">Home</a>
-        <a href="/cosmic-post-station.html">✉️ Cosmic Post Station</a>
-        <a href="/soulmirror.html">🪞 Soul Mirror</a>
-      </nav>
-      <div class="uv-glowline" aria-hidden="true"></div>
-    </div>
-  </header>
-
-  <main class="cps-wrap" style="padding-top:64px">
-    <section class="cps-title">
-      <h1>宇宙郵局 ✉️ ｜ Cosmic Post Station</h1>
-      <p>Communicating with the Cosmos… Receiving signals… Ajin ・ Migou ・ Gungun ✦</p>
-    </section>
-
-    <section id="cps-feed" style="height:50vh; overflow:auto; padding-right:2px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02)"></section>
-
-    <div class="controls">
-      <input id="cps-input" type="text" placeholder="想對三隻靈魂鳥說什麼？">
-      <button onclick="cpsSend(document.getElementById('cps-input').value);document.getElementById('cps-input').value=''">Send</button>
-    </div>
-  </main>
-
-  <div class="starfield"></div>
-  <div class="shooting-layer"></div>
-
-  <script src="/js/main_v917_addon.js"></script>
-</body>
-</html>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cosmic Post Station</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/universe.css"><link rel="stylesheet" href="/css/cps.css"></head><body>
+<div class="universe"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
+<nav class="nav-rail"><a href="/"><span>🏠</span> Home</a><a href="/cosmic-post-station.html"><span>✉️</span> Post</a><a href="/soulmirror.html"><span>🪞</span> Mirror</a><a href="/#gallery"><span>🔭</span> Gallery</a></nav>
+<section class="cps-wrap"><h2 style="text-align:center;font-family:Orbitron,sans-serif;letter-spacing:.12em;color:#e9efff;">Cosmic Post Station</h2>
+<div class="chat chat-scroll"></div><div class="composer"><input id="msg" placeholder="跟他們聊聊吧…"/><button id="send">SEND</button></div></section>
+<script src="/js/dialogue.js"></script></body></html>
