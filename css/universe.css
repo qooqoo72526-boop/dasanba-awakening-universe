@@ -1,0 +1,63 @@
+/* universe.css — global cosmic visuals (v9.1.7) */
+:root{
+  --uv-bg-1:#0d1530;
+  --uv-bg-2:#0b1b3d;
+  --uv-glass:rgba(255,255,255,.08);
+  --uv-stroke:rgba(255,255,255,.12);
+  --uv-white:#eaf1ff;
+  --uv-silver:#cfe0ff;
+  --uv-gold:#ffd980;
+  --uv-rose:#ffb7cf;
+  --uv-blue:#9fd0ff;
+  --uv-shadow:0 10px 40px rgba(0,0,0,.35);
+}
+body{
+  background: radial-gradient(1200px 800px at 50% -10%, #1b2b5a 0%, var(--uv-bg-2) 35%, var(--uv-bg-1) 100%) fixed;
+  color: var(--uv-white);
+}
+.uv-stars, .uv-stars:before, .uv-stars:after{
+  content:""; position:fixed; inset:0; pointer-events:none;
+  background-repeat: repeat;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,.9) 60%,transparent 61%),
+    radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,.6) 60%,transparent 61%),
+    radial-gradient(1px 1px at 260px 120px, rgba(255,255,255,.75) 60%,transparent 61%),
+    radial-gradient(1px 1px at 90px 200px, rgba(255,255,255,.7) 60%,transparent 61%);
+  animation: uvTwinkle 6s linear infinite;
+  opacity:.85;
+}
+.uv-stars:before{ animation-duration:8s; opacity:.55; filter:blur(.3px) }
+.uv-stars:after { animation-duration:11s; opacity:.35; filter:blur(.6px) }
+@keyframes uvTwinkle{ 0%{transform:translateY(0)} 50%{opacity:.7} 100%{transform:translateY(-20px)} }
+.uv-meteor{
+  position:fixed; top:-10vh; left:110vw; width:2px; height:2px; background:#fff;
+  box-shadow: 0 0 8px 2px rgba(255,255,255,.9);
+  transform: rotate(-35deg);
+  animation: uvMeteor 1.8s ease-in forwards;
+}
+@keyframes uvMeteor{
+  0%{ transform:translate(0,0) rotate(-35deg); opacity:0 }
+  10%{ opacity:1 }
+  100%{ transform:translate(-130vw, 80vh) rotate(-35deg); opacity:0 }
+}
+.uv-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+  border:1px solid var(--uv-stroke);
+  border-radius:22px; padding:18px; box-shadow: var(--uv-shadow);
+  backdrop-filter: blur(10px);
+}
+.uv-halo-gold{ box-shadow: 0 0 0 0 rgba(255,217,128,.45), 0 0 50px 10px rgba(255,217,128,.25) inset }
+.uv-halo-rose{ box-shadow: 0 0 0 0 rgba(255,183,207,.45), 0 0 50px 10px rgba(255,183,207,.22) inset }
+.uv-halo-blue{ box-shadow: 0 0 0 0 rgba(159,208,255,.45), 0 0 50px 10px rgba(159,208,255,.22) inset }
+.uv-nav{
+  position: fixed; top:14px; left:50%; transform:translateX(-50%);
+  width:min(1120px, 92vw); height:48px;
+  display:flex; align-items:center; gap:18px; padding:0 16px;
+  border-radius:16px; border:1px solid var(--uv-stroke);
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  backdrop-filter: blur(10px);
+  z-index:1000;
+}
+.uv-nav a{ color:var(--uv-silver); text-decoration:none; font-size:14px; letter-spacing:.2px }
+.uv-nav a:hover{ color:#fff; text-shadow:0 0 10px rgba(255,255,255,.35) }
+.uv-footer{ color:var(--uv-silver); font-size:12px; opacity:.8; margin-top:26px }
