@@ -1,31 +1,38 @@
-/* ========== v9.1.7 Style (Blue–Silver) Full Restore ========== */
-.container{ width:min(1120px,92vw); margin:0 auto }
-h1{ margin:120px 0 6px; font-family: 'Orbitron', system-ui, sans-serif; letter-spacing:.18em; text-align:center }
-h2{ margin:0 0 18px; opacity:.8; text-align:center; letter-spacing:.12em }
-.subtitle{ text-align:center; color:#cfe0ff; font-size:14px }
+/* v9.1.6 → v9.1.7 Style FULL RESTORE (Blue–Silver) */
+/* Layout containers (multiple aliases so不改HTML也能吃到) */
+.container, .wrap, .page, main { width: min(1120px, 92vw); margin: 0 auto; }
+h1 { margin: 120px 0 6px; font-family: 'Orbitron', system-ui, sans-serif; letter-spacing: .18em; text-align: center; }
+h2 { margin: 0 0 18px; opacity: .85; text-align: center; letter-spacing: .12em; }
+.subtitle, .subnote { text-align: center; color: #cfe0ff; font-size: 14px; opacity: .95; }
 
-/* Trio cards */
-.cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin:28px 0 10px }
-.card{ overflow:hidden; position:relative }
-.card img{ width:100%; height:auto; border-radius:16px }
-.card .meta{ padding:10px 8px 14px; font-size:14px }
-.card .meta .name{ font-weight:700; letter-spacing:.06em }
-.card .meta .desc{ opacity:.8; font-size:12px }
-.card{ transition:transform .35s ease, filter .35s ease }
-.card:hover{ transform:translateY(-4px) }
-.card:hover img{ filter:brightness(1.06) }
+/* Trio cards (accepts .cards / .card-grid / [data-cards]) */
+.cards, .card-grid, [data-cards] { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin: 28px 0 10px; }
+.card, .parrot-card, [data-card] { overflow: hidden; position: relative; border-radius: 16px; }
+.card img, .parrot-card img, [data-card] img { width: 100%; height: auto; display: block; border-radius: 16px; }
+.card .meta, .parrot-card .meta, [data-card] .meta { padding: 10px 8px 14px; font-size: 14px; }
+.card .meta .name { font-weight: 700; letter-spacing: .06em; }
+.card .meta .desc { opacity: .8; font-size: 12px; }
+.card, .parrot-card, [data-card] { transition: transform .35s ease, filter .35s ease; }
+.card:hover, .parrot-card:hover, [data-card]:hover { transform: translateY(-4px); }
+.card:hover img, .parrot-card:hover img, [data-card]:hover img { filter: brightness(1.06); }
 
-/* Gallery strip */
-.gallery{ overflow:hidden; border-radius:16px; margin:28px 0 }
-.gallery .track{ display:flex; gap:10px; animation: slider 30s linear infinite }
-.gallery img{ height:220px; width:auto; border-radius:12px; object-fit:cover }
-@keyframes slider{ 0%{ transform:translateX(0) } 100%{ transform:translateX(-50%) } }
+/* Halos (attach via JS or existing classes) */
+.uv-card { background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05)); border: 1px solid rgba(220,235,255,.18); border-radius: 22px; box-shadow: 0 18px 60px rgba(0,0,0,.45); backdrop-filter: blur(14px); }
+.uv-halo-gold{ box-shadow: 0 0 0 0 rgba(255,217,128,.32), inset 0 0 60px 12px rgba(255,217,128,.32) }
+.uv-halo-rose{ box-shadow: 0 0 0 0 rgba(255,170,205,.30), inset 0 0 60px 12px rgba(255,170,205,.30) }
+.uv-halo-blue{ box-shadow: 0 0 0 0 rgba(150,195,255,.34), inset 0 0 60px 12px rgba(150,195,255,.34) }
+
+/* Auto gallery (accepts .gallery / #gallery / .star-gallery) */
+.gallery, #gallery, .star-gallery { overflow: hidden; border-radius: 16px; margin: 28px 0; }
+.gallery .track, #gallery .track, .star-gallery .track { display: flex; gap: 10px; animation: slider 30s linear infinite; }
+.gallery img, #gallery img, .star-gallery img { height: 220px; width: auto; border-radius: 12px; object-fit: cover; }
+@keyframes slider { 0% { transform: translateX(0) } 100% { transform: translateX(-50%) } }
 
 /* Footer */
-footer.small{ margin:22px 0 50px; text-align:center; color:#cfe0ff; font-size:12px }
+footer.small, .uv-footer { margin: 22px 0 50px; text-align: center; color: #cfe0ff; font-size: 12px; }
 
 /* RWD */
-@media (max-width:960px){
-  .cards{ grid-template-columns:1fr; }
-  h1{ margin-top:90px }
+@media (max-width: 960px) {
+  .cards, .card-grid, [data-cards] { grid-template-columns: 1fr; }
+  h1 { margin-top: 90px; }
 }
