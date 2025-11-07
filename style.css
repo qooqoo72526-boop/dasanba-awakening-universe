@@ -1,0 +1,31 @@
+/* ========== v9.1.7 Style (Blue–Silver) Full Restore ========== */
+.container{ width:min(1120px,92vw); margin:0 auto }
+h1{ margin:120px 0 6px; font-family: 'Orbitron', system-ui, sans-serif; letter-spacing:.18em; text-align:center }
+h2{ margin:0 0 18px; opacity:.8; text-align:center; letter-spacing:.12em }
+.subtitle{ text-align:center; color:#cfe0ff; font-size:14px }
+
+/* Trio cards */
+.cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin:28px 0 10px }
+.card{ overflow:hidden; position:relative }
+.card img{ width:100%; height:auto; border-radius:16px }
+.card .meta{ padding:10px 8px 14px; font-size:14px }
+.card .meta .name{ font-weight:700; letter-spacing:.06em }
+.card .meta .desc{ opacity:.8; font-size:12px }
+.card{ transition:transform .35s ease, filter .35s ease }
+.card:hover{ transform:translateY(-4px) }
+.card:hover img{ filter:brightness(1.06) }
+
+/* Gallery strip */
+.gallery{ overflow:hidden; border-radius:16px; margin:28px 0 }
+.gallery .track{ display:flex; gap:10px; animation: slider 30s linear infinite }
+.gallery img{ height:220px; width:auto; border-radius:12px; object-fit:cover }
+@keyframes slider{ 0%{ transform:translateX(0) } 100%{ transform:translateX(-50%) } }
+
+/* Footer */
+footer.small{ margin:22px 0 50px; text-align:center; color:#cfe0ff; font-size:12px }
+
+/* RWD */
+@media (max-width:960px){
+  .cards{ grid-template-columns:1fr; }
+  h1{ margin-top:90px }
+}
