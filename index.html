@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+  <style id="hotfix-v916-cards">
+  :root { --page-w:1120px;  gap:24px; }
+  section.cards{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:var(--gap)!important;margin:10px 0 50px!important;align-items:stretch!important}
+  section.cards article{position:relative;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));border:1px solid rgba(220,235,255,.18);box-shadow:0 18px 60px rgba(0,0,0,.45);overflow:hidden;transition:transform .25s ease,filter .25s ease}
+  section.cards article:hover{transform:translateY(-4px);filter:brightness(1.03)}
+  section.cards img{width:100%!important;aspect-ratio:16/11;object-fit:cover;display:block}
+  section.cards .meta{padding:12px 14px 16px;font-size:14px}
+  section.cards .meta .name{font-weight:700;letter-spacing:.06em}
+  section.cards .meta .line{font-size:12px;opacity:.85}
+  @media (max-width:1100px){section.cards{grid-template-columns:repeat(2,1fr)!important}}
+  @media (max-width:720px){section.cards{grid-template-columns:1fr!important}section.cards img{aspect-ratio:16/12}}
+</style>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
