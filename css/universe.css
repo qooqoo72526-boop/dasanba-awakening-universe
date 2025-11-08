@@ -1,44 +1,26 @@
 
-/* v9.1.9.2 — darker tune (extend-only) */
-:root{
-  /* Home (9/19 darker): #cfd9f6 → #5a77b8 → #162445 */
-  --home-top:#cfd9f6;
-  --home-mid:#5a77b8;
-  --home-btm:#162445;
-
-  /* Post (white-silver universe, slightly brighter than home but still darker than last) */
-  --post-top:#d8e2fb;
-  --post-mid:#6c86c7;
-  --post-btm:#1c2f58;
-
-  /* Mirror (silver‑violet darker) */
-  --mirror-top:#d9d3fb;
-  --mirror-mid:#9b94d8;
-  --mirror-btm:#3d3b7a;
-
-  --text-en:#dfe7ff;
-  --text-zh:#d6e0ff;
-  --glass-weak:rgba(255,255,255,.07);
-  --glass:rgba(255,255,255,.11);
-  --glass-strong:rgba(255,255,255,.16);
-  --stroke:rgba(255,255,255,.14);
-
-  --ajin:#ffd43a;
-  --migou:#ff9d57;
-  --gungun:#5fb6ff;
+body[data-universe="home"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #cfe1ff 0%, #7aa2e8 36%, #264a86 62%, #0e2244 100%),
+    radial-gradient(900px 600px at 80% 120%, rgba(160,200,255,.25), transparent 60%);
 }
-
-html,body{height:100%}
-body{
-  margin:0; overflow-x:hidden; color:var(--text-zh);
-  font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue";
-  background: radial-gradient(155% 120% at 50% -10%, var(--home-top) 0%, var(--home-mid) 38%, var(--home-btm) 100%) fixed;
+body[data-universe="ajin"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #fff2bf 0%, #ffd98a 36%, #375a9c 62%, #0e2244 100%);
 }
-body[data-page="post"]{
-  background: radial-gradient(150% 120% at 50% -10%, var(--post-top) 0%, var(--post-mid) 36%, var(--post-btm) 100%) fixed;
+body[data-universe="migou"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #ffd9ec 0%, #ffc6e7 34%, #5a6fb3 62%, #132a59 100%);
 }
-body[data-page="mirror"]{
-  background: radial-gradient(150% 120% at 50% -10%, var(--mirror-top) 0%, var(--mirror-mid) 36%, var(--mirror-btm) 100%) fixed;
+body[data-universe="gungun"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #e7f1ff 0%, #cbe4ff 34%, #3a66a8 62%, #0d2246 100%);
 }
-
-/* Keep rest styles inherited from previous universe.css — this file only overrides variables + background */
+body[data-universe="post"]{
+  background:
+    radial-gradient(1100px 720px at 50% -120px, #d7ebff 0%, #8cb6ea 36%, #2a4c80 62%, #0b2140 100%);
+}
+body[data-universe="mirror"]{
+  background:
+    radial-gradient(1180px 760px at 50% -120px, #e6ddff 0%, #c9baff 34%, #5b50b7 62%, #1d1a5f 100%);
+}
