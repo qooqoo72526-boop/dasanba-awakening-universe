@@ -1,57 +1,58 @@
-const canvas = document.getElementById('starfield');
-if (canvas) {
-  const ctx = canvas.getContext('2d',{alpha:true});
-  let W,H,stars=[],meteors=[];
 
-  function resize(){
-    W = canvas.width = innerWidth;
-    H = canvas.height = innerHeight;
-    stars = Array.from({length: Math.floor(W*H/15000)}, () => ({
-      x: Math.random()*W, y: Math.random()*H,
-      r: Math.random()*0.9 + 0.2, a: Math.random()*0.5 + 0.5
-    }));
-  }
-  addEventListener('resize', resize);
-  resize();
-
-  function spawnMeteor(){
-    const y = Math.random()*H*0.7;
-    const len = 140 + Math.random()*160;
-    const angle = (Math.random()*0.25 + 0.65) * Math.PI; // ↘
-    const speed = 0.7 + Math.random()*0.8;
-    meteors.push({x:-100,y,len,angle,speed});
-    setTimeout(spawnMeteor, 3000 + Math.random()*2500); // 3–5.5s
-  }
-  setTimeout(spawnMeteor, 1200);
-
-  function tick(t){
+// Starfield + meteors (3–5s irregular) + gallery crossfade
+(()=>{
+  const cvs = document.getElementById('starfield');
+  if(!cvs) return;
+  const ctx = cvs.getContext('2d',{alpha:true});
+  let W=0,H=0,stars=[],meteors=[];
+  const resize=()=>{ W=cvs.width=innerWidth; H=cvs.height=innerHeight; };
+  addEventListener('resize', resize); resize();
+  const seed=(nmul=1.4)=>{
+    const n = Math.min(420, Math.floor((W*H/8000)*nmul)); // bright mode
+    stars = Array.from({length:n},()=>({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.2+0.2, t:Math.random()*Math.PI*2, s:Math.random()*0.8+0.4 }));
+  };
+  seed();
+  const spawnMeteor=()=>{
+    const delay = 3000 + Math.random()*2000; // 3–5s
+    setTimeout(()=>{
+      const y = Math.random()*H*0.85 + 10;
+      meteors.push({ x: -120, y, vx: Math.random()*6+5, life: 0, max: 100 });
+      spawnMeteor();
+    }, delay);
+  };
+  spawnMeteor();
+  const loop=()=>{
     ctx.clearRect(0,0,W,H);
-    for(const s of stars){
-      const flicker = 0.5 + 0.5*Math.sin((t/900) + s.x*0.01 + s.y*0.01);
-      ctx.globalAlpha = s.a * flicker;
-      ctx.fillStyle = '#fff';
-      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.28); ctx.fill();
+    for(const p of stars){
+      p.t += 0.02*p.s;
+      const o = 0.45 + Math.sin(p.t)*0.35;
+      ctx.fillStyle = `rgba(255,255,255,${0.35+o*0.5})`;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
     }
-    ctx.globalAlpha = 1;
-
     for(const m of meteors){
-      m.x += Math.cos(m.angle)*m.speed*4;
-      m.y += Math.sin(m.angle)*m.speed*4;
-      const grad = ctx.createLinearGradient(m.x, m.y, m.x - Math.cos(m.angle)*m.len, m.y - Math.sin(m.angle)*m.len);
-      grad.addColorStop(0,'rgba(255,255,255,.9)');
-      grad.addColorStop(1,'rgba(160,200,255,0)');
-      ctx.strokeStyle = grad; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(m.x,m.y);
-      ctx.lineTo(m.x - Math.cos(m.angle)*m.len, m.y - Math.sin(m.angle)*m.len);
-      ctx.stroke();
+      m.life++; m.x += m.vx;
+      const len = 160;
+      const grad = ctx.createLinearGradient(m.x-len,m.y,m.x,m.y);
+      grad.addColorStop(0,'rgba(255,255,255,0)');
+      grad.addColorStop(1,'rgba(210,235,255,.95)');
+      ctx.strokeStyle = grad; ctx.lineWidth = 1.25;
+      ctx.beginPath(); ctx.moveTo(m.x-len,m.y); ctx.lineTo(m.x,m.y); ctx.stroke();
     }
-    meteors = meteors.filter(m => m.x < W+200 && m.y < H+200);
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}
+    meteors = meteors.filter(m => m.life < m.max && m.x < W+200);
+    requestAnimationFrame(loop);
+  };
+  loop();
+})();
 
-/* 卡片點擊→房間 */
-document.querySelectorAll('[data-room]').forEach(el=>{
-  el.addEventListener('click',()=>location.href=`./rooms/${el.dataset.room}.html`);
-});
+// Gallery crossfade (trio.webp ~ trio10.webp)
+(()=>{
+  const g = document.querySelector('.gallery-viewport');
+  if(!g) return;
+  const imgs = Array.from(g.querySelectorAll('img'));
+  let i=0; if(imgs[0]) imgs[0].classList.add('active');
+  setInterval(()=>{
+    const prev = imgs[i]; i=(i+1)%imgs.length; const next = imgs[i];
+    if(prev) prev.classList.remove('active');
+    if(next) next.classList.add('active');
+  }, 3000);
+})();

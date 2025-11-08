@@ -1,97 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap');
 
-:root{
-  --silver: #e6f0ff;
-  --silver-blue: #cfe2ff;
-  --ink: #0b1220;
-  --tool-dim: rgba(255,255,255,.06);
-  --tool-glow: rgba(160,200,255,.28);
-  --card: rgba(18,30,58,.65);
-  --card-strong: rgba(18,30,58,.85);
-  --ajin: #ffd74d;      /* 💛 */
-  --migou: #ff9e6e;     /* 🧡 (粉系感受，橘心) */
-  --gungun: #6fc3ff;    /* 💙 */
-}
-
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; color:#eef6ff;
-  font-family:'Orbitron','Noto Sans TC',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  /* 銀藍背景：無「中間斷層」 */
+body[data-universe="home"]{
   background:
-    radial-gradient(1200px 700px at 50% -220px, rgba(160,190,250,.35), transparent 60%),
-    linear-gradient(180deg,#0b1f3f,#0b2246 40%,#081a36 100%);
-  overflow-x:hidden;
+    radial-gradient(1200px 800px at 50% -120px, #cfe1ff 0%, #7aa2e8 36%, #264a86 62%, #0e2244 100%),
+    radial-gradient(900px 600px at 80% 120%, rgba(160,200,255,.25), transparent 60%);
 }
-
-/* 星星與流星畫布（全站共用） */
-#starfield{position:fixed;inset:0;z-index:-1;display:block}
-
-/* ——— HERO 影片 ——— */
-.hero{width:min(1200px,92vw);margin:92px auto 24px;position:relative;border-radius:18px;overflow:hidden;
-  box-shadow:0 12px 40px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.06) inset}
-.hero video,.hero img{display:block;width:100%;height:auto}
-
-/* ——— 首頁標題（兩行，銀白帶藍漸層；副標在下且細閃） ——— */
-.main-title{
-  text-align:center;margin:18px 0 2px;letter-spacing:.06em;font-weight:900;line-height:1.04;
-  font-size:clamp(34px,4.2vw,60px);
-  background:linear-gradient(180deg,#e9f2ff,#9bc3ff);
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 18px rgba(160,200,255,.18));
+body[data-universe="ajin"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #fff2bf 0%, #ffd98a 36%, #375a9c 62%, #0e2244 100%);
 }
-.sub-title{
-  text-align:center;margin:4px auto 18px;
-  font-family:'Noto Sans TC';font-weight:500;font-size:clamp(12px,1.6vw,16px);
-  letter-spacing:.08em;color:#dbe9ff
+body[data-universe="migou"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #ffd9ec 0%, #ffc6e7 34%, #5a6fb3 62%, #132a59 100%);
 }
-.sub-title .globe{filter:drop-shadow(0 0 8px rgba(190,230,255,.9))}
-
-/* ——— 左側工具列（線條極簡、小字、遠遠光圈會閃） ——— */
-.toolbox{position:fixed;left:18px;top:90px;display:flex;flex-direction:column;gap:12px;z-index:50}
-.tool{
-  display:flex;align-items:center;gap:10px;padding:10px 14px 10px 12px;border-radius:16px;
-  font:600 13px/1 'Noto Sans TC';letter-spacing:.02em;color:#dfeaff;
-  background:radial-gradient(40px 40px at 20% 20%, var(--tool-glow), transparent 60%), var(--tool-dim);
-  border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(8px);
-  box-shadow:0 4px 16px rgba(0,0,0,.25);transition:.2s ease;
+body[data-universe="gungun"]{
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #e7f1ff 0%, #cbe4ff 34%, #3a66a8 62%, #0d2246 100%);
 }
-.tool svg{width:16px;height:16px;stroke:#eaf2ff;opacity:.9;fill:none;stroke-width:1.7}
-.tool:hover{transform:translateX(2px);border-color:rgba(180,220,255,.45);box-shadow:0 6px 20px rgba(80,140,255,.25)}
-
-/* ——— 三張角色卡（直立、不切頭、柔邊光暈、點卡片進房間） ——— */
-.cards{width:min(1200px,92vw);margin:18px auto 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.card{position:relative;padding:14px;border-radius:22px;background:var(--card);
-  box-shadow:0 10px 30px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.05) inset;overflow:hidden;
-  transition:transform .25s,box-shadow .25s,background .25s;cursor:pointer}
-.card img{display:block;width:100%;height:auto;border-radius:16px;object-fit:cover}
-.card .meta{margin-top:10px;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center}
-.card .name{font-weight:800;letter-spacing:.06em}
-.card .tag{font:600 12px/1.1 'Noto Sans TC';opacity:.9}
-.card .line{font:500 12px/1.4 'Noto Sans TC';opacity:.85}
-.card:before{content:'';position:absolute;inset:-25% -10% auto -10%;height:50%;
-  background:radial-gradient(50% 60% at 50% 50%, rgba(255,255,255,.16), transparent 70%);
-  filter:blur(20px);opacity:0;transition:opacity .25s}
-.card:hover{transform:translateY(-6px);background:var(--card-strong)}
-.card:hover:before{opacity:.9}
-
-/* 代表色光暈 */
-.heart{font-size:16px;vertical-align:middle;margin-right:6px;filter:drop-shadow(0 0 6px rgba(255,255,255,.35))}
-.card.ajin{box-shadow:0 12px 28px rgba(255,215,77,.18),0 0 0 1px rgba(255,230,150,.14) inset}
-.card.migou{box-shadow:0 12px 28px rgba(255,158,110,.16),0 0 0 1px rgba(255,180,150,.13) inset}
-.card.gungun{box-shadow:0 12px 28px rgba(111,195,255,.18),0 0 0 1px rgba(170,220,255,.14) inset}
-
-/* ——— 觀星畫廊：字小、圖不會過大；頁尾能延伸 —— */
-.gallery-wrap{width:min(1200px,92vw);margin:16px auto 60px}
-.gallery-title{text-align:center;font-weight:800;letter-spacing:.12em;font-size:clamp(12px,1.4vw,14px);color:#dfe9ff;margin-bottom:10px}
-.gallery{position:relative;overflow:hidden;border-radius:18px;background:rgba(255,255,255,.03);
-  box-shadow:0 10px 30px rgba(0,0,0,.28),0 0 0 1px rgba(255,255,255,.06) inset}
-.gallery img,.gallery video{display:block;width:100%;height:auto}
-
-/* ——— 頁尾：英文在上、中文在下（銀白細閃） —— */
-.footer{text-align:center;margin:34px auto 40px;color:#d7e7ff;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:.18em}
-.footer .zh{display:block;font:500 12px/1.4 'Noto Sans TC';letter-spacing:.18em;color:#cfe0ff}
-
-a{color:inherit;text-decoration:none}
-@media (max-width:900px){.cards{grid-template-columns:1fr;gap:18px}}
+body[data-universe="post"]{
+  background:
+    radial-gradient(1100px 720px at 50% -120px, #d7ebff 0%, #8cb6ea 36%, #2a4c80 62%, #0b2140 100%);
+}
+body[data-universe="mirror"]{
+  background:
+    radial-gradient(1180px 760px at 50% -120px, #e6ddff 0%, #c9baff 34%, #5b50b7 62%, #1d1a5f 100%);
+}
