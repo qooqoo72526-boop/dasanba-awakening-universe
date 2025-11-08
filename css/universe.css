@@ -182,3 +182,30 @@ body.cosmic-silverblue::after{
 
 /* 小字：細、銀白、不要太大 */
 .small-silver { color: rgba(240,248,255,.92); font-size: 13px; letter-spacing:.06em }
+
+/* 工具列：細線條＋圓潤＋下方小尾巴 */
+.nav-rail {
+  position: fixed; left:24px; top:50%; transform: translateY(-50%);
+  display:flex; flex-direction:column; gap:14px; z-index: 40;
+}
+.nav-rail .btn {
+  width:44px; height:44px; border-radius:22px;
+  backdrop-filter: blur(8px);
+  border: none; outline: none;
+  display:grid; place-items:center;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.12) inset, 0 0 18px rgba(200,220,255,.25);
+  background: rgba(220,235,255,.08);
+  position: relative;
+  text-decoration:none;
+}
+.nav-rail .btn::after {
+  /* 小尾巴 */
+  content:""; position:absolute; bottom:-10px; left:50%; transform:translateX(-50%);
+  width:10px; height:10px; border-radius:10px;
+  background: radial-gradient(circle, rgba(220,235,255,.6), transparent 60%);
+  filter: blur(1px);
+}
+.nav-rail .btn svg { width:18px; height:18px; stroke: rgba(230,240,255,.9); fill:none; stroke-width:1.5 }
+.nav-rail .btn span { 
+  font-size:11px; color: rgba(240,248,255,.85); line-height:1; margin-top:4px; 
+}
