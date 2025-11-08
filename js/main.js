@@ -1,58 +1,72 @@
+// v9.19r-fix2 — keep background untouched. Only interactions below.
 
-// Starfield + meteors (3–5s irregular) + gallery crossfade
-(()=>{
-  const cvs = document.getElementById('starfield');
-  if(!cvs) return;
-  const ctx = cvs.getContext('2d',{alpha:true});
-  let W=0,H=0,stars=[],meteors=[];
-  const resize=()=>{ W=cvs.width=innerWidth; H=cvs.height=innerHeight; };
-  addEventListener('resize', resize); resize();
-  const seed=(nmul=1.4)=>{
-    const n = Math.min(420, Math.floor((W*H/8000)*nmul)); // bright mode
-    stars = Array.from({length:n},()=>({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.2+0.2, t:Math.random()*Math.PI*2, s:Math.random()*0.8+0.4 }));
-  };
-  seed();
-  const spawnMeteor=()=>{
-    const delay = 3000 + Math.random()*2000; // 3–5s
-    setTimeout(()=>{
-      const y = Math.random()*H*0.85 + 10;
-      meteors.push({ x: -120, y, vx: Math.random()*6+5, life: 0, max: 100 });
-      spawnMeteor();
-    }, delay);
-  };
-  spawnMeteor();
-  const loop=()=>{
-    ctx.clearRect(0,0,W,H);
-    for(const p of stars){
-      p.t += 0.02*p.s;
-      const o = 0.45 + Math.sin(p.t)*0.35;
-      ctx.fillStyle = `rgba(255,255,255,${0.35+o*0.5})`;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    }
-    for(const m of meteors){
-      m.life++; m.x += m.vx;
-      const len = 160;
-      const grad = ctx.createLinearGradient(m.x-len,m.y,m.x,m.y);
-      grad.addColorStop(0,'rgba(255,255,255,0)');
-      grad.addColorStop(1,'rgba(210,235,255,.95)');
-      ctx.strokeStyle = grad; ctx.lineWidth = 1.25;
-      ctx.beginPath(); ctx.moveTo(m.x-len,m.y); ctx.lineTo(m.x,m.y); ctx.stroke();
-    }
-    meteors = meteors.filter(m => m.life < m.max && m.x < W+200);
-    requestAnimationFrame(loop);
-  };
-  loop();
-})();
-
-// Gallery crossfade (trio.webp ~ trio10.webp)
-(()=>{
-  const g = document.querySelector('.gallery-viewport');
-  if(!g) return;
-  const imgs = Array.from(g.querySelectorAll('img'));
-  let i=0; if(imgs[0]) imgs[0].classList.add('active');
+// --- STAR SLIDER ---
+const slides = Array.from(document.querySelectorAll('.slider .slide'));
+let idx = 0;
+function show(i){
+  slides.forEach((s, k)=> s.classList.toggle('active', k===i));
+}
+if (slides.length){
+  show(idx);
   setInterval(()=>{
-    const prev = imgs[i]; i=(i+1)%imgs.length; const next = imgs[i];
-    if(prev) prev.classList.remove('active');
-    if(next) next.classList.add('active');
-  }, 3000);
+    idx = (idx + 1) % slides.length;
+    show(idx);
+  }, 3000); // every 3s
+}
+
+// --- TWINKLE + METEORS ---
+// We assume your existing starfield canvas/bg remains. Here we only add meteors layer on top
+(function meteors(){
+  const layer = document.createElement('div');
+  layer.style.position='fixed';
+  layer.style.inset='0';
+  layer.style.pointerEvents='none';
+  layer.style.zIndex='2';
+  document.body.appendChild(layer);
+
+  function spawnMeteor(){
+    const m = document.createElement('div');
+    const startSide = Math.random();
+    // random direction: from left->right top, or right->left, or top->down diagonal
+    let x = startSide<0.5 ? -80 : window.innerWidth+80;
+    let y = Math.random()*window.innerHeight*0.45 + 20;
+    if (Math.random()<0.33){ x = Math.random()*window.innerWidth*0.8; y = -40; }
+
+    Object.assign(m.style, {
+      position:'absolute',
+      left: x+'px',
+      top:  y+'px',
+      width:'2px',
+      height:'2px',
+      borderRadius:'2px',
+      background:'white',
+      boxShadow:'0 0 10px rgba(255,255,255,.9), 0 0 24px rgba(180,220,255,.9)',
+      opacity:'0.95',
+      transform:'rotate(' + (startSide<0.5? -18 : 18) + 'deg)',
+    });
+    layer.appendChild(m);
+
+    const dx = startSide<0.5 ? (window.innerWidth+160) : -(window.innerWidth+160);
+    const dy =  startSide<0.5 ?  -window.innerHeight*0.25 :  -window.innerHeight*0.25;
+
+    const dur = 900 + Math.random()*1200;
+    m.animate([{ transform: m.style.transform, opacity: .95 }, 
+               { transform: 'translate('+dx+'px,'+dy+'px) ' + m.style.transform, opacity: 0 }], 
+              { duration: dur, easing: 'ease-out' }).onfinish = ()=> m.remove();
+  }
+
+  function loop(){
+    // random 3~7s
+    const wait = 3000 + Math.random()*4000;
+    setTimeout(()=>{
+      // occasionally pause a bit brighter: spawn two quick ones
+      if (Math.random()<0.18){
+        spawnMeteor(); setTimeout(spawnMeteor, 280);
+      } else {
+        spawnMeteor();
+      }
+      loop();
+    }, wait);
+  }
+  loop();
 })();
