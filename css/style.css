@@ -1,21 +1,107 @@
-body{
-  margin:0;font-family:'Noto Sans TC',sans-serif;
-  background:linear-gradient(180deg,#1a2947 0%,#344a7a 45%,#d9e4f2 100%);
-  color:white;overflow-x:hidden;
+/* ===== 全站底色：深銀藍→淡銀藍→霧白（無斷層） ===== */
+:root{
+  --silver:#eaf2ff;
+  --silver-blue:#cfe3ff;
+  --blue-1:#113a6b;
+  --blue-2:#1e4f86;
+  --blue-3:#275a93;
+  --blue-4:#6fa0d4;
+  --glass-bg: rgba(255,255,255,0.10);
+  --glass-stroke: rgba(255,255,255,0.20);
+  --glow: 0 0 25px rgba(180,210,255,.55);
 }
-.hero-video{max-width:1160px;margin:30px auto;border-radius:18px;overflow:hidden;}
-.hero-video video{width:100%;height:auto;object-fit:contain;display:block;}
-.hero-title{text-align:center;margin:24px 0;}
-.hero-title .l1{font-size:48px;background:linear-gradient(180deg,#e8f2ff,#b9d3ff);-webkit-background-clip:text;color:transparent;}
-.hero-title .l2{display:block;font-size:42px;background:linear-gradient(180deg,#dfeeff,#a9c8ff);-webkit-background-clip:text;color:transparent;}
-.subtitle{text-align:center;font-size:14px;color:rgba(255,255,255,.85);}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1160px;margin:20px auto;}
-.card{position:relative;display:flex;flex-direction:column;align-items:center;border-radius:18px;backdrop-filter:blur(10px);background:rgba(34,58,108,.5);box-shadow:0 10px 26px rgba(8,14,32,.28) inset;}
-.card-figure{width:100%;aspect-ratio:3/4;overflow:hidden;border-radius:14px;}
-.card-img{width:100%;height:100%;object-fit:contain;}
-.card-text{text-align:center;margin-top:10px;}
-.card::before{content:'';position:absolute;inset:-18%;pointer-events:none;background:radial-gradient(40% 40% at 88% 18%,rgba(255,255,255,.4),transparent 62%),radial-gradient(35% 35% at 12% 84%,rgba(170,210,255,.3),transparent 66%);}
-.gallery{margin:40px auto;max-width:1160px;}
-.gallery-title{text-align:center;color:rgba(235,245,255,.95);}
-.gallery-frame{aspect-ratio:16/9;overflow:hidden;border-radius:18px;}
-#gallery-img{width:100%;height:100%;object-fit:contain;transition:opacity .5s ease;}
+
+html,body{height:100%}
+body{
+  margin:0;
+  color:#e9f1ff;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+    linear-gradient(180deg, var(--blue-1) 0%, var(--blue-2) 45%, var(--blue-3) 70%, var(--blue-4) 100%);
+  font-family: 'Noto Sans TC', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  overflow-x:hidden;
+}
+
+/* ===== 左側工具列 ===== */
+.toolbar{
+  position: fixed; left:24px; top:90px; z-index:30;
+  display:flex; flex-direction:column; gap:14px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.25));
+}
+.tool{
+  position:relative; display:flex; align-items:center; gap:10px;
+  padding:12px 18px;
+  border-radius:20px;
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-decoration:none; color:#eaf2ff; font-weight:600;
+}
+.tool svg{ width:20px; height:20px; opacity:.95 }
+.tool .tail{
+  content:""; position:absolute; inset:auto auto -10px 26px;
+  width:44px; height:12px; border-radius:0 0 44px 44px;
+  background: radial-gradient(40px 12px at 50% 0%, rgba(185,210,255,.45), transparent 70%);
+}
+
+/* ===== 主標題兩行，第二行略藍 ===== */
+.hero{ text-align:center; padding:110px 16px 20px }
+.title{ margin:0; line-height:1.06; font-family:'Orbitron', sans-serif; font-weight:800; letter-spacing:.02em }
+.title .l1{
+  display:block; font-size: clamp(30px, 6.2vw, 68px);
+  background: linear-gradient(180deg, #ffffff 0%, #dfeaff 60%, #b8d1ff 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow: 0 2px 18px rgba(160,190,255,.28);
+}
+.title .l2{
+  display:block; margin-top:6px; font-size: clamp(28px, 5.6vw, 62px);
+  background: linear-gradient(180deg, #eaf2ff 0%, #cfe3ff 55%, #9ec0ff 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow: 0 2px 18px rgba(140,170,255,.28);
+}
+.subtitle{ margin:14px 0 0; font-size:14px; letter-spacing:.15em; color:#eaf2ff; opacity:.95 }
+.subtitle .globe{ filter: drop-shadow(0 0 6px rgba(160,210,255,.9)); }
+
+/* ===== 三鳥卡片 ===== */
+.cards{
+  display:grid; grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap:24px; max-width:1100px; margin:34px auto 24px; padding:0 24px;
+}
+.card{ position:relative; height:180px; border-radius:18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border:1px solid rgba(255,255,255,.18);
+  overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,.25) inset;
+  transform: translateZ(0);
+}
+.card-inner{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; text-align:center; padding:10px }
+.card .line1{ font-weight:700; opacity:.95 }
+.card .line2{ font-weight:600; opacity:.92 }
+.card .line3{ font-size:12px; opacity:.85 }
+.card:hover{ transform: translateY(-2px) }
+.card .glow{ position:absolute; width:220px; height:220px; pointer-events:none; filter:blur(22px); opacity:.60 }
+.card .glow.tl{ left:-80px; top:-80px; background: radial-gradient(closest-side, rgba(255,180,200,.40), transparent 70%) }
+.card .glow.br{ right:-80px; bottom:-80px; background: radial-gradient(closest-side, rgba(150,200,255,.40), transparent 70%) }
+.card.migou .glow.tl{ background: radial-gradient(closest-side, rgba(255,170,190,.45), transparent 70%) } /* 米果偏粉 */
+.card.ajin  .glow.tl{ background: radial-gradient(closest-side, rgba(255,240,170,.45), transparent 70%) } /* 阿金偏金黃 */
+.card.gungun.glow{ background: radial-gradient(closest-side, rgba(170,200,255,.45), transparent 70%) } /* 滾滾偏藍 */
+
+/* ===== 觀星畫廊 ===== */
+.gallery{ max-width:1100px; margin:10px auto 60px; padding:0 24px; }
+.gallery-title{ text-align:center; font-weight:700; letter-spacing:.15em; color:#eaf2ff; margin:6px 0 14px }
+.gallery-frame{
+  width:100%; aspect-ratio:16/9; border-radius:16px;
+  background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18);
+  overflow:hidden; display:grid; place-items:center;
+  box-shadow: var(--glow);
+}
+.gallery-frame img{ width:100%; height:100%; object-fit:contain; }
+
+/* ===== 底部 ===== */
+.footer{ text-align:center; padding:16px; color:#cfe3ff; opacity:.9 }
+.footer small{ letter-spacing:.2em }
+
+@media (max-width: 960px){
+  .cards{ grid-template-columns: 1fr; }
+  .card{ height:160px }
+}

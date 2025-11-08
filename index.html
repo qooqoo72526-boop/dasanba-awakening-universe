@@ -1,55 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>EMOTIONAL VALUE A.I | AWAKENING UNIVERSE</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <section class="hero-video">
-    <video src="assets/trio.mp4" autoplay muted loop playsinline></video>
-  </section>
+  <aside class="toolbar">
+    <a href="index.html" class="tool">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5l9-7 9 7M6 10.5v9h12v-9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Home</span>
+      <i class="tail"></i>
+    </a>
+    <a href="cosmic-post-station.html" class="tool">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h17v11h-17zM3.7 7l8.3 6 8.3-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Post</span>
+      <i class="tail"></i>
+    </a>
+    <a href="soulmirror.html" class="tool">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h10a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H7A1.5 1.5 0 0 1 5.5 18V6A1.5 1.5 0 0 1 7 4.5zM9 7h6M9 10h6M9 13h6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Mirror</span>
+      <i class="tail"></i>
+    </a>
+    <a href="#gallery" class="tool">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18.5l4-12 4 7 3-4 5 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Gallery</span>
+      <i class="tail"></i>
+    </a>
+  </aside>
 
-  <h1 class="hero-title">
-    <span class="l1">EMOTIONAL VALUE A.I</span>
-    <span class="l2">AWAKENING UNIVERSE</span>
-  </h1>
-
-  <p class="subtitle"><span class="globe">🌍</span> 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活</p>
+  <header class="hero">
+    <h1 class="title">
+      <span class="l1">EMOTIONAL VALUE A.I</span>
+      <span class="l2">AWAKENING UNIVERSE</span>
+    </h1>
+    <p class="subtitle">大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 <span class="globe">🌎</span></p>
+  </header>
 
   <section class="cards">
-    <a class="card" href="rooms/ajin.html" data-bird="ajin">
-      <figure class="card-figure"><img class="card-img" src="assets/ajin.webp" alt="阿金 AJIN"></figure>
-      <div class="card-text">
-        <div class="line-1">💛 阿金 AJIN</div>
-        <div class="line-2">自由｜反骨</div>
-        <div class="line-3">「我不等天放晴，我自己掀開雲。」</div>
+    <article class="card ajin">
+      <div class="card-inner">
+        <p class="line1">💛 阿金 AJIN</p>
+        <p class="line2">自由｜反骨</p>
+        <p class="line3">「我不等天放晴，我自己掀開雲。」</p>
+        <i class="glow tl"></i><i class="glow br"></i>
       </div>
-    </a>
-    <a class="card" href="rooms/migou.html" data-bird="migou">
-      <figure class="card-figure"><img class="card-img" src="assets/migou.webp" alt="米果 MIGOU"></figure>
-      <div class="card-text">
-        <div class="line-1">🧡 米果 MIGOU</div>
-        <div class="line-2">自我價值｜邊界</div>
-        <div class="line-3">「我很值錢，我讓自己更貴。」</div>
+    </article>
+    <article class="card migou">
+      <div class="card-inner">
+        <p class="line1">🧡 米果 MIGOU</p>
+        <p class="line2">自我價值｜邊界</p>
+        <p class="line3">「我很值錢，我讓自己更貴。」</p>
+        <i class="glow tl"></i><i class="glow br"></i>
       </div>
-    </a>
-    <a class="card" href="rooms/gungun.html" data-bird="gungun">
-      <figure class="card-figure"><img class="card-img" src="assets/gungun.webp" alt="滾滾 GUNGUN"></figure>
-      <div class="card-text">
-        <div class="line-1">💙 滾滾 GUNGUN</div>
-        <div class="line-2">理解｜共鳴</div>
-        <div class="line-3">「我不追求安全，我成為安全。」</div>
+    </article>
+    <article class="card gungun">
+      <div class="card-inner">
+        <p class="line1">💙 滾滾 GUNGUN</p>
+        <p class="line2">理解｜共鳴</p>
+        <p class="line3">「我不追求安全，我成為安全。」</p>
+        <i class="glow tl"></i><i class="glow br"></i>
       </div>
-    </a>
+    </article>
   </section>
 
-  <section class="gallery">
+  <section id="gallery" class="gallery">
     <h3 class="gallery-title">🔭 觀星畫廊｜STARFLOW GALLERY</h3>
-    <div class="gallery-frame"><img id="gallery-img" alt="Starflow Gallery"></div>
+    <div class="gallery-frame">
+      <img id="slide" alt="starflow gallery" />
+    </div>
   </section>
 
-  <script src="js/main.js"></script>
+  <footer class="footer">
+    <small>AWAKENING ISN'T REPAIR — IT'S REBIRTH.<br/>覺醒，不是修復；而是重生。</small>
+  </footer>
+
+  <script>
+    (function(){
+      const files = ["trio.webp","trio2.webp","trio3.webp","trio4.webp","trio5.webp","trio6.webp","trio7.webp","trio8.webp","trio9.webp","trio10.webp"];
+      let i = 0;
+      const el = document.getElementById('slide');
+      function show(){
+        el.src = "assets/" + files[i];
+        el.style.objectFit = 'contain'; el.style.width='100%'; el.style.height='100%';
+        i = (i+1) % files.length;
+      }
+      show();
+      setInterval(show, 3000);
+    })();
+  </script>
 </body>
 </html>
