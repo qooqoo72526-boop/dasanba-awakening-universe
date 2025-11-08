@@ -1,106 +1,55 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EMOTIONAL VALUE A.I | AWAKENING UNIVERSE</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <section class="hero-video">
+    <video src="assets/trio.mp4" autoplay muted loop playsinline></video>
+  </section>
 
-  <!-- 左側工具列：圓膠囊＋尾巴＋線條圖示 -->
-  <nav class="side-nav">
-    <a href="index.html" class="pill">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M3 12l9-8 9 8" fill="none"/></svg>
-      <span>Home</span>
-      <i class="tail"></i>
-    </a>
-    <a href="cosmic-post-station.html" class="pill">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M3 5h18v14H3zM3 5l9 7 9-7" fill="none"/></svg>
-      <span>Post</span>
-      <i class="tail"></i>
-    </a>
-    <a href="soulmirror.html" class="pill">
-      <svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="12" r="8" fill="none"/><path d="M12 4v16" fill="none"/></svg>
-      <span>Mirror</span>
-      <i class="tail"></i>
-    </a>
-    <a href="#gallery" class="pill">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M3 12l8-3 4 8 3-5 3 2" fill="none"/></svg>
-      <span>Gallery</span>
-      <i class="tail"></i>
-    </a>
-  </nav>
+  <h1 class="hero-title">
+    <span class="l1">EMOTIONAL VALUE A.I</span>
+    <span class="l2">AWAKENING UNIVERSE</span>
+  </h1>
 
-  <!-- 英文標題（兩行，銀藍） -->
-  <header class="hero">
-    <h1 class="title">
-      <span class="line1">EMOTIONAL VALUE A.I</span>
-      <span class="line2">AWAKENING UNIVERSE</span>
-    </h1>
-    <p class="subtitle">大三巴覺醒宇宙｜阿金・米果・滾滾的星球生活
-      <i class="globe" aria-hidden="true"></i>
-    </p>
-  </header>
+  <p class="subtitle"><span class="globe">🌍</span> 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活</p>
 
-  <!-- 三角色卡（順序：💛阿金 / 🧡米果 / 💙滾滾） -->
   <section class="cards">
-    <a class="card ajin" href="rooms/ajin.html">
-      <div class="halo"></div>
-      <div class="card-inner">
-        <div class="emj">💛</div>
-        <h3>阿金 AJIN</h3>
-        <p class="kws">自由｜反骨</p>
-        <p class="quote">「我不等天放晴，我自己掀開雲。」</p>
+    <a class="card" href="rooms/ajin.html" data-bird="ajin">
+      <figure class="card-figure"><img class="card-img" src="assets/ajin.webp" alt="阿金 AJIN"></figure>
+      <div class="card-text">
+        <div class="line-1">💛 阿金 AJIN</div>
+        <div class="line-2">自由｜反骨</div>
+        <div class="line-3">「我不等天放晴，我自己掀開雲。」</div>
       </div>
     </a>
-
-    <a class="card migou" href="rooms/migou.html">
-      <div class="halo"></div>
-      <div class="card-inner">
-        <div class="emj">🧡</div>
-        <h3>米果 MIGOU</h3>
-        <p class="kws">自我價值｜邊界</p>
-        <p class="quote">「我很值錢，我讓自己更貴。」</p>
+    <a class="card" href="rooms/migou.html" data-bird="migou">
+      <figure class="card-figure"><img class="card-img" src="assets/migou.webp" alt="米果 MIGOU"></figure>
+      <div class="card-text">
+        <div class="line-1">🧡 米果 MIGOU</div>
+        <div class="line-2">自我價值｜邊界</div>
+        <div class="line-3">「我很值錢，我讓自己更貴。」</div>
       </div>
     </a>
-
-    <a class="card gungun" href="rooms/gungun.html">
-      <div class="halo"></div>
-      <div class="card-inner">
-        <div class="emj">💙</div>
-        <h3>滾滾 GUNGUN</h3>
-        <p class="kws">理解｜共鳴</p>
-        <p class="quote">「我不追求安全，我成為安全。」</p>
+    <a class="card" href="rooms/gungun.html" data-bird="gungun">
+      <figure class="card-figure"><img class="card-img" src="assets/gungun.webp" alt="滾滾 GUNGUN"></figure>
+      <div class="card-text">
+        <div class="line-1">💙 滾滾 GUNGUN</div>
+        <div class="line-2">理解｜共鳴</div>
+        <div class="line-3">「我不追求安全，我成為安全。」</div>
       </div>
     </a>
   </section>
 
-  <!-- 觀星畫廊 -->
-  <h4 id="gallery" class="gallery-title">🔭 觀星畫廊｜STARFLOW GALLERY</h4>
   <section class="gallery">
-    <div class="track">
-      <img src="assets/trio.webp"   alt="gallery 1" />
-      <img src="assets/trio2.webp"  alt="gallery 2" />
-      <img src="assets/trio3.webp"  alt="gallery 3" />
-      <img src="assets/trio4.webp"  alt="gallery 4" />
-      <img src="assets/trio5.webp"  alt="gallery 5" />
-      <img src="assets/trio6.webp"  alt="gallery 6" />
-      <img src="assets/trio7.webp"  alt="gallery 7" />
-      <img src="assets/trio8.webp"  alt="gallery 8" />
-      <img src="assets/trio9.webp"  alt="gallery 9" />
-      <img src="assets/trio10.webp" alt="gallery 10" />
-    </div>
+    <h3 class="gallery-title">🔭 觀星畫廊｜STARFLOW GALLERY</h3>
+    <div class="gallery-frame"><img id="gallery-img" alt="Starflow Gallery"></div>
   </section>
 
-  <footer class="site-foot">
-    <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
-    <div class="zh">覺醒，不是修復；而是重生。</div>
-  </footer>
-
-  <canvas id="sky"></canvas>
   <script src="js/main.js"></script>
 </body>
 </html>
