@@ -1,113 +1,78 @@
-/* Base */
+/* ===== Base ===== */
 :root{
-  --silver:#eaf2ff;
-  --blue-silver:#cfe3ff;
-  --ink:#021633;
+  --ink:#eaf2ff;
+  --glow:0 0 16px rgba(205,228,255,.6),0 0 32px rgba(168,200,255,.35);
 }
-*{box-sizing:border-box}
-html,body{height:100%}
+*{box-sizing:border-box} html,body{height:100%}
 body{
-  margin:0; color:var(--silver);
-  background: radial-gradient(1200px 800px at 50% 20%, rgba(255,255,255,.04), rgba(255,255,255,0) 60%), #051631;
-  font-family:'Noto Sans TC', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  margin:0; color:var(--ink);
+  font-family: 'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, Arial, "PingFang TC","Microsoft JhengHei", sans-serif;
+  /* 銀藍＋白暈（自然過度、無邊界） */
+  background: linear-gradient(180deg, #eaf2ff 0%, #d6e4fb 22%, #b8ccf5 48%, #86a6dd 72%, #5b7fc2 100%);
   overflow-x:hidden;
 }
-#starfield{
-  position:fixed; inset:0; z-index:0;
-  display:block; width:100vw; height:100vh;
-  background: radial-gradient(1200px 800px at 50% 15%, rgba(200,220,255,.06), rgba(0,0,0,0) 60%), linear-gradient(#0c1b36, #08142a 70%, #08142a);
-}
-.container{ position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:40px 24px 80px; text-align:center;}
 
-/* 左側工具列（圓角氣泡＋小尾巴，極簡線條字） */
-.side-nav{ position:fixed; left:22px; top:120px; display:flex; flex-direction:column; gap:14px; z-index:3;}
-.side-nav a{
-  display:flex; align-items:center; gap:8px;
-  padding:10px 14px 10px 12px;
-  border-radius:14px 18px 18px 14px;
-  background:rgba(255,255,255,.06);
-  backdrop-filter: blur(8px);
-  color:var(--silver); text-decoration:none; font-weight:300; letter-spacing:.5px; font-size:14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.15);
-  position:relative;
-}
-.side-nav a::after{
-  content:""; position:absolute; left:-6px; top:50%; transform:translateY(-50%);
-  width:10px; height:10px; border-radius:50%;
-  background:rgba(255,255,255,.10); box-shadow:0 0 10px rgba(255,255,255,.25);
-}
+/* 背景特效層 */
+#stars,#meteors{position:fixed; inset:0; width:100%; height:100%; pointer-events:none}
+#stars{z-index:0; opacity:.95} #meteors{z-index:1}
 
-/* 主視覺影片（置頂、不要過大） */
-.hero-video{ display:flex; justify-content:center; margin:48px auto 10px; }
-.hero-video video{ width:min(920px, 86vw); max-height:46vh; border-radius:16px; object-fit:cover;}
+/* 左側導覽（線條、圓角、無外框、小尾巴） */
+.side-nav{position:fixed; left:18px; top:80px; z-index:5; display:flex; flex-direction:column; gap:14px}
+.nav-btn{position:relative; display:flex; align-items:center; gap:10px; padding:12px 18px 12px 16px;
+  border-radius:16px; background:radial-gradient(100% 120% at 10% 10%, rgba(255,255,255,.12), rgba(255,255,255,.02) 60%);
+  backdrop-filter: blur(8px); text-decoration:none; color:#f2f6ff; box-shadow:0 2px 12px rgba(0,0,0,.18)}
+.nav-btn::after{content:""; position:absolute; right:-10px; top:50%; transform:translateY(-50%); width:18px; height:28px;
+  border-radius:14px; background:radial-gradient(100% 100% at 30% 30%, rgba(255,255,255,.12), rgba(255,255,255,.02)); filter:blur(.5px)}
+.nav-btn .ico{width:22px;height:22px;stroke:#eef5ff;fill:none;stroke-width:1.6}
+.nav-btn span{font-weight:600; letter-spacing:.5px; font-size:12px}
 
-/* 標題（銀白藍漸層字，不做動畫） */
-.hero-title{ margin:10px auto 10px; }
-.en-1,.en-2{
-  font-family:'Orbitron', sans-serif;
-  background: linear-gradient(180deg, #f1f7ff 0%, #dfe9ff 60%, #b8ccff 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  letter-spacing:.08em; text-shadow: 0 0 18px rgba(160,200,255,.35);
-  margin:0;
-}
-.en-1{ font-size: clamp(28px, 4.6vw, 60px); }
-.en-2{ font-size: clamp(26px, 4.2vw, 52px); margin-top:6px; }
-.subtitle{ margin:8px 0 28px; font-size: clamp(12px, 1.8vw, 16px); color:#ccdaff; letter-spacing:.08em;}
-.subtitle .globe{ filter: drop-shadow(0 0 6px rgba(200,220,255,.6)); }
+/* 標題 */
+.hero{position:relative; z-index:2; padding:120px 24px 24px; text-align:center}
+.title-en{margin:0 0 10px 0; line-height:1.0; letter-spacing:1.6px; text-shadow: var(--glow)}
+.title-en .line1{display:block; font-size: clamp(32px, 5.8vw, 68px);
+  background: linear-gradient(180deg,#ecf5ff 0%,#bcd2ff 60%,#8fb1ff 100%); -webkit-background-clip:text; color:transparent}
+.title-en .line2{display:block; font-size: clamp(24px, 4.8vw, 48px);
+  background: linear-gradient(180deg,#e6f0ff 0%,#b1c7ff 60%,#7ba0ff 100%); -webkit-background-clip:text; color:transparent}
+.title-zh{margin:6px 0 0 0; font-size:14px; color:#eef5ff; opacity:.92}
+.title-zh .globe{filter:drop-shadow(0 0 6px rgba(180,220,255,.9))}
 
-/* 卡片校正（直立、無邊框、置中、各自暈染） */
-.cards-3{
-  display:grid; grid-template-columns: repeat(3, minmax(240px,1fr));
-  gap: 22px; align-items: stretch; margin: 18px auto 8px; max-width:1100px;
-}
-@media (max-width: 1199px){ .cards-3{ grid-template-columns: repeat(2, minmax(240px,1fr)); } }
-@media (max-width: 720px){ .cards-3{ grid-template-columns: 1fr; gap: 16px; } }
+/* 角色卡 */
+.cards{z-index:2; position:relative; display:grid; grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap:22px; max-width:1100px; margin:20px auto; padding:0 20px}
+.card{position:relative; overflow:hidden; border-radius:18px;
+  background: radial-gradient(120% 160% at 20% 10%, rgba(255,255,255,.10), rgba(255,255,255,.04) 60%);
+  backdrop-filter: blur(6px); box-shadow: 0 8px 28px rgba(0,0,0,.22); transform: translateZ(0);
+  transition: transform .35s ease, box-shadow .35s ease; min-height: 220px}
+.card::before,.card::after{content:""; position:absolute; width:60%; height:60%; filter: blur(30px); opacity:.55;
+  pointer-events:none; mix-blend-mode: screen}
+.card::before{ left:-15%; top:-15%}
+.card::after{ right:-15%; bottom:-15%}
+.card-ajin::before,.card-ajin::after{ background: radial-gradient(closest-side, #ffd36b, rgba(255,211,107,0))}
+.card-migou::before,.card-migou::after{ background: radial-gradient(closest-side, #ff9f9f, rgba(255,159,159,0))}
+.card-gungun::before,.card-gungun::after{ background: radial-gradient(closest-side, #7fb7ff, rgba(127,183,255,0))}
+.card:hover{ transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,0,0,.28)}
+.card-inner{ padding:22px 20px; text-align:center}
+.card .badge{margin:0; font-size:22px}
+.card .name{margin:6px 0 2px; font-size:20px; font-weight:800}
+.card .name small{font-weight:700; opacity:.9; margin-left:6px; font-size:.9em}
+.card .tags{margin:4px 0 10px; font-size:13px; opacity:.85}
+.card .quote{margin:0; font-size:13px; opacity:.9}
 
-.card{
-  position:relative; border:none; border-radius:18px;
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(8px);
-  overflow:hidden; display:flex; flex-direction:column;
-  box-shadow: 0 10px 26px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.14);
-  min-height: 420px;
-}
-.card img{
-  width:100%; aspect-ratio: 3/4; object-fit: cover;
-  object-position: center var(--pos, 12%);
-  display:block; user-select:none;
-}
-.card-body{ text-align:center; padding: 12px 14px 16px; }
-.card-body .k-heart{ font-size:18px; margin-bottom:6px; }
-.card-body h3{ margin:2px 0 2px; font-size: clamp(14px, 1.4vw, 16px); letter-spacing:.06em; }
-.card-body p{ margin:0 0 4px; font-size: 12px; opacity:.9; letter-spacing:.08em; }
-.card-body small{ display:block; opacity:.85; font-size:11px; letter-spacing:.06em; }
+/* 觀星畫廊：自動 3 秒淡入切換 */
+.gallery{position:relative; z-index:2; max-width:1100px; margin:22px auto 80px; padding:0 20px}
+.gallery-title{margin:6px 0 10px; font-size:14px; letter-spacing:1px; color:#e9f2ff; opacity:.95}
+.gallery-frame{position:relative; overflow:hidden; border-radius:18px; height: 480px; box-shadow: 0 10px 28px rgba(0,0,0,.26);
+  background: rgba(255,255,255,.05)}
+.gallery-frame .slide{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition: opacity .8s ease}
+.gallery-frame .slide.active{opacity:1}
 
-/* 三鳥柔光暈染 + 銀白過渡（🧡米果為橙粉銀光） */
-.card.bird-ajin::before,
-.card.bird-migou::before,
-.card.bird-gungun::before{
-  content:""; position:absolute; inset:-14px; border-radius:24px; z-index:-1;
-  filter: blur(30px); opacity:.6; mix-blend-mode: screen;
-  animation: floatGlow 7s ease-in-out infinite;
-  transition: opacity .6s ease, transform 1s ease;
-}
-.card.bird-ajin::before { background: radial-gradient(circle, rgba(255,233,76,.55) 0%, rgba(255,249,220,.25) 50%, rgba(255,255,255,0) 85%); }
-.card.bird-migou::before{ background: radial-gradient(circle, rgba(255,175,150,.6) 0%, rgba(255,220,235,.35) 50%, rgba(255,255,255,0) 85%); }
-.card.bird-gungun::before{ background: radial-gradient(circle, rgba(150,200,255,.55) 0%, rgba(220,240,255,.35) 50%, rgba(255,255,255,0) 85%); }
-.card:hover::before{ opacity:.75; transform:scale(1.05) translateY(-2px); }
-@keyframes floatGlow{ 0%,100%{ transform:translateY(0) scale(1); opacity:.6;} 50%{ transform:translateY(-3px) scale(1.03); opacity:.75;} }
+/* 頁尾 */
+.site-foot{z-index:2; position:relative; text-align:center; padding:28px 20px 60px; color:#eef5ff}
+.site-foot .en{margin:0 0 6px; font-size:12px; letter-spacing:1.4px; opacity:.95}
+.site-foot .zh{margin:0; font-size:12px; opacity:.9}
 
-/* 觀星畫廊：橫向，一張一張，自動滑；標題小字銀白 */
-.gallery-wrap{ margin:18px auto 0; }
-.gallery-title{ font-weight:500; letter-spacing:.12em; color:#dfe9ff; opacity:.92; font-size:clamp(12px,1.6vw,14px); }
-.gallery{
-  display:flex; gap:18px; overflow:auto; scroll-snap-type:x mandatory;
-  padding:10px 6px; margin:0 auto; max-width:1100px;
+/* RWD */
+@media (max-width: 980px){
+  .cards{grid-template-columns:1fr; max-width:560px}
+  .gallery-frame{height: 52vw; min-height:260px}
 }
-.gallery .item{ flex:0 0 88%; max-width:880px; border-radius:16px; overflow:hidden; scroll-snap-align:center; }
-.gallery img{ width:100%; height:auto; display:block; object-fit:cover; }
-
-/* 頁尾：英文在上、中文在下（銀白細字） */
-.site-footer{ margin:48px auto 80px; text-align:center; color:#dfe9ff; opacity:.88; }
-.site-footer .en{ font-size:.92rem; letter-spacing:.12em; }
-.site-footer .zh{ font-size:.86rem; opacity:.9; margin-top:4px; }
