@@ -209,3 +209,38 @@ body.cosmic-silverblue::after{
 .nav-rail .btn span { 
   font-size:11px; color: rgba(240,248,255,.85); line-height:1; margin-top:4px; 
 }
+/* === FOOTER COSMIC EXTENSION === */
+.footer-dual {
+  text-align:center;
+  margin: 70px auto 60px;
+  line-height:1.6;
+  animation: footerGlow 6s ease-in-out infinite;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent 70%);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 20px;
+}
+.footer-dual .en {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  color: rgba(230,240,255,.95);
+  font-size: 14px;
+  letter-spacing: .12em;
+  margin-bottom: 4px;
+}
+.footer-dual .zh {
+  font-family: 'Noto Sans TC', sans-serif;
+  color: rgba(230,240,255,.85);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.footer-dual .quote-en,
+.footer-dual .quote-zh {
+  font-size: 12px;
+  opacity: .85;
+  color: rgba(240,248,255,.9);
+  transition: opacity .8s ease-in-out;
+}
+@keyframes footerGlow {
+  0%,100% { filter: drop-shadow(0 0 4px rgba(255,255,255,0.2)); opacity:.95; }
+  50%     { filter: drop-shadow(0 0 8px rgba(220,235,255,0.45)); opacity:1; }
+}
