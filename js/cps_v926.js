@@ -1,4 +1,0 @@
-(() => { const input=document.getElementById('cps-text'); const send=document.getElementById('cps-send'); const log=document.getElementById('cps-log'); if(!input||!send||!log) return;
-async function go(){ const text=input.value.trim(); if(!text)return; input.value=''; const you=document.createElement('li'); you.textContent='你：'+text; log.appendChild(you);
-try{ const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,mode:'cps'})}); const j=await r.json(); const li=document.createElement('li'); li.textContent=j.reply||'[已送出星郵，等待回響…]'; log.appendChild(li); log.scrollTop=log.scrollHeight; }catch(err){ const li=document.createElement('li'); li.textContent='傳送失敗：'+err.message; log.appendChild(li); } }
-send.addEventListener('click',go); input.addEventListener('keydown',e=>{if(e.key==='Enter') go();}); })();

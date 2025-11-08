@@ -1,1 +1,0 @@
-(() => { const key=document.body.getAttribute('data-universe'); if(!key) return; let dur=5000; if(key==='ajin') dur=3400; else if(key==='migou') dur=5600; else if(key==='gungun') dur=8000; setInterval(()=>{}, dur/2); })();
