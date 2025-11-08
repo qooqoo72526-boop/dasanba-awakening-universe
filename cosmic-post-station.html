@@ -1,76 +1,47 @@
 
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>宇宙郵局 | Awakening Universe</title>
-<link href="/css/universe.css" rel="stylesheet"/>
-<style>
-.page{padding:90px 0 40px;display:grid;place-items:center;position:relative;z-index:1}
-.heading{text-align:center;margin-bottom:12px}
-.heading h2{font-family:"Orbitron";letter-spacing:.6px;font-weight:800;font-size:clamp(24px,4.4vw,40px);
-background:linear-gradient(180deg,#eaf2ff 0,#d9e8ff 40%,#bcd4ff 70%);-webkit-background-clip:text;color:transparent}
-.heading p{margin-top:6px;font-size:12px;opacity:.9;color:#dfe8ff}
-.center-chat{width:min(960px,92vw);padding:16px;border-radius:20px;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
-box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 10px 28px rgba(20,30,60,.26)}
-.msg{display:flex;gap:10px;align-items:flex-end;margin:10px 0}
-.msg .avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;box-shadow:0 0 10px rgba(180,210,255,.6)}
-.msg .bubble{max-width:72%;padding:12px 14px;border-radius:14px;background:rgba(240,245,255,.10);
-box-shadow:0 8px 26px rgba(20,30,60,.22) inset;animation:float 4s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.input{display:flex;gap:8px;margin-top:12px}
-.input input{flex:1;padding:12px 14px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.08);color:#e9f1ff}
-.input button{padding:12px 16px;border-radius:12px;border:none;background:rgba(200,220,255,.18);color:#112;cursor:pointer}
-</style>
-</head>
-<body>
-<div id="starfield"></div>
-<div id="meteors"></div>
-
-<div class="toolbar">
-  <a class="toolbtn" href="/index.html" title="Home">
-    <svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5"/><path d="M6.5 10v9h11v-9"/></svg>
-  </a>
-  <a class="toolbtn" href="/cosmic-post-station.html" title="Cosmic Post">
-    <svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17z"/><path d="M4 7l8 6 8-6"/></svg>
-  </a>
-  <a class="toolbtn" href="/soulmirror.html" title="Soul Mirror">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="5.5"/><path d="M7.5 15.5h9"/><path d="M9 18.5h6"/></svg>
-  </a>
-  <div class="toolbtn" title="Starflow">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 3v3"/><path d="M21 12h-3"/><path d="M12 21v-3"/><path d="M3 12h3"/></svg>
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>宇宙郵局 | COSMIC POST STATION</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Noto+Sans+TC:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/universe.css"></head>
+<body data-universe="post">
+<nav class="nav-rail">
+  <a href="/index.html"><i>⌂</i></a>
+  <a href="/cosmic-post-station.html"><i>✉</i></a>
+  <a href="/soulmirror.html"><i>🪞</i></a>
+</nav>
+<section class="chat-wrap">
+  <div class="chat-title">COSMIC POST STATION ✉</div>
+  <div class="bubbles" id="bubbles">
+    <div class="bubble"><img class="avatar-glow" src="/assets/icons/icon_migou.png" alt="">嘿，我在。你今天心情怎麼了？</div>
   </div>
-</div>
-
-<section class="page">
-  <div class="heading">
-    <h2>宇宙郵局 ✉️</h2>
-    <p>把心事交給宇宙，讓三隻靈魂鳥一個接著一個回你。</p>
-  </div>
-  <div class="center-chat">
-    <div class="msg">
-      <img class="avatar" src="/assets/icon_you.png" alt="YOU"/>
-      <div class="bubble">（這裡會顯示你的訊息...）</div>
-    </div>
-    <div class="msg">
-      <img class="avatar" src="/assets/icon_ajin.png" alt="AJIN"/>
-      <div class="bubble">我聽到了，先呼吸一下，等等我們一起拆開它。</div>
-    </div>
-    <div class="msg">
-      <img class="avatar" src="/assets/icon_migou.png" alt="MIGOU"/>
-      <div class="bubble">先把自己放到第一順位，然後慢慢來。</div>
-    </div>
-    <div class="msg">
-      <img class="avatar" src="/assets/icon_gungun.png" alt="GUNGUN"/>
-      <div class="bubble">我在這裡，別擔心，我陪你。</div>
-    </div>
-    <div class="input">
-      <input placeholder="跟宇宙說點什麼..." />
-      <button>送出</button>
-    </div>
+  <div class="chat-input">
+    <input id="msg" placeholder="在宇宙裡說點什麼吧…"/>
+    <button id="send">送出</button>
   </div>
 </section>
+<script>
+const order=[
+  {who:'you',icon:'/assets/icons/icon_you.png'},
+  {who:'ajin',icon:'/assets/icons/icon_ajin.png',sfx:'/assets/sfx/reply_ajin.wav'},
+  {who:'migou',icon:'/assets/icons/icon_migou.png',sfx:'/assets/sfx/reply_migou.wav'},
+  {who:'gungun',icon:'/assets/icons/icon_gungun.png',sfx:'/assets/sfx/reply_gungun.wav'}
+];
+let turn=0; const bub=document.getElementById('bubbles');
+function addLine(text,who='you'){ const cfg=order.find(o=>o.who===who)||order[0];
+  const d=document.createElement('div'); d.className='bubble'; d.innerHTML=`<img class="avatar-glow" src="${cfg.icon}">`+text;
+  bub.appendChild(d); d.scrollIntoView({behavior:'smooth',block:'end'});
+  if(cfg.sfx){ const a=new Audio(cfg.sfx); a.play().catch(()=>{}); }
+}
+document.getElementById('send').onclick=async()=>{
+  const v=document.getElementById('msg').value.trim(); if(!v) return;
+  addLine(v,'you'); document.getElementById('msg').value='';
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona:order[(++turn)%3+1].who,text:v})});
+    const j=await r.json(); const who=order[(turn)%3+1].who;
+    addLine(j.reply||'收到。',who);
+  }catch(e){ const who=order[(turn)%3+1].who; addLine('先記下來了。',who); }
+};
+</script>
 <script src="/js/main.js"></script>
-</body>
-</html>
+</body></html>

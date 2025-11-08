@@ -1,48 +1,39 @@
 
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>靈魂照妖鏡 | Awakening Universe</title>
-<link href="/css/universe.css" rel="stylesheet"/>
-<style>
-.wrap{padding:90px 0 40px;display:grid;place-items:center;position:relative;z-index:1}
-.hdr{text-align:center}
-.hdr h2{font-family:"Orbitron";font-weight:800;letter-spacing:.6px;font-size:clamp(24px,4.4vw,40px);
-background:linear-gradient(180deg,#eae2ff 0,#d9ccff 45%,#c3b8ff 80%);-webkit-background-clip:text;color:transparent}
-.panel{margin-top:14px;width:min(980px,92vw);padding:16px;border-radius:20px;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
-box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 10px 28px rgba(20,30,60,.26)}
-</style>
-</head>
-<body>
-<div id="starfield"></div>
-<div id="meteors"></div>
-
-<div class="toolbar">
-  <a class="toolbtn" href="/index.html" title="Home">
-    <svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5"/><path d="M6.5 10v9h11v-9"/></svg>
-  </a>
-  <a class="toolbtn" href="/cosmic-post-station.html" title="Cosmic Post">
-    <svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17z"/><path d="M4 7l8 6 8-6"/></svg>
-  </a>
-  <a class="toolbtn" href="/soulmirror.html" title="Soul Mirror">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="5.5"/><path d="M7.5 15.5h9"/><path d="M9 18.5h6"/></svg>
-  </a>
-  <div class="toolbtn" title="Starflow">
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 3v3"/><path d="M21 12h-3"/><path d="M12 21v-3"/><path d="M3 12h3"/></svg>
-  </div>
-</div>
-
-<section class="wrap">
-  <div class="hdr">
-    <h2>靈魂照妖鏡 🪞</h2>
-    <div class="subtitle">25 題深度體驗，結束後由三隻靈魂鳥各說一句話。</div>
-  </div>
-  <div class="panel">
-    <p>（題目與結果區由原本的 JS 注入，保留樣式與動效。）</p>
-  </div>
+<!doctype html><html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>靈魂照妖鏡 | SOUL MIRROR</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Noto+Sans+TC:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/universe.css"></head>
+<body data-universe="mirror">
+<nav class="nav-rail">
+  <a href="/index.html"><i>⌂</i></a>
+  <a href="/cosmic-post-station.html"><i>✉</i></a>
+  <a href="/soulmirror.html"><i>🪞</i></a>
+</nav>
+<section class="mirror-wrap">
+  <div class="mirror-title">SOUL MIRROR 🪞</div>
+  <p style="text-align:center;opacity:.9">請從 25 題裡直覺作答，完成後會啟動三鳥的覺醒解析。</p>
+  <div class="qgrid" id="qgrid"></div>
+  <div style="text-align:center;margin-top:10px"><button id="submit">送出解析</button></div>
+  <div id="result" style="margin-top:16px"></div>
 </section>
+<script>
+const pool=["當你被誤解時，你會先澄清、先穩定情緒，還是先退開？","你如何區分『對自己誠實』與『對他人誠實』？","當界線被測試，你會怎麼說『不』而不內疚？","你最不想被別人修正的是哪個部分？為什麼？","什麼時候，你感覺到自己最『值得』？","明知道會失望，仍然選擇的那件事是什麼？","你最近一次『把自己放回宇宙中心』是何時？","你如何辨認『出於恐懼的善良』與『出於自由的善良』？","面對衝突，你更在意被理解，還是被喜歡？","你最想守護的界線，是誰看不見的？"];
+function pick25(){const arr=[];while(arr.length<25){arr.push(pool[arr.length%pool.length]);}return arr;}
+const qs=pick25(); const qgrid=document.getElementById('qgrid');
+qs.forEach(q=>{const lab=document.createElement('label');lab.innerHTML=`<input type="text" style="flex:1;min-width:0" placeholder="${q}">`;qgrid.appendChild(lab);});
+document.getElementById('submit').onclick=async()=>{
+  const answers=[...document.querySelectorAll('.qgrid input')].map(i=>i.value.trim()).filter(Boolean);
+  const res=document.getElementById('result'); res.innerHTML="<div class='bubble'>正在凝視你的靈魂光譜…</div>";
+  try{
+    const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({persona:"mirror",questions:qs,answers})});
+    const j=await r.json();
+    res.innerHTML=`<div class='bubble'>${j.analysis||'完成，你的靈魂在緩慢發光。'}</div>
+    <div class='bubble'><img class='avatar-glow' src='/assets/icons/icon_ajin.png'>「我不等天放晴，我自己掀開雲。」</div>
+    <div class='bubble'><img class='avatar-glow' src='/assets/icons/icon_migou.png'>「我很值錢，我讓自己更貴。」</div>
+    <div class='bubble'><img class='avatar-glow' src='/assets/icons/icon_gungun.png'>「我不追求安全，我成為安全。」</div>`;
+  }catch(e){ res.innerHTML="<div class='bubble'>暫存完成。下次我們繼續。</div>"; }
+};
+</script>
 <script src="/js/main.js"></script>
-</body>
-</html>
+</body></html>
