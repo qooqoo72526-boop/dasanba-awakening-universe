@@ -1,107 +1,111 @@
-/* ===== 全站底色：深銀藍→淡銀藍→霧白（無斷層） ===== */
-:root{
-  --silver:#eaf2ff;
-  --silver-blue:#cfe3ff;
-  --blue-1:#113a6b;
-  --blue-2:#1e4f86;
-  --blue-3:#275a93;
-  --blue-4:#6fa0d4;
-  --glass-bg: rgba(255,255,255,0.10);
-  --glass-stroke: rgba(255,255,255,0.20);
-  --glow: 0 0 25px rgba(180,210,255,.55);
-}
 
+:root{
+  --silver:#eaf2ff; --sil2:#cfe0ff; --sil3:#b9cdfb;
+  --ink:#0b2140; --ink2:#132e57; --ink3:#071a33;
+  --glow-gold: rgba(255,220,120,.28);
+  --glow-pink: rgba(255,150,180,.26);
+  --glow-blue: rgba(120,200,255,.28);
+}
+*{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
-  color:#e9f1ff;
   background:
-    radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
-    linear-gradient(180deg, var(--blue-1) 0%, var(--blue-2) 45%, var(--blue-3) 70%, var(--blue-4) 100%);
-  font-family: 'Noto Sans TC', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+    radial-gradient(1200px 800px at 50% -120px, #cfe1ff 0%, #7aa2e8 36%, #264a86 62%, #0e2244 100%),
+    radial-gradient(900px 600px at 80% 120%, rgba(160,200,255,.25), transparent 60%);
+  color:var(--silver);
+  font-family:"Orbitron","Noto Sans TC",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
   overflow-x:hidden;
 }
 
-/* ===== 左側工具列 ===== */
-.toolbar{
-  position: fixed; left:24px; top:90px; z-index:30;
-  display:flex; flex-direction:column; gap:14px;
-  filter: drop-shadow(0 8px 24px rgba(0,0,0,.25));
-}
+/* Starfield Canvas */
+#starfield{position:fixed; inset:0; z-index:-1}
+
+/* Toolbar */
+.toolbox{ position:fixed; left:20px; top:82px; display:flex; flex-direction:column; gap:12px; z-index:50; }
 .tool{
-  position:relative; display:flex; align-items:center; gap:10px;
-  padding:12px 18px;
-  border-radius:20px;
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  text-decoration:none; color:#eaf2ff; font-weight:600;
+  position:relative; display:flex; align-items:center; gap:8px;
+  padding:10px 12px; border-radius:14px;
+  background:rgba(255,255,255,.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  color:#dfe9ff; text-decoration:none; font-weight:300; font-size:12px; letter-spacing:.08em;
+  box-shadow: 0 8px 22px rgba(0,10,30,.16), inset 0 0 0 1px rgba(255,255,255,.08);
+  transition: transform .2s ease, box-shadow .2s ease, color .2s ease;
 }
-.tool svg{ width:20px; height:20px; opacity:.95 }
-.tool .tail{
-  content:""; position:absolute; inset:auto auto -10px 26px;
-  width:44px; height:12px; border-radius:0 0 44px 44px;
-  background: radial-gradient(40px 12px at 50% 0%, rgba(185,210,255,.45), transparent 70%);
+.tool svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;opacity:.95}
+.tool:hover{transform:translateY(-1px); color:#fff; box-shadow:0 10px 26px rgba(0,10,30,.2), inset 0 0 0 1px rgba(255,255,255,.12)}
+.tool::after{
+  content:""; position:absolute; inset:-26px; border-radius:22px; pointer-events:none;
+  box-shadow: 0 0 36px 12px rgba(170,210,255,.25);
+  animation: haloFlicker 2.8s ease-in-out infinite;
+  opacity:.55;
+}
+@keyframes haloFlicker{
+  0%{opacity:.38} 12%{opacity:.62} 23%{opacity:.42} 41%{opacity:.58} 56%{opacity:.50}
+  70%{opacity:.66} 84%{opacity:.44} 100%{opacity:.38}
+}
+.tool.active{color:#fff; box-shadow:0 10px 30px rgba(0,10,30,.24), inset 0 0 0 1px rgba(255,255,255,.16)}
+@media(max-width:640px){ .toolbox{left:12px; top:68px} .tool{font-size:11px; padding:9px 10px} .tool svg{width:16px;height:16px;stroke-width:1.5} }
+
+/* Hero Video */
+.hero{display:flex; justify-content:center; margin:86px 0 8px}
+.hero-video{
+  width:min(86vw,1100px); max-height:420px; aspect-ratio:16/9; object-fit:cover; border-radius:20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* ===== 主標題兩行，第二行略藍 ===== */
-.hero{ text-align:center; padding:110px 16px 20px }
-.title{ margin:0; line-height:1.06; font-family:'Orbitron', sans-serif; font-weight:800; letter-spacing:.02em }
-.title .l1{
-  display:block; font-size: clamp(30px, 6.2vw, 68px);
-  background: linear-gradient(180deg, #ffffff 0%, #dfeaff 60%, #b8d1ff 100%);
+/* Titles */
+.title-wrap{text-align:center; margin:8px 0 22px}
+.main-title{
+  margin:3px 0; letter-spacing:.08em; font-weight:700;
+  background: linear-gradient(180deg, #f5fbff 0%, #cfe0ff 48%, #e8f2ff 100%);
   -webkit-background-clip:text; background-clip:text; color:transparent;
-  text-shadow: 0 2px 18px rgba(160,190,255,.28);
+  text-shadow: 0 0 18px rgba(170,215,255,.22);
 }
-.title .l2{
-  display:block; margin-top:6px; font-size: clamp(28px, 5.6vw, 62px);
-  background: linear-gradient(180deg, #eaf2ff 0%, #cfe3ff 55%, #9ec0ff 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  text-shadow: 0 2px 18px rgba(140,170,255,.28);
-}
-.subtitle{ margin:14px 0 0; font-size:14px; letter-spacing:.15em; color:#eaf2ff; opacity:.95 }
-.subtitle .globe{ filter: drop-shadow(0 0 6px rgba(160,210,255,.9)); }
+.main-title{font-size: clamp(30px, 4.8vw, 56px)}
+.main-title.sub{font-size: clamp(24px, 4.2vw, 48px)}
+.sub-title{font: 500 12px "Noto Sans TC",sans-serif; letter-spacing:.24em; color:#dbe8ff; opacity:.92}
+.sub-title .earth{filter:drop-shadow(0 0 6px rgba(120,200,255,.9))}
 
-/* ===== 三鳥卡片 ===== */
-.cards{
-  display:grid; grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap:24px; max-width:1100px; margin:34px auto 24px; padding:0 24px;
-}
-.card{ position:relative; height:180px; border-radius:18px;
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border:1px solid rgba(255,255,255,.18);
-  overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,.25) inset;
-  transform: translateZ(0);
-}
-.card-inner{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; text-align:center; padding:10px }
-.card .line1{ font-weight:700; opacity:.95 }
-.card .line2{ font-weight:600; opacity:.92 }
-.card .line3{ font-size:12px; opacity:.85 }
-.card:hover{ transform: translateY(-2px) }
-.card .glow{ position:absolute; width:220px; height:220px; pointer-events:none; filter:blur(22px); opacity:.60 }
-.card .glow.tl{ left:-80px; top:-80px; background: radial-gradient(closest-side, rgba(255,180,200,.40), transparent 70%) }
-.card .glow.br{ right:-80px; bottom:-80px; background: radial-gradient(closest-side, rgba(150,200,255,.40), transparent 70%) }
-.card.migou .glow.tl{ background: radial-gradient(closest-side, rgba(255,170,190,.45), transparent 70%) } /* 米果偏粉 */
-.card.ajin  .glow.tl{ background: radial-gradient(closest-side, rgba(255,240,170,.45), transparent 70%) } /* 阿金偏金黃 */
-.card.gungun.glow{ background: radial-gradient(closest-side, rgba(170,200,255,.45), transparent 70%) } /* 滾滾偏藍 */
+/* Cards */
+.cards{ width:min(1100px,92vw); margin: 14px auto 34px; display:grid; grid-template-columns: repeat(3,1fr); gap:26px}
+@media(max-width:1100px){ .cards{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:720px){ .cards{grid-template-columns:1fr} }
 
-/* ===== 觀星畫廊 ===== */
-.gallery{ max-width:1100px; margin:10px auto 60px; padding:0 24px; }
-.gallery-title{ text-align:center; font-weight:700; letter-spacing:.15em; color:#eaf2ff; margin:6px 0 14px }
-.gallery-frame{
-  width:100%; aspect-ratio:16/9; border-radius:16px;
-  background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18);
-  overflow:hidden; display:grid; place-items:center;
-  box-shadow: var(--glow);
+.card{
+  position:relative; border-radius:22px; overflow:hidden; text-decoration:none; color:#e8f2ff;
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 15px 50px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
 }
-.gallery-frame img{ width:100%; height:100%; object-fit:contain; }
+.card::before{content:""; position:absolute; inset:-2px; border-radius:24px; z-index:-1; filter: blur(14px); opacity:.55}
+.card.ajin::before { background: radial-gradient(360px 220px at 50% 0%, var(--glow-gold), transparent 70%) }
+.card.migou::before{ background: radial-gradient(360px 220px at 50% 0%, var(--glow-pink), transparent 70%) }
+.card.gungun::before{ background: radial-gradient(360px 220px at 50% 0%, var(--glow-blue), transparent 70%) }
 
-/* ===== 底部 ===== */
-.footer{ text-align:center; padding:16px; color:#cfe3ff; opacity:.9 }
-.footer small{ letter-spacing:.2em }
-
-@media (max-width: 960px){
-  .cards{ grid-template-columns: 1fr; }
-  .card{ height:160px }
+.card .card-photo{height: 260px; background-size:cover; background-position:center}
+.card .card-name{display:flex; justify-content:center; margin:12px 0 6px; font-weight:700; letter-spacing:.08em}
+.card .card-meta{font: 500 12px 'Noto Sans TC',sans-serif; text-align:center; opacity:.9}
+.card .card-quote{font: 500 12px 'Noto Sans TC',sans-serif; text-align:center; opacity:.82; padding:10px 14px 16px}
+.card:hover{transform:translateY(-6px); filter:brightness(1.06)}
+.card .card-name span{ position:relative }
+.card .card-name span::after{
+  content:""; position:absolute; inset:-6px -10px; border-radius:16px; pointer-events:none;
+  box-shadow: 0 0 20px 6px rgba(255,255,255,.12);
 }
+
+/* Gallery */
+.gallery{width:min(1100px,92vw); margin: 18px auto 64px}
+.gallery-title{font-size:16px; text-align:center; letter-spacing:.22em; color:#dbe8ff; opacity:.95}
+.gallery-title span{font-size:.96em; letter-spacing:.18em; opacity:.88}
+.gallery-viewport{position:relative; width:100%; height:auto}
+.gallery-viewport img{
+  position:absolute; inset:0; width:100%; height:auto; border-radius:18px; display:block; object-fit:cover;
+  box-shadow: 0 16px 45px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+  opacity:0; transition: opacity .8s ease;
+}
+.gallery-viewport img.active{opacity:1}
+
+/* Footer */
+.footer{ text-align:center; padding:28px 10px 52px; color:#cfe2ff }
+.footer .en{font-size:12px; letter-spacing:.22em; opacity:.92}
+.footer .zh{font: 500 12px 'Noto Sans TC',sans-serif; opacity:.85}
