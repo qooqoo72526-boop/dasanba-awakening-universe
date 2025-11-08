@@ -1,78 +1,55 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>宇宙郵局 Cosmic Post Station</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/universe.css"/>
+<!DOCTYPE html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cosmic Post Station</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+<link rel="stylesheet" href="./css/universe.css">
+<link rel="stylesheet" href="./css/cps.css">
 </head>
-<body data-page="post">
-  <canvas id="starfield" aria-hidden="true"></canvas>
+<body data-universe="post">
+<canvas id="starfield"></canvas>
 
-  <nav class="side-nav">
-    <a class="nav-btn" data-icon="home" href="index.html"><span class="ico"></span><span class="tx">Home</span></a>
-    <a class="nav-btn active" data-icon="post" href="cosmic-post-station.html"><span class="ico"></span><span class="tx">Post</span></a>
-    <a class="nav-btn" data-icon="mirror" href="soulmirror.html"><span class="ico"></span><span class="tx">Mirror</span></a>
-    <a class="nav-btn" data-icon="gallery" href="index.html#gallery"><span class="ico"></span><span class="tx">Gallery</span></a>
-  </nav>
+<nav class="toolbox">
+  <a class="tool" href="./index.html" aria-label="Home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5l9-7 9 7M6 10v10h12V10"/></svg>
+    <span>Home</span>
+  </a>
+  <a class="tool" href="./cosmic-post-station.html" aria-label="Post">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
+    <span>Post</span>
+  </a>
+  <a class="tool" href="./soulmirror.html" aria-label="Mirror">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10v17H7zM9.5 8l5 7"/></svg>
+    <span>Mirror</span>
+  </a>
+  <a class="tool" href="#gallery" aria-label="Gallery">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 11l6-3 2 4-6 3zM11 8l8-4 2 4-8 4zM12 14v6M9 20h6"/>
+    </svg>
+    <span>Gallery</span>
+  </a>
+</nav>
 
-  <header class="page-head">
-    <h2>宇宙郵局 <small>Cosmic Post Station</small></h2>
-    <p class="subtitle thin">像朋友一樣聊天，訊息送進宇宙 <span class="globe">🌍</span></p>
-  </header>
 
-  <main class="post-layout">
-    <div class="photos">
-      <div class="photo ph1"></div><div class="photo ph2"></div><div class="photo ph3"></div>
-      <div class="photo ph4"></div><div class="photo ph5"></div>
+<div class="post-wrap">
+  <div class="post-bg">
+    <div class="ph" style="background:url('./assets/trio_post1.webp') center/cover"></div>
+    <div class="ph" style="background:url('./assets/trio_post2.webp') center/cover"></div>
+    <div class="ph" style="background:url('./assets/ajin_post.webp') center/cover"></div>
+    <div class="ph" style="background:url('./assets/migou_post.webp') center/cover"></div>
+    <div class="ph" style="background:url('./assets/gungun_post.webp') center/cover"></div>
+  </div>
+  <div class="chat" id="chat">
+    <div class="msg"><div class="avatar" style="box-shadow:0 0 0 3px rgba(255,230,120,.45), 0 0 16px rgba(255,230,120,.55)"></div>
+      <div class="bubble">我先開個話題，今天心情怎樣？</div></div>
+    <div class="input">
+      <input id="inp" placeholder="寫下你想說的話…（按 Enter 送出）" />
+      <button id="send">送出</button>
     </div>
-    <div class="chat-wrap">
-      <div id="chatList" class="chat-list"></div>
-      <form id="chatForm" class="chat-input">
-        <input id="msg" placeholder="寫下你現在的心聲…" autocomplete="off"/>
-        <button type="submit">送出</button>
-      </form>
-    </div>
-  </main>
+  </div>
+</div>
 
-  <footer class="site-foot">
-    <p class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</p>
-    <p class="zh">覺醒，不是修復；是重生。</p>
-  </footer>
-
-  <script src="js/starfield.js"></script>
-  <script src="js/ui.js"></script>
-  <script>
-    // LINE-like centered chat: one-by-one replies, natural tone (demo placeholder)
-    const birds = [
-      { name: 'Ajin',   ring: 'glow-ajin',   avatar: 'assets/icon_ajin.png'   },
-      { name: 'Migou',  ring: 'glow-migou',  avatar: 'assets/icon_migou.png'  },
-      { name: 'Gungun', ring: 'glow-gungun', avatar: 'assets/icon_gungun.png' }
-    ];
-    let i = 0;
-    const list = document.getElementById('chatList');
-    const form = document.getElementById('chatForm');
-    const input = document.getElementById('msg');
-    function addBubble(text, me=false){
-      const wrap = document.createElement('div');
-      wrap.className = 'bubble' + (me ? ' me' : '');
-      wrap.textContent = text;
-      list.appendChild(wrap);
-      list.scrollTop = list.scrollHeight;
-    }
-    form.addEventListener('submit', e=>{
-      e.preventDefault();
-      const v = (input.value||'').trim(); if(!v) return;
-      addBubble(v, true);
-      input.value='';
-      setTimeout(()=>{
-        const reply = ['收到～','先別急，呼口氣','我在','好，懂了！','嗯哼','別怕'];
-        addBubble(reply[Math.floor(Math.random()*reply.length)], false);
-        i++;
-      }, 700 + Math.random()*800);
-    });
-  </script>
-</body>
-</html>
+<script src="./js/main.js"></script>
+<script src="./js/dialogue.js"></script>
+</body></html>
