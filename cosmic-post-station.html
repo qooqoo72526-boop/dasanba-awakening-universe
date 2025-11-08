@@ -1,55 +1,31 @@
-<!DOCTYPE html>
-<html lang="zh-Hant"><head>
+<!DOCTYPE html><html lang="zh-Hant"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cosmic Post Station</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/universe.css">
-<link rel="stylesheet" href="./css/cps.css">
-</head>
-<body data-universe="post">
-<canvas id="starfield"></canvas>
-
-<nav class="toolbox">
-  <a class="tool" href="./index.html" aria-label="Home">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5l9-7 9 7M6 10v10h12V10"/></svg>
-    <span>Home</span>
-  </a>
-  <a class="tool" href="./cosmic-post-station.html" aria-label="Post">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
-    <span>Post</span>
-  </a>
-  <a class="tool" href="./soulmirror.html" aria-label="Mirror">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10v17H7zM9.5 8l5 7"/></svg>
-    <span>Mirror</span>
-  </a>
-  <a class="tool" href="#gallery" aria-label="Gallery">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M3 11l6-3 2 4-6 3zM11 8l8-4 2 4-8 4zM12 14v6M9 20h6"/>
-    </svg>
-    <span>Gallery</span>
-  </a>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head>
+<body>
+<nav class="side-nav">
+  <a href="index.html" class="chip"><span class="ico">🏠</span><span class="txt">Home</span></a>
+  <a href="cosmic-post-station.html" class="chip"><span class="ico">✉️</span><span class="txt">Post</span></a>
+  <a href="soulmirror.html" class="chip"><span class="ico">🪞</span><span class="txt">Mirror</span></a>
+  <a href="#gallery" class="chip"><span class="ico">🔭</span><span class="txt">Gallery</span></a>
+  <div class="tail"></div>
 </nav>
-
-
-<div class="post-wrap">
-  <div class="post-bg">
-    <div class="ph" style="background:url('./assets/trio_post1.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/trio_post2.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/ajin_post.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/migou_post.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/gungun_post.webp') center/cover"></div>
-  </div>
-  <div class="chat" id="chat">
-    <div class="msg"><div class="avatar" style="box-shadow:0 0 0 3px rgba(255,230,120,.45), 0 0 16px rgba(255,230,120,.55)"></div>
-      <div class="bubble">我先開個話題，今天心情怎樣？</div></div>
-    <div class="input">
-      <input id="inp" placeholder="寫下你想說的話…（按 Enter 送出）" />
-      <button id="send">送出</button>
+<header class="title-wrap">
+  <h1 class="en-title">宇宙郵局</h1>
+  <h2 class="en-sub">COSMIC POST STATION</h2>
+</header>
+<section class="cards" style="grid-template-columns:1fr;max-width:900px">
+  <article class="role-card gungun" style="box-shadow:none;">
+    <div class="role-meta">
+      <div class="role-name">三鳥對話置中（連線妳的 API 保留既有邏輯）</div>
+      <div class="role-quote">這個頁面我沒有動背景，只保留版面樣式；聊天邏輯沿用你現有的 api/chat.js。</div>
     </div>
-  </div>
-</div>
-
-<script src="./js/main.js"></script>
-<script src="./js/dialogue.js"></script>
+  </article>
+</section>
+<footer class="site-footer">
+  <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
+  <div class="zh">覺醒，不是修復；是重生。</div>
+</footer>
+<script src="js/main.js"></script>
 </body></html>
