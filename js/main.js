@@ -1,78 +1,95 @@
-/* 宇宙參數（首頁） */
-const P = {stars:120, size:[0.8,1.8], twinkle:[2.4,4.2], meteors:[3000,7000]};
+/* ===== 銀藍星空（更亮＋更活躍），流星 3–7s 隨機 ===== */
+const sky = document.getElementById('sky');
+const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+const ctx = sky.getContext('2d');
 
-/* Canvas */
-const starC = document.getElementById('stars');
-const metC  = document.getElementById('meteors');
-const sctx = starC.getContext('2d');
-const mctx = metC.getContext('2d');
-function fit(){ starC.width = metC.width = innerWidth; starC.height = metC.height = innerHeight }
-addEventListener('resize', fit); fit();
-
-/* 星星閃爍 */
-const stars = [];
-for(let i=0;i<P.stars;i++){
-  stars.push({
-    x: Math.random()*starC.width,
-    y: Math.random()*starC.height,
-    r: P.size[0] + Math.random()*(P.size[1]-P.size[0]),
-    a: Math.random()*1,
-    sp: (P.twinkle[0]+Math.random()*(P.twinkle[1]-P.twinkle[0])) * (Math.random()<.5?1:-1)
-  });
+function resize(){
+  sky.width  = innerWidth * dpr;
+  sky.height = innerHeight * dpr;
 }
-function drawStars(){
-  sctx.clearRect(0,0,starC.width,starC.height);
+resize(); addEventListener('resize', resize);
+
+const starCount = innerWidth>1024 ? 120 : 90;
+const stars = Array.from({length:starCount}).map(()=>({
+  x: Math.random()*sky.width,
+  y: Math.random()*sky.height,
+  r: (0.6 + Math.random()*1.2) * dpr,
+  a: 0.4 + Math.random()*0.5,
+  t: Math.random()*2*Math.PI
+}));
+
+let comets = [];
+function spawnComet(){
+  // 從四邊任一隨機射入
+  const side = Math.floor(Math.random()*4);
+  const speed = (3 + Math.random()*3) * dpr;
+  let x,y,vx,vy;
+  if(side===0){ x=-40; y=Math.random()*sky.height; vx=speed; vy=(Math.random()-.5)*speed; }
+  if(side===1){ x=sky.width+40; y=Math.random()*sky.height; vx=-speed; vy=(Math.random()-.5)*speed; }
+  if(side===2){ x=Math.random()*sky.width; y=-40; vx=(Math.random()-.5)*speed; vy=speed; }
+  if(side===3){ x=Math.random()*sky.width; y=sky.height+40; vx=(Math.random()-.5)*speed; vy=-speed; }
+  comets.push({x,y,vx,vy,life:0});
+  setTimeout(spawnComet, 3000 + Math.random()*4000); // 3–7 秒
+}
+spawnComet();
+
+function tick(t){
+  ctx.clearRect(0,0,sky.width, sky.height);
+
+  // 星星閃爍
   for(const s of stars){
-    s.a += 0.015/s.sp;
-    const alpha = 0.6 + 0.4*Math.sin(s.a);
-    sctx.fillStyle = `rgba(234,242,255,${alpha})`;
-    sctx.beginPath(); sctx.arc(s.x, s.y, s.r, 0, Math.PI*2); sctx.fill();
+    s.t += 0.02 + Math.random()*0.02;
+    const alpha = s.a * (0.7 + 0.3*Math.sin(s.t));
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+    ctx.fill();
   }
-  requestAnimationFrame(drawStars);
-}
-requestAnimationFrame(drawStars);
 
-/* 流星（3–7 秒不規則；偶爾更亮一點） */
-function shootMeteor(){
-  const len = Math.random()*180+160;
-  const fromLeft = Math.random()>.5;
-  const x0 = fromLeft ? -80 : starC.width+80;
-  const y0 = Math.random()*starC.height*0.6 + 40;
-  const dx = (fromLeft?1:-1) * (Math.random()*2+2);
-  const dy = (Math.random()*1.2+0.6) * (Math.random()>.5?1:0.6);
-  let life = 0;
-  const trail = [];
-  const id = setInterval(()=>{
-    life += 1;
-    const x = x0 + dx*life*3;
-    const y = y0 + dy*life*3;
-    trail.push([x,y]);
-    if(trail.length>len/6) trail.shift();
-    mctx.clearRect(0,0,metC.width,metC.height);
-    for(let i=0;i<trail.length;i++){
-      const k = i/trail.length;
-      const glow = (i>trail.length*0.8)? 1 : k;
-      mctx.strokeStyle = `rgba(235,245,255, ${glow})`;
-      mctx.lineWidth = 1.1 + 2.4*k;
-      mctx.beginPath();
-      mctx.moveTo(trail[i][0], trail[i][1]);
-      mctx.lineTo(trail[i][0]-dx*10, trail[i][1]-dy*10);
-      mctx.stroke();
-    }
-    if(trail.length>len || x<-200 || x>metC.width+200 || y>metC.height+100){
-      clearInterval(id);
-    }
-  }, 16);
-  const next = P.meteors[0] + Math.random()*(P.meteors[1]-P.meteors[0]);
-  setTimeout(shootMeteor, next);
-}
-setTimeout(shootMeteor, 1200);
+  // 流星
+  comets = comets.filter(c => c.life < 220);
+  for(const c of comets){
+    c.x += c.vx;
+    c.y += c.vy;
+    c.life += 1;
+    const grad = ctx.createLinearGradient(c.x, c.y, c.x - c.vx*12, c.y - c.vy*12);
+    grad.addColorStop(0, 'rgba(255,255,255,.95)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth = 2*dpr;
+    ctx.beginPath();
+    ctx.moveTo(c.x, c.y);
+    ctx.lineTo(c.x - c.vx*12, c.y - c.vy*12);
+    ctx.stroke();
+  }
 
-/* 觀星畫廊：每 3 秒淡入切換，無手動控制 */
-const slides = Array.from(document.querySelectorAll('.gallery-frame .slide'));
-let idx=0;
-function show(i){ slides.forEach((s,si)=> s.classList.toggle('active', si===i)); }
-if(slides.length){
-  show(0);
-  setInterval(()=>{ idx=(idx+1)%slides.length; show(idx); }, 3000);
+  requestAnimationFrame(tick);
 }
+requestAnimationFrame(tick);
+
+/* ===== 觀星畫廊：單張 3 秒自動滑，無手動滑軌 ===== */
+const track = document.querySelector('.gallery .track');
+if(track){
+  let idx = 0;
+  const imgs = [...track.children];
+  function slide(){
+    idx = (idx + 1) % imgs.length;
+    track.style.transition = 'transform .9s ease';
+    track.style.transform = `translateX(${-idx * 100}%)`;
+  }
+  // 建立每張寬度為 100% 的佈局
+  track.style.width = `${imgs.length * 100}%`;
+  imgs.forEach(el => el.style.width = `${100/imgs.length}%`);
+  setInterval(slide, 3000);
+}
+
+/* ===== 卡片點擊：進房時光暈加強（小特效） ===== */
+document.querySelectorAll('.card').forEach(card=>{
+  card.addEventListener('mousedown', ()=>{
+    const halo = card.querySelector('.halo');
+    halo.animate([
+      { transform:'scale(1)', opacity:.6 },
+      { transform:'scale(1.25)', opacity:.85 }
+    ], { duration:360, easing:'ease-out' });
+  });
+});
