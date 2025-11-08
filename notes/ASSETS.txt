@@ -1,7 +1,0 @@
-Expected assets (not included):
-/assets/hero.mp4
-/assets/ajin.webp
-/assets/migou.webp
-/assets/gungun.webp
-/assets/trio.webp ... /assets/trio10.webp
-/assets/ajin_5s.mp4 /assets/migou_5s.mp4 /assets/gungun.mp4
