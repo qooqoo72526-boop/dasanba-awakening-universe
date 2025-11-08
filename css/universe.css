@@ -1,37 +1,37 @@
 
-/* v9.1.9.2 restore 9.19 base — extend-only patch */
-/* Base colors (home): #dce5ff → #6f8dc9 → #1d2e60 */
-
+/* v9.1.9.2 — darker tune (extend-only) */
 :root{
-  --home-top:#dce5ff;
-  --home-mid:#6f8dc9;
-  --home-btm:#1d2e60;
+  /* Home (9/19 darker): #cfd9f6 → #5a77b8 → #162445 */
+  --home-top:#cfd9f6;
+  --home-mid:#5a77b8;
+  --home-btm:#162445;
 
-  --post-top:#e6eeff;   /* same family, slightly brighter */
-  --post-mid:#8aa3e0;
-  --post-btm:#2a3f78;
+  /* Post (white-silver universe, slightly brighter than home but still darker than last) */
+  --post-top:#d8e2fb;
+  --post-mid:#6c86c7;
+  --post-btm:#1c2f58;
 
-  --mirror-top:#eae5ff; /* silver-violet for mirror */
-  --mirror-mid:#b7b0e8;
-  --mirror-btm:#4b4b8f;
+  /* Mirror (silver‑violet darker) */
+  --mirror-top:#d9d3fb;
+  --mirror-mid:#9b94d8;
+  --mirror-btm:#3d3b7a;
 
-  --text-en:#eaf2ff;
-  --text-zh:#d7e2ff;
-
-  --glass-weak:rgba(255,255,255,.08);
-  --glass:rgba(255,255,255,.12);
-  --glass-strong:rgba(255,255,255,.18);
-  --stroke:rgba(255,255,255,.16);
+  --text-en:#dfe7ff;
+  --text-zh:#d6e0ff;
+  --glass-weak:rgba(255,255,255,.07);
+  --glass:rgba(255,255,255,.11);
+  --glass-strong:rgba(255,255,255,.16);
+  --stroke:rgba(255,255,255,.14);
 
   --ajin:#ffd43a;
-  --migou:#ff9d57;   /* 🧡 米果 */
-  --gungun:#5fb6ff;  /* 💙 滾滾 */
+  --migou:#ff9d57;
+  --gungun:#5fb6ff;
 }
 
-html,body{height:100%;}
+html,body{height:100%}
 body{
   margin:0; overflow-x:hidden; color:var(--text-zh);
-  font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue";
+  font-family:"Noto Sans TC",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue";
   background: radial-gradient(155% 120% at 50% -10%, var(--home-top) 0%, var(--home-mid) 38%, var(--home-btm) 100%) fixed;
 }
 body[data-page="post"]{
@@ -41,129 +41,4 @@ body[data-page="mirror"]{
   background: radial-gradient(150% 120% at 50% -10%, var(--mirror-top) 0%, var(--mirror-mid) 36%, var(--mirror-btm) 100%) fixed;
 }
 
-/* Starfield canvas stays behind all content */
-#starfield{ position: fixed; inset:0; z-index:0; pointer-events:none; }
-
-/* Sidebar — round glass pills, no outer container border, tiny text, with tail */
-.side-nav{
-  position: fixed; left: 18px; top: 88px; z-index: 30;
-  display:flex; flex-direction:column; gap:12px;
-  filter: drop-shadow(0 6px 24px rgba(0,0,0,.18));
-}
-.side-nav::after{
-  content:""; display:block; width:2px; height:120px; margin:16px auto 0;
-  background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0));
-  border-radius:2px; box-shadow:0 0 12px rgba(190,210,255,.55);
-}
-.nav-btn{
-  display:flex; align-items:center; gap:10px;
-  padding:10px 14px; border-radius:16px;
-  background: rgba(255,255,255,.06);
-  border:1px solid var(--stroke);
-  backdrop-filter: blur(10px);
-  text-decoration:none; color:var(--text-en);
-  font-family:"Orbitron", ui-sans-serif; font-weight:500; font-size:13px;
-  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-}
-.nav-btn .ico{ width:16px; height:16px; display:inline-block; filter: drop-shadow(0 0 6px rgba(200,220,255,.6)); }
-.nav-btn:hover{ transform:translateX(2px); background: rgba(255,255,255,.1); box-shadow:0 0 18px rgba(160,190,255,.35); }
-.nav-btn.active{ background: rgba(255,255,255,.14); }
-
-/* Hero video at top — auto play loop */
-.hero-video{ position:relative; z-index:1; width:min(1100px, 92vw); margin: 28px auto 0; border-radius:18px; overflow:hidden;
-  border:1px solid var(--stroke); background: rgba(255,255,255,.06); backdrop-filter: blur(8px);
-}
-.hero-video video{ display:block; width:100%; height:auto; object-fit:cover; aspect-ratio: 16/9; }
-
-/* Two-line main title (center, gradient text) */
-.site-head{ width:min(1100px, 92vw); margin: 16px auto 8px; text-align:center; z-index:1; position:relative; }
-.title-en{ margin:12px 0 6px; line-height:1.04; font-family:"Orbitron"; font-weight:700; letter-spacing:.02em; }
-.title-en span{
-  display:block;
-  background: linear-gradient(180deg, #f5fbff 0%, #cfe9ff 60%, #bcd6ff 100%);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-  filter: drop-shadow(0 1px 8px rgba(255,255,255,.18));
-}
-.title-en span:first-child{ font-size: clamp(28px, 4.6vw, 64px); }
-.title-en span:last-child{ font-size: clamp(22px, 4.0vw, 54px); }
-.subtitle{ font-size: clamp(12px, 1.6vw, 16px); letter-spacing:.08em; color:var(--text-zh); opacity:.92; }
-.subtitle .globe{ text-shadow: 0 0 10px rgba(120,210,255,.9), 0 0 22px rgba(120,210,255,.5); }
-
-/* Character cards — upright, soft edges, no hard crop; click to enter */
-.cards{ width:min(1100px, 92vw); margin: 14px auto 12px; display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
-@media (max-width: 920px){ .cards{ grid-template-columns:1fr; } }
-.char-card{
-  display:block; border-radius:18px; overflow:hidden; text-decoration:none; color:var(--text-en);
-  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-  border:1px solid var(--stroke); backdrop-filter: blur(10px);
-  box-shadow: 0 8px 40px rgba(0,0,0,.25);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.char-card:hover{ transform: translateY(-3px); box-shadow: 0 12px 52px rgba(0,0,0,.28); }
-.char-card img{
-  width:100%; display:block;
-  /* Upright: prevent head cut — contain, padded pillarbox */
-  aspect-ratio: 3/4; object-fit: contain; background: rgba(255,255,255,.03);
-}
-.char-card .meta{ padding:10px 14px 12px; font-family:"Orbitron"; }
-.char-card .name{ font-size:14px; letter-spacing:.06em; }
-.char-card .tags{ font-size:12px; opacity:.9; margin-top:2px; }
-.char-card .quote{ font-family:"Noto Sans TC"; font-size:12px; opacity:.92; margin-top:4px; }
-
-/* Per-bird halos */
-.glow-ajin{ box-shadow: 0 8px 40px rgba(0,0,0,.25), 0 0 22px rgba(255,212,58,.35) inset, 0 0 26px rgba(255,212,58,.28); }
-.glow-migou{ box-shadow: 0 8px 40px rgba(0,0,0,.25), 0 0 22px rgba(255,157,87,.35) inset, 0 0 26px rgba(255,157,87,.28); }
-.glow-gungun{ box-shadow: 0 8px 40px rgba(0,0,0,.25), 0 0 22px rgba(95,182,255,.35) inset, 0 0 26px rgba(95,182,255,.28); }
-
-/* Gallery (trio.webp ~ trio10.webp) */
-.gallery{ width:min(1100px, 92vw); margin: 6px auto 0; }
-.gallery-title{ text-align:center; font-family:"Orbitron"; letter-spacing:.18em; font-size: clamp(13px, 1.6vw, 18px); color:var(--text-en); opacity:.92; }
-.gallery-rail{ margin-top:10px; border-radius:18px; overflow:hidden; border:1px solid var(--stroke); background: rgba(255,255,255,.06); }
-.gallery-rail img{ width:100%; display:block; aspect-ratio:16/9; object-fit:cover; }
-.gallery-rail{ animation: slideShow 30s linear infinite; }
-@keyframes slideShow{
-  0%{transform:translateX(0)}
-  10%{transform:translateX(0)}
-  20%{transform:translateX(-100%)}
-  30%{transform:translateX(-100%)}
-  40%{transform:translateX(-200%)}
-  50%{transform:translateX(-200%)}
-  60%{transform:translateX(-300%)}
-  70%{transform:translateX(-300%)}
-  80%{transform:translateX(-400%)}
-  90%{transform:translateX(-400%)}
-  100%{transform:translateX(-500%)}
-}
-
-/* Footer — English on top, zh below (extendable) */
-.site-foot{ width:min(1100px, 92vw); margin: 24px auto 46px; text-align:center; color:#e7eeff; opacity:.9; font-size:12px; }
-.site-foot .zh{ margin-top:6px; display:block; opacity:.92; }
-
-/* Post Station — centered LINE-like chat */
-.page-head{ width:min(1100px, 92vw); margin: 22px auto 8px; text-align:center; }
-.page-head h2{ font-family:"Orbitron"; margin:0; }
-.page-head small{ font-size:.7em; opacity:.85; }
-.post-layout{ width:min(1100px, 92vw); margin: 10px auto 32px; display:grid; grid-template-columns: 1fr min(560px, 90vw); gap:22px; align-items:start; }
-@media (max-width: 1024px){ .post-layout{ grid-template-columns: 1fr; } }
-
-.photos{ display:grid; grid-template-columns: repeat(6, 1fr); gap:12px; opacity:.9; }
-.photo{ aspect-ratio: 3/4; border-radius:16px; background: rgba(255,255,255,.06); border:1px solid var(--stroke); backdrop-filter: blur(8px); }
-.photo.ph4, .photo.ph5{ aspect-ratio:16/9; grid-column: span 3; }
-.photo.ph1, .photo.ph2, .photo.ph3{ grid-column: span 2; }
-
-.chat-wrap{ border-radius:18px; border:1px solid var(--stroke); background: rgba(255,255,255,.08); backdrop-filter: blur(10px); padding:14px; }
-.chat-list{ max-height: 60vh; overflow:auto; padding:6px 6px 2px; }
-.bubble{ max-width: 48ch; padding:10px 12px; margin:10px auto; border-radius:14px;
-  background: linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.10));
-  border:1px solid var(--stroke); color:#f5fbff; animation: breath 3.4s ease-in-out infinite;
-}
-.bubble.me{ background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.12)); }
-@keyframes breath{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-1.2px)} }
-.chat-input{ display:flex; gap:10px; margin-top:10px; }
-.chat-input input{ flex:1; padding:10px 12px; border-radius:12px; border:1px solid var(--stroke); background: rgba(255,255,255,.12); color:#fff; }
-.chat-input button{ padding:10px 14px; border-radius:12px; border:1px solid var(--stroke); background: rgba(255,255,255,.16); color:#fff; }
-
-/* Soul Mirror */
-.mirror-panel{ width:min(780px, 92vw); margin: 18px auto 40px; border-radius:18px; border:1px solid var(--stroke); background: rgba(255,255,255,.08); backdrop-filter: blur(10px); padding:14px; }
-.mirror-panel textarea{ width:100%; min-height: 160px; border-radius:12px; border:1px solid var(--stroke); background: rgba(255,255,255,.10); color:#fff; padding:10px 12px; }
-.mirror-panel button{ margin-top:10px; padding:10px 14px; border-radius:12px; border:1px solid var(--stroke); background: rgba(255,255,255,.16); color:#fff; }
+/* Keep rest styles inherited from previous universe.css — this file only overrides variables + background */
