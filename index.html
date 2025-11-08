@@ -1,92 +1,91 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-page="index">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Emotional Value A.I | Awakening Universe</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/universe.css"/>
+  <link rel="stylesheet" href="./css/universe.css" />
 </head>
-<body class="cosmic-silverblue">
-  <div class="cosmic-stars"></div>
-  <div class="meteor-layer" id="meteor-layer"></div>
+<body data-page="index">
+  <canvas class="cosmos-layer" id="stars1"></canvas>
+  <canvas class="cosmos-layer-2" id="stars2"></canvas>
+  <canvas class="cosmos-layer-3" id="meteors"></canvas>
+  <nav class="sidebar">
+    <a class="dot" href="./index.html" title="Home" aria-label="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5M5 10.5V20h4v-5h6v5h4v-9.5"/></svg>
+    </a>
+    <div class="tail"></div>
+    <a class="dot" href="./cosmic-post-station.html" title="Post Station ✉️" aria-label="Post">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></svg>
+    </a>
+    <div class="tail"></div>
+    <a class="dot" href="./soulmirror.html" title="Soul Mirror 🪞" aria-label="Mirror">
+      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 1 6 6v2a6 6 0 1 1-12 0V9a6 6 0 0 1 6-6zM15 18l3 3M9 18l-3 3"/></svg>
+    </a>
+    <div class="tail"></div>
+    <a class="dot" href="#gallery" title="Starflow 🔭" aria-label="Gallery">
+      <svg viewBox="0 0 24 24"><path d="M3 21l18-9M3 3l9 18M14 3l7 7M3 10l7 7"/></svg>
+    </a>
+  </nav>
 
-  <!-- Left minimal rail -->
-  <aside class="left-rail">
-    <nav class="nav-pill">
-      <a href="index.html" title="Home">
-        <svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
-      </a>
-      <a href="cosmic-post-station.html" title="Cosmic Post">
-        <svg class="ico" viewBox="0 0 24 24"><path d="M3 6h18v12H3zM4 7l8 6 8-6"/></svg>
-      </a>
-      <a href="soulmirror.html" title="Soul Mirror">
-        <svg class="ico" viewBox="0 0 24 24"><path d="M12 3c4 0 7 3 7 7v4c0 4-3 7-7 7s-7-3-7-7V10c0-4 3-7 7-7zM9 10h6"/></svg>
-      </a>
-      <a href="#gallery" title="Starflow">
-        <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l2.5 6.5L21 11l-6.5 2.5L12 20l-2.5-6.5L3 11l6.5-2.5L12 2z"/></svg>
-      </a>
-    </nav>
-  </aside>
+  <section class="hero-wrap">
+    <video src="./assets/trio.mp4" autoplay muted playsinline loop></video>
+  </section>
 
-  <main class="container">
-    <header class="hero-head">
-      <h1 class="title-en">Emotional Value A.I <small>Awakening Universe</small></h1>
-      <div class="subtitle-zh">
-        − 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活
-        <span class="globe">🌍</span>
-      </div>
-    </header>
+  <section class="title-block">
+    <h1 class="h1-main">Emotional Value A.I</h1>
+    <h2 class="h1-sub">Awakening Universe</h2>
+    <div class="sub-cn">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 <span class="earth">🌍</span></div>
+  </section>
 
-    <!-- Cards -->
-    <section class="cards">
-      <!-- AJIN -->
-      <article class="card glow" style="--ring: rgba(255,215,64,.35)">
-        <div class="card-photo" style="background-image:url('assets/ajin.webp')"></div>
-        <h3>💛 阿金 <span class="en">AJIN</span></h3>
-        <div class="meta">自由｜反骨</div>
-        <div class="line">「我不等天放晴，我自己掀開雲。」</div>
-      </article>
-      <!-- MIGOU -->
-      <article class="card glow" style="--ring: rgba(255,140,140,.35)">
-        <div class="card-photo" style="background-image:url('assets/migou.webp')"></div>
-        <h3>🧡 米果 <span class="en">MIGOU</span></h3>
-        <div class="meta">自我價值｜邊界</div>
-        <div class="line">「我很值錢，我讓自己更貴。」</div>
-      </article>
-      <!-- GUNGUN -->
-      <article class="card glow" style="--ring: rgba(120,170,255,.35)">
-        <div class="card-photo" style="background-image:url('assets/gungun.webp')"></div>
-        <h3>💙 滾滾 <span class="en">GUNGUN</span></h3>
-        <div class="meta">理解｜共鳴</div>
-        <div class="line">「我不追求安全，我成為安全。」</div>
-      </article>
-    </section>
+  <section class="cards">
+    <a class="card" href="./rooms/ajin.html">
+      <img class="pic" src="./assets/ajin.webp" alt="阿金 AJIN">
+      <div class="heart">💛</div>
+      <h3>阿金 AJIN</h3>
+      <div class="meta">自由｜反骨</div>
+      <div class="quote">「我不等天放晴，我自己掀開雲。」</div>
+      <div class="glow" style="background: radial-gradient(50% 80% at 50% 50%, rgba(255,220,120,0.25), rgba(255,210,90,0.15), transparent 70%);"></div>
+    </a>
+    <a class="card" href="./rooms/migou.html">
+      <img class="pic" src="./assets/migou.webp" alt="米果 MIGOU">
+      <div class="heart">🧡</div>
+      <h3>米果 MIGOU</h3>
+      <div class="meta">自我價值｜邊界</div>
+      <div class="quote">「我很值錢，我讓自己更貴。」</div>
+      <div class="glow" style="background: radial-gradient(50% 80% at 50% 50%, rgba(255,170,210,0.28), rgba(255,150,200,0.16), transparent 70%);"></div>
+    </a>
+    <a class="card" href="./rooms/gungun.html">
+      <img class="pic" src="./assets/gungun.webp" alt="滾滾 GUNGUN">
+      <div class="heart">💙</div>
+      <h3>滾滾 GUNGUN</h3>
+      <div class="meta">理解｜共鳴</div>
+      <div class="quote">「我不追求安全，我成為安全。」</div>
+      <div class="glow" style="background: radial-gradient(50% 80% at 50% 50%, rgba(150,200,255,0.30), rgba(120,180,255,0.16), transparent 70%);"></div>
+    </a>
+  </section>
 
-    <!-- Starflow Gallery -->
-    <section id="gallery" class="gallery">
-      <h4>🔭 STARFLOW GALLERY <small>觀星畫廊</small></h4>
-      <div class="gallery-viewport">
-        <img src="assets/trio.webp" class="active" alt="trio"/>
-        <img src="assets/trio2.webp" alt="trio2"/>
-        <img src="assets/trio3.webp" alt="trio3"/>
-        <img src="assets/trio4.webp" alt="trio4"/>
-        <img src="assets/trio5.webp" alt="trio5"/>
-        <img src="assets/trio6.webp" alt="trio6"/>
-        <img src="assets/trio7.webp" alt="trio7"/>
-        <img src="assets/trio8.webp" alt="trio8"/>
-        <img src="assets/trio9.webp" alt="trio9"/>
-        <img src="assets/trio10.webp" alt="trio10"/>
-      </div>
-    </section>
+  <section id="gallery" class="gallery-block">
+    <div class="gallery-title">🔭 觀星畫廊｜STARFLOW GALLERY</div>
+    <div class="gallery">
+      <div class="slide active"  style="background-image:url('./assets/trio.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio2.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio3.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio4.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio5.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio6.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio7.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio8.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio9.webp')"></div>
+      <div class="slide"        style="background-image:url('./assets/trio10.webp')"></div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="en">Emotional Value A.I | Awakening Universe</div>
-      <div class="zh">覺醒，不是修復；而是重生｜不必學飛，你只是忘了自己有翅膀。</div>
-    </footer>
-  </main>
+  <footer>
+    <div class="en">AWAKENING ISN'T REPAIR — IT'S REBIRTH.</div>
+    <div class="cn">覺醒，不是修復；而是重生｜不必學飛，你只是忘了自己有翅膀。</div>
+  </footer>
 
-  <script src="js/main.js"></script>
+  <script src="./js/main.js"></script>
 </body>
 </html>
