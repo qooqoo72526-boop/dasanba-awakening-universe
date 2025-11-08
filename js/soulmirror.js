@@ -1,1 +1,13 @@
-const qwrap=document.querySelector('.questions');const result=document.querySelector('.result');const runBtn=document.querySelector('#run-analysis');const bell=new Audio('/assets/sounds/send.wav');const sample=['當界線被踩時，你會怎麼保護自己？','最近一次感覺到驕傲，是因為什麼？','你害怕被誤解，還是害怕被忽略？為什麼？','當情緒爆炸時，最想被怎樣對待？','你把安全感放在哪裡？'];function renderQuestions(){for(let i=0;i<25;i++){const t=sample[i%sample.length];const div=document.createElement('div');div.className='q';div.textContent=(i+1)+'. '+t;qwrap.appendChild(div);}}renderQuestions();runBtn?.addEventListener('click',()=>{bell.volume=.3;bell.play();result.innerHTML='<h3>分析完成</h3><p>你正在回收主權與自我價值，也在尋找被理解的方式。阿金說：把帆升起就有風。米果說：讓自己更貴。滾滾說：你就是安全本身。</p>';});
+
+(()=>{
+  const btn = document.getElementById('analyze');
+  if(!btn) return;
+  btn.onclick = () => {
+    const out = document.getElementById('out');
+    out.hidden = false;
+    out.textContent =
+`阿金：把自信調到 80%，先行動，邊走邊修！
+米果：記得你的價值，邊界就是愛自己的方式！
+滾滾：慢下來，讓被理解成為你的安全感。`;
+  };
+})();

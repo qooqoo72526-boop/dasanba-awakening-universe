@@ -1,4 +1,39 @@
-const chatBox=document.querySelector('.chat');const inputEl=document.querySelector('#msg');const sendBtn=document.querySelector('#send');
-function bubble(who,text){const row=document.createElement('div');row.className='msg '+(who==='you'?'you':'them');const avatar=document.createElement('img');avatar.className='avatar '+(who==='ajin'?'ajin':who==='migou'?'migou':who==='gungun'?'gungun':'you');avatar.src=who==='you'?'/assets/icons/icon_you.png':who==='ajin'?'/assets/icons/icon_ajin.png':who==='migou'?'/assets/icons/icon_migou.png':'/assets/icons/icon_gungun.png';const b=document.createElement('div');b.className='bubble';b.textContent=text;if(who==='you'){row.appendChild(b);}else{row.appendChild(avatar);row.appendChild(b);}chatBox.appendChild(row);chatBox.scrollTop=chatBox.scrollHeight;const snd=who==='you'?new Audio('/assets/sounds/send.wav'):who==='ajin'?new Audio('/assets/sounds/ajin_reply.wav'):who==='migou'?new Audio('/assets/sounds/migou_reply.wav'):new Audio('/assets/sounds/gungun_reply.wav');snd.volume=.35;snd.play();}
-async function askBirds(text){for(const who of ['ajin','migou','gungun']){try{await fetch('/api/chat.js',{method:'POST',body:JSON.stringify({role:who,text})});const reply=who==='ajin'?'好，我來了。向前走。':who==='migou'?'先愛自己，然後設好界線。':'慢下來，聽聽心裡的聲音。';bubble(who,reply);await new Promise(r=>setTimeout(r,420));}catch(e){bubble(who,'(連線中…暫存回覆)');}}}
-sendBtn?.addEventListener('click',()=>{const text=inputEl.value.trim();if(!text)return;bubble('you',text);inputEl.value='';askBirds(text);});inputEl?.addEventListener('keydown',e=>{if(e.key==='Enter')sendBtn.click();});
+
+(()=>{
+  const rings = [
+    '0 0 0 3px rgba(255,230,120,.45), 0 0 16px rgba(255,230,120,.55)',
+    '0 0 0 3px rgba(255,150,180,.45), 0 0 16px rgba(255,150,180,.55)',
+    '0 0 0 3px rgba(120,200,255,.45), 0 0 16px rgba(120,200,255,.55)'
+  ];
+  const voices = [
+    (t)=>'收到，先動起來—一步一步，我陪你。',
+    (t)=>'聽到了，你的邊界很重要，先照顧自己。',
+    (t)=>'我在，慢慢來，讓被理解成為你的安全感。'
+  ];
+  let turn=0;
+  const chat = document.getElementById('chat');
+  const inp  = document.getElementById('inp');
+  const sendBtn = document.getElementById('send');
+  function addMsg(txt, me=false){
+    const wrap = document.createElement('div');
+    wrap.className = 'msg'+(me?' me':'');
+    if(!me){
+      const av = document.createElement('div');
+      av.className='avatar';
+      av.style.boxShadow = rings[turn%3];
+      wrap.appendChild(av);
+    }
+    const b = document.createElement('div');
+    b.className='bubble'; b.textContent = txt;
+    wrap.appendChild(b);
+    chat.insertBefore(wrap, chat.querySelector('.input'));
+    chat.scrollTop = chat.scrollHeight;
+  }
+  function send(){
+    const val = inp.value.trim(); if(!val) return;
+    addMsg(val,true); inp.value='';
+    setTimeout(()=>{ addMsg(voices[turn%3](val), false); turn++; }, 600);
+  }
+  if(sendBtn) sendBtn.onclick = send;
+  if(inp) inp.addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
+})();
