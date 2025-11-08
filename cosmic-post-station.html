@@ -1,44 +1,76 @@
+
 <!doctype html>
-<html lang="zh-Hant" data-page="cps">
+<html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>宇宙郵局 ✉️ | Awakening Universe</title>
-  <link rel="stylesheet" href="./css/universe.css" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>宇宙郵局 | Awakening Universe</title>
+<link href="/css/universe.css" rel="stylesheet"/>
+<style>
+.page{padding:90px 0 40px;display:grid;place-items:center;position:relative;z-index:1}
+.heading{text-align:center;margin-bottom:12px}
+.heading h2{font-family:"Orbitron";letter-spacing:.6px;font-weight:800;font-size:clamp(24px,4.4vw,40px);
+background:linear-gradient(180deg,#eaf2ff 0,#d9e8ff 40%,#bcd4ff 70%);-webkit-background-clip:text;color:transparent}
+.heading p{margin-top:6px;font-size:12px;opacity:.9;color:#dfe8ff}
+.center-chat{width:min(960px,92vw);padding:16px;border-radius:20px;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);
+box-shadow:0 0 0 1px rgba(255,255,255,.06) inset,0 10px 28px rgba(20,30,60,.26)}
+.msg{display:flex;gap:10px;align-items:flex-end;margin:10px 0}
+.msg .avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;box-shadow:0 0 10px rgba(180,210,255,.6)}
+.msg .bubble{max-width:72%;padding:12px 14px;border-radius:14px;background:rgba(240,245,255,.10);
+box-shadow:0 8px 26px rgba(20,30,60,.22) inset;animation:float 4s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.input{display:flex;gap:8px;margin-top:12px}
+.input input{flex:1;padding:12px 14px;border-radius:12px;border:none;outline:none;background:rgba(255,255,255,.08);color:#e9f1ff}
+.input button{padding:12px 16px;border-radius:12px;border:none;background:rgba(200,220,255,.18);color:#112;cursor:pointer}
+</style>
 </head>
-<body data-page="cps">
-  <canvas class="cosmos-layer" id="stars1"></canvas>
-  <canvas class="cosmos-layer-2" id="stars2"></canvas>
-  <nav class="sidebar">
-    <a class="dot" href="./index.html" title="Home" aria-label="Home">
-      <svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5M5 10.5V20h4v-5h6v5h4v-9.5"/></svg>
-    </a>
-    <div class="tail"></div>
-    <a class="dot" href="./cosmic-post-station.html" title="Post Station ✉️" aria-label="Post">
-      <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></svg>
-    </a>
-    <div class="tail"></div>
-    <a class="dot" href="./soulmirror.html" title="Soul Mirror 🪞" aria-label="Mirror">
-      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 1 6 6v2a6 6 0 1 1-12 0V9a6 6 0 0 1 6-6zM15 18l3 3M9 18l-3 3"/></svg>
-    </a>
-  </nav>
+<body>
+<div id="starfield"></div>
+<div id="meteors"></div>
 
-  <section class="title-block">
-    <h1 class="h1-main">Cosmic Post Station</h1>
-    <h2 class="h1-sub">Letters in the Universe</h2>
-    <div class="sub-cn">在宇宙裡聊天，讓心事漂浮成光。</div>
-  </section>
+<div class="toolbar">
+  <a class="toolbtn" href="/index.html" title="Home">
+    <svg viewBox="0 0 24 24"><path d="M3 11.5L12 4l9 7.5"/><path d="M6.5 10v9h11v-9"/></svg>
+  </a>
+  <a class="toolbtn" href="/cosmic-post-station.html" title="Cosmic Post">
+    <svg viewBox="0 0 24 24"><path d="M3.5 6.5h17v11h-17z"/><path d="M4 7l8 6 8-6"/></svg>
+  </a>
+  <a class="toolbtn" href="/soulmirror.html" title="Soul Mirror">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="5.5"/><path d="M7.5 15.5h9"/><path d="M9 18.5h6"/></svg>
+  </a>
+  <div class="toolbtn" title="Starflow">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M12 3v3"/><path d="M21 12h-3"/><path d="M12 21v-3"/><path d="M3 12h3"/></svg>
+  </div>
+</div>
 
-  <section class="chat-stage" id="chat">
-    <div class="msg"><div class="who">阿金 AJIN</div><div class="text">今天想說什麼？我聽你說，然後一起想辦法。</div></div>
-    <div class="msg"><div class="who">米果 MIGOU</div><div class="text">把心放回自己身上，句號也可以是起點。</div></div>
-    <div class="msg"><div class="who">滾滾 GUNGUN</div><div class="text">我在—慢慢來沒關係，我會在你身邊。</div></div>
-  </section>
-
-  <footer>
-    <div class="en">COSMIC POST STATION</div>
-    <div class="cn">我們在宇宙裡回你。</div>
-  </footer>
-  <script src="./js/main.js"></script>
+<section class="page">
+  <div class="heading">
+    <h2>宇宙郵局 ✉️</h2>
+    <p>把心事交給宇宙，讓三隻靈魂鳥一個接著一個回你。</p>
+  </div>
+  <div class="center-chat">
+    <div class="msg">
+      <img class="avatar" src="/assets/icon_you.png" alt="YOU"/>
+      <div class="bubble">（這裡會顯示你的訊息...）</div>
+    </div>
+    <div class="msg">
+      <img class="avatar" src="/assets/icon_ajin.png" alt="AJIN"/>
+      <div class="bubble">我聽到了，先呼吸一下，等等我們一起拆開它。</div>
+    </div>
+    <div class="msg">
+      <img class="avatar" src="/assets/icon_migou.png" alt="MIGOU"/>
+      <div class="bubble">先把自己放到第一順位，然後慢慢來。</div>
+    </div>
+    <div class="msg">
+      <img class="avatar" src="/assets/icon_gungun.png" alt="GUNGUN"/>
+      <div class="bubble">我在這裡，別擔心，我陪你。</div>
+    </div>
+    <div class="input">
+      <input placeholder="跟宇宙說點什麼..." />
+      <button>送出</button>
+    </div>
+  </div>
+</section>
+<script src="/js/main.js"></script>
 </body>
 </html>
