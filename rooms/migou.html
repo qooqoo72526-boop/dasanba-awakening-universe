@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MIGOU | Awakening Universe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/universe.css">
+  <style>
+    body::before{ filter: saturate(108%) contrast(104%); }
+    .room-wrap{ width:min(1080px, 92vw); margin: 12vh auto 8vh; text-align:center; }
+    .room-title{ font-family: 'Orbitron', sans-serif; letter-spacing:.08em;
+      background: linear-gradient(180deg,#ffffff,#e1ecff 65%,#b8d4ff);
+      -webkit-background-clip:text; background-clip:text; color:transparent; 
+      font-size:clamp(24px, 4.8vw, 40px); margin:0 0 12px;
+    }
+    .video-wrap{ position:relative; margin:0 auto; max-width:520px; }
+    .video-wrap::before{
+      content:''; position:absolute; inset:-14px -12px -18px -12px;
+      background:radial-gradient(520px 200px at 50% 0%, rgba(220,235,255,.5), transparent 70%);
+      filter:blur(16px);
+    }
+    video{ width:100%; border-radius:14px; object-fit:contain; max-height:56vh; }
+  </style>
+</head>
+<body data-universe="migou">
+  <canvas id="starfield"></canvas>
+  <canvas id="meteors"></canvas>
+  <nav class="side-nav">
+    <a class="nav-item" href="/index.html"><svg class="icon-line" viewBox="0 0 24 24"><path d="M3 11 L12 4 L21 11" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10 V20 H18 V10" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Home</span></a>
+    <a class="nav-item" href="/cosmic-post-station.html"><svg class="icon-line" viewBox="0 0 24 24"><path d="M3 6 H21 V18 H3 Z M3 6 L12 12 L21 6" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Post</span></a>
+    <a class="nav-item" href="/soulmirror.html"><svg class="icon-line" viewBox="0 0 24 24"><ellipse cx="12" cy="10" rx="6" ry="8" fill="none" stroke-width="1.5"/><path d="M12 18 V22" fill="none" stroke-width="1.5" stroke-linecap="round"/></svg><span>Mirror</span></a>
+    <a class="nav-item" href="/index.html#gallery"><svg class="icon-line" viewBox="0 0 24 24"><path d="M12 2 L14.5 8.5 L21 9 L16 13 L17.5 20 L12 16.5 L6.5 20 L8 13 L3 9 L9.5 8.5 Z" fill="none" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Gallery</span></a>
+  </nav>
+
+  <div class="room-wrap">
+    <h1 class="room-title">MIGOU 星艦</h1>
+    <div class="video-wrap">
+      <video src="/assets/migou_5s.mp4" autoplay muted loop playsinline></video>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

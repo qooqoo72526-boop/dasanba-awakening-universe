@@ -1,83 +1,136 @@
-/* Base unchanged */
+
 :root{
-  --silver: rgba(240,248,255,.92);
-  --silver-soft: rgba(240,248,255,.85);
+  --bg-top: #eef4fb;
+  --bg-mid: #dbe6f7;
+  --bg-bottom: #c2d2ec;
+  --silver: rgba(240,245,255,0.92);
+  --silver-weak: rgba(240,245,255,0.75);
+  --text-en: 'Orbitron', system-ui, -apple-system, sans-serif;
+  --text-zh: 'Noto Sans TC', system-ui, -apple-system, sans-serif;
 }
+
 *{box-sizing:border-box}
-html,body{height:100%}
-body{font-family:'Noto Sans TC',system-ui,sans-serif;background:#0e2447;color:var(--silver);overflow-x:hidden;margin:0}
-#stars,#meteors{position:fixed;inset:0;z-index:0;display:block}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+html,body{height:100%;margin:0;background:transparent;color:#f2f6ff}
+body{ font-family:var(--text-zh); overflow-x:hidden; }
+
+/* 背景漸層（無邊界） */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-3;
   background:
-    radial-gradient(28% 24% at 20% 6%, rgba(255,255,255,.15), transparent 60%),
-    linear-gradient(180deg, rgba(10,20,40,.0) 0%, rgba(10,26,52,.85) 38%, rgba(6,18,42,.95) 100%);
+    radial-gradient(1000px 600px at 50% -10%, rgba(255,255,255,0.9), transparent 60%),
+    radial-gradient(900px 540px at 18% 22%, rgba(188,205,240,0.55), transparent 70%),
+    radial-gradient(900px 560px at 82% 34%, rgba(180,210,255,0.45), transparent 70%),
+    linear-gradient(180deg, var(--bg-top), var(--bg-mid) 58%, var(--bg-bottom));
 }
 
-/* Toolbox — constellation line style, no border feel */
-.toolbox{position:fixed;top:96px;left:24px;z-index:9;display:flex;gap:12px;padding:8px 10px;border-radius:14px;
-  background:rgba(255,255,255,.04);backdrop-filter:blur(12px)}
-.toolbox::before{content:"";position:absolute;inset:0;border-radius:14px;
-  background:radial-gradient(80% 80% at 20% 20%, rgba(255,255,255,.08), transparent 70%);opacity:.35;pointer-events:none}
-.tool{display:flex;align-items:center;gap:8px;padding:6px 10px;color:var(--silver);text-decoration:none}
-.tool svg{width:18px;height:18px;stroke:var(--silver);fill:none;stroke-width:1.2;opacity:.95}
-.tool span{font-size:12px;letter-spacing:.06em}
-.tool:hover{color:white}
-.tool:hover svg{filter:drop-shadow(0 0 6px rgba(160,210,255,.9))}
+/* 星海層 */
+#starfield, #meteors{ position:fixed; inset:0; z-index:-2; pointer-events:none; }
 
-/* Titles (colors unchanged) */
-.title-wrap{text-align:center;margin:12px auto 10px}
-.main-title{font-family:'Orbitron',sans-serif;margin:0;line-height:1}
-.main-title.line1{font-weight:700;font-size:clamp(30px,4vw,56px);
-  background:linear-gradient(180deg,#ffffff,#b7d4ff 85%);-webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 4px 30px rgba(150,200,255,.25)}
-.main-title.line2{font-weight:700;font-size:clamp(28px,3.6vw,48px);
-  background:linear-gradient(180deg,#ffffff 0%,#cfe4ff 50%,#8db8ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 4px 20px rgba(150,200,255,.25))}
-.sub-title{display:inline-block;margin-top:10px;font-size:14px;color:var(--silver-soft);opacity:.92}
-.sub-title .earth{filter:drop-shadow(0 0 6px rgba(120,200,255,.9));animation:earth 2.6s ease-in-out infinite}
-@keyframes earth{0%,100%{filter:drop-shadow(0 0 4px rgba(120,200,255,.6))}50%{filter:drop-shadow(0 0 9px rgba(160,220,255,1))}}
+/* 左側工具列（線條/無框/細字） */
+.side-nav{
+  position:fixed; left:16px; top:12vh; z-index:20;
+  display:flex; flex-direction:column; gap:14px;
+  backdrop-filter: blur(8px) saturate(120%);
+}
+.side-nav .nav-item{
+  display:flex; align-items:center; gap:8px;
+  padding:8px 10px; border-radius:999px;
+  text-decoration:none; color:rgba(240,245,255,.92);
+  font-family:var(--text-en); font-weight:400; letter-spacing:1px;
+  font-size:11px; opacity:.9;
+  transition:transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+}
+.side-nav .nav-item:hover{
+  transform:translateY(-1px);
+  box-shadow:0 0 14px 2px rgba(210,230,255,.35);
+  opacity:1;
+}
+.icon-line{ width:18px; height:18px; stroke:rgba(230,240,255,.9); }
 
-/* Micro flash for subtitle, gallery, footer */
-.micro-flash{animation:micro 6s ease-in-out infinite}
-@keyframes micro{0%,100%{opacity:.92}50%{opacity:1}}
+/* 主區塊 */
+main{ width:min(1160px, 92vw); margin:0 auto; }
 
-/* Hero video */
-.hero{max-width:1100px;margin:120px auto 12px;position:relative}
-.hero-video{width:100%;height:auto;display:block;outline:0;border-radius:18px}
-.hero::after{content:"";position:absolute;left:50%;translate:-50% 0;width:min(1100px,86vw);height:60px;margin-top:-40px;
-  background:radial-gradient(60% 60% at 50% 0%,rgba(255,255,255,.2),transparent 70%);pointer-events:none;filter:blur(8px)}
+/* 上方影片 */
+.hero-video{ position:relative; margin:9vh auto 2.5rem; width:100%; }
+.hero-video .video-glow{
+  position:absolute; inset:-18px -10px -26px -10px; z-index:0;
+  background:radial-gradient(600px 280px at 50% 0%, rgba(220,235,255,.55), transparent 70%);
+  filter: blur(18px);
+}
+.hero-video video{
+  position:relative; z-index:1; display:block; width:100%; max-height:38vh;
+  object-fit:contain; border:none; outline:none; border-radius:18px;
+}
 
-/* Cards */
-.cards{max-width:1180px;margin:24px auto 18px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.card-bird{position:relative;padding:16px;border-radius:16px;background:rgba(255,255,255,.10);backdrop-filter:blur(10px);
-  box-shadow:0 6px 40px rgba(0,0,0,.24) inset, 0 10px 24px rgba(10,30,60,.35);text-decoration:none;color:var(--silver);
-  transform:translateY(0);transition:transform .35s ease, box-shadow .35s ease, background .35s ease}
-.card-bird:hover{transform:translateY(-6px);box-shadow:0 10px 54px rgba(0,0,0,.35),0 0 0 1px rgba(180,210,255,.08) inset}
-.card-bird .glow{position:absolute;inset:-6px;border-radius:18px;filter:blur(16px);opacity:.45;z-index:0}
-.glow-ajin{background:radial-gradient(circle,rgba(255,233,120,.65),rgba(255,213,90,0))}
-.glow-migou{background:radial-gradient(circle,rgba(255,185,175,.55),rgba(170,150,255,0))}
-.glow-gungun{background:radial-gradient(circle,rgba(120,190,255,.55),rgba(140,200,255,0))}
-.card-photo{position:relative;z-index:1;width:100%;aspect-ratio:3/4;border-radius:12px;overflow:hidden;background:#eef;background-size:cover;background-position:center}
-.named{text-align:center;font-weight:600;margin-top:10px}
-.meta{text-align:center;font-size:13px;color:rgba(220,235,255,.95)}
-.quote{text-align:center;font-size:12px;color:rgba(220,235,255,.85);margin-top:6px}
-.heart{display:inline-block;transform-origin:center;animation:heartbeat 1.8s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(255,255,255,.35))}
-@keyframes heartbeat{0%,100%{transform:scale(1)}25%{transform:scale(1.12)}50%{transform:scale(1)}}
+/* 標題 */
+.titles{ text-align:center; margin:0 auto 1.2rem; }
+.title-line{
+  margin:0; line-height:1.06;
+  font-family:var(--text-en); font-weight:700; letter-spacing:0.06em;
+}
+.title-line.line-1{
+  font-size: clamp(28px, 5.4vw, 56px);
+  background: linear-gradient(180deg, #f7fbff, #eaf2ff 60%, #cfe4ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter: drop-shadow(0 2px 10px rgba(200,220,255,.45));
+}
+.title-line.line-2{
+  font-size: clamp(26px, 5.0vw, 50px);
+  background: linear-gradient(180deg, #ffffff, #e0efff 65%, #b8d4ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter: drop-shadow(0 2px 10px rgba(170,200,255,.4));
+}
+.subtitle{
+  margin:.6rem 0 0; font-size:clamp(11px, 1.9vw, 14px);
+  color:var(--silver-weak); letter-spacing:.06em;
+  display:flex; justify-content:center; align-items:center; gap:.5ch;
+}
+.subtitle .globe{ animation:globePulse 2.8s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(170,210,255,.6)); }
+@keyframes globePulse{ 0%,100%{ opacity:.65; transform:scale(.98)} 50%{ opacity:1; transform:scale(1.04)} }
 
-/* Gallery (text micro flash via class) */
-.gallery{position:relative;max-width:1180px;margin:42px auto 14px;padding:4px}
-.gallery-title{text-align:center;font-weight:600;letter-spacing:.06em;margin-bottom:10px}
-.gallery-viewport{position:relative;overflow:hidden;border-radius:14px}
-.gallery-track{display:flex;gap:10px;align-items:center;transition:transform .6s ease}
-.gallery-track img{width:100%;max-height:clamp(230px,32vw,360px);object-fit:contain;background:rgba(255,255,255,.06);border-radius:12px;display:block}
+/* 卡片 */
+.cards{ margin: 2.2rem auto 2.6rem; display:grid; grid-template-columns:repeat(3, 1fr); gap:min(3vw,20px); }
+.bird-card{
+  position:relative; padding:14px 14px 16px; border-radius:18px;
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(8px) saturate(130%);
+  overflow:hidden; cursor:pointer;
+  transform: translateZ(0); transition: transform .25s ease, box-shadow .25s ease;
+}
+.bird-card::before{
+  content:""; position:absolute; inset:-10% -5% auto -5%; height:48%;
+  filter: blur(28px); opacity:.9; z-index:0; pointer-events:none;
+  background: radial-gradient(60% 88% at 50% 85%, rgba(255,230,160,.85), transparent 70%);
+}
+.bird-card[data-bird="migou"]::before{ background: radial-gradient(60% 88% at 50% 85%, rgba(255,190,220,.88), transparent 70%); }
+.bird-card[data-bird="gungun"]::before{ background: radial-gradient(60% 88% at 50% 85%, rgba(170,200,255,.88), transparent 70%); }
+.bird-card:hover{ transform:translateY(-6px); box-shadow: 0 10px 28px rgba(150,180,240,.25); }
 
-/* Footer */
-.footer-dual{text-align:center;margin:60px auto 80px;line-height:1.6}
-.footer-dual .quote-en{font-family:'Orbitron',sans-serif;font-weight:600;font-size:14px;color:var(--silver);opacity:.92}
-.footer-dual .quote-zh{font-size:13px;color:var(--silver-soft);opacity:.9}
+.card-media{ aspect-ratio:3/4; border-radius:14px; overflow:hidden; position:relative; z-index:1;
+  background: radial-gradient(120% 70% at 50% 0%, rgba(230,240,255,.35), transparent 70%); }
+.card-media img{ width:100%; height:100%; object-fit:contain; display:block; image-rendering:auto; }
+.card-text{ text-align:center; position:relative; z-index:1; padding-top:10px; }
+.card-text .name{ margin:.4rem 0 0; font-family:var(--text-zh); font-weight:700; letter-spacing:.02em; font-size:clamp(14px, 2.2vw, 16px); color:var(--silver); }
+.card-text .name .heart{ display:inline-block; animation: heartbeat 2.6s infinite; transform-origin:center; }
+@keyframes heartbeat{ 0%,100%{ transform:scale(1);} 15%{ transform:scale(1.16);} 30%{ transform:scale(1.0);} 45%{ transform:scale(1.12);} }
+.card-text .traits{ margin:.2rem 0 0; font-size:clamp(12px, 2vw, 14px); color:rgba(245,248,255,.85); }
+.card-text .quote{ margin:.25rem 0 0; font-size:clamp(11px, 1.8vw, 13px); color:rgba(240,245,255,.8); }
 
-@media (max-width:980px){
-  .cards{grid-template-columns:1fr;max-width:540px}
-  .toolbox{top:12px;left:50%;transform:translateX(-50%)}
-  .hero{margin-top:80px}
+/* 觀星畫廊 */
+.gallery{ margin: 1.6rem auto 2.6rem; }
+.gallery-title{ text-align:center; margin:0 0 .8rem; font-weight:600; font-family:var(--text-zh); font-size:clamp(12px, 2.2vw, 14px); letter-spacing:.08em; color:var(--silver-weak);
+  text-shadow: 0 0 10px rgba(180,200,245,.4); }
+.gallery-frame{ position:relative; width:100%; max-height:46vh; overflow:hidden; border-radius:18px; background: radial-gradient(120% 70% at 50% 0%, rgba(235,245,255,.25), transparent 70%); }
+.gallery-slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transition:opacity .8s ease; }
+.gallery-slide.show{ opacity:1; }
+
+/* 頁尾 */
+.site-footer{ text-align:center; margin: 2.4rem 0 4.4rem; }
+.foot-en{ font-family:var(--text-en); letter-spacing:.12em; font-size: clamp(11px, 1.9vw, 13px); color:var(--silver-weak); }
+.foot-zh{ margin:.25rem 0 0; font-size: clamp(11px, 1.8vw, 13px); color:var(--silver-weak); }
+
+@media (max-width: 960px){
+  .cards{ grid-template-columns:1fr; gap:16px; }
+  .side-nav{ left:10px; top:12vh; }
+  .hero-video video{ max-height:34vh; }
 }

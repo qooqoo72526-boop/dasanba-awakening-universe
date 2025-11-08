@@ -1,56 +1,74 @@
-// stars + meteors
-const stars = document.getElementById('stars');
-const meteors = document.getElementById('meteors');
-function resizeCanvas(c){ c.width = window.innerWidth; c.height = window.innerHeight; }
-[stars, meteors].forEach(resizeCanvas);
-const sctx = stars.getContext('2d');
-const mctx = meteors.getContext('2d');
 
-let starField = [];
-function initStars(){
-  starField = [];
-  const count = Math.min(220, Math.floor(window.innerWidth/6));
-  for(let i=0;i<count;i++){
-    starField.push({ x: Math.random()*stars.width, y: Math.random()*stars.height, r: Math.random()*1.3+0.3, p: Math.random()*Math.PI*2, s: Math.random()*0.8+0.2 });
+(function(){
+  const starCanvas = document.getElementById('starfield');
+  const meteorCanvas = document.getElementById('meteors');
+  if(!starCanvas || !meteorCanvas) return;
+  const sctx = starCanvas.getContext('2d');
+  const mctx = meteorCanvas.getContext('2d');
+
+  function fitCanvas(c){
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const w = innerWidth, h = innerHeight;
+    c.width = Math.floor(w*dpr); c.height = Math.floor(h*dpr);
+    c.style.width = w+'px'; c.style.height = h+'px';
+    c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);
   }
-}
-function drawStars(t){
-  sctx.clearRect(0,0,stars.width,stars.height);
-  starField.forEach(st=>{
-    const flicker = 0.6 + 0.4*Math.sin(st.p + t*st.s*0.001);
-    sctx.fillStyle = `rgba(240,248,255,${flicker})`;
-    sctx.beginPath(); sctx.arc(st.x, st.y, st.r, 0, Math.PI*2); sctx.fill();
-  });
-}
-let meteor=null, lastMeteor=0;
-function spawnMeteor(){
-  const now = performance.now();
-  if(now - lastMeteor < 2500) return;
-  lastMeteor = now;
-  const dir = Math.random()<0.5 ? -1 : 1;
-  meteor = { x: dir<0 ? meteors.width+80 : -80, y: Math.random()*meteors.height*0.5 + 20, vx: (2.2 + Math.random()*1.5)*dir, vy: 0.8 + Math.random()*1.2 };
-}
-function drawMeteor(){
-  mctx.clearRect(0,0,meteors.width,meteors.height);
-  if(!meteor) return;
-  meteor.x += meteor.vx; meteor.y += meteor.vy;
-  const trail = 120;
-  const g = mctx.createLinearGradient(meteor.x, meteor.y, meteor.x - meteor.vx*trail, meteor.y - meteor.vy*trail);
-  g.addColorStop(0, 'rgba(200,230,255,1)'); g.addColorStop(1, 'rgba(200,230,255,0)');
-  mctx.strokeStyle = g; mctx.lineWidth = 2;
-  mctx.beginPath(); mctx.moveTo(meteor.x - meteor.vx*trail, meteor.y - meteor.vy*trail); mctx.lineTo(meteor.x, meteor.y); mctx.stroke();
-  if(meteor.x < -200 || meteor.x > meteors.width+200 || meteor.y > meteors.height+200){ meteor=null; }
-}
-function tick(t){ drawStars(t); drawMeteor(); if(Math.random()<0.01) spawnMeteor(); requestAnimationFrame(tick); }
-initStars(); requestAnimationFrame(tick);
-window.addEventListener('resize', ()=>{ [stars, meteors].forEach(resizeCanvas); initStars(); });
 
-// gallery auto slide
-const track = document.querySelector('.gallery-track');
-if(track){
-  const imgs = [...track.querySelectorAll('img')];
-  let idx = 0;
-  function layout(){ track.style.transform = `translateX(${(-idx)*100}%)`; track.style.width = `${imgs.length*100}%`; imgs.forEach(img => img.style.width = `${100/imgs.length}%`); }
-  layout();
-  setInterval(()=>{ idx = (idx + 1) % imgs.length; layout(); }, 3000);
-}
+  let stars = [];
+  function makeStars(){
+    stars = [];
+    const count = Math.floor((innerWidth*innerHeight)/14000)+80;
+    for(let i=0;i<count;i++){
+      stars.push({ x:Math.random()*innerWidth, y:Math.random()*innerHeight, r:Math.random()*1.2+.3, a:Math.random()*.6+.3, tw:Math.random()*2.5+1.2 });
+    }
+  }
+  function drawStars(t){
+    sctx.clearRect(0,0,starCanvas.width,starCanvas.height);
+    for(const s of stars){
+      const pulse = (Math.sin(t/1000*s.tw + s.x*.01)+1)/2;
+      const alpha = s.a*.7 + pulse*.3;
+      sctx.fillStyle = `rgba(235,244,255,${alpha})`;
+      sctx.beginPath(); sctx.arc(s.x, s.y, s.r, 0, Math.PI*2); sctx.fill();
+    }
+  }
+
+  let meteors = [];
+  function spawnMeteor(){
+    const edges = ['top','left','right'];
+    const edge = edges[Math.floor(Math.random()*edges.length)];
+    let x,y,vx,vy;
+    const speed = Math.random()*2+2.0;
+    const ang = (Math.random()*.6+.2) * (Math.random()<.5?1:-1);
+    if(edge==='top'){ x=Math.random()*innerWidth; y=-20; vx=Math.sin(ang)*speed; vy=speed; }
+    else if(edge==='left'){ x=-20; y=Math.random()*innerHeight*.7; vx=speed; vy=Math.sin(ang)*speed; }
+    else { x=innerWidth+20; y=Math.random()*innerHeight*.7; vx=-speed; vy=Math.sin(-ang)*speed; }
+    meteors.push({x,y,vx,vy,life:0,maxLife:Math.random()*900+700, paused:Math.random()<.25, pauseT:Math.random()*420+260});
+  }
+  function drawMeteors(dt){
+    mctx.clearRect(0,0,meteorCanvas.width,meteorCanvas.height);
+    for(const m of meteors){
+      if(m.paused && m.life < m.pauseT){
+        mctx.strokeStyle='rgba(210,230,255,.85)'; mctx.lineWidth=1.2;
+        mctx.beginPath(); mctx.moveTo(m.x-6,m.y-6); mctx.lineTo(m.x+6,m.y+6); mctx.stroke();
+        m.life+=dt; continue;
+      }
+      m.x+=m.vx; m.y+=m.vy; m.life+=dt;
+      mctx.strokeStyle='rgba(210,230,255,.85)'; mctx.lineWidth=1.2;
+      mctx.beginPath(); mctx.moveTo(m.x, m.y); mctx.lineTo(m.x-m.vx*10, m.y-m.vy*10); mctx.stroke();
+    }
+    meteors = meteors.filter(m=> m.life<m.maxLife && m.x>-50 && m.x<innerWidth+50 && m.y>-50 && m.y<innerHeight+50);
+  }
+
+  function loop(t){ drawStars(t); drawMeteors(16); requestAnimationFrame(loop); }
+  function schedule(){ setTimeout(()=>{ spawnMeteor(); schedule(); }, Math.random()*2000+1000); }
+  function onResize(){ fitCanvas(starCanvas); fitCanvas(meteorCanvas); makeStars(); }
+  onResize(); addEventListener('resize', onResize); schedule(); requestAnimationFrame(loop);
+})();
+
+/* 觀星畫廊 */
+(function(){
+  const slides = Array.from(document.querySelectorAll('.gallery-slide'));
+  if(!slides.length) return;
+  let i=0; function show(n){ slides.forEach((el,idx)=> el.classList.toggle('show', idx===n)); }
+  show(0); setInterval(()=>{ i=(i+1)%slides.length; show(i); }, 3000);
+})();
