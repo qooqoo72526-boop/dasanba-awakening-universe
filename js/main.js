@@ -1,73 +1,41 @@
-
-// Starfield + meteors (3–5s irregular) + gallery crossfade
-(()=>{
-  const cvs = document.getElementById('starfield');
-  if(!cvs) return;
-  const ctx = cvs.getContext('2d',{alpha:true});
-  let W=0,H=0,stars=[],meteors=[];
-  const resize=()=>{ W=cvs.width=innerWidth; H=cvs.height=innerHeight; };
-  addEventListener('resize', resize); resize();
-  const seed=(nmul=1.4)=>{
-    const n = Math.min(420, Math.floor((W*H/8000)*nmul)); // bright mode
-    stars = Array.from({length:n},()=>({ x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.2+0.2, t:Math.random()*Math.PI*2, s:Math.random()*0.8+0.4 }));
-  };
-  seed();
-  const spawnMeteor=()=>{
-    const delay = 3000 + Math.random()*2000; // 3–5s
-    setTimeout(()=>{
-      const y = Math.random()*H*0.85 + 10;
-      meteors.push({ x: -120, y, vx: Math.random()*6+5, life: 0, max: 100 });
-      spawnMeteor();
-    }, delay);
-  };
-  spawnMeteor();
-  const loop=()=>{
-    ctx.clearRect(0,0,W,H);
-    for(const p of stars){
-      p.t += 0.02*p.s;
-      const o = 0.45 + Math.sin(p.t)*0.35;
-      ctx.fillStyle = `rgba(255,255,255,${0.35+o*0.5})`;
-      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
-    }
-    for(const m of meteors){
-      m.life++; m.x += m.vx;
-      const len = 160;
-      const grad = ctx.createLinearGradient(m.x-len,m.y,m.x,m.y);
-      grad.addColorStop(0,'rgba(255,255,255,0)');
-      grad.addColorStop(1,'rgba(210,235,255,.95)');
-      ctx.strokeStyle = grad; ctx.lineWidth = 1.25;
-      ctx.beginPath(); ctx.moveTo(m.x-len,m.y); ctx.lineTo(m.x,m.y); ctx.stroke();
-    }
-    meteors = meteors.filter(m => m.life < m.max && m.x < W+200);
-    requestAnimationFrame(loop);
-  };
-  loop();
-})();
-
-// Gallery crossfade (trio.webp ~ trio10.webp)
-(()=>{
-  const g = document.querySelector('.gallery-viewport');
-  if(!g) return;
-  const imgs = Array.from(g.querySelectorAll('img'));
-  let i=0; if(imgs[0]) imgs[0].classList.add('active');
-  setInterval(()=>{
-    const prev = imgs[i]; i=(i+1)%imgs.length; const next = imgs[i];
-    if(prev) prev.classList.remove('active');
-    if(next) next.classList.add('active');
-  }, 3000);
-})();
-
-// v9.1.9 EG: Starflow gallery auto 3s
+// Starflow Gallery: 3s auto, single active
 (function(){
   const box = document.querySelector('.gallery-viewport');
   if(!box) return;
   const imgs = Array.from(box.querySelectorAll('img'));
-  if(!imgs.length) return;
-  let i = imgs.findIndex(im => im.classList.contains('active'));
-  if(i < 0){ i = 0; imgs[0].classList.add('active'); }
-  setInterval(() => {
+  let i = 0;
+  imgs.forEach((im, idx)=> im.classList.toggle('active', idx===0));
+  setInterval(()=>{
     imgs[i].classList.remove('active');
-    i = (i + 1) % imgs.length;
+    i = (i+1)%imgs.length;
     imgs[i].classList.add('active');
   }, 3000);
+})();
+
+// Meteors: random 3-7s from random edge, occasional pause flash
+(function(){
+  const layer = document.getElementById('meteor-layer');
+  if(!layer) return;
+  function launch(){
+    const m = document.createElement('div');
+    m.className = 'meteor';
+    const side = Math.random();
+    let x, y, dx, dy;
+    if(side < .33){ x = -120; y = Math.random()*window.innerHeight*0.6; dx = window.innerWidth+240; dy = Math.random()*window.innerHeight*0.4; }
+    else if(side < .66){ x = Math.random()*window.innerWidth*0.6; y = -40; dx = Math.random()*window.innerWidth*0.4; dy = window.innerHeight+120; }
+    else { x = window.innerWidth+120; y = Math.random()*window.innerHeight*0.6; dx = -window.innerWidth-240; dy = Math.random()*window.innerHeight*0.4; }
+    m.style.left = x+'px'; m.style.top = y+'px'; m.style.opacity = '1';
+    layer.appendChild(m);
+    const t = 1200 + Math.random()*800;
+    m.animate([{transform:`translate(0,0)`},{transform:`translate(${dx}px,${dy}px)`}], {duration:t, easing:'ease-out'}).onfinish = ()=>{
+      m.remove();
+    };
+    // occasional pause flash
+    if(Math.random()<0.25){
+      m.style.boxShadow = '0 0 12px rgba(255,255,255,.9)';
+      setTimeout(()=>{ m.style.boxShadow=''; }, 200);
+    }
+    setTimeout(launch, 3000 + Math.random()*4000);
+  }
+  setTimeout(launch, 1000);
 })();

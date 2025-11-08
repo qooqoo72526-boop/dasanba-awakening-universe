@@ -1,55 +1,79 @@
-<!DOCTYPE html>
-<html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cosmic Post Station</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./css/style.css">
-<link rel="stylesheet" href="./css/universe.css">
-<link rel="stylesheet" href="./css/cps.css">
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>宇宙郵局 ✉️ | Cosmic Post Station</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/universe.css"/>
+  <style>
+    body.cosmic-silverblue{
+      background:
+        radial-gradient(circle at 30% 20%, rgba(230,245,255,.18) 0%, rgba(150,190,245,.22) 35%, rgba(110,150,220,.28) 60%, rgba(60,100,180,.38) 100%),
+        linear-gradient(180deg, rgba(90,130,205,.18) 0%, rgba(50,96,178,.28) 55%, rgba(28,72,142,.40) 100%);
+    }
+    .floating-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
+    .floating-bg img{ position:absolute; opacity:.22; filter: drop-shadow(0 10px 30px rgba(200,220,255,.35)); }
+    .chat-wrap{ max-width:780px; margin: 60px auto 40px; padding:16px; }
+    h1{ text-align:center; margin:0 0 12px; font: 600 24px/1.2 'Orbitron'; letter-spacing:.18em;
+      color: rgba(235,245,255,.96); text-shadow: 0 0 16px rgba(210,235,255,.38); }
+    .slogan{ text-align:center; font: 500 13px/1.6 'Noto Sans TC'; opacity:.9; margin-bottom:18px;}
+    .chat{ background: rgba(255,255,255,.06); border-radius:18px; backdrop-filter:blur(12px);
+      padding:14px; box-shadow: 0 14px 50px rgba(90,120,200,.35); }
+    .bubble{ display:flex; gap:10px; align-items:flex-end; margin:8px auto; width:86%; }
+    .bubble .avatar{ width:36px; height:36px; border-radius:50%; background: rgba(255,255,255,.18); overflow:hidden;
+      box-shadow: 0 0 14px rgba(220,235,255,.55); }
+    .bubble .avatar img{ width:100%; height:100%; object-fit:cover; }
+    .bubble .msg{ flex:1; padding:10px 12px; border-radius:14px; background: rgba(255,255,255,.08);
+      backdrop-filter: blur(10px); box-shadow: 0 6px 30px rgba(120,160,220,.25); animation: speak .35s ease; }
+    @keyframes speak{ from{ transform: translateY(6px); opacity:0 } to{ transform: translateY(0); opacity:1 } }
+    .bubble.you{ flex-direction:row-reverse; }
+    .bubble.you .msg{ background: rgba(255,255,255,.12); }
+    .input-row{ display:flex; gap:10px; margin-top:12px; }
+    .input-row input{ flex:1; padding:12px 14px; border-radius:12px; border:none; outline:none; background: rgba(255,255,255,.10);
+      color: #eef4ff; font: 500 14px/1.4 'Noto Sans TC'; }
+    .input-row button{ padding:12px 16px; border:none; border-radius:12px; background: rgba(200,225,255,.2);
+      color:#f5fbff; font:600 12px 'Orbitron'; letter-spacing:.16em; cursor:pointer; }
+  </style>
 </head>
-<body data-universe="post">
-<canvas id="starfield"></canvas>
-
-<nav class="toolbox">
-  <a class="tool" href="./index.html" aria-label="Home">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5l9-7 9 7M6 10v10h12V10"/></svg>
-    <span>Home</span>
-  </a>
-  <a class="tool" href="./cosmic-post-station.html" aria-label="Post">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
-    <span>Post</span>
-  </a>
-  <a class="tool" href="./soulmirror.html" aria-label="Mirror">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10v17H7zM9.5 8l5 7"/></svg>
-    <span>Mirror</span>
-  </a>
-  <a class="tool" href="#gallery" aria-label="Gallery">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M3 11l6-3 2 4-6 3zM11 8l8-4 2 4-8 4zM12 14v6M9 20h6"/>
-    </svg>
-    <span>Gallery</span>
-  </a>
-</nav>
-
-
-<div class="post-wrap">
-  <div class="post-bg">
-    <div class="ph" style="background:url('./assets/trio_post1.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/trio_post2.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/ajin_post.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/migou_post.webp') center/cover"></div>
-    <div class="ph" style="background:url('./assets/gungun_post.webp') center/cover"></div>
+<body class="cosmic-silverblue">
+  <div class="cosmic-stars"></div>
+  <div class="meteor-layer" id="meteor-layer"></div>
+  <!-- floating photos: 3 portrait + 2 landscape -->
+  <div class="floating-bg">
+    <img src="assets/ajin_post.webp" style="top:10%; left:6%; width:180px">
+    <img src="assets/migou_post.webp" style="bottom:12%; right:8%; width:160px">
+    <img src="assets/gungun_post.webp" style="top:22%; right:12%; width:170px">
+    <img src="assets/trio_post1.webp" style="bottom:14%; left:18%; width:280px">
+    <img src="assets/trio_post2.webp" style="top:60%; left:60%; width:260px">
   </div>
-  <div class="chat" id="chat">
-    <div class="msg"><div class="avatar" style="box-shadow:0 0 0 3px rgba(255,230,120,.45), 0 0 16px rgba(255,230,120,.55)"></div>
-      <div class="bubble">我先開個話題，今天心情怎樣？</div></div>
-    <div class="input">
-      <input id="inp" placeholder="寫下你想說的話…（按 Enter 送出）" />
-      <button id="send">送出</button>
+
+  <aside class="left-rail">
+    <nav class="nav-pill">
+      <a href="index.html" title="Home">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
+      </a>
+      <a href="cosmic-post-station.html" title="Cosmic Post">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M3 6h18v12H3zM4 7l8 6 8-6"/></svg>
+      </a>
+      <a href="soulmirror.html" title="Soul Mirror">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 3c4 0 7 3 7 7v4c0 4-3 7-7 7s-7-3-7-7V10c0-4 3-7 7-7zM9 10h6"/></svg>
+      </a>
+    </nav>
+  </aside>
+
+  <main class="chat-wrap">
+    <h1>宇宙郵局 ✉️ <span style="font:500 12px 'Orbitron'; opacity:.85">COSMIC POST STATION</span></h1>
+    <div class="slogan">把你的話交給宇宙。阿金、米果、滾滾會輪流回你，一個一個，不急。</div>
+
+    <section id="chat" class="chat"></section>
+    <div class="input-row">
+      <input id="userInput" placeholder="在宇宙裡留言吧…（可用表情/驚嘆號/逗號，不要官腔）">
+      <button id="sendBtn">SEND</button>
     </div>
-  </div>
-</div>
+  </main>
 
-<script src="./js/main.js"></script>
-<script src="./js/dialogue.js"></script>
-</body></html>
+  <script src="js/main.js"></script>
+  <script src="js/cps.js"></script>
+</body>
+</html>
