@@ -1,8 +1,27 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MIGOU Room</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/universe.css">
-<style>.room-wrap{width:min(1100px,92%);margin:20px auto}.room-title{text-align:center;font-family:Orbitron,sans-serif;letter-spacing:.12em;background:linear-gradient(90deg,#DDEFFF,#BBD4FF);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:clamp(28px,5vw,46px)}.video{width:100%;margin:12px auto 16px;border-radius:14px;overflow:hidden;box-shadow:0 10px 40px rgba(90,130,200,.25)}</style></head><body>
-<div class="universe"><div class="stars"></div><div class="stars2"></div><div class="stars3"></div></div>
-<nav class="nav-rail"><a href="/"><span>🏠</span> Home</a><a href="/cosmic-post-station.html"><span>✉️</span> Post</a><a href="/soulmirror.html"><span>🪞</span> Mirror</a><a href="/#gallery"><span>🔭</span> Gallery</a></nav>
-<section class="room-wrap"><div class="room-title">米果｜MIGOU</div><div class="video"><video src="/assets/migou_5s.mp4" autoplay muted playsinline loop style="width:100%;height:auto;display:block;"></video></div></section></body></html>
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🧡 米果 MIGOU STARSHIP</title><link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../css/style.css"><link rel="stylesheet" href="../css/universe.css"></head>
+<body data-universe="migou"><canvas id="starfield"></canvas>
+<nav class="toolbox">
+  <a class="tool" href="./index.html" aria-label="Home">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5l9-7 9 7M6 10v10h12V10" /></svg>
+    <span>Home</span>
+  </a>
+  <a class="tool" href="./cosmic-post-station.html" aria-label="Post">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18v12H3zM3 6l9 7 9-7" /></svg>
+    <span>Post</span>
+  </a>
+  <a class="tool" href="./soulmirror.html" aria-label="Mirror">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10v17H7zM9.5 8l5 7" /></svg>
+    <span>Mirror</span>
+  </a>
+  <a class="tool" href="#gallery" aria-label="Gallery">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 11l6-3 2 4-6 3zM11 8l8-4 2 4-8 4zM12 14v6M9 20h6"/>
+    </svg>
+    <span>Gallery</span>
+  </a>
+</nav>
+
+<section class="title-wrap"><h1 class="main-title">🧡 米果 MIGOU STARSHIP</h1><h2 class="main-title sub">自我價值｜邊界</h2></section>
+<section class="hero"><video class="hero-video" src="../assets/migou_5s.mp4" autoplay muted loop playsinline></video></section>
+<script src="../js/main.js"></script></body></html>

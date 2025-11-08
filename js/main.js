@@ -1,5 +1,1 @@
-const root=document.documentElement;
-function spawnMeteor(){const m=document.createElement('div');m.className='meteor';m.style.setProperty('--sx',(60+Math.random()*50)+'vw');m.style.setProperty('--sy',(-10+Math.random()*20)+'vh');document.body.appendChild(m);setTimeout(()=>m.remove(),1400);}
-function meteorLoop(){spawnMeteor();setTimeout(meteorLoop, 3000+Math.random()*2000);}setTimeout(meteorLoop,1500);
-const galleryEl=document.querySelector('.gallery');if(galleryEl){const imgs=[];for(let i=0;i<10;i++){const name=i===0?'trio.webp':`trio${i}.webp`;const im=document.createElement('img');im.src=`/assets/${name}`;galleryEl.appendChild(im);imgs.push(im);}let idx=0;function show(n){imgs.forEach((im,i)=>im.classList.toggle('active',i===n));}show(0);setInterval(()=>{idx=(idx+1)%imgs.length;show(idx);},3000);}
-document.querySelectorAll('[data-room]').forEach(card=>{card.addEventListener('click',()=>{new Audio('/assets/sounds/click.wav').play();location.href=`/rooms/${card.dataset.room}.html`;});});
+console.log('v9.1.9 main loaded')
