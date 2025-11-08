@@ -1,78 +1,107 @@
-/* ===== Base ===== */
 :root{
-  --ink:#eaf2ff;
-  --glow:0 0 16px rgba(205,228,255,.6),0 0 32px rgba(168,200,255,.35);
+  --bg-top:#dbe7f7;         /* 銀藍(偏白) */
+  --bg-mid:#b9cfe9;         /* 中段銀藍 */
+  --bg-btm:#95b5df;         /* 下段銀藍：不會過深 */
+  --txt-en:#dfefff;         /* 標題銀藍 */
+  --txt-zh:#e9eef9;         /* 副標銀白 */
+  --pill-bg:rgba(255,255,255,.06);
+  --pill-stroke:rgba(255,255,255,.22);
+  --pill-glow:rgba(208,233,255,.35);
+  --card-bg:rgba(19,35,70,.28);
+  --card-glass:rgba(255,255,255,.08);
+  --aj-gold:#ffd365;
+  --mi-pink:#ff95b3;  /* 米果固定粉色 */
+  --gu-blue:#5aa6ff;
 }
-*{box-sizing:border-box} html,body{height:100%}
+
+/* ==== 基底銀藍漸層（無斷層＋細微噪點避免色帶） ==== */
+html,body{height:100%;margin:0}
 body{
-  margin:0; color:var(--ink);
-  font-family: 'Noto Sans TC', system-ui, -apple-system, Segoe UI, Roboto, Arial, "PingFang TC","Microsoft JhengHei", sans-serif;
-  /* 銀藍＋白暈（自然過度、無邊界） */
-  background: linear-gradient(180deg, #eaf2ff 0%, #d6e4fb 22%, #b8ccf5 48%, #86a6dd 72%, #5b7fc2 100%);
-  overflow-x:hidden;
+  font-family: "Noto Sans TC",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:#eaf2ff; overflow-x:hidden;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 45%, var(--bg-btm) 100%),
+    /* ultra subtle noise */
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncA type='table' tableValues='0 0 0 0 .05 .08 .1 .08 .05 0 0 0'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: auto, auto, 320px 320px;
+  background-attachment: fixed,fixed,fixed;
 }
 
-/* 背景特效層 */
-#stars,#meteors{position:fixed; inset:0; width:100%; height:100%; pointer-events:none}
-#stars{z-index:0; opacity:.95} #meteors{z-index:1}
+/* ==== 英文標題（兩行、銀藍） ==== */
+.hero{padding:88px 16px 12px; text-align:center}
+.title{margin:0 0 8px 0; line-height:1.05; letter-spacing:.04em; font-family:"Orbitron", sans-serif}
+.title .line1{display:block; font-weight:800; font-size:clamp(30px,5.8vw,68px); color:var(--txt-en); text-shadow:0 6px 22px rgba(255,255,255,.18)}
+.title .line2{display:block; font-weight:700; font-size:clamp(24px,4.9vw,56px); color:#cfe4ff}
+.subtitle{margin:2px 0 18px; font-size:13.5px; color:var(--txt-zh); opacity:.92}
+.globe{display:inline-block; width:8px; height:8px; margin-left:6px; border-radius:50%; background:radial-gradient(circle at 30% 30%, #7fffd4, #4cc3ff 55%, #0939a6 70%); box-shadow:0 0 10px 3px #79e6ff; animation:glow 2.2s ease-in-out infinite alternate}
+@keyframes glow{to{box-shadow:0 0 14px 5px #bdf2ff; transform:translateY(-1px)}}
 
-/* 左側導覽（線條、圓角、無外框、小尾巴） */
-.side-nav{position:fixed; left:18px; top:80px; z-index:5; display:flex; flex-direction:column; gap:14px}
-.nav-btn{position:relative; display:flex; align-items:center; gap:10px; padding:12px 18px 12px 16px;
-  border-radius:16px; background:radial-gradient(100% 120% at 10% 10%, rgba(255,255,255,.12), rgba(255,255,255,.02) 60%);
-  backdrop-filter: blur(8px); text-decoration:none; color:#f2f6ff; box-shadow:0 2px 12px rgba(0,0,0,.18)}
-.nav-btn::after{content:""; position:absolute; right:-10px; top:50%; transform:translateY(-50%); width:18px; height:28px;
-  border-radius:14px; background:radial-gradient(100% 100% at 30% 30%, rgba(255,255,255,.12), rgba(255,255,255,.02)); filter:blur(.5px)}
-.nav-btn .ico{width:22px;height:22px;stroke:#eef5ff;fill:none;stroke-width:1.6}
-.nav-btn span{font-weight:600; letter-spacing:.5px; font-size:12px}
+/* ==== 工具列：圓膠囊＋尾巴＋線條圖示 ==== */
+.side-nav{position:fixed; left:18px; top:84px; display:flex; flex-direction:column; gap:14px; z-index:20}
+.side-nav .pill{
+  position:relative; display:flex; align-items:center; gap:10px;
+  padding:12px 18px; border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+  box-shadow:inset 0 0 0 1px var(--pill-stroke), 0 6px 18px -8px var(--pill-glow);
+  color:#eaf4ff; text-decoration:none; font-weight:600; letter-spacing:.2px;
+  backdrop-filter: blur(10px);
+}
+.side-nav .pill .ico{
+  width:18px; height:18px; stroke:#e6f3ff; stroke-width:2; opacity:.9
+}
+.side-nav .pill .tail{
+  content:""; position:absolute; right:-7px; top:50%; width:12px; height:12px;
+  border-radius:0 8px 8px 8px;
+  transform:translateY(-50%) rotate(45deg);
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  box-shadow:inset 0 0 0 1px var(--pill-stroke);
+}
 
-/* 標題 */
-.hero{position:relative; z-index:2; padding:120px 24px 24px; text-align:center}
-.title-en{margin:0 0 10px 0; line-height:1.0; letter-spacing:1.6px; text-shadow: var(--glow)}
-.title-en .line1{display:block; font-size: clamp(32px, 5.8vw, 68px);
-  background: linear-gradient(180deg,#ecf5ff 0%,#bcd2ff 60%,#8fb1ff 100%); -webkit-background-clip:text; color:transparent}
-.title-en .line2{display:block; font-size: clamp(24px, 4.8vw, 48px);
-  background: linear-gradient(180deg,#e6f0ff 0%,#b1c7ff 60%,#7ba0ff 100%); -webkit-background-clip:text; color:transparent}
-.title-zh{margin:6px 0 0 0; font-size:14px; color:#eef5ff; opacity:.92}
-.title-zh .globe{filter:drop-shadow(0 0 6px rgba(180,220,255,.9))}
+/* ==== 角色卡 ==== */
+.cards{max-width:1200px; margin:16px auto 10px; padding:0 18px; display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
+.card{
+  position:relative; border:none; text-decoration:none; color:#eaf2ff;
+  border-radius:18px; overflow:hidden; background:linear-gradient(180deg, var(--card-bg), var(--card-glass));
+  backdrop-filter:blur(6px); box-shadow:0 15px 42px rgba(8,18,42,.24);
+  transform:translateZ(0); transition:transform .25s ease, box-shadow .25s ease
+}
+.card:hover{transform:translateY(-6px); box-shadow:0 22px 56px rgba(8,18,42,.32)}
+.card .halo{
+  position:absolute; inset:-25% -25% auto auto; width:65%; height:65%; filter:blur(28px); opacity:.55; pointer-events:none;
+  background:radial-gradient(ellipse at 100% 0, var(--aj-gold), transparent 60%);
+  mix-blend-mode:screen;
+}
+.card.migou .halo{ background:radial-gradient(ellipse at 100% 0, var(--mi-pink), transparent 60%) }
+.card.gungun .halo{ background:radial-gradient(ellipse at 100% 0, var(--gu-blue), transparent 60%) }
 
-/* 角色卡 */
-.cards{z-index:2; position:relative; display:grid; grid-template-columns: repeat(3, minmax(240px, 1fr));
-  gap:22px; max-width:1100px; margin:20px auto; padding:0 20px}
-.card{position:relative; overflow:hidden; border-radius:18px;
-  background: radial-gradient(120% 160% at 20% 10%, rgba(255,255,255,.10), rgba(255,255,255,.04) 60%);
-  backdrop-filter: blur(6px); box-shadow: 0 8px 28px rgba(0,0,0,.22); transform: translateZ(0);
-  transition: transform .35s ease, box-shadow .35s ease; min-height: 220px}
-.card::before,.card::after{content:""; position:absolute; width:60%; height:60%; filter: blur(30px); opacity:.55;
-  pointer-events:none; mix-blend-mode: screen}
-.card::before{ left:-15%; top:-15%}
-.card::after{ right:-15%; bottom:-15%}
-.card-ajin::before,.card-ajin::after{ background: radial-gradient(closest-side, #ffd36b, rgba(255,211,107,0))}
-.card-migou::before,.card-migou::after{ background: radial-gradient(closest-side, #ff9f9f, rgba(255,159,159,0))}
-.card-gungun::before,.card-gungun::after{ background: radial-gradient(closest-side, #7fb7ff, rgba(127,183,255,0))}
-.card:hover{ transform: translateY(-6px); box-shadow: 0 14px 36px rgba(0,0,0,.28)}
-.card-inner{ padding:22px 20px; text-align:center}
-.card .badge{margin:0; font-size:22px}
-.card .name{margin:6px 0 2px; font-size:20px; font-weight:800}
-.card .name small{font-weight:700; opacity:.9; margin-left:6px; font-size:.9em}
-.card .tags{margin:4px 0 10px; font-size:13px; opacity:.85}
-.card .quote{margin:0; font-size:13px; opacity:.9}
+.card .card-inner{padding:22px 18px; text-align:center}
+.card .emj{font-size:20px; margin-bottom:6px}
+.card h3{margin:0 0 6px 0; font-size:18px; font-weight:700}
+.card .kws{margin:0 0 6px 0; font-size:13px; opacity:.9}
+.card .quote{margin:0; font-size:12.5px; opacity:.92}
 
-/* 觀星畫廊：自動 3 秒淡入切換 */
-.gallery{position:relative; z-index:2; max-width:1100px; margin:22px auto 80px; padding:0 20px}
-.gallery-title{margin:6px 0 10px; font-size:14px; letter-spacing:1px; color:#e9f2ff; opacity:.95}
-.gallery-frame{position:relative; overflow:hidden; border-radius:18px; height: 480px; box-shadow: 0 10px 28px rgba(0,0,0,.26);
-  background: rgba(255,255,255,.05)}
-.gallery-frame .slide{position:absolute; inset:0; background-size:cover; background-position:center; opacity:0; transition: opacity .8s ease}
-.gallery-frame .slide.active{opacity:1}
+/* ==== 觀星畫廊：單張 3 秒自動滑，防切頭 ==== */
+.gallery-title{max-width:1200px; margin:26px auto 10px; padding:0 18px; font-family:"Orbitron"; letter-spacing:.12em; color:#e9f3ff; opacity:.95}
+.gallery{max-width:1200px; margin:0 auto 70px; padding:0 18px}
+.gallery .track{display:flex; gap:16px; overflow:hidden}
+.gallery img{
+  flex:0 0 100%; height:calc(100vw * 9 / 16); max-height:480px;
+  object-fit:contain; object-position:center center; border-radius:18px;
+  box-shadow:0 15px 42px rgba(8,18,42,.24)
+}
+@media (min-width:1200px){ .gallery img{ height:540px } }
 
-/* 頁尾 */
-.site-foot{z-index:2; position:relative; text-align:center; padding:28px 20px 60px; color:#eef5ff}
-.site-foot .en{margin:0 0 6px; font-size:12px; letter-spacing:1.4px; opacity:.95}
-.site-foot .zh{margin:0; font-size:12px; opacity:.9}
+/* ==== 頁尾 ==== */
+.site-foot{max-width:1200px; margin:30px auto 40px; padding:0 18px; text-align:center; color:#e9f1ff}
+.site-foot .en{font-family:"Orbitron"; font-size:13px; letter-spacing:.18em; margin-bottom:6px; opacity:.95}
+.site-foot .zh{font-size:12.5px; opacity:.92}
+
+/* ==== 星空畫布佈局 ==== */
+#sky{position:fixed; inset:0; z-index:-1; pointer-events:none}
 
 /* RWD */
-@media (max-width: 980px){
-  .cards{grid-template-columns:1fr; max-width:560px}
-  .gallery-frame{height: 52vw; min-height:260px}
+@media (max-width:900px){
+  .cards{grid-template-columns:1fr; gap:16px}
+  .side-nav{left:12px; top:72px; gap:10px}
 }
