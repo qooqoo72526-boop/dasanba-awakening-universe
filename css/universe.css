@@ -1,53 +1,84 @@
-/* universe.css — restored v9.1.6 backgrounds + no-underline fix (v9.1.6.1) */
 
-/* ---- BACKGROUNDS (unchanged from v9.1.6) ---- */
+/* Homepage visual fix v9.1.6.2 — deep silver-blue, no white line, proper layout */
 body[data-universe="home"] {
-  background:
-    radial-gradient(1200px 800px at 50% -120px, #cfe1ff 0%, #7aa2e8 36%, #264a86 62%, #0e2244 100%),
-    radial-gradient(900px 600px at 80% 120%, rgba(160,200,255,0.25), transparent 60%);
-}
-body[data-universe="ajin"] {
-  background:
-    radial-gradient(1200px 800px at 50% -120px, #fff2bf 0%, #ffd98a 36%, #375a9c 62%, #0e2244 100%);
-}
-body[data-universe="migou"] {
-  background:
-    radial-gradient(1200px 800px at 50% -120px, #ffd9ec 0%, #ffc6e7 34%, #5a6fb3 62%, #132a59 100%);
-}
-body[data-universe="gungun"] {
-  background:
-    radial-gradient(1200px 800px at 50% -120px, #e7f1ff 0%, #cbe4ff 34%, #3a66a8 62%, #0d2246 100%);
-}
-body[data-universe="post"] {
-  background:
-    radial-gradient(1100px 720px at 50% -120px, #d7ebff 0%, #8cb6ea 36%, #2a4c80 62%, #0b2140 100%);
-}
-body[data-universe="mirror"] {
-  background:
-    radial-gradient(1180px 760px at 50% -120px, #e6ddff 0%, #c9baff 34%, #5b50b7 62%, #1d1a5f 100%);
-}
-
-/* optional baseline */
-body {
+  background: linear-gradient(180deg, #27477f 0%, #193564 45%, #10254b 80%, #081a34 100%);
   background-attachment: fixed;
-  background-size: cover;
   color: #fff;
-  font-family: "Noto Sans TC", "Orbitron", sans-serif;
+  font-family: "Orbitron", "Noto Sans TC", sans-serif;
 }
 
-/* ---- NO-UNDERLINE FIX for main headings ---- */
-/* remove any accidental borders or pseudo-element lines under titles */
-h1, h2, .main-title, .title-wrap h1, .title-wrap h2 {
-  border: none !important;
-  box-shadow: none !important;
+.hero {
+  position: relative;
+  z-index: 0;
+  max-width: 1200px;
+  margin: 20px auto;
 }
-h1::before, h1::after,
-h2::before, h2::after,
-.main-title::before, .main-title::after,
+.hero img, .hero video {
+  display: block;
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(10,30,60,.45);
+}
+
+.title-wrap {
+  position: relative;
+  text-align: center;
+  margin: 24px auto;
+  z-index: 1;
+}
 .title-wrap::before, .title-wrap::after {
   content: none !important;
-  display: none !important;
-  border: none !important;
-  background: none !important;
-  box-shadow: none !important;
+}
+.main-title {
+  margin: 0;
+  line-height: 1.05;
+  font-weight: 600;
+}
+.sub-title {
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: rgba(230,240,255,0.92);
+}
+.sub-title .earth {
+  display:inline-block;
+  width:.9em; height:.9em;
+  vertical-align:-.08em;
+  filter:drop-shadow(0 0 4px rgba(140,200,255,.85));
+  animation:earthBlink 2.4s ease-in-out infinite;
+}
+@keyframes earthBlink {0%,100%{opacity:1}50%{opacity:.55}}
+
+.cards {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+.card {
+  background: rgba(255,255,255,.05);
+  border: none;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(10,30,60,.3);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(10,30,60,.4); }
+.card img {
+  border-radius: 12px;
+  width: 100%;
+  display: block;
+}
+
+.gallery {
+  max-width: 1200px;
+  margin: 40px auto 80px;
+  display: flex;
+  gap: 16px;
+  overflow: hidden;
+}
+.gallery img {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 8px 28px rgba(10,25,60,.3);
 }
