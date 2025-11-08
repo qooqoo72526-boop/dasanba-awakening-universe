@@ -56,76 +56,18 @@
     if(next) next.classList.add('active');
   }, 3000);
 })();
-/* === v9.1.9 COSMIC EXTENSIONS (append-only) === */
-(function() {
-  // 啟用主頁銀藍底
-  document.body.classList.add('cosmic-silverblue');
 
-  // 星星生成（數量可再調低/高）
-  const starLayer = document.querySelector('.cosmic-stars') || (function(){
-    const d=document.createElement('div'); d.className='cosmic-stars'; document.body.appendChild(d); return d;
-  })();
-  if (starLayer.childElementCount < 120) {
-    for (let i=0;i<120;i++){
-      const s=document.createElement('i'); s.className='star';
-      s.style.left = Math.random()*100+'%';
-      s.style.top  = Math.random()*100+'%';
-      s.style.animationDelay = (Math.random()*2.4)+'s';
-      s.style.opacity = (0.25 + Math.random()*0.75).toFixed(2);
-      starLayer.appendChild(s);
-    }
-  }
-
-  // 流星
-  const shootLayer = document.querySelector('.shooting-layer') || (function(){
-    const d=document.createElement('div'); d.className='shooting-layer'; document.body.appendChild(d); return d;
-  })();
-  function spawnMeteor(){
-    const m=document.createElement('div'); m.className='shooting';
-    const side = Math.random()<.5 ? 'left' : 'right';
-    const y = Math.random()*80+5;
-    m.style.top = y+'%';
-    m.style.left = side==='left'? '-140px':'calc(100% + 140px)';
-    m.style.setProperty('--deg', side==='left' ? (-20-Math.random()*20)+'deg' : (200+Math.random()*20)+'deg');
-    shootLayer.appendChild(m);
-    // 進場
-    requestAnimationFrame(()=>{ m.style.transition='transform 1.2s linear, opacity .3s ease';
-      m.style.opacity=.95;
-      const dx = side==='left'? (window.innerWidth+280) : -(window.innerWidth+280);
-      m.style.transform = `translate3d(${dx}px, ${60-(Math.random()*120)}px, 0) rotate(${getComputedStyle(m).getPropertyValue('--deg')})`;
-    });
-    // 停留亮點
-    setTimeout(()=>{
-      m.style.transition='opacity .5s ease';
-      m.style.opacity=.0;
-      setTimeout(()=> m.remove(), 700);
-    }, 1200 + (Math.random()<.35?400:0)); // 偶爾停一下
-  }
-  // 3–7 秒不規則
-  (function meteorLoop(){
-    spawnMeteor();
-    setTimeout(meteorLoop, 3000 + Math.random()*4000);
-  })();
-
-  // 觀星畫廊：trio.webp~trio10.webp，3秒自動
-  const gallery = document.querySelector('.starflow');
-  if (gallery && !gallery.dataset.bound){
-    gallery.dataset.bound='1';
-    const imgs = ["trio.webp","trio2.webp","trio3.webp","trio4.webp","trio5.webp","trio6.webp","trio7.webp","trio8.webp","trio9.webp","trio10.webp"];
-    let idx = 0;
-    const imgEl = document.createElement('img');
-    imgEl.alt = "Starflow Gallery";
-    gallery.innerHTML='';
-    gallery.appendChild(imgEl);
-    function setSrc(k){ imgEl.src = `assets/${imgs[k]}`; }
-    setSrc(idx);
-    setInterval(()=>{ idx = (idx+1)%imgs.length; setSrc(idx); }, 3000); // 3秒
-  }
-
-  // 角色卡圖片自動校正不切頭
-  document.querySelectorAll('.card-bird img').forEach(img=>{
-    img.style.objectFit = 'contain';
-    img.style.objectPosition = 'center';
-  });
-
+// v9.1.9 EG: Starflow gallery auto 3s
+(function(){
+  const box = document.querySelector('.gallery-viewport');
+  if(!box) return;
+  const imgs = Array.from(box.querySelectorAll('img'));
+  if(!imgs.length) return;
+  let i = imgs.findIndex(im => im.classList.contains('active'));
+  if(i < 0){ i = 0; imgs[0].classList.add('active'); }
+  setInterval(() => {
+    imgs[i].classList.remove('active');
+    i = (i + 1) % imgs.length;
+    imgs[i].classList.add('active');
+  }, 3000);
 })();
