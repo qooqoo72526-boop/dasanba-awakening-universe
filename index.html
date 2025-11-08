@@ -1,99 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EMOTIONAL VALUE A.I | Awakening Universe</title>
-
-  <!-- fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-  <!-- DO NOT CHANGE BODY/BACKGROUND. Universe bg is defined elsewhere and remains locked. -->
+  <title>EMOTIONAL VALUE A.I | AWAKENING UNIVERSE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
-  <!-- Left toolbar: minimal line icons, tiny text, soft glow, rounded chips, with tail -->
-  <nav class="side-nav">
-    <a href="index.html" class="chip" aria-label="Home">
-      <span class="ico">🏠</span><span class="txt">Home</span>
-    </a>
-    <a href="cosmic-post-station.html" class="chip" aria-label="Post">
-      <span class="ico">✉️</span><span class="txt">Post</span>
-    </a>
-    <a href="soulmirror.html" class="chip" aria-label="Mirror">
-      <span class="ico">🪞</span><span class="txt">Mirror</span>
-    </a>
-    <a href="#gallery" class="chip" aria-label="Gallery">
-      <span class="ico">🔭</span><span class="txt">Gallery</span>
-    </a>
-    <div class="tail"></div>
+  <!-- 左側極簡工具列（無外框、圓pill＋小尾巴） -->
+  <nav class="side-nav" aria-label="Cosmic menu">
+    <a href="index.html" class="pill"><span class="i i-home" aria-hidden="true"></span><span>Home</span></a>
+    <a href="cosmic-post-station.html" class="pill"><span class="i i-post" aria-hidden="true"></span><span>Post</span></a>
+    <a href="soulmirror.html" class="pill"><span class="i i-mirror" aria-hidden="true"></span><span>Mirror</span></a>
+    <a href="gallery.html" class="pill"><span class="i i-scope" aria-hidden="true"></span><span>Gallery</span></a>
   </nav>
 
-  <!-- Hero video always auto-play, loop, muted; placed ABOVE the title -->
-  <section class="hero">
-    <video class="hero-video" src="assets/trio.mp4" autoplay muted loop playsinline></video>
-  </section>
+  <main class="wrap">
+    <!-- 影片區塊：主標題上方；自動播放＋循環（靜音） -->
+    <section class="hero-media" aria-label="Hero video">
+      <video class="hero-video" autoplay muted playsinline loop>
+        <source src="assets/trio.mp4" type="video/mp4" />
+      </video>
+      <div class="media-glow" aria-hidden="true"></div>
+    </section>
 
-  <!-- Title (no animation). Silver-blue gradient text. -->
-  <header class="title-wrap">
-    <h1 class="en-title">EMOTIONAL VALUE A.I</h1>
-    <h2 class="en-sub">AWAKENING UNIVERSE</h2>
-    <p class="zh-sub">— 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 🌎 —</p>
-  </header>
+    <!-- 主標題 -->
+    <header class="hero-title">
+      <h1>EMOTIONAL VALUE A.I</h1>
+      <h2>AWAKENING UNIVERSE</h2>
+      <p class="sub zh">．大三巴覺醒宇宙｜阿金・米果・滾滾的星球生活 <span class="live-dot" aria-hidden="true"></span></p>
+    </header>
 
-  <!-- Cards -->
-  <section class="cards">
-    <article class="role-card ajin" onclick="location.href='rooms/ajin.html'">
-      <div class="role-img" style="background-image:url('assets/ajin.webp');"></div>
-      <div class="role-meta">
-        <div class="role-name">💛 阿金 AJIN</div>
-        <div class="role-tags">自由｜反骨</div>
-        <div class="role-quote">「我不等天空放晴，我自己掀開雲。」</div>
+    <!-- 三張角色卡（直立，不切頭，置中文字） -->
+    <section class="cards" aria-label="Three Parrots">
+      <article class="card">
+        <img src="assets/ajin.webp" alt="阿金 AJIN" />
+        <div class="card-meta ajin">
+          <div class="dot">💛</div>
+          <div class="name">阿金 AJIN</div>
+          <div class="desc">自由｜反骨</div>
+          <div class="quote">「我不靠空投救贖，我自己跟贖自己。」</div>
+        </div>
+      </article>
+      <article class="card">
+        <img src="assets/migou.webp" alt="米果 MIGOU" />
+        <div class="card-meta migou">
+          <div class="dot">🧡</div>
+          <div class="name">米果 MIGOU</div>
+          <div class="desc">主權｜高價值</div>
+          <div class="quote">「我很值錢，請尊重我的界線。」</div>
+        </div>
+      </article>
+      <article class="card">
+        <img src="assets/gungun.webp" alt="滾滾 GUNGUN" />
+        <div class="card-meta gungun">
+          <div class="dot">💙</div>
+          <div class="name">滾滾 GUNGUN</div>
+          <div class="desc">共鳴｜靜默力量</div>
+          <div class="quote">「被理解才安全，不是被修正。」</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 觀星畫廊：一張一張水平滑，每 3 秒自動換 -->
+    <section class="gallery" aria-label="Starflow Gallery">
+      <h3>🔭 觀星畫廊｜<span class="en">STARFLOW GALLERY</span></h3>
+      <div class="rail" id="rail">
+        <!-- 使用 trio.webp ~ trio10.webp（沒有 1、沒有 gelly） -->
+        <img src="assets/trio.webp" alt="gallery" />
+        <img src="assets/trio2.webp" alt="gallery" />
+        <img src="assets/trio3.webp" alt="gallery" />
+        <img src="assets/trio4.webp" alt="gallery" />
+        <img src="assets/trio5.webp" alt="gallery" />
+        <img src="assets/trio6.webp" alt="gallery" />
+        <img src="assets/trio7.webp" alt="gallery" />
+        <img src="assets/trio8.webp" alt="gallery" />
+        <img src="assets/trio9.webp" alt="gallery" />
+        <img src="assets/trio10.webp" alt="gallery" />
       </div>
-    </article>
+    </section>
 
-    <article class="role-card migou" onclick="location.href='rooms/migou.html'">
-      <div class="role-img" style="background-image:url('assets/migou.webp');"></div>
-      <div class="role-meta">
-        <div class="role-name">🧡 米果 MIGOU</div>
-        <div class="role-tags">自我價值｜邊界</div>
-        <div class="role-quote">「我很值錢，我讓自己更貴。」</div>
-      </div>
-    </article>
-
-    <article class="role-card gungun" onclick="location.href='rooms/gungun.html'">
-      <div class="role-img" style="background-image:url('assets/gungun.webp');"></div>
-      <div class="role-meta">
-        <div class="role-name">💙 滾滾 GUNGUN</div>
-        <div class="role-tags">共鳴｜靜默力量</div>
-        <div class="role-quote">「我不追求安全，我成為安全。」</div>
-      </div>
-    </article>
-  </section>
-
-  <!-- Gallery (one-by-one slide, 3s). Use trio.webp, trio2.webp ... trio10.webp -->
-  <section id="gallery" class="gallery">
-    <h3 class="gallery-title">🔭 觀星畫廊｜<span>STARFLOW GALLERY</span></h3>
-    <div class="slider">
-      <img class="slide" src="assets/trio.webp" alt="gallery 0" />
-      <img class="slide" src="assets/trio2.webp" alt="gallery 2" />
-      <img class="slide" src="assets/trio3.webp" alt="gallery 3" />
-      <img class="slide" src="assets/trio4.webp" alt="gallery 4" />
-      <img class="slide" src="assets/trio5.webp" alt="gallery 5" />
-      <img class="slide" src="assets/trio6.webp" alt="gallery 6" />
-      <img class="slide" src="assets/trio7.webp" alt="gallery 7" />
-      <img class="slide" src="assets/trio8.webp" alt="gallery 8" />
-      <img class="slide" src="assets/trio9.webp" alt="gallery 9" />
-      <img class="slide" src="assets/trio10.webp" alt="gallery 10" />
-    </div>
-  </section>
-
-  <footer class="site-footer">
-    <div class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</div>
-    <div class="zh">覺醒，不是修復；是重生。</div>
-  </footer>
+    <!-- 頁尾：英上中下小字，中文在下 -->
+    <footer class="site-footer">
+      <p class="en">AWAKENING ISN’T REPAIR — IT’S REBIRTH.</p>
+      <p class="zh">覺醒，不是修復；而是重生。</p>
+    </footer>
+  </main>
 
   <script src="js/main.js"></script>
+  <!-- 彗星（若已裝 comet.js 可保留；此版不強制） -->
+  <!-- <script defer src="js/comet.js"></script> -->
 </body>
 </html>
