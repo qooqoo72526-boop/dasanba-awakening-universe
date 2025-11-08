@@ -1,120 +1,111 @@
-/* v9.1.9 layout hotfix — 不動你的背景設定，只修排版 */
+
 :root{
-  --silver: #cfe3ff;
-  --silver-strong:#eaf2ff;
-  --ink:#0b1f3a;
-  --glow: rgba(255,255,255,.18);
+  --silver:#eaf2ff; --sil2:#cfe0ff; --sil3:#b9cdfb;
+  --ink:#0b2140; --ink2:#132e57; --ink3:#071a33;
+  --glow-gold: rgba(255,220,120,.28);
+  --glow-pink: rgba(255,150,180,.26);
+  --glow-blue: rgba(120,200,255,.28);
 }
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0;
-  font-family:'Noto Sans TC', system-ui, -apple-system, 'Microsoft JhengHei', sans-serif;
+  background:
+    radial-gradient(1200px 800px at 50% -120px, #cfe1ff 0%, #7aa2e8 36%, #264a86 62%, #0e2244 100%),
+    radial-gradient(900px 600px at 80% 120%, rgba(160,200,255,.25), transparent 60%);
   color:var(--silver);
-}
-/* 中央容器寬度 — 保持 9.19 置中 */
-.wrap{
-  width:min(1180px, 92vw);
-  margin: 0 auto;
-  position:relative;
+  font-family:"Orbitron","Noto Sans TC",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"PingFang TC","Microsoft JhengHei",sans-serif;
+  overflow-x:hidden;
 }
 
-/* 工具列：圓 pill、無外框、有尾巴與柔光 */
-.side-nav{
-  position:fixed; left:20px; top:120px; display:flex; flex-direction:column; gap:12px; z-index:1000;
-}
-.side-nav .pill{
-  display:flex; align-items:center; gap:10px;
-  padding:10px 14px 10px 12px;
-  background: radial-gradient(120px 60px at -40px center, rgba(255,255,255,.24), rgba(255,255,255,.06) 40%, transparent 60%);
-  border-radius:999px;
-  text-decoration:none;
-  color:var(--silver);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0 16px rgba(255,255,255,.08) inset;
-  position:relative;
-}
-.side-nav .pill::after{
-  content:''; position:absolute; right:-7px; top:50%; transform:translateY(-50%);
-  width:14px; height:14px; border-radius: 0 999px 999px 999px;
-  background: radial-gradient(14px 14px at 2px 7px, rgba(255,255,255,.25), rgba(255,255,255,.05));
-  filter: blur(.2px);
-}
-.side-nav .pill span{font-size:12px; letter-spacing:.6px; font-weight:400}
-/* 極細線圖示（純 CSS） */
-.i{display:inline-block; width:16px; height:16px; border:1.5px solid var(--silver); border-radius:3px; opacity:.9}
-.i-home{border-radius:3px; box-shadow: inset 0 0 0 999px transparent}
-.i-post{border-radius:2px}
-.i-mirror{border-radius:2px; position:relative}
-.i-mirror::after{content:''; position:absolute; inset:3px; border:1px solid var(--silver-strong); border-radius:2px; opacity:.6}
-.i-scope{border-radius:50%}
+/* Starfield Canvas */
+#starfield{position:fixed; inset:0; z-index:-1}
 
-/* 影片區塊在主標題上方 */
-.hero-media{position:relative; margin: 46px auto 14px; width:100%;}
+/* Toolbar */
+.toolbox{ position:fixed; left:20px; top:82px; display:flex; flex-direction:column; gap:12px; z-index:50; }
+.tool{
+  position:relative; display:flex; align-items:center; gap:8px;
+  padding:10px 12px; border-radius:14px;
+  background:rgba(255,255,255,.06); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  color:#dfe9ff; text-decoration:none; font-weight:300; font-size:12px; letter-spacing:.08em;
+  box-shadow: 0 8px 22px rgba(0,10,30,.16), inset 0 0 0 1px rgba(255,255,255,.08);
+  transition: transform .2s ease, box-shadow .2s ease, color .2s ease;
+}
+.tool svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;opacity:.95}
+.tool:hover{transform:translateY(-1px); color:#fff; box-shadow:0 10px 26px rgba(0,10,30,.2), inset 0 0 0 1px rgba(255,255,255,.12)}
+.tool::after{
+  content:""; position:absolute; inset:-26px; border-radius:22px; pointer-events:none;
+  box-shadow: 0 0 36px 12px rgba(170,210,255,.25);
+  animation: haloFlicker 2.8s ease-in-out infinite;
+  opacity:.55;
+}
+@keyframes haloFlicker{
+  0%{opacity:.38} 12%{opacity:.62} 23%{opacity:.42} 41%{opacity:.58} 56%{opacity:.50}
+  70%{opacity:.66} 84%{opacity:.44} 100%{opacity:.38}
+}
+.tool.active{color:#fff; box-shadow:0 10px 30px rgba(0,10,30,.24), inset 0 0 0 1px rgba(255,255,255,.16)}
+@media(max-width:640px){ .toolbox{left:12px; top:68px} .tool{font-size:11px; padding:9px 10px} .tool svg{width:16px;height:16px;stroke-width:1.5} }
+
+/* Hero Video */
+.hero{display:flex; justify-content:center; margin:86px 0 8px}
 .hero-video{
-  width:100%; height:auto; display:block; border-radius:22px;
-  object-fit:cover;
-}
-.media-glow{
-  position:absolute; inset:0; border-radius:22px; pointer-events:none;
-  box-shadow: 0 40px 120px rgba(255,255,255,.08) inset, 0 0 0 1px rgba(255,255,255,.04) inset;
+  width:min(86vw,1100px); max-height:420px; aspect-ratio:16/9; object-fit:cover; border-radius:20px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
 }
 
-/* 主標題：英文銀藍、大；中文白銀小一階 */
-.hero-title{ text-align:center; margin-top:8px; }
-.hero-title h1, .hero-title h2{
-  font-family:'Orbitron', sans-serif;
-  margin:0; line-height:1; letter-spacing:2px;
-  color: var(--silver-strong);
-  text-shadow: 0 2px 10px rgba(255,255,255,.12);
+/* Titles */
+.title-wrap{text-align:center; margin:8px 0 22px}
+.main-title{
+  margin:3px 0; letter-spacing:.08em; font-weight:700;
+  background: linear-gradient(180deg, #f5fbff 0%, #cfe0ff 48%, #e8f2ff 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow: 0 0 18px rgba(170,215,255,.22);
 }
-.hero-title h1{ font-size: clamp(28px, 4.2vw, 56px); }
-.hero-title h2{ font-size: clamp(20px, 3vw, 40px); margin-top:8px; }
-.hero-title .sub.zh{ font-size:12px; opacity:.9; margin-top:10px; }
+.main-title{font-size: clamp(30px, 4.8vw, 56px)}
+.main-title.sub{font-size: clamp(24px, 4.2vw, 48px)}
+.sub-title{font: 500 12px "Noto Sans TC",sans-serif; letter-spacing:.24em; color:#dbe8ff; opacity:.92}
+.sub-title .earth{filter:drop-shadow(0 0 6px rgba(120,200,255,.9))}
 
-.live-dot{display:inline-block; width:8px; height:8px; border-radius:50%; background:#69f0ff; box-shadow:0 0 10px #69f0ff}
+/* Cards */
+.cards{ width:min(1100px,92vw); margin: 14px auto 34px; display:grid; grid-template-columns: repeat(3,1fr); gap:26px}
+@media(max-width:1100px){ .cards{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:720px){ .cards{grid-template-columns:1fr} }
 
-/* 卡片區：三張直立，不切頭；內文置中；無邊框，僅柔光 */
-.cards{
-  margin: 18px 0 8px;
-  display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
-}
 .card{
-  background: rgba(255,255,255,.06);
-  border-radius:22px;
-  padding:10px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,.12), 0 0 0 1px rgba(255,255,255,.04) inset;
+  position:relative; border-radius:22px; overflow:hidden; text-decoration:none; color:#e8f2ff;
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 15px 50px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+  transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
 }
-.card img{
-  width:100%; aspect-ratio: 1 / 1; object-fit:cover;
-  object-position: top center; /* 不切頭 */
-  border-radius:16px;
-  display:block;
+.card::before{content:""; position:absolute; inset:-2px; border-radius:24px; z-index:-1; filter: blur(14px); opacity:.55}
+.card.ajin::before { background: radial-gradient(360px 220px at 50% 0%, var(--glow-gold), transparent 70%) }
+.card.migou::before{ background: radial-gradient(360px 220px at 50% 0%, var(--glow-pink), transparent 70%) }
+.card.gungun::before{ background: radial-gradient(360px 220px at 50% 0%, var(--glow-blue), transparent 70%) }
+
+.card .card-photo{height: 260px; background-size:cover; background-position:center}
+.card .card-name{display:flex; justify-content:center; margin:12px 0 6px; font-weight:700; letter-spacing:.08em}
+.card .card-meta{font: 500 12px 'Noto Sans TC',sans-serif; text-align:center; opacity:.9}
+.card .card-quote{font: 500 12px 'Noto Sans TC',sans-serif; text-align:center; opacity:.82; padding:10px 14px 16px}
+.card:hover{transform:translateY(-6px); filter:brightness(1.06)}
+.card .card-name span{ position:relative }
+.card .card-name span::after{
+  content:""; position:absolute; inset:-6px -10px; border-radius:16px; pointer-events:none;
+  box-shadow: 0 0 20px 6px rgba(255,255,255,.12);
 }
-.card-meta{ text-align:center; padding:10px 6px 8px; font-size:13px; }
-.card-meta .name{ font-weight:600; margin-top:2px }
-.card-meta .desc{ opacity:.9; font-size:12px; margin-top:2px }
-.card-meta .quote{ opacity:.8; font-size:12px; margin-top:6px }
-.card-meta.ajin .dot{color:#ffd54f}
-.card-meta.migou .dot{color:#ffa06a}
-.card-meta.gungun .dot{color:#8ec5ff}
 
-/* 觀星畫廊：橫向單張滑動，3 秒換一張 */
-.gallery{ margin: 8px 0 28px }
-.gallery h3{ font-family:'Orbitron', sans-serif; font-size:14px; letter-spacing:1.8px; opacity:.9; margin: 4px 0 8px; }
-.gallery .en{ font-size:12px; opacity:.85 }
-.rail{ display:flex; gap:12px; overflow:hidden; scroll-behavior:smooth }
-.rail img{ height: 280px; width:auto; border-radius:16px; flex: 0 0 auto; object-fit:cover; object-position:center;}
-
-/* 頁尾：英上、中文字下，小銀白 */
-.site-footer{ text-align:center; margin: 20px 0 40px }
-.site-footer .en{ font-family:'Orbitron', sans-serif; font-size:12px; opacity:.9 }
-.site-footer .zh{ font-size:12px; opacity:.85; color: var(--silver) }
-
-/* 響應式 */
-@media (max-width: 960px){
-  .cards{ grid-template-columns: 1fr; }
-  .rail img{ height: 220px }
-  .side-nav{ left:12px; top:90px }
+/* Gallery */
+.gallery{width:min(1100px,92vw); margin: 18px auto 64px}
+.gallery-title{font-size:16px; text-align:center; letter-spacing:.22em; color:#dbe8ff; opacity:.95}
+.gallery-title span{font-size:.96em; letter-spacing:.18em; opacity:.88}
+.gallery-viewport{position:relative; width:100%; height:auto}
+.gallery-viewport img{
+  position:absolute; inset:0; width:100%; height:auto; border-radius:18px; display:block; object-fit:cover;
+  box-shadow: 0 16px 45px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.06);
+  opacity:0; transition: opacity .8s ease;
 }
+.gallery-viewport img.active{opacity:1}
+
+/* Footer */
+.footer{ text-align:center; padding:28px 10px 52px; color:#cfe2ff }
+.footer .en{font-size:12px; letter-spacing:.22em; opacity:.92}
+.footer .zh{font: 500 12px 'Noto Sans TC',sans-serif; opacity:.85}
