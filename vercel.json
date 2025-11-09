@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "api/chat.js"
+    }
+  ],
+  "regions": [
+    "sin1",
+    "hnd1",
+    "icn1"
+  ]
+}
