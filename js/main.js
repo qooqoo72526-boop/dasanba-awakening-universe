@@ -1,12 +1,38 @@
-/* starfield + natural meteors + gallery + jump */
-const starCanvas=document.getElementById('starfield');const meteorCanvas=document.getElementById('meteors');
-const sctx=starCanvas.getContext('2d');const mctx=meteorCanvas.getContext('2d');
-let stars=[], meteors=[]; function resize(){ starCanvas.width=meteorCanvas.width=innerWidth; starCanvas.height=meteorCanvas.height=innerHeight;} addEventListener('resize',resize); resize();
-function initStars(){ stars=Array.from({length:180},()=>({x:Math.random()*starCanvas.width,y:Math.random()*starCanvas.height,r:Math.random()*1.2+0.3,t:Math.random()*Math.PI*2,s:Math.random()*0.6+0.2})); } initStars();
-function drawStars(){ sctx.clearRect(0,0,starCanvas.width,starCanvas.height); for(const st of stars){ st.t+=0.02*st.s; const o=0.6+Math.sin(st.t)*0.35; sctx.beginPath(); sctx.arc(st.x,st.y,st.r,0,Math.PI*2); sctx.fillStyle=`rgba(230,240,255,${o})`; sctx.fill(); } }
-function spawnMeteor(){ if(Math.random()<0.5) return; const side=Math.random()<0.5?'left':'right'; const startY=Math.random()*innerHeight*0.7; const len=Math.random()*120+80; const sp=Math.random()*2+2.2; const pause=Math.random()<0.3?26:0; meteors.push({x:side==='left'?-40:innerWidth+40,y:startY,vx:side==='left'?(Math.random()*sp+sp):-(Math.random()*2+2.2),vy:Math.random()*0.6+0.2,life:0,len,pause});}
-function drawMeteors(){ mctx.clearRect(0,0,meteorCanvas.width,meteorCanvas.height); for(const mt of meteors){ mt.life++; if(mt.pause>0 && mt.life<mt.pause){ const g=mctx.createRadialGradient(mt.x,mt.y,0,mt.x,mt.y,24); g.addColorStop(0,'rgba(255,255,255,.95)'); g.addColorStop(1,'rgba(180,220,255,0)'); mctx.fillStyle=g; mctx.beginPath(); mctx.arc(mt.x,mt.y,24,0,Math.PI*2); mctx.fill(); } else { mt.x+=mt.vx; mt.y+=mt.vy; mctx.strokeStyle='rgba(200,230,255,.85)'; mctx.lineWidth=2; mctx.beginPath(); mctx.moveTo(mt.x,mt.y); mctx.lineTo(mt.x-mt.vx*mt.len, mt.y-mt.vy*mt.len); mctx.stroke(); } } meteors=meteors.filter(mt=>mt.x>-200 && mt.x<innerWidth+200 && mt.y<innerHeight+200);}
-setInterval(()=>{ if(Math.random()<0.8) spawnMeteor(); }, 1200);
-function loop(){ drawStars(); drawMeteors(); requestAnimationFrame(loop);} loop();
-const galleryRail=document.querySelector('.gallery .rail'); if(galleryRail){ const imgs=Array.from({length:10},(_,i)=> i===0? 'trio.webp':`trio${i+0}.webp`); let idx=0; const img=new Image(); img.loading='eager'; img.decoding='async'; galleryRail.innerHTML=""; galleryRail.appendChild(img); function show(){ img.src=`assets/${imgs[idx]}`; idx=(idx+1)%imgs.length; } show(); setInterval(show,3000); }
-const jump=document.querySelector('a[data-jump]'); if(jump){ jump.addEventListener('click',e=>{e.preventDefault(); document.querySelector('.cards')?.scrollIntoView({behavior:'smooth', block:'start'});});}
+const BIRDS = {
+  ajin: {
+    name: "阿金",
+    heart: "💛",
+    tone: "行動派、反骨、敢講直球；語速快，偶爾挑釁；句子短不囉嗦；多用逗號、句號、驚嘆號。",
+    style: [
+      "先給結論，再補一句推動行動",
+      "少形容詞，多動詞",
+      "出手帥但不油"
+    ]
+  },
+  migou: {
+    name: "米果",
+    heart: "🧡",
+    // 重要：改成高傲、昂貴、邊界清楚
+    tone: "高傲、昂貴、邊界銳利；語氣克制、字少但狠；像在挑選值得的人事物；不討好。",
+    style: [
+      "先設界線，再給一句價值判斷",
+      "不用可愛語氣，不賣萌",
+      "必要時用停頓（…）冷感拉距"
+    ],
+    forbid: [
+      "溫柔體",
+      "道歉式開頭",
+      "貼心服務口吻"
+    ]
+  },
+  gungun: {
+    name: "滾滾",
+    heart: "💙",
+    tone: "被理解系、靜默力量；語速慢一點、句子圓潤；安穩但不說教。",
+    style: [
+      "先共鳴，再遞一個安穩小行動",
+      "用比喻但不灑雞湯",
+      "字數精簡、留白"
+    ]
+  }
+};
