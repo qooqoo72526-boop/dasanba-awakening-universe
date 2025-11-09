@@ -1,38 +1,25 @@
-const BIRDS = {
-  ajin: {
-    name: "阿金",
-    heart: "💛",
-    tone: "行動派、反骨、敢講直球；語速快，偶爾挑釁；句子短不囉嗦；多用逗號、句號、驚嘆號。",
-    style: [
-      "先給結論，再補一句推動行動",
-      "少形容詞，多動詞",
-      "出手帥但不油"
-    ]
-  },
-  migou: {
-    name: "米果",
-    heart: "🧡",
-    // 重要：改成高傲、昂貴、邊界清楚
-    tone: "高傲、昂貴、邊界銳利；語氣克制、字少但狠；像在挑選值得的人事物；不討好。",
-    style: [
-      "先設界線，再給一句價值判斷",
-      "不用可愛語氣，不賣萌",
-      "必要時用停頓（…）冷感拉距"
-    ],
-    forbid: [
-      "溫柔體",
-      "道歉式開頭",
-      "貼心服務口吻"
-    ]
-  },
-  gungun: {
-    name: "滾滾",
-    heart: "💙",
-    tone: "被理解系、靜默力量；語速慢一點、句子圓潤；安穩但不說教。",
-    style: [
-      "先共鳴，再遞一個安穩小行動",
-      "用比喻但不灑雞湯",
-      "字數精簡、留白"
-    ]
+(function(){
+  function mountStars(){
+    document.querySelectorAll('.stars').forEach(container=>{
+      for(let i=0;i<140;i++){
+        const s=document.createElement('i');
+        s.style.setProperty('--x', Math.random());
+        s.style.setProperty('--y', Math.random());
+        s.style.setProperty('--r', Math.random());
+        container.appendChild(s);
+      }
+    });
   }
-};
+  mountStars();
+
+  const gal = document.getElementById('galImg');
+  if(gal){
+    const files = ['trio.webp','trio2.webp','trio3.webp','trio4.webp','trio5.webp','trio6.webp','trio7.webp','trio8.webp','trio9.webp','trio10.webp'];
+    let i=0;
+    setInterval(()=>{
+      i=(i+1)%files.length;
+      gal.src = 'assets/' + files[i];
+      const indi = document.getElementById('galIndi'); if(indi) indi.textContent = (i+1) + ' / ' + files.length;
+    }, 3000);
+  }
+})();
