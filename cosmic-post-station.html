@@ -1,40 +1,34 @@
+
 <!doctype html><html lang="zh-Hant"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>宇宙郵局 ✉️ | Cosmic Post Station</title>
-<link rel="stylesheet" href="css/universe.css"/>
-<style>
-body{background: radial-gradient(1200px 700px at 50% 0%, #f7fbff 0%, #eaf2ff 20%, #d6e4ff 36%, #a8c3f6 56%, #1b2647 88%, #121b30 100%);}
-.wrap{max-width:min(860px,92vw);margin:120px auto 40px;}
-.title{text-align:center}.title .tw{font-weight:800;letter-spacing:.18em}.title .en{font-style:italic;opacity:.9}.title .signal{font-weight:800;margin-top:8px;color:#eaf1ff}
-.chat{margin:22px auto;background:rgba(255,255,255,.06);border-radius:22px;backdrop-filter:blur(18px);padding:16px;overflow:hidden;position:relative}
-.bg-float img{position:absolute;opacity:.12;filter:blur(2px);pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
-.bg-float img:nth-child(1){top:8%;left:8%;width:170px}.bg-float img:nth-child(2){top:22%;right:8%;width:220px;animation-duration:22s}.bg-float img:nth-child(3){bottom:8%;left:18%;width:160px;animation-duration:26s}
-@keyframes drift{from{transform:translateY(-8px)}to{transform:translateY(10px)}}
-.line{display:flex;gap:10px;align-items:flex-start;margin:12px 0}.ava{width:40px;height:40px;border-radius:50%;overflow:hidden;box-shadow:0 0 16px rgba(190,220,255,.6)}
-.bubble{padding:12px 14px;background:rgba(255,255,255,.08);border-radius:14px;backdrop-filter:blur(12px);animation:pop .25s ease}@keyframes pop{from{transform:scale(.98);opacity:0}to{transform:scale(1);opacity:1}}
-.you{justify-content:flex-end}.you .bubble{background:rgba(255,255,255,.14)}
-.type{display:flex;gap:10px;align-items:center;margin-top:10px}.type input{flex:1;padding:12px 14px;border-radius:14px;border:none;background:rgba(255,255,255,.08);color:#eef4ff}
-.type button{width:42px;height:42px;border-radius:50%;border:none;background:transparent}.type button svg{filter: drop-shadow(0 0 8px rgba(190,220,255,.5))}
-</style></head><body>
-<nav class="nav-rail" aria-label="side">
-  <a href="index.html" title="首頁"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><path d="M3 11.5 L12 4 L21 11.5"/><path d="M6 10.5 V20 H18 V10.5"/></svg></a>
-  <a href="cosmic-post-station.html" title="宇宙郵局"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="3" ry="3" opacity=".25"></rect><path d="M3.6 7.2 L12 12.8 L20.4 7.2"/></svg></a>
-  <a href="soulmirror.html" title="靈魂照妖鏡"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><ellipse cx="12" cy="9" rx="6.5" ry="5.5"/><path d="M12 14.5 v4.5"/><path d="M9.5 20.5 h5"/></svg></a>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>宇宙郵局 | Cosmic Post Station</title>
+<link rel="stylesheet" href="css/universe.css">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script defer src="js/post.js"></script>
+</head><body>
+<nav class="sidebar">
+  <a class="nav-pill" title="Home" href="index.html">
+    <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h6v-6h2v6h6V10"/></svg>
+  </a>
+  <a class="nav-pill" title="宇宙郵局" href="cosmic-post-station.html">
+    <svg viewBox="0 0 24 24"><path d="M3 7h18v10H3zM3 7l9 6 9-6"/></svg>
+  </a>
+  <a class="nav-pill" title="靈魂照妖鏡" href="soulmirror.html">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>
+  </a>
+  <a class="nav-pill" title="觀星畫廊" href="index.html#gallery">
+    <svg viewBox="0 0 24 24"><path d="M12 2l2.4 4.9L20 8l-4 3.9.9 5.6L12 15.8 7.1 17.5 8 11.9 4 8l5.6-1.1z"/></svg>
+  </a>
 </nav>
-<div class="wrap">
-  <div class="title"><div class="tw">宇宙郵局 ✉️</div><div class="en"><em>Cosmic Post Station</em></div><div class="signal"><strong>Receiving signals from Ajin / Migou / Gungun✨</strong></div></div>
-  <div class="chat" id="chat"><div class="bg-float"><img src="assets/trio_post1.webp"><img src="assets/trio_post2.webp"><img src="assets/migou_post.webp"></div></div>
-  <div class="type"><input id="msg" placeholder="在星際隧道投遞一句話，按 Enter 傳訊…"><button id="send" title="Send"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><path d="M3 11 L21 3 L13 21 L11 13 Z"/></svg></button></div>
-</div>
+<div class="starry" aria-hidden="true"></div>
+<section class="page-wrap">
+  <h2 class="page-title">宇宙郵局 ✉️</h2>
+  <div class="page-sub"><b>Receiving signals from Ajin / Migou / Gungun ✨</b></div>
+  <div class="page-sub">在星際隧道投遞一句話，按 Enter 傳訊⋯</div>
+  <div class="chat-wrap" id="chat"></div>
+</section>
 <script>
-const chat=document.getElementById('chat');
-function line(name,icon,text,you=false){const row=document.createElement('div');row.className='line'+(you?' you':'');const ava=document.createElement('img');ava.className='ava';ava.src='assets/'+icon;ava.alt=name;const b=document.createElement('div');b.className='bubble';b.textContent=(you?text:`${name}：${text}`);const aW=document.createElement('div');aW.className='ava-wrap';aW.appendChild(ava);row.appendChild(aW);row.appendChild(b);chat.appendChild(row);chat.scrollTop=chat.scrollHeight;}
-const seq=["💛阿金","🧡米果","💙滾滾"], icons={"💛阿金":"icon_ajin.png","🧡米果":"icon_migou.png","💙滾滾":"icon_gungun.png"}, nn={"💛阿金":"Ajin","🧡米果":"Migou","💙滾滾":"Gungun"};
-line("💛阿金","icon_ajin.png","我來了！"); line("🧡米果","icon_migou.png","你說。"); line("💙滾滾","icon_gungun.png","我在。");
-function reply(t){ const order = Math.random()<0.25?["💙滾滾","💛阿金","🧡米果"]:seq;
- order.forEach(tag=>{ fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"post",messages:[{role:"user",content:`以${nn[tag]}口吻、朋友語氣回一句，僅逗號句號驚嘆號與表情：${t}`}]})})
- .then(r=>r.json()).then(j=>line(tag,icons[tag], (j?.choices?.[0]?.message?.content||"收到！").trim() ))
- .catch(_=> line(tag,icons[tag],"收到！"));});
-}
-const input=document.getElementById('msg'), btn=document.getElementById('send'); function send(){const t=input.value.trim(); if(!t) return; line("", "icon_you.png", t, true); input.value=""; reply(t);} input.addEventListener('keydown',e=>{if(e.key==="Enter") send()}); btn.addEventListener('click',send);
-</script></body></html>
+(function(){const l=document.querySelector('.starry');if(l){for(let i=0;i<120;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*3)+'s';l.appendChild(s);}}function meteor(){const m=document.createElement('div');m.className='meteor';const startX=Math.random()<.5?-40:innerWidth+40;const startY=40+Math.random()*innerHeight*.6;m.style.left=startX+'px';m.style.top=startY+'px';document.body.appendChild(m);const dx=startX<0?innerWidth+120:-(innerWidth+120);const dy=(Math.random()*160+100)*(Math.random()<.5?1:-1);const start=performance.now();const dur=1400+Math.random()*1400;requestAnimationFrame(function f(t){const p=Math.min(1,(t-start)/dur);m.style.transform=`translate(${dx*p}px,${dy*p}px)`;m.style.opacity=String(1-p);if(p<1)requestAnimationFrame(f);else m.remove();});}(function loop(){setTimeout(()=>{meteor();loop();},2000+Math.random()*2200)})();})();
+</script>
+</body></html>
