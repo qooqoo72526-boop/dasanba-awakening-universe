@@ -1,22 +1,43 @@
-<!doctype html>
-<html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AJIN 的星艦房間</title>
-<link href="../css/universe.css" rel="stylesheet" />
-<style>.wrap{padding-top:120px} .room{width:min(860px,92vw);margin:0 auto;text-align:center}
-.vidwrap{width:min(420px,68vw);margin:0 auto 12px;border-radius:26px;overflow:hidden;box-shadow:0 14px 30px rgba(0,0,0,.28)}
-video{width:100%;height:auto;aspect-ratio:9/16;object-fit:cover}</style></head>
-<body>
-<canvas id="starfield"></canvas><canvas id="meteors"></canvas>
-<nav class="nav">
-  <a href="../index.html" title="Home"><span class="icon home"></span></a>
-  <a href="../cosmic-post-station.html" title="宇宙郵局"><span class="icon mail"></span></a>
-  <a href="../soulmirror.html" title="靈魂照妖鏡"><span class="icon mirror"></span></a>
-  <a href="../index.html#gallery" title="觀星畫廊"><span class="icon gallery"></span></a>
-</nav>
-<div class="wrap"><section class="room">
-  <div class="vidwrap"><video src="../assets/ajin_5s.mp4" autoplay muted playsinline loop></video></div>
-  <div class="note" style="text-align:center;font-size:12px;opacity:.9">5s 直式循環、已自動校正；點左側導覽可返回。</div>
-</section></div>
-<script src="../js/main.js"></script>
-</body></html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AJIN｜星艦房間</title>
+  <link rel="stylesheet" href="../universe.css" />
+</head>
+<body data-universe="home">
+  <div class="stars" id="stars"></div>
+  <div class="meteor" style="animation-delay:1.4s"></div>
+  <div class="meteor" style="animation-delay:4.1s; transform: scale(.92) rotate(-10deg)"></div>
+
+  <nav class="left-dock">
+    <a href="../index.html" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h6V14h2v6h6V10"/></svg>
+      Home
+    </a>
+    <a href="../cosmic-post-station.html" title="宇宙郵局">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
+      Post
+    </a>
+    <a href="../soulmirror.html" title="靈魂照妖鏡">
+      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 1 6 6v6a6 6 0 0 1-12 0V9a6 6 0 0 1 6-6z"/></svg>
+      Mirror
+    </a>
+  </nav>
+
+  <div class="hero-wrap" style="max-width:520px">
+    <div class="hero">
+      <video src="../assets/ajin_5s.mp4" autoplay muted playsinline loop></video>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="en">AWAKENING ISN’T REPAIRING — IT’S REBIRTH.</div>
+    <div class="tw">「覺醒；不是修復，而是重生。」</div>
+    <div class="tw">「不必學飛，你只是忘了自己有翅膀。」</div>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>

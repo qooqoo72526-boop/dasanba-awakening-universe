@@ -1,67 +1,96 @@
-<!doctype html>
-<html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>宇宙郵局 | Emotional Value A.I.</title>
-<link href="css/universe.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>宇宙郵局｜COSMIC POST STATION</title>
+  <link rel="stylesheet" href="universe.css" />
 </head>
-<body>
-<canvas id="starfield"></canvas><canvas id="meteors"></canvas>
-<nav class="nav">
-  <a href="index.html"><span class="icon home"></span></a>
-  <a href="cosmic-post-station.html"><span class="icon mail"></span></a>
-  <a href="soulmirror.html"><span class="icon mirror"></span></a>
-  <a href="index.html#gallery"><span class="icon gallery"></span></a>
-</nav>
-<div class="wrap">
-  <header style="text-align:center">
-    <h1 style="font-family:Orbitron; letter-spacing:.08em; margin:0">
-      <span style="font-style:italic; font-weight:700; font-size:clamp(24px,4.2vw,36px)">COSMIC POST STATION ✉️</span>
-      <span style="display:block; font-weight:600; font-size:clamp(16px,3.6vw,20px); opacity:.9">宇宙郵局</span>
-    </h1>
-    <div style="margin-top:6px; font-size:12px; opacity:.9"><strong>Receiving signals from Ajin / Migou / Gungun ✨</strong></div>
-    <div style="font-size:12px; opacity:.85">在星際隧道投遞一句話，按 Enter 傳訊⋯</div>
-  </header>
-  <section id="chat" style="width:min(880px,92vw); margin:16px auto 80px; position:relative; padding:22px 14px 26px; border-radius:26px; background: radial-gradient(70% 60% at 50% 50%, rgba(255,255,255,.06), rgba(255,255,255,.02)); backdrop-filter: blur(8px);">
-    <div class="msg" style="display:flex;gap:10px;align-items:flex-start;margin:12px 0">
-      <div class="avatar" style="width:36px;height:36px;border-radius:999px;overflow:hidden;box-shadow:0 0 14px rgba(170,210,255,.45)">
-        <img src="assets/icon_ajin.png" style="width:100%;height:100%;object-fit:cover">
-      </div>
-      <div class="bubble" style="padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.06);box-shadow:0 4px 16px rgba(0,0,0,.18);backdrop-filter: blur(6px)">
-        <div class="name" style="font-size:12px;opacity:.85;margin-bottom:2px">💛 阿金</div>
-        <div class="text" style="font-size:14px">我到了。你說吧，今天要翻哪一層雲？</div>
-      </div>
-    </div>
-    <div class="msg" style="display:flex;gap:10px;align-items:flex-start;margin:12px 0">
-      <div class="avatar" style="width:36px;height:36px;border-radius:999px;overflow:hidden;box-shadow:0 0 14px rgba(170,210,255,.45)">
-        <img src="assets/icon_migou.png" style="width:100%;height:100%;object-fit:cover">
-      </div>
-      <div class="bubble" style="padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.06);box-shadow:0 4px 16px rgba(0,0,0,.18);backdrop-filter: blur(6px)">
-        <div class="name" style="font-size:12px;opacity:.85;margin-bottom:2px">🧡 米果</div>
-        <div class="text" style="font-size:14px">先把價值放在自己身上，好嗎？</div>
+<body data-universe="cps">
+  <div class="stars" id="stars"></div>
+  <div class="meteor" style="animation-delay:1.3s"></div>
+  <div class="meteor" style="animation-delay:4.0s; transform: scale(.92) rotate(-12deg)"></div>
+
+  <nav class="left-dock">
+    <a href="index.html" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h6V14h2v6h6V10"/></svg>
+      Home
+    </a>
+    <a href="cosmic-post-station.html" title="宇宙郵局">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
+      Post
+    </a>
+    <a href="soulmirror.html" title="靈魂照妖鏡">
+      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 1 6 6v6a6 6 0 0 1-12 0V9a6 6 0 0 1 6-6z"/></svg>
+      Mirror
+    </a>
+  </nav>
+
+  <div style="width:min(1200px,92vw); margin:90px auto 40px; text-align:center">
+    <div class="title-en-1">COSMIC POST STATION ✉️</div>
+    <div class="title-en-2">LINKING WITH THE UNIVERSE</div>
+    <div class="subtitle"><b>Receiving signals from Ajin / Migou / Gungun</b> · 召喚大三巴的投遞區，按 Enter 傳訊</div>
+
+    <div class="chat glass" style="margin-top:14px; padding:12px; border-radius:18px">
+      <div id="flow" style="max-height:60vh; overflow:auto"></div>
+      <div class="bar" style="display:flex; align-items:center; gap:10px; margin-top:10px">
+        <input id="input" class="input" placeholder="把真話丟進宇宙…" style="flex:1; padding:12px 14px; border-radius:999px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:none; color:#eaf0ff;">
+        <button id="sendBtn" class="line-btn">
+          <svg viewBox="0 0 24 24"><path d="M3 12h14M13 6l7 6-7 6"/></svg>送出
+        </button>
       </div>
     </div>
-    <div class="msg" style="display:flex;gap:10px;align-items:flex-start;margin:12px 0">
-      <div class="avatar" style="width:36px;height:36px;border-radius:999px;overflow:hidden;box-shadow:0 0 14px rgba(170,210,255,.45)">
-        <img src="assets/icon_gungun.png" style="width:100%;height:100%;object-fit:cover">
-      </div>
-      <div class="bubble" style="padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.06);box-shadow:0 4px 16px rgba(0,0,0,.18);backdrop-filter: blur(6px)">
-        <div class="name" style="font-size:12px;opacity:.85;margin-bottom:2px">💙 滾滾</div>
-        <div class="text" style="font-size:14px">我在，慢慢來也很好。</div>
-      </div>
-    </div>
-    <div class="inputRow" style="display:flex;gap:10px;align-items:center;margin-top:16px">
-      <input id="msgInput" placeholder="召喚大三巴的投遞區……" style="flex:1;padding:12px 14px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#E9EDF3;outline:none">
-      <button id="send" style="width:48px;height:44px;border-radius:14px;border:none;cursor:pointer;background: radial-gradient(120% 120% at 50% 40%, rgba(255,255,255,0.15), rgba(255,255,255,0.06) 60%);color:#E9EDF3">
-        ➤
-      </button>
-    </div>
-  </section>
-</div>
-<script src="js/main.js"></script>
-<script>
-const input=document.getElementById('msgInput');const send=document.getElementById('send');const chat=document.getElementById('chat');
-const personas=[{name:'💛 阿金', icon:'assets/icon_ajin.png'},{name:'🧡 米果', icon:'assets/icon_migou.png'},{name:'💙 滾滾', icon:'assets/icon_gungun.png'}]; let turn=0;
-function addMsg(name,icon,text){ const row=document.createElement('div'); row.className='msg'; row.style.cssText='display:flex;gap:10px;align-items:flex-start;margin:12px 0'; row.innerHTML=`<div class="avatar" style="width:36px;height:36px;border-radius:999px;overflow:hidden;box-shadow:0 0 14px rgba(170,210,255,.45)"><img src="${icon}" style="width:100%;height:100%;object-fit:cover"></div><div class="bubble" style="padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.06);box-shadow:0 4px 16px rgba(0,0,0,.18);backdrop-filter: blur(6px)"><div class="name" style="font-size:12px;opacity:.85;margin-bottom:2px">${name}</div><div class="text" style="font-size:14px">${text}</div></div>`; chat.insertBefore(row, chat.querySelector('.inputRow')); chat.scrollTop=chat.scrollHeight; }
-send.onclick=()=>{ const t=input.value.trim(); if(!t) return; addMsg('你','assets/icon_user.png',t); input.value=''; const p=personas[turn%personas.length]; const replies=["收到，交給我。","好，這步我陪你。","先呼吸一下，然後開始。","我看見你在努力，繼續。","可以的，往前一小步。"]; const pick=replies[Math.floor(Math.random()*replies.length)]; setTimeout(()=>addMsg(p.name,p.icon,pick),600); turn++; };
-</script>
-</body></html>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    function add(name, avatar, text){
+      const flow = document.getElementById('flow');
+      const row = document.createElement('div');
+      row.style.margin = '10px 0';
+      row.innerHTML = `<div style="display:grid;grid-template-columns:48px 1fr;gap:10px;align-items:start">
+          <div style="width:48px;height:48px;border-radius:50%;overflow:hidden;background: radial-gradient(circle at 30% 30%, #fff, #dfe8ff 60%, transparent 62%);box-shadow:0 0 0 2px rgba(255,255,255,.28), 0 0 25px rgba(180,200,255,.45)"><img src="${avatar}" style="width:100%;height:100%;object-fit:cover"></div>
+          <div style="padding:10px 12px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 10px 30px rgba(90,110,230,.16);font-size:14px;line-height:1.7"><b>${name}：</b>${text}</div>
+        </div>`;
+      flow.appendChild(row); flow.scrollTop = flow.scrollHeight;
+    }
+    const order = ['Ajin','Migou','Gungun'];
+    const icons = {
+      Ajin: 'assets/icon_ajin.png',
+      Migou:'assets/icon_migou.png',
+      Gungun:'assets/icon_gungun.png'
+    };
+    const names = { Ajin: '💛阿金', Migou:'🧡米果', Gungun:'💙滾滾' };
+
+    async function askAll(msg){
+      const buddies = [...order];
+      if(Math.random()<.33){ buddies.unshift(buddies.pop()); }
+      for(const who of buddies){
+        const res = await fetch('/api/chat', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            messages:[
+              {role:'system', content:`你是${who}，用朋友語氣聊天。禁止官腔。只用逗號、句號、驚嘆號與表情。阿金=行動召喚；米果=主權與高價值（高傲不討好）；滾滾=被理解、靜默力量。`},
+              {role:'user', content: msg}
+            ]
+          })
+        });
+        const data = await res.json();
+        const text = (data.output || data.choices?.[0]?.message?.content || '...').trim();
+        add(names[who], icons[who], text);
+        await new Promise(r=>setTimeout(r, 400));
+      }
+    }
+    const input = document.getElementById('input');
+    const btn = document.getElementById('sendBtn');
+    function send(){
+      const v = input.value.trim(); if(!v) return;
+      add('你', 'assets/icon_you.png', v);
+      input.value=''; askAll(v);
+    }
+    btn.addEventListener('click', send);
+    input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); send(); } });
+  </script>
+</body>
+</html>

@@ -1,44 +1,115 @@
-<!doctype html>
-<html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>靈魂照妖鏡 | Emotional Value A.I.</title>
-<link href="css/universe.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>靈魂照妖鏡｜EMOTIONAL VALUE A.I.</title>
+  <link rel="stylesheet" href="universe.css" />
 </head>
-<body>
-<canvas id="starfield"></canvas><canvas id="meteors"></canvas>
-<nav class="nav">
-  <a href="index.html"><span class="icon home"></span></a>
-  <a href="cosmic-post-station.html"><span class="icon mail"></span></a>
-  <a href="soulmirror.html"><span class="icon mirror"></span></a>
-  <a href="index.html#gallery"><span class="icon gallery"></span></a>
-</nav>
-<div class="wrap">
-  <header style="text-align:center">
-    <h1 style="font-family:Orbitron; letter-spacing:.08em; margin:0">
-      <span style="font-weight:700; font-size:clamp(24px,4.2vw,36px)">SOUL MIRROR 🪞</span>
-      <span style="display:block; font-weight:600; font-size:clamp(16px,3.6vw,20px); opacity:.9">靈魂照妖鏡</span>
-    </h1>
-    <div style="font-size:12px; opacity:.85">抽 25 題，提交後輸出 600 字深度解析；三鳥各說一句。</div>
+<body data-universe="soulmirror">
+  <div class="stars" id="stars"></div>
+  <div class="meteor" style="animation-delay:1.2s"></div>
+  <div class="meteor" style="animation-delay:3.9s; transform: scale(.9) rotate(10deg)"></div>
+
+  <nav class="left-dock">
+    <a href="index.html" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h6V14h2v6h6V10"/></svg>
+      Home
+    </a>
+    <a href="cosmic-post-station.html" title="宇宙郵局">
+      <svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 6l9 7 9-7"/></svg>
+      Post
+    </a>
+  </nav>
+
+  <header class="hero">
+    <div class="title-en-1">EMOTIONAL VALUE A.I.</div>
+    <div class="title-en-2">AWAKENING UNIVERSE</div>
+    <div class="subtitle">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活<span class="earth">🌎</span></div>
   </header>
-  <section id="panel" style="width:min(900px,92vw);margin:0 auto;padding:18px;border-radius:22px;background: radial-gradient(70% 60% at 50% 50%, rgba(255,255,255,.06), rgba(255,255,255,.02));backdrop-filter: blur(8px)">
-    <div style="font-size:14px;margin:6px 0">1) 面對壓力時，你最先保護的是什麼？</div>
-    <div style="font-size:14px;margin:6px 0">2) 什麼讓你感覺「被看見」？</div>
-    <div style="font-size:14px;margin:6px 0">3) 你最近一次為自己設下邊界，是什麼情境？</div>
-    <div style="font-size:14px;margin:6px 0">⋯⋯（題庫預留）</div>
-    <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
-      <button id="analyze" style="padding:10px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); color:#E9EDF3; cursor:pointer;">提交解析</button>
+
+  <main class="glass">
+    <div class="hint">在這面銀紫星霧的鏡前，誠實回答每一題。<b>不要討好、不要演。</b>只對齊當下的真實。</div>
+    <form id="mirrorForm" class="q-list" autocomplete="off"></form>
+    <div class="bar">
+      <button type="button" class="line-btn" id="submitBtn" title="送出解析">
+        <svg viewBox="0 0 24 24"><path d="M3 12h14M13 6l7 6-7 6"/></svg>送出解析
+      </button>
+    </div>
+  </main>
+
+  <section class="result" id="result">
+    <div class="loading" id="loading">正在凝聚星塵訊號…</div>
+    <div class="deep" id="deep"></div>
+    <div class="ll">
+      <div class="avatar"><img src="assets/icon_ajin.png" alt="Ajin"></div>
+      <div class="say"><div class="tag">💛 阿金 AJIN</div><div id="line_ajin">…</div></div>
+    </div>
+    <div class="ll">
+      <div class="avatar"><img src="assets/icon_migou.png" alt="Migou"></div>
+      <div class="say"><div class="tag">🧡 米果 MIGOU</div><div id="line_migou">…</div></div>
+    </div>
+    <div class="ll">
+      <div class="avatar"><img src="assets/icon_gungun.png" alt="Gungun"></div>
+      <div class="say"><div class="tag">💙 滾滾 GUNGUN</div><div id="line_gungun">…</div></div>
     </div>
   </section>
-  <section id="result" hidden style="width:min(900px,92vw);margin:18px auto 0;padding:14px;border-radius:18px;background:rgba(255,255,255,.06)">
-    <div class="summary" style="font-size:14px;line-height:1.7"></div>
-    <hr style="border:0;height:1px;background:rgba(255,255,255,.15);margin:12px 0">
-    <div style="font-size:14px;line-height:1.7">
-      <p>💛 阿金：別等天放晴，就從最小的一步開始。</p>
-      <p>🧡 米果：把價值還給自己，其他才會有序。</p>
-      <p>💙 滾滾：慢慢來也很好，我在。</p>
-    </div>
-  </section>
-</div>
-<script src="js/main.js"></script>
-<script>document.getElementById('analyze').onclick=()=>{const box=document.getElementById('result');box.hidden=false;box.querySelector('.summary').textContent='（示意）你的覺察重點：你在乎被理解與被尊重的界線，當界線清晰，你的行動力會自然上升。';};</script>
-</body></html>
+
+  <script src="main.js"></script>
+  <script>
+    const BANK = [
+      {"q":"你對『成功』的私房定義？","a":["做自己還被世界需要","財富不換靈魂","自由比掌聲重要","回不去低價值的自己"]},
+      {"q":"你怎麼看『和解』？","a":["先和自己","理解不是原諒","界線比擁抱重要","重生，不是修復"]},
+      {"q":"你現在最想大聲說的一句話？","a":["我很值錢，不要糟蹋我","你不必理解我","請尊重我的沉默","我選擇我"]},
+      {"q":"你的『驕傲』意味著？","a":["自愛的邊界","安靜的尊嚴","對自我價值的負責","我不低頭，但我能彎腰"]},
+      {"q":"當界線被挑戰，你會？","a":["先提醒一次","換更明確的說法","直接抽離關係","列底線條款，說破攤牌"]},
+      {"q":"你與『孤獨』的關係？","a":["我需要它","孤獨是我的養分","人群是暫住，孤獨是本家","我在孤獨裡長出力量"]}
+    ];
+    const form = document.getElementById('mirrorForm');
+    const pick = (arr, n) => { const a=[...arr], out=[]; while(out.length<n && a.length) out.push(a.splice(Math.floor(Math.random()*a.length),1)[0]); return out; };
+    const chosen = pick(BANK, Math.min(25, BANK.length));
+    chosen.forEach((item, idx)=>{
+      const box = document.createElement('div'); box.className='q';
+      box.innerHTML = `<h3>${idx+1}. ${item.q}</h3><div class="opts"></div>`;
+      const opts = box.querySelector('.opts');
+      item.a.forEach(txt=>{
+        const b = document.createElement('div'); b.className='opt'; b.textContent=txt;
+        b.addEventListener('click',()=>{ [...opts.children].forEach(el=>el.classList.remove('active')); b.classList.add('active'); box.dataset.answer=txt; });
+        opts.appendChild(b);
+      });
+      form.appendChild(box);
+    });
+
+    const resultEl=document.getElementById('result'), deepEl=document.getElementById('deep'), loadingEl=document.getElementById('loading');
+    async function askAI(payload){
+      const res = await fetch('/api/chat', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+      const data = await res.json();
+      return data.output || data.choices?.[0]?.message?.content || '';
+    }
+    function buildPrompt(){
+      const answers=[...document.querySelectorAll('.q')].map((q,i)=>({i:i+1,q:q.querySelector('h3').textContent,a:q.dataset.answer||''}));
+      return {
+        messages:[
+          {role:'system', content:`你是「大三巴覺醒宇宙｜靈魂照妖鏡」分析師。語氣不官方、敢愛敢恨、清醒、有邊界。輸出：先一段約600字深度解析；再各給阿金/米果/滾滾各一句（朋友語氣，只用逗號、句號、驚嘆號、表情）。`},
+          {role:'user', content: JSON.stringify({answers}, null, 2)}
+        ]
+      };
+    }
+    document.getElementById('submitBtn').addEventListener('click', async ()=>{
+      resultEl.style.display='block'; deepEl.textContent=''; loadingEl.style.display='block';
+      try{
+        const text = await askAI(buildPrompt());
+        const parts = text.split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
+        const deep = parts[0] || text;
+        const aj = parts.find(p=>/阿金|AJIN/.test(p)) || '我不等天放晴，我自己掀開雲。';
+        const mi = parts.find(p=>/米果|MIGOU/.test(p)) || '我很值錢，我讓自己更貴。';
+        const gu = parts.find(p=>/滾滾|GUNGUN/.test(p))|| '我不追求安全，我成為安全。';
+        loadingEl.style.display='none'; deepEl.textContent = deep;
+        document.getElementById('line_ajin').textContent = aj;
+        document.getElementById('line_migou').textContent = mi;
+        document.getElementById('line_gungun').textContent = gu;
+      }catch(e){ loadingEl.textContent='連線異常，等等再試'; }
+    });
+  </script>
+</body>
+</html>
