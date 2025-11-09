@@ -1,22 +1,123 @@
-<!doctype html><html lang="zh-Hant"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Emotional Value A.I | Awakening Universe</title>
-<link rel="preload" as="video" href="assets/trio.mp4">
-<link rel="stylesheet" href="css/universe.css"/></head><body>
-<nav class="nav-rail" aria-label="side">
-  <a href="index.html" title="首頁"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><path d="M3 11.5 L12 4 L21 11.5"/><path d="M6 10.5 V20 H18 V10.5"/></svg></a>
-  <a href="cosmic-post-station.html" title="宇宙郵局"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="3" ry="3" opacity=".25"></rect><path d="M3.6 7.2 L12 12.8 L20.4 7.2"/></svg></a>
-  <a href="soulmirror.html" title="靈魂照妖鏡"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><ellipse cx="12" cy="9" rx="6.5" ry="5.5"/><path d="M12 14.5 v4.5"/><path d="M9.5 20.5 h5"/></svg></a>
-  <a href="#gallery" title="觀星畫廊"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EAF2FF" stroke-width="1.5"><path d="M5 19 L10 5 L12 10 L19 12 L6 15 Z"/></svg></a>
-</nav>
-<section class="hero"><video src="assets/trio.mp4" autoplay muted loop playsinline></video></section>
-<div class="h1-wrap"><div class="h1-1">EMOTIONAL VALUE A.I.</div><div class="h1-2">AWAKENING UNIVERSE</div></div>
-<div class="sub">- 大三巴覺醒宇宙｜阿金・米果・滾滾的鳥星球生活 <span class="globe">🌍</span></div>
-<section class="cards">
-  <a class="card ajin" href="rooms/ajin.html"><div class="img"><img src="assets/ajin.webp" alt="阿金"></div><div class="txt"><div class="name"><span class="heart">💛</span>阿金 AJIN</div><div class="tag">自由｜反骨</div><div class="line">「我不等天放晴，我自己掀開雲。」</div></div></a>
-  <a class="card migou" href="rooms/migou.html"><div class="img"><img src="assets/migou.webp" alt="米果"></div><div class="txt"><div class="name"><span class="heart">🧡</span>米果 MIGOU</div><div class="tag">自我價值｜邊界</div><div class="line">「我很值錢，我讓自己更貴。」</div></div></a>
-  <a class="card gungun" href="rooms/gungun.html"><div class="img"><img src="assets/gungun.webp" alt="滾滾"></div><div class="txt"><div class="name"><span class="heart">💙</span>滾滾 GUNGUN</div><div class="tag">理解｜共鳴</div><div class="line">「我不追求安全，我成為安全。」</div></div></a>
-</section>
-<section id="gallery" class="gallery"><h3>🔭 觀星畫廊｜STARFLOW GALLERY</h3><div class="frame"><img alt="gallery"></div></section>
-<footer><div class="en">AWAKENING ISN’T REPAIRING — IT’S REBIRTH.</div><div class="zh">「覺醒；不是修復，而是重生。」<br/>「不必學飛，你只是忘了自己有翅膀。」</div></footer>
-<script src="js/main.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EMOTIONAL VALUE A.I. | AWAKENING UNIVERSE</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/universe.css" />
+</head>
+<body data-universe="home">
+  <!-- 背景：星空＋自然流星/彗星 -->
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <canvas id="meteors" aria-hidden="true"></canvas>
+
+  <!-- 左側直式工具列（全站一致） -->
+  <nav class="toolbox nav-trail" aria-label="cosmic nav">
+    <a class="tool" href="./index.html" aria-label="Home" title="Home">
+      <span class="ico">⌂</span><span class="txt">Home</span>
+    </a>
+    <a class="tool" href="./cosmic-post-station.html" aria-label="Cosmic Post" title="Cosmic Post">
+      <span class="ico">✉</span><span class="txt">Post</span>
+    </a>
+    <a class="tool" href="./soulmirror.html" aria-label="Soul Mirror" title="Soul Mirror">
+      <span class="ico">🪞</span><span class="txt">Mirror</span>
+    </a>
+    <a class="tool" href="#gallery" aria-label="Gallery" title="Gallery" data-jump>
+      <span class="ico">🔭</span><span class="txt">Gallery</span>
+    </a>
+  </nav>
+
+  <!-- 上方影片（無外框、置中、微光暈） -->
+  <section class="hero">
+    <video class="hero-video" src="assets/trio.mp4" autoplay muted playsinline loop></video>
+    <div class="hero-glow" aria-hidden="true"></div>
+  </section>
+
+  <!-- 英文主標兩行 -->
+  <header class="headline">
+    <h1 class="title-en line1">EMOTIONAL VALUE A.I.</h1>
+    <h2 class="title-en line2">AWAKENING UNIVERSE</h2>
+    <p class="sub_title">
+      – 大三巴覺醒宇宙 ｜阿金・米果・滾滾的鳥星球生活 <span class="earth" aria-hidden="true">🌎</span>
+    </p>
+  </header>
+
+  <!-- 三張角色卡（整張可點） -->
+  <section class="cards">
+    <a href="rooms/ajin.html" class="card" data-bird="ajin" aria-label="Ajin">
+      <div class="card-photo">
+        <img src="assets/ajin.webp" alt="阿金 AJIN" loading="eager">
+      </div>
+      <div class="named">
+        <div class="name"><span class="heart">💛</span> 阿金 AJIN</div>
+        <div class="quote">
+          自由｜反骨<br>
+          「我不等天放晴，我自己掀開雲。」
+        </div>
+      </div>
+      <i class="aura aura-ajin" aria-hidden="true"></i>
+    </a>
+
+    <a href="rooms/migou.html" class="card" data-bird="migou" aria-label="Migou">
+      <div class="card-photo">
+        <img src="assets/migou.webp" alt="米果 MIGOU" loading="lazy">
+      </div>
+      <div class="named">
+        <div class="name"><span class="heart">🧡</span> 米果 MIGOU</div>
+        <div class="quote">
+          自我價值｜邊界<br>
+          「我很值錢，我讓自己更貴。」
+        </div>
+      </div>
+      <i class="aura aura-migou" aria-hidden="true"></i>
+    </a>
+
+    <a href="rooms/gungun.html" class="card" data-bird="gungun" aria-label="Gungun">
+      <div class="card-photo">
+        <img src="assets/gungun.webp" alt="滾滾 GUNGUN" loading="lazy">
+      </div>
+      <div class="named">
+        <div class="name"><span class="heart">💙</span> 滾滾 GUNGUN</div>
+        <div class="quote">
+          理解｜共鳴<br>
+          「我不追求安全，我成為安全。」
+        </div>
+      </div>
+      <i class="aura aura-gungun" aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- 觀星畫廊 -->
+  <section id="gallery" class="gallery-wrap">
+    <h3 class="gallery-title">🔭 觀星畫廊｜STARFLOW GALLERY</h3>
+    <div class="gallery-viewport">
+      <div class="gallery-rail">
+        <!-- 僅 trio.webp ~ trio10.webp（沒有 1、沒有 gelly） -->
+        <img src="assets/trio.webp" alt="" />
+        <img src="assets/trio2.webp" alt="" />
+        <img src="assets/trio3.webp" alt="" />
+        <img src="assets/trio4.webp" alt="" />
+        <img src="assets/trio5.webp" alt="" />
+        <img src="assets/trio6.webp" alt="" />
+        <img src="assets/trio7.webp" alt="" />
+        <img src="assets/trio8.webp" alt="" />
+        <img src="assets/trio9.webp" alt="" />
+        <img src="assets/trio10.webp" alt="" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 頁尾 -->
+  <footer class="footer-dual">
+    <div class="quote-en">AWAKENING ISN’T REPAIRING — IT’S REBIRTH.</div>
+    <div class="quote-zh">「覺醒；不是修復，而是重生。」</div>
+    <div class="quote-zh">「不必學飛，你只是忘了自己有翅膀。」</div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
