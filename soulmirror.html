@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="zh-Hant"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>靈魂照妖鏡 | Emotional Value A.I.</title>
+<link href="css/universe.css" rel="stylesheet" />
+</head>
+<body>
+<canvas id="starfield"></canvas><canvas id="meteors"></canvas>
+<nav class="nav">
+  <a href="index.html"><span class="icon home"></span></a>
+  <a href="cosmic-post-station.html"><span class="icon mail"></span></a>
+  <a href="soulmirror.html"><span class="icon mirror"></span></a>
+  <a href="index.html#gallery"><span class="icon gallery"></span></a>
+</nav>
+<div class="wrap">
+  <header style="text-align:center">
+    <h1 style="font-family:Orbitron; letter-spacing:.08em; margin:0">
+      <span style="font-weight:700; font-size:clamp(24px,4.2vw,36px)">SOUL MIRROR 🪞</span>
+      <span style="display:block; font-weight:600; font-size:clamp(16px,3.6vw,20px); opacity:.9">靈魂照妖鏡</span>
+    </h1>
+    <div style="font-size:12px; opacity:.85">抽 25 題，提交後輸出 600 字深度解析；三鳥各說一句。</div>
+  </header>
+  <section id="panel" style="width:min(900px,92vw);margin:0 auto;padding:18px;border-radius:22px;background: radial-gradient(70% 60% at 50% 50%, rgba(255,255,255,.06), rgba(255,255,255,.02));backdrop-filter: blur(8px)">
+    <div style="font-size:14px;margin:6px 0">1) 面對壓力時，你最先保護的是什麼？</div>
+    <div style="font-size:14px;margin:6px 0">2) 什麼讓你感覺「被看見」？</div>
+    <div style="font-size:14px;margin:6px 0">3) 你最近一次為自己設下邊界，是什麼情境？</div>
+    <div style="font-size:14px;margin:6px 0">⋯⋯（題庫預留）</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:12px">
+      <button id="analyze" style="padding:10px 14px; border-radius:14px; border:1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); color:#E9EDF3; cursor:pointer;">提交解析</button>
+    </div>
+  </section>
+  <section id="result" hidden style="width:min(900px,92vw);margin:18px auto 0;padding:14px;border-radius:18px;background:rgba(255,255,255,.06)">
+    <div class="summary" style="font-size:14px;line-height:1.7"></div>
+    <hr style="border:0;height:1px;background:rgba(255,255,255,.15);margin:12px 0">
+    <div style="font-size:14px;line-height:1.7">
+      <p>💛 阿金：別等天放晴，就從最小的一步開始。</p>
+      <p>🧡 米果：把價值還給自己，其他才會有序。</p>
+      <p>💙 滾滾：慢慢來也很好，我在。</p>
+    </div>
+  </section>
+</div>
+<script src="js/main.js"></script>
+<script>document.getElementById('analyze').onclick=()=>{const box=document.getElementById('result');box.hidden=false;box.querySelector('.summary').textContent='（示意）你的覺察重點：你在乎被理解與被尊重的界線，當界線清晰，你的行動力會自然上升。';};</script>
+</body></html>
