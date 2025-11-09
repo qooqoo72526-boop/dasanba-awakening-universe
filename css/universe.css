@@ -1,71 +1,128 @@
-/* ===== Universe Base (v10, silver-blue) ===== */
 :root{
-  --silver:#E9EDF3; --soft-silver:#C8D1E0; --glow-silver:rgba(230,240,255,0.9);
-  --ink:#0C1020; --ink-2:#0A0E1A; --ink-3:#08101E;
-  --blue:#91B8FF; --blue-deep:#3C6EE8; --cyan:#72D7FF;
-  --pink:#F3ABC8; --gold:#F7D26A;
-  --card-bg: rgba(255,255,255,0.06); --glass: rgba(255,255,255,0.08);
+  --silver:#eaf1ff; --silver-2:#dfe8ff; --white:#ffffff;
+  --blue-1:#cfe2ff; --blue-2:#a8c8ff; --blue-3:#86b0ff;
+  --glass: rgba(255,255,255,.08); --glass-2: rgba(255,255,255,.05);
+  --stroke: rgba(255,255,255,.32); --stroke-2: rgba(255,255,255,.18);
+  --txt: #eaf0ff; --txt-dim:#cfd7f3;
 }
-*{box-sizing:border-box} html,body{height:100%}
-body{
-  margin:0; color:var(--silver);
-  background: radial-gradient(1200px 700px at 50% 15%, rgba(255,255,255,0.35), transparent 60%),
-              radial-gradient(1800px 900px at 50% 65%, rgba(140,170,220,0.25), transparent 70%),
-              linear-gradient(180deg, #0b0f1c 0%, #0e1627 45%, #101a30 70%, #0b1222 100%);
-  overflow-x:hidden; font-family: "Noto Sans TC", system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+html,body{margin:0;padding:0;height:100%;font-family: "Noto Sans TC", ui-sans-serif, system-ui; color:var(--txt); background:#0b1224;}
+a{ color:inherit; text-decoration:none }
+
+/* Backgrounds */
+body[data-universe="home"]{
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(255,255,255,.84), rgba(232,240,255,.58) 22%, rgba(206,222,255,.34) 42%, rgba(168,188,255,.16) 62%, rgba(28,40,88,.08) 100%) fixed,
+    linear-gradient(180deg, #eaf2ff 0%, #cedeff 25%, #b8d0ff 45%, #98b7ff 72%, #7aa4ff 100%) fixed;
+  min-height:100svh; overflow-x:hidden;
 }
-#starfield,#meteors{position:fixed; inset:0; z-index:-2; pointer-events:none}
-#meteors{z-index:-1}
-.nav{ position:fixed; left:24px; top:24px; z-index:50; display:flex; flex-direction:column; gap:14px;}
-.nav a{ width:48px; height:48px; display:grid; place-items:center; border-radius:16px;
-  background: radial-gradient(120% 120% at 50% 40%, rgba(255,255,255,0.12), rgba(255,255,255,0.04) 60%);
-  text-decoration:none; color:var(--silver); transition: transform .25s, box-shadow .25s; backdrop-filter: blur(6px);
+body[data-universe="cps"]{
+  background:
+    radial-gradient(1400px 780px at 50% -12%, rgba(255,255,255,.86), rgba(230,238,255,.60) 22%, rgba(206,220,255,.35) 42%, rgba(170,190,255,.16) 62%, rgba(40,60,120,.10) 100%) fixed,
+    linear-gradient(180deg, #dfe9ff 0%, #bfd2ff 40%, #94b4ff 100%) fixed;
+  min-height:100svh; overflow-x:hidden;
 }
-.nav a:hover{ transform: translateY(-2px); box-shadow:0 0 24px rgba(160,200,255,.35) }
-.icon{ position:relative; width:22px; height:22px; }
-.icon::before,.icon::after{ content:""; position:absolute; inset:0; border-radius:999px }
-.icon.mail::before{ border:1.5px solid currentColor; border-radius:8px; transform:skewX(-2deg)}
-.icon.mail::after{ width:100%; height:1.5px; background:currentColor; top:50%; left:0; transform:translateY(-50%); clip-path: polygon(0 0, 50% 100%, 100% 0) }
-.icon.mirror::before{ border:1.5px solid currentColor; border-radius:50px }
-.icon.mirror::after{ left:4px; top:3px; width:60%; height:30%; border-top:1.5px solid currentColor; border-radius:50px; transform: rotate(-10deg) }
-.icon.gallery::before{ border:1.5px solid currentColor; border-radius:6px }
-.icon.gallery::after{ bottom:4px; left:4px; width:60%; height:35%; border-left:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:skewX(-10deg) }
-.icon.home::before{ border:1.5px solid currentColor; border-radius:6px; clip-path: polygon(50% 0, 100% 35%, 100% 100%, 0 100%, 0 35%) }
-.icon.jump::before{ border:1.5px solid currentColor; border-radius:12px; box-shadow: 0 0 18px rgba(160,200,255,.35) inset }
-.icon.jump::after{ left:50%; top:50%; width:2px; height:16px; background:linear-gradient(to bottom, rgba(255,255,255,.8), rgba(120,170,255,.4)); transform:translate(-50%,-50%) }
-.wrap{ width:100%; max-width:1200px; margin:0 auto; padding:96px 24px 120px }
-.hero{ display:flex; flex-direction:column; align-items:center; gap:22px; margin-top:24px }
-.hero video{ width:min(980px, 92vw); aspect-ratio:16/9; object-fit:cover; border-radius:24px; border:none; filter: drop-shadow(0 10px 30px rgba(140,170,220,.28)) }
-.h1{ margin-top:8px; text-align:center; line-height:1.12; letter-spacing:.06em }
-.h1 .l1{ font-size: clamp(32px, 6vw, 56px); background: linear-gradient(180deg, #ffffff, #cfe3ff 70%);
-  -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow: 0 0 24px rgba(160,200,255,.28); font-weight:700 }
-.h1 .l2{ display:block; font-size: clamp(28px, 5.2vw, 50px); background: linear-gradient(180deg, #ffffff, #b6d0ff 65%);
-  -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow: 0 0 26px rgba(160,200,255,.35); font-weight:700 }
-.sub{ margin-top:4px; text-align:center; font-size:14px; letter-spacing:.08em; opacity:.95 }
-.earth{ display:inline-block; filter:drop-shadow(0 0 8px rgba(180,220,255,.75)); animation: twinkle 2.4s ease-in-out infinite }
-@keyframes twinkle{0%,100%{opacity:.7} 50%{opacity:1}}
-.cards{ margin-top:28px; display:grid; grid-template-columns: repeat(3, 1fr); gap:22px }
-.card{ position:relative; padding:16px 14px 18px; border-radius:24px; background:rgba(255,255,255,0.06);
-  backdrop-filter: blur(10px); overflow:hidden; text-align:center; transition: transform .25s, box-shadow .25s; border:1px solid rgba(255,255,255,.06) }
-.card:hover{ transform:translateY(-6px) scale(1.01); box-shadow: 0 16px 36px rgba(150,180,240,.28) }
-.card .halo{ position:absolute; left:50%; bottom:-14%; width:140%; height:80%; transform:translateX(-50%); filter: blur(36px); pointer-events:none }
-.card .imgwrap{ width:100%; aspect-ratio:3/4; overflow:hidden; border-radius:18px; box-shadow: 0 10px 28px rgba(0,0,0,.25) }
-.card img{ width:100%; height:100%; object-fit:cover; object-position:center; display:block }
-.card .meta{ position:relative; margin-top:10px }
-.nick{ display:flex; align-items:center; gap:8px; justify-content:center; font-weight:700 }
-.heart{ font-size:18px; animation: beat 1.85s ease-in-out infinite; transform-origin:center }
-@keyframes beat{0%,100%{transform:scale(1)} 50%{transform:scale(1.12)}}
-.nick .en{ font-size:12px; letter-spacing:.12em; opacity:.8 }
-.kws{ font-size:13px; opacity:.9; margin-top:2px; letter-spacing:.06em }
-.quote{ font-size:12px; opacity:.9; margin-top:2px }
-.card.ajin .halo{ background: radial-gradient(60% 60% at 50% 70%, rgba(255,220,120,.35), rgba(140,190,255,.22) 60%, transparent 70%) }
-.card.migou .halo{ background: radial-gradient(60% 60% at 50% 70%, rgba(255,180,210,.35), rgba(230,240,255,.25) 60%, transparent 70%) }
-.card.gungun .halo{ background: radial-gradient(60% 60% at 50% 70%, rgba(160,200,255,.36), rgba(200,235,255,.28) 60%, transparent 70%) }
-.gallery{ margin:42px auto 24px; max-width:1200px; text-align:center }
-.gallery h3{ margin:0 0 10px; font-size:14px; letter-spacing:.12em; text-shadow:0 0 10px rgba(200,230,255,.55) }
-.gallery .rail{ position:relative; width:min(1000px, 92vw); margin:0 auto; border-radius:22px; overflow:hidden; background:rgba(255,255,255,.08); backdrop-filter: blur(6px) }
-.gallery img{ width:100%; height:auto; display:block; object-fit:cover; object-position:center }
-.footer{ margin:40px auto 0; text-align:center; opacity:.9 }
-.footer .en{ font-size:12px; letter-spacing:.14em; margin-bottom:6px }
-.footer .zh{ font-size:12px; opacity:.95; line-height:1.6 }
-@media (max-width:860px){ .cards{grid-template-columns:1fr} .nav{left:16px; top:16px; gap:10px} .nav a{width:42px; height:42px; border-radius:14px}}
+body[data-universe="soulmirror"]{
+  background:
+    radial-gradient(1200px 700px at 50% -10%, rgba(255,255,255,.86), rgba(235,240,255,.58) 20%, rgba(220,228,255,.36) 36%, rgba(200,210,255,.22) 52%, rgba(182,190,255,.14) 66%, rgba(110,120,210,.10) 100%) fixed,
+    linear-gradient(180deg, #f0f3ff 0%, #d6ddff 25%, #c0c9ff 46%, #a9b4ff 66%, #8ca0ff 100%) fixed;
+  min-height:100svh; overflow-x:hidden;
+}
+
+/* Stars + meteors */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.stars i{
+  position:absolute;width:2px;height:2px;border-radius:50%;
+  background:#fff;opacity:.85;filter: drop-shadow(0 0 4px #fff);
+  left: calc(100% * var(--x)); top: calc(100% * var(--y));
+  animation: twinkle calc(2.4s + 2.2s * var(--r)) ease-in-out infinite alternate;
+}
+@keyframes twinkle{to{opacity:.25; filter:drop-shadow(0 0 1px #fff)}}
+
+.meteor{position:fixed;inset:0;pointer-events:none;z-index:0}
+.meteor::before{
+  content:""; position:absolute; width:2px;height:2px;border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 10px 4px #fff, 0 0 22px 10px #a6c8ff;
+  left:-10%; top:-10%;
+  animation: shoot 5.6s linear infinite;
+}
+@keyframes shoot{
+  0% { transform: translate(0,0) scale(1); opacity:0 }
+  5% { opacity:1 }
+  35%{ transform: translate(120vw, 60vh) scale(1.06) }
+  40%{ transform: translate(126vw, 64vh) scale(1.12); box-shadow:0 0 16px 8px #fff, 0 0 30px 16px #9bd0ff }
+  55%{ opacity:.25 }
+  100%{ opacity:0 }
+}
+
+/* Left vertical dock */
+.left-dock{ position:fixed; left:18px; top:18px; z-index:5; display:flex; flex-direction:column; gap:10px }
+.left-dock a{
+  display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:999px; background: var(--glass);
+  backdrop-filter: blur(10px) saturate(120%); box-shadow: 0 0 0 1px var(--stroke-2);
+  font-size:12px; letter-spacing:.04em; color:var(--txt); transition: .2s ease; white-space:nowrap;
+}
+.left-dock a:hover{ box-shadow: 0 0 0 1px #fff, 0 0 18px rgba(180,205,255,.45) }
+.left-dock svg{ width:16px;height:16px; stroke:#eaf1ff; stroke-width:1.6; fill:none }
+
+/* Hero */
+.hero-wrap{ margin:84px auto 10px; width:min(1100px, 92vw); text-align:center; position:relative; z-index:1}
+.hero{ border-radius:18px; overflow:hidden; filter: drop-shadow(0 10px 40px rgba(80,110,200,.25)); }
+.hero video{ width:100%; height:auto; display:block; object-fit:cover }
+
+/* Titles */
+.title-en-1{
+  font-family:"Orbitron", ui-sans-serif, system-ui;
+  margin-top:14px; font-size: clamp(30px, 6vw, 56px);
+  letter-spacing:.08em; font-weight:800; text-transform:uppercase;
+  background: linear-gradient(180deg, #ffffff, #eaf2ff 60%, #d5e6ff);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.title-en-2{
+  font-family:"Orbitron", ui-sans-serif, system-ui;
+  font-size: clamp(26px, 5.4vw, 48px);
+  letter-spacing:.08em; font-weight:800; text-transform:uppercase;
+  background: linear-gradient(180deg, #f7fbff 0%, #e9f2ff 40%, #cfe2ff 80%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 0 18px rgba(180,205,255,.25);
+}
+.subtitle{ margin-top:10px; font-size:13px; letter-spacing:.06em; opacity:.95; color:var(--silver) }
+.subtitle .earth{ filter: drop-shadow(0 0 6px rgba(180,220,255,.9)); animation: glow 2.4s ease-in-out infinite alternate }
+@keyframes glow{ to{ filter: drop-shadow(0 0 2px rgba(180,220,255,.5)) } }
+
+/* Cards */
+.cards{ width:min(1200px, 92vw); margin:18px auto 6px; display:grid; gap:16px }
+@media (min-width: 900px){ .cards{ grid-template-columns: repeat(3, 1fr) } }
+.card{ position:relative; border-radius:20px; overflow:hidden;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 18px 60px rgba(80,110,220,.22);
+  transform: translateY(0); transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover{ transform: translateY(-6px); box-shadow: 0 24px 70px rgba(80,110,220,.28) }
+.card .img{ width:100%; aspect-ratio: 3 / 4; display:block; object-fit:cover; object-position:center }
+.card .halo{ position:absolute; inset:auto -15% -12% -15%; height:42%; filter: blur(40px); opacity:.65; pointer-events:none }
+.halo.ajin{  background: radial-gradient(circle at 50% 50%, rgba(255,225,120,.55), rgba(160,200,255,.45), transparent 62%) }
+.halo.migou{ background: radial-gradient(circle at 50% 50%, rgba(255,160,200,.55), rgba(255,220,250,.45), transparent 62%) }
+.halo.gungun{ background: radial-gradient(circle at 50% 50%, rgba(180,210,255,.55), rgba(220,240,255,.45), transparent 62%) }
+.card .meta{ position:absolute; inset:auto 0 0 0; padding:14px 14px 16px; text-align:center; background:linear-gradient(180deg, transparent, rgba(10,16,32,.28)) }
+.meta .heart{ font-size:18px; display:inline-block; animation: beat 1.6s infinite ease-in-out; filter:drop-shadow(0 0 10px rgba(255,255,255,.4)) }
+@keyframes beat{ 0%,100%{ transform:scale(1)} 50%{ transform:scale(1.08)} }
+.meta .name{ margin-top:6px; font-weight:800; letter-spacing:.06em }
+.meta .role{ margin-top:2px; font-size:13px; opacity:.9 }
+.meta .quote{ margin-top:6px; font-size:12.5px; opacity:.92 }
+
+/* Gallery */
+.gallery-wrap{ width:min(1200px, 92vw); margin:20px auto 18px; text-align:center }
+.gallery-title{ font-size:14px; letter-spacing:.08em; color:var(--silver); opacity:.95 }
+.gallery{
+  margin-top:10px; position:relative; border-radius:18px; overflow:hidden;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 18px 60px rgba(80,110,220,.22);
+}
+.gallery img{ width:100%; height:auto; display:block; aspect-ratio:16/9; object-fit:cover; object-position:center }
+.gallery .indicator{ position:absolute; inset:auto 0 10px 0; text-align:center; font-size:12px; color:var(--txt-dim) }
+
+/* Footer */
+.footer{ width:min(1100px, 92vw); margin: 24px auto 40px; text-align:center; color:var(--silver) }
+.footer .en{ font-size:12.5px; letter-spacing:.08em; opacity:.95 }
+.footer .tw{ margin-top:6px; font-size:12.5px; letter-spacing:.04em; opacity:.92 }
