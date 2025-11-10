@@ -82,38 +82,65 @@ h1.ev-title{margin:14px 0 6px 0;font-family:"Orbitron",ui-sans-serif;letter-spac
   .card{width:45vw}
   .gimg{height:40vh}
 }
-/* === Home hotfix v9.3.7: cards + gallery (only index) === */
-body:not([data-page]) .cards { gap: 18px; }
+/* === v9.3.7 Home Fine-Tune: Card 3:4 ratio + heart fix + taller gallery === */
 
-/* 卡片尺寸微調：避免卡頭、比例更順 */
-body:not([data-page]) .cards .card{
+/* 卡片：回到 3:4 比例 */
+body:not([data-page]) .cards .card {
   width: 300px;
-  height: 430px;
+  height: 400px;              /* 原始 3:4 比例 */
   border-radius: 18px;
   overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+body:not([data-page]) .cards .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 36px rgba(255,255,255,.18);
 }
 
-/* 卡片內圖片：往上對齊一點，減少「卡頭」感 */
-body:not([data-page]) .cards .card img{
+/* 圖片：上移一點避免切頭 */
+body:not([data-page]) .cards .card img {
   width: 100%;
-  height: 260px;
+  height: 250px;
   object-fit: cover;
-  object-position: 50% 15%;          /* ↑ 視角稍微往上 */
+  object-position: 50% 18%;
   filter: drop-shadow(0 0 14px rgba(255,255,255,.28));
 }
 
-/* 畫廊與卡片拉開距離；並把畫廊圖本身做高一點（不再切到頭） */
-body:not([data-page]) .gallery{ margin-top: 36px; } /* 想再多一點就調 48 或 56 */
-body:not([data-page]) .gallery .gimg{
-  width: 100%;
-  height: min(420px, 46vh);          /* ↑ 畫廊區「更高一些」 */
-  object-fit: cover;
-  object-position: 50% 12%;          /* ↑ 顯示稍偏上，避免切到頭 */
-  border-radius: 16px;
+/* 名稱與愛心同行置中 */
+body:not([data-page]) .cards .card h3,
+body:not([data-page]) .cards .card .name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
 }
 
-/* 手機微調 */
-@media (max-width: 768px){
-  body:not([data-page]) .cards .card{ width: 88vw; max-width: 360px; height: 420px; }
-  body:not([data-page]) .gallery .gimg{ height: min(52vh, 420px); }
+/* 畫廊：再高一些、距離卡片更寬 */
+body:not([data-page]) .gallery {
+  margin-top: 48px;            /* ↑ 距離卡片更寬 */
+}
+body:not([data-page]) .gallery .gimg {
+  width: 100%;
+  height: min(520px, 56vh);    /* ↑ 畫廊更高 */
+  object-fit: cover;
+  object-position: 50% 10%;    /* ↑ 視角往上避免切頭 */
+  border-radius: 16px;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,.15));
+}
+
+/* 手機尺寸微調 */
+@media (max-width: 768px) {
+  body:not([data-page]) .cards .card {
+    width: 88vw;
+    max-width: 360px;
+    height: 390px;
+  }
+  body:not([data-page]) .cards .card img {
+    height: 240px;
+  }
+  body:not([data-page]) .gallery .gimg {
+    height: min(54vh, 420px);
+  }
 }
