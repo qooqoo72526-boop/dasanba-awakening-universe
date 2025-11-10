@@ -1,60 +1,57 @@
-
 <!doctype html>
-<html lang="zh-Hant" class="page--poststation">
+<html lang="zh-Hant">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>宇宙郵局 | Emotional Value A.I.</title>
-  <link rel="stylesheet" href="css/addons.css"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>宇宙郵局 ✉️ | Cosmic Post Station</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/universe.css">
 </head>
-<body>
-  <!-- left constellation toolbar -->
-  <nav class="constellation-toolbar">
-    <a href="index.html" title="Home">
-      <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v9h4v-6h6v6h4v-9"/></svg>
-    </a>
-    <a href="cosmic-post-station.html" title="宇宙郵局">
-      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3zM4 6l8 6 8-6"/></svg>
-    </a>
-    <a href="soulmirror.html" title="靈魂照妖鏡">
-      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 016 6c0 5-6 10-6 10S6 14 6 9a6 6 0 016-6zM12 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
-    </a>
-    <a href="#gallery" title="觀星畫廊">
-      <svg viewBox="0 0 24 24"><path d="M5 19l4-10 3 6 2-4 5 8M2 5h20"/></svg>
-    </a>
-  </nav>
+<body data-page="cps">
 
-  <canvas id="starfield"></canvas>
-
-  <section class="chat-wrap">
-    <div class="chat-title">
-      <div class="subheading">宇宙郵局 ✉️ <span class="en">COSMIC POST STATION</span></div>
+  <!-- 背景：漸層 + 星霧 + 3直2橫 -->
+  <div class="bg-wrap">
+    <div class="bg-gradient"></div>
+    <canvas class="bg-stars" aria-hidden="true"></canvas>
+    <div class="bg-cloud"></div>
+    <div class="bg-gallery">
+      <img src="assets/ajin_post.webp" alt="" class="bg v">
+      <img src="assets/migou_post.webp" alt="" class="bg v">
+      <img src="assets/gungun_post.webp" alt="" class="bg v">
+      <img src="assets/trio_post1.webp" alt="" class="bg h">
+      <img src="assets/trio_post2.webp" alt="" class="bg h">
     </div>
-    <div class="chat-preamble">
-      <div>與宇宙聯繫中⋯</div>
-      <div>Receiving signals from Ajin / Migou / Gungun</div>
-      <div class="strong">RECEIVING SIGNALS FROM AJIN / MIGOU / GUNGUN ✨</div>
-    </div>
+  </div>
 
-    <!-- floating background photos: user supplies 3 vertical + 2 horizontal -->
-    <div class="bg-floats" aria-hidden="true" style="position:relative; height:22vh; margin: 0 auto 14px; max-width:980px;">
-      <img src="assets/trio_post1.webp" style="position:absolute;left:2%;top:6%;width:22%;opacity:.28; filter: blur(.2px) brightness(1.2);">
-      <img src="assets/trio_post2.webp" style="position:absolute;right:4%;top:0;width:26%;opacity:.25; filter: blur(.2px) brightness(1.15);">
-      <img src="assets/ajin_post.webp" style="position:absolute;left:26%;top:-8%;height:120%;opacity:.22;">
-      <img src="assets/migou_post.webp" style="position:absolute;left:48%;top:2%;height:110%;opacity:.20;">
-      <img src="assets/gungun_post.webp" style="position:absolute;left:68%;top:-6%;height:125%;opacity:.20;">
-    </div>
+  <!-- 音樂：自動播放 + 🔈 開關 -->
+  <button class="audio-toggle" title="music"><span class="icon">🔈</span></button>
+  <audio id="bgm" src="assets/sounds/cosmic_bgm.mp3" loop></audio>
+  <audio id="sfx-ajin"   src="assets/sounds/ajin_tap.mp3"></audio>
+  <audio id="sfx-migou"  src="assets/sounds/migou_chime.mp3"></audio>
+  <audio id="sfx-gungun" src="assets/sounds/gungun_bubble.mp3"></audio>
 
-    <div class="messages glass-bubble" id="messages"></div>
+  <!-- 標題：五行 + 進場淡入 -->
+  <header class="cps-hero">
+    <h1 class="t1 glow">宇宙郵局 ✉️</h1>
+    <div class="t2 glow-en">COSMIC POST STATION</div>
+    <div class="sub t3">與宇宙聯繫中⋯</div>
+    <div class="sub t4">Receiving signals from the Universe…</div>
+    <div class="sub t5">Receiving signals from Ajin / Migou / Gungun✨</div>
+  </header>
 
-    <div class="input-row">
-      <input id="sendInput" type="text" placeholder="在星際隧道投遞一句話，按 Enter 傳訊⋯">
-      <button id="sendBtn" class="send-btn" aria-label="Send">
-        <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-6-6-4z"/></svg>
-      </button>
-    </div>
-  </section>
+  <!-- 對話框 -->
+  <main class="cps-main">
+    <section id="chat" class="chatbox" aria-live="polite"></section>
 
-  <script type="module" src="js/poststation.js"></script>
+    <form id="composer" class="composer">
+      <input id="input" class="input" type="text" maxlength="500"
+             placeholder="召喚大三巴⋯" autocomplete="off" />
+      <button class="send" type="submit" aria-label="send">➤</button>
+    </form>
+  </main>
+
+  <script src="js/poststation.js" defer></script>
 </body>
 </html>
