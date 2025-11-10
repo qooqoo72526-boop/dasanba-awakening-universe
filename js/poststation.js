@@ -1,4 +1,4 @@
-/* js/poststation.js  v9.3.7 Free Soul */
+/* js/poststation.js  v9.3.7-flat (assets folder unified) */
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
   const chat = $('#chat');
@@ -12,13 +12,13 @@
 
   // 角色設定（顏色、icon、音效、愛心）
   const BIRDS = {
-    ajin:  { name: '阿金',  heart:'💛', color:'#f6d56b', glow:'rgba(246,213,107,.35)', icon:'assets/icons/icon_ajin.png',  sfx: $('#sfx-ajin') },
-    migou: { name: '米果',  heart:'🧡', color:'#ffb7a5', glow:'rgba(255,183,165,.35)', icon:'assets/icons/icon_migou.png', sfx: $('#sfx-migou') },
-    gungun:{ name: '滾滾',  heart:'💙', color:'#a9c7ff', glow:'rgba(169,199,255,.35)', icon:'assets/icons/icon_gungun.png',sfx: $('#sfx-gungun') }
+    ajin:  { name: '阿金',  heart:'💛', color:'#f6d56b', glow:'rgba(246,213,107,.35)', icon:'assets/icon_ajin.png',  sfx: new Audio('assets/ajin_tap.mp3') },
+    migou: { name: '米果',  heart:'🧡', color:'#ffb7a5', glow:'rgba(255,183,165,.35)', icon:'assets/icon_migou.png', sfx: new Audio('assets/migou_chime.mp3') },
+    gungun:{ name: '滾滾',  heart:'💙', color:'#a9c7ff', glow:'rgba(169,199,255,.35)', icon:'assets/icon_gungun.png',sfx: new Audio('assets/gungun_bubble.mp3') }
   };
   const BIRD_KEYS = Object.keys(BIRDS);
 
-  // ===== 背景：星粒（輕量） =====
+  // ===== 背景：星粒 =====
   const canvas = $('.bg-stars');
   if (canvas && canvas.getContext) {
     const ctx = canvas.getContext('2d');
@@ -78,14 +78,13 @@
     bubble.style.setProperty('--tone', B.color);
     row.append(meta, bubble, glow);
     chat.appendChild(row);
-    // 音效（存在就播）
+    // 音效
     if (B.sfx) { try { B.sfx.currentTime=0; B.sfx.play(); } catch(e){} }
     scrollToBottom();
   };
 
-  // 把 API 一段文字分給 1~3 隻鳥 & 多句
+  // 把 API 回應拆成句子後隨機分配給鳥
   const dispatchToBirds = (apiText) => {
-    // 依標點切句（保留符號）
     const parts = apiText
       .split(/([，。！？,.!?])/)
       .reduce((arr, cur, i, src) => {
@@ -94,14 +93,12 @@
         else arr.push(cur.trim());
         return arr;
       }, []);
-    // 隨機挑會說話的鳥（至少 1 隻）
     const sayers = BIRD_KEYS.filter(()=>Math.random()>0.35);
     if (sayers.length===0) sayers.push(BIRD_KEYS[Math.floor(Math.random()*BIRD_KEYS.length)]);
-    // 隨機把句子分配給這些鳥
     let i = 0;
     parts.forEach(p => {
       const k = sayers[i % sayers.length];
-      const delay = 800 + Math.random()*4200; // 0.8~5s
+      const delay = 800 + Math.random()*4200;
       setTimeout(()=>renderBird(k, p), delay);
       i++;
     });
@@ -116,18 +113,15 @@
         body: JSON.stringify({ message: userText })
       });
       const data = await res.json().catch(()=> ({}));
-      // 支援兩種：1) { ajin:'', migou:'', gungun:'' } 2) "單一字串"
       if (typeof data === 'object' && (data.ajin || data.migou || data.gungun)) {
         const order = BIRD_KEYS.filter(k => data[k]).sort(()=>Math.random()-0.5);
-        order.forEach((k, idx)=>{
+        order.forEach((k)=>{
           const chunk = String(data[k]).trim();
           if (!chunk) return;
-          // 隨機再切成 1~2 句
           const split = chunk.split(/(?<=[。！？!?])/).filter(Boolean);
           setTimeout(()=>renderBird(k, split[0]), 900 + Math.random()*2200);
-          if (split[1] && Math.random()>0.5) {
+          if (split[1] && Math.random()>0.5)
             setTimeout(()=>renderBird(k, split[1]), 2200 + Math.random()*2600);
-          }
         });
       } else {
         const text = String(data || '').trim() || '…';
