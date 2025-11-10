@@ -1,0 +1,68 @@
+/* v9.3.5_homecards_hotfix — Homepage cards only (no background changes) */
+/* Safe add-on: link this CSS after your existing universe.css/style.css */
+
+/* Scope to homepage only if you already use a marker; fallback keeps it narrow */
+body[data-page="home"] .character-cards,
+body.home .character-cards,
+.character-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  align-items: stretch;
+}
+
+/* Card container: unified aspect ratio to avoid weird heights */
+.character-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  /* Keep your original glass/border; don't redefine background */
+  aspect-ratio: 5 / 6;            /* portrait-ish, avoids '過寬' */
+  min-height: 260px;
+}
+
+/* Image should never crop heads: use contain + per-bird offsets */
+.character-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;             /* no cropping */
+  object-position: center top;     /* bias to top so頭部不被切 */
+  display: block;
+  transform: translateZ(0);
+}
+
+/* Per-bird fine-tune (auto-added class via JS) */
+.character-card.ajin img   { object-position: 50% 8%; }
+.character-card.migou img  { object-position: 50% 10%; }
+.character-card.gungun img { object-position: 50% 12%; }
+
+/* Heart icon: always pinned to top-right, consistent offset */
+.character-card .heart,
+.character-card .like,
+.character-card .fav {
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  transform: none !important;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* Title/labels inside card remain readable atop images */
+.character-card .label,
+.character-card .title {
+  position: absolute;
+  left: 12px; bottom: 10px;
+  z-index: 3;
+  /* do not change fonts/colors; just ensure readability */
+  text-shadow: 0 2px 8px rgba(0,0,0,.35);
+}
+
+/* Responsive: stack on small screens */
+@media (max-width: 900px){
+  .character-cards{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px){
+  .character-cards{ grid-template-columns: 1fr; }
+  .character-card{ aspect-ratio: 4 / 5; }
+}
