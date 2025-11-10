@@ -66,3 +66,66 @@ body.home .character-cards,
   .character-cards{ grid-template-columns: 1fr; }
   .character-card{ aspect-ratio: 4 / 5; }
 }
+/* ===== v9.3.7f HOME ULTRA PATCH — 卡片 3:4 + 愛心回位 + 標題/畫廊微調 ===== */
+
+/* 卡片容器間距一致 */
+html body:not([data-page]) section.cards{
+  display:flex !important; flex-wrap:wrap !important; justify-content:center !important;
+  gap:clamp(12px,2vw,20px) !important; margin-top:6px !important;
+}
+
+/* 卡片本體：強制 3:4（杜絕正方形） */
+html body:not([data-page]) section.cards>article.card{
+  width:clamp(260px,25vw,320px) !important;
+  aspect-ratio:3/4 !important; height:auto !important;
+  display:flex !important; flex-direction:column !important;
+  border-radius:18px !important; overflow:hidden !important;
+  position:relative !important;
+  transition:transform .25s ease, box-shadow .25s ease !important;
+}
+html body:not([data-page]) section.cards>article.card:hover{
+  transform:translateY(-6px) !important;
+  box-shadow:0 0 36px rgba(255,255,255,.18) !important;
+}
+
+/* 卡片圖片：固定上半 65%，避免卡頭 */
+html body:not([data-page]) section.cards>article.card>img{
+  flex:0 0 65% !important; width:100% !important; height:auto !important;
+  object-fit:cover !important; object-position:50% 18% !important; display:block !important;
+  filter:drop-shadow(0 0 14px rgba(255,255,255,.28)) !important;
+}
+
+/* 名稱＋愛心：把舊的 .heart 隱藏，改用標題前置+柔光 */
+html body:not([data-page]) section.cards>article.card .heart{display:none !important;}
+html body:not([data-page]) section.cards>article.card h3{
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  gap:6px !important; white-space:nowrap !important; text-align:center !important;
+  font-size:clamp(16px,1.8vw,20px) !important;
+}
+@keyframes heartBeat{0%,100%{transform:translateY(1px) scale(1);opacity:.95}50%{transform:translateY(0) scale(1.1);opacity:1}}
+html body:not([data-page]) section.cards>article.card.ajin   h3::before{content:"💛";color:#FFD84D;filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor);animation:heartBeat 1.8s ease-in-out infinite;}
+html body:not([data-page]) section.cards>article.card.migou  h3::before{content:"🧡";color:#FF925A;filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor);animation:heartBeat 1.8s ease-in-out infinite;}
+html body:not([data-page]) section.cards>article.card.gungun h3::before{content:"💙";color:#6DB7FF;filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor);animation:heartBeat 1.8s ease-in-out infinite;}
+
+/* 畫廊標題：置中＋上/下間距一致 */
+html body:not([data-page]) section.gallery>h4,
+html body:not([data-page]) #gallery.gallery>h4{
+  text-align:center !important; margin:12px 0 10px !important; letter-spacing:.08em !important; font-weight:600 !important;
+}
+
+/* 畫廊外框：維持 16:9 置中顯示 */
+html body:not([data-page]) section.gallery{margin-top:clamp(32px,4vh,48px) !important; display:flex !important; justify-content:center !important;}
+html body:not([data-page]) section.gallery .gframe{
+  width:90% !important; max-width:1200px !important; aspect-ratio:16/9 !important;
+  border-radius:16px !important; overflow:hidden !important;
+}
+html body:not([data-page]) section.gallery .gimg{
+  width:100% !important; height:100% !important; display:block !important;
+  object-fit:cover !important; object-position:50% 12% !important;
+}
+
+/* 手機補強 */
+@media (max-width:768px){
+  html body:not([data-page]) section.cards>article.card{width:88vw !important; max-width:360px !important;}
+  html body:not([data-page]) section.cards>article.card>img{flex:0 0 62% !important; object-position:50% 16% !important;}
+}
