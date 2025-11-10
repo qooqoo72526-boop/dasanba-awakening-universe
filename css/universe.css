@@ -82,63 +82,151 @@ h1.ev-title{margin:14px 0 6px 0;font-family:"Orbitron",ui-sans-serif;letter-spac
   .card{width:45vw}
   .gimg{height:40vh}
 }
-/* ==== Home Hotfix v9.3.7b (ONLY index) =============================== */
-/* 1) 卡片比例→回 3:4（300×400），無論舊規則為何都覆蓋 */
-body:not([data-page]) .cards .card{
-  width:300px !important;
-  height:400px !important;
+/* ===== v9.3.7 FINAL — CPS + Home Stable Responsive Tail ===== */
+
+/* ===================== CPS（宇宙郵局） ===================== */
+body[data-page="cps"]{
+  --silver:#E9EEF4;
+  background: linear-gradient(180deg, #0b0d12 0%, #111826 45%, #1c2338 100%);
+  color: var(--silver);
+  overflow-x:hidden;
+  font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC", sans-serif;
+}
+
+/* 背景層：鋪滿、不外露、輕漂浮 */
+.bg-wrap{position:fixed;inset:0;z-index:-1;pointer-events:none;}
+.bg-gradient{position:absolute;inset:0;background:
+  radial-gradient(1000px 780px at 50% 18%, rgba(205,225,255,.22), transparent 70%),
+  radial-gradient(720px 520px at 20% 82%, rgba(245,225,200,.08), transparent 72%);}
+.bg-stars{position:absolute;inset:0}
+.bg-cloud{position:absolute;inset:-8% -10% -6% -10%;
+  background:
+    radial-gradient(900px 600px at 65% 70%, rgba(200,220,255,.10), transparent 70%),
+    radial-gradient(700px 500px at 35% 25%, rgba(245,230,200,.07), transparent 70%);
+  filter: blur(22px); animation: cloudfloat 16s ease-in-out infinite alternate;}
+@keyframes cloudfloat{50%{transform:translate3d(-10px, 12px, 0)}}
+
+/* 3直2橫背景圖：置中 + 不裁壞 */
+.bg-gallery{position:absolute;inset:0;overflow:hidden;}
+.bg-gallery .bg{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  opacity:.12;
+  filter: blur(.3px) drop-shadow(0 0 6px rgba(255,255,255,.06));
+  animation: cfloat 22s ease-in-out infinite;
+}
+.bg-gallery .bg.v{ height: min(90vh, 980px); width:auto; }
+.bg-gallery .bg.h{ width: min(96vw, 1600px); height:auto; }
+@keyframes cfloat{50%{transform:translate(-50%,-52%)}}
+.bg-gallery .bg:nth-child(1){transform:translate(-58%,-52%);}
+.bg-gallery .bg:nth-child(2){transform:translate(-42%,-50%);}
+.bg-gallery .bg:nth-child(3){transform:translate(-50%,-44%);}
+.bg-gallery .bg:nth-child(4){transform:translate(-50%,-60%);opacity:.10;}
+.bg-gallery .bg:nth-child(5){transform:translate(-50%,-36%);opacity:.10;}
+
+/* 標題：淡入 */
+.cps-hero{margin:clamp(70px,10vh,100px) auto 24px; text-align:center; width:min(92vw,1100px); letter-spacing:.02em; position:relative; z-index:1;}
+.cps-hero .glow,.cps-hero .sub{opacity:0; transform:translateY(6px); animation:fadeIn 1.6s ease forwards;}
+.cps-hero .t1{font:800 clamp(30px,4vw,46px)/1 "Orbitron",ui-sans-serif;}
+.cps-hero .t2{font:800 clamp(16px,2.2vw,24px)/1 "Orbitron",ui-sans-serif; opacity:.9; margin-top:6px}
+.cps-hero .sub{font-size:clamp(12px,1.6vw,14px); opacity:.9; margin-top:6px}
+.cps-hero .t1{animation-delay:.05s}.cps-hero .t2{animation-delay:.25s}
+.cps-hero .t3{animation-delay:.45s}.cps-hero .t4{animation-delay:.65s}.cps-hero .t5{animation-delay:.85s}
+@keyframes fadeIn{to{opacity:1; transform:none}}
+
+/* 對話框 + 輸入列 */
+.cps-main{position:relative; z-index:1;}
+.chatbox{
+  width:min(92vw,900px);
+  height:min(60vh,680px);
+  margin:12px auto 1.2em;
+  padding:1.2em;
+  overflow:auto;
   border-radius:18px;
-  overflow:hidden;
-  position:relative;
-  transition:transform .25s ease, box-shadow .25s ease;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset, 0 10px 32px rgba(0,0,0,.25);
 }
-body:not([data-page]) .cards .card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 36px rgba(255,255,255,.18);
+.msg{margin:10px 8px; position:relative;}
+.msg .meta{font-size:12px; opacity:.85; margin-left:2px; margin-bottom:4px}
+.msg .bubble{display:inline-block; padding:10px 14px; border-radius:14px; background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10); backdrop-filter: blur(6px); box-shadow: 0 6px 18px rgba(0,0,0,.18); animation:pop .18s ease both}
+@keyframes pop{from{transform:translateY(4px) scale(.98); opacity:0} to{transform:none; opacity:1}}
+.msg.me{display:flex; justify-content:flex-end}
+.msg.me .bubble{background: rgba(255,255,255,.10); border-color: rgba(255,255,255,.14)}
+.speaker-glow{position:absolute; left:0; right:0; height:22px; bottom:-6px; pointer-events:none;
+  background: radial-gradient(50% 100% at 50% 0%, var(--glow), transparent 70%); filter: blur(6px);}
+
+.composer{width:min(92vw,900px); margin: 12px auto 96px; display:flex; align-items:center; gap:.6em;}
+.input{flex:1; padding:14px 16px; border-radius:14px; background: rgba(255,255,255,.08); color:#fff;
+  border:1px solid rgba(255,255,255,.12); outline:none; font-size:15px;}
+.input::placeholder{color:rgba(235,245,255,.7)}
+.input:focus{box-shadow:0 0 0 2px rgba(200,230,255,.22) inset;}
+.send{width:clamp(40px,4vw,46px); height:clamp(40px,4vw,46px); border-radius:14px; border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.08); color:#EAF3FF; font-size:20px; line-height:0; display:grid; place-items:center; cursor:pointer;}
+.send:hover{box-shadow:0 0 18px rgba(200,230,255,.25)}
+
+/* 音樂開關：固定右上，不跑位 */
+.audio-toggle{position:fixed; right:clamp(12px,2vw,20px); top:clamp(12px,2vw,20px);
+  width:clamp(40px,4vw,46px); height:clamp(40px,4vw,46px);
+  border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); color:#fff; z-index:10}
+
+/* ===================== Home（首頁） ===================== */
+/* Cards 容器：自適應間距 */
+body:not([data-page]) .cards{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap: clamp(12px, 2vw, 20px);
 }
 
-/* 卡片主圖：上移避免切頭 */
+/* 卡片：鎖 3:4 比例，跨裝置不跑位 */
+body:not([data-page]) .cards .card{
+  width: clamp(260px, 25vw, 320px);
+  aspect-ratio: 3 / 4;
+  border-radius: 18px;
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+body:not([data-page]) .cards .card:hover{ transform: translateY(-6px); box-shadow: 0 0 36px rgba(255,255,255,.18); }
+
+/* 卡片圖：上移焦點避免卡頭 */
 body:not([data-page]) .cards .card img{
-  width:100% !important;
-  height:250px !important;
-  object-fit:cover !important;
-  object-position:50% 18% !important;
-  display:block !important;
-  filter:drop-shadow(0 0 14px rgba(255,255,255,.28));
+  width: 100%; height: 65%;
+  object-fit: cover; object-position: 50% 18%;
+  display: block;
+  filter: drop-shadow(0 0 14px rgba(255,255,255,.28));
 }
 
-/* 2) 愛心跑位：隱藏原 .heart，改由 h3::before 產生在名字前 */
-body:not([data-page]) .cards .card .heart{ display:none !important; }
-
+/* 名稱 + 愛心：同行且置中 */
 body:not([data-page]) .cards .card h3{
-  display:inline-flex; align-items:center; gap:6px;
-  justify-content:center; text-align:center; white-space:nowrap;
-  width:100%;
+  display:inline-flex; align-items:center; gap:6px; justify-content:center;
+  text-align:center; white-space:nowrap; font-size: clamp(16px, 1.8vw, 20px);
 }
+/* 若有原本 .heart 元素，統一隱藏，改用類名產生 */
+body:not([data-page]) .cards .card .heart{ display:none !important; }
 body:not([data-page]) .cards .card.ajin  h3::before{ content:"💛"; }
 body:not([data-page]) .cards .card.migou h3::before{ content:"🧡"; }
 body:not([data-page]) .cards .card.gungun h3::before{ content:"💙"; }
 
-/* 3) 畫廊高度：容器與圖片一起拉高、底部延伸、不被外框裁短 */
-body:not([data-page]) .gallery{ margin-top:48px !important; }
+/* 畫廊：容器固定比例（16:9），圖片填滿、底部延伸 */
+body:not([data-page]) .gallery{
+  margin-top: clamp(36px, 4vh, 56px);
+  display:flex; justify-content:center; align-items:center;
+}
 body:not([data-page]) .gallery .gframe{
-  position:relative; border-radius:16px; overflow:hidden;
-  /* 這個高度決定外框的“底部有沒有到位” */
-  height:min(520px, 56vh) !important;
+  width: 90%; max-width: 1200px;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px; overflow: hidden;
 }
 body:not([data-page]) .gallery .gimg{
-  width:100% !important;
-  height:100% !important;         /* 跟著 gframe 高度 */
-  object-fit:cover !important;
-  object-position:50% 10% !important;  /* 再往上，避免壓頭 */
-  display:block !important;
-  border-radius:16px;              /* 讓圖的圓角與外框一致 */
-  filter:drop-shadow(0 0 12px rgba(255,255,255,.15));
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 12%;
+  display: block; border-radius: 16px;
+  filter: drop-shadow(0 0 12px rgba(255,255,255,.15));
 }
 
-/* 手機微調 */
-@media (max-width:768px){
-  body:not([data-page]) .cards .card{ width:88vw !important; max-width:360px; height:390px !important; }
-  body:not([data-page]) .cards .card img{ height:240px !important; }
-  body:not([data-page]) .gallery .gframe{ height:min(54vh, 420px) !important; }
+/* 手機額外微調（可保留更穩） */
+@media (max-width: 768px){
+  body[data-page="cps"] .chatbox{ height: 56vh; padding: 12px 10px 6px; }
+  body[data-page="cps"] .composer{ margin: 10px auto 96px; gap: 8px; }
+  .bg-gallery .bg{ opacity:.10; } /* 背景圖在手機稍淡，文字更清楚 */
 }
