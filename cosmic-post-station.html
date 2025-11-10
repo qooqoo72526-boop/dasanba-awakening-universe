@@ -10,29 +10,25 @@
   <link rel="stylesheet" href="css/universe.css">
 </head>
 <body data-page="cps">
-
-  <!-- 背景：漸層 + 星霧 + 3直2橫 -->
+  <!-- 背景 -->
   <div class="bg-wrap">
     <div class="bg-gradient"></div>
     <canvas class="bg-stars" aria-hidden="true"></canvas>
     <div class="bg-cloud"></div>
     <div class="bg-gallery">
-      <img src="assets/ajin_post.webp" alt="" class="bg v">
-      <img src="assets/migou_post.webp" alt="" class="bg v">
-      <img src="assets/gungun_post.webp" alt="" class="bg v">
-      <img src="assets/trio_post1.webp" alt="" class="bg h">
-      <img src="assets/trio_post2.webp" alt="" class="bg h">
+      <img src="assets/ajin_post.webp"   class="bg v" alt="">
+      <img src="assets/migou_post.webp"  class="bg v" alt="">
+      <img src="assets/gungun_post.webp" class="bg v" alt="">
+      <img src="assets/trio_post1.webp"  class="bg h" alt="">
+      <img src="assets/trio_post2.webp"  class="bg h" alt="">
     </div>
   </div>
 
-  <!-- 音樂：自動播放 + 🔈 開關 -->
+  <!-- 音樂 -->
   <button class="audio-toggle" title="music"><span class="icon">🔈</span></button>
-  <audio id="bgm" src="assets/sounds/cosmic_bgm.mp3" loop></audio>
-  <audio id="sfx-ajin"   src="assets/sounds/ajin_tap.mp3"></audio>
-  <audio id="sfx-migou"  src="assets/sounds/migou_chime.mp3"></audio>
-  <audio id="sfx-gungun" src="assets/sounds/gungun_bubble.mp3"></audio>
+  <audio id="bgm" src="assets/cosmic_bgm.mp3" loop></audio>
 
-  <!-- 標題：五行 + 進場淡入 -->
+  <!-- 標題（五行） -->
   <header class="cps-hero">
     <h1 class="t1 glow">宇宙郵局 ✉️</h1>
     <div class="t2 glow-en">COSMIC POST STATION</div>
@@ -41,10 +37,9 @@
     <div class="sub t5">Receiving signals from Ajin / Migou / Gungun✨</div>
   </header>
 
-  <!-- 對話框 -->
+  <!-- 對話 -->
   <main class="cps-main">
     <section id="chat" class="chatbox" aria-live="polite"></section>
-
     <form id="composer" class="composer">
       <input id="input" class="input" type="text" maxlength="500"
              placeholder="召喚大三巴⋯" autocomplete="off" />
