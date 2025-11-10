@@ -1,34 +1,60 @@
 
-<!doctype html><html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>宇宙郵局 | Cosmic Post Station</title>
-<link rel="stylesheet" href="css/universe.css">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
-<script defer src="js/post.js"></script>
-</head><body>
-<nav class="sidebar">
-  <a class="nav-pill" title="Home" href="index.html">
-    <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h6v-6h2v6h6V10"/></svg>
-  </a>
-  <a class="nav-pill" title="宇宙郵局" href="cosmic-post-station.html">
-    <svg viewBox="0 0 24 24"><path d="M3 7h18v10H3zM3 7l9 6 9-6"/></svg>
-  </a>
-  <a class="nav-pill" title="靈魂照妖鏡" href="soulmirror.html">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>
-  </a>
-  <a class="nav-pill" title="觀星畫廊" href="index.html#gallery">
-    <svg viewBox="0 0 24 24"><path d="M12 2l2.4 4.9L20 8l-4 3.9.9 5.6L12 15.8 7.1 17.5 8 11.9 4 8l5.6-1.1z"/></svg>
-  </a>
-</nav>
-<div class="starry" aria-hidden="true"></div>
-<section class="page-wrap">
-  <h2 class="page-title">宇宙郵局 ✉️</h2>
-  <div class="page-sub"><b>Receiving signals from Ajin / Migou / Gungun ✨</b></div>
-  <div class="page-sub">在星際隧道投遞一句話，按 Enter 傳訊⋯</div>
-  <div class="chat-wrap" id="chat"></div>
-</section>
-<script>
-(function(){const l=document.querySelector('.starry');if(l){for(let i=0;i<120;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*3)+'s';l.appendChild(s);}}function meteor(){const m=document.createElement('div');m.className='meteor';const startX=Math.random()<.5?-40:innerWidth+40;const startY=40+Math.random()*innerHeight*.6;m.style.left=startX+'px';m.style.top=startY+'px';document.body.appendChild(m);const dx=startX<0?innerWidth+120:-(innerWidth+120);const dy=(Math.random()*160+100)*(Math.random()<.5?1:-1);const start=performance.now();const dur=1400+Math.random()*1400;requestAnimationFrame(function f(t){const p=Math.min(1,(t-start)/dur);m.style.transform=`translate(${dx*p}px,${dy*p}px)`;m.style.opacity=String(1-p);if(p<1)requestAnimationFrame(f);else m.remove();});}(function loop(){setTimeout(()=>{meteor();loop();},2000+Math.random()*2200)})();})();
-</script>
-</body></html>
+<!doctype html>
+<html lang="zh-Hant" class="page--poststation">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>宇宙郵局 | Emotional Value A.I.</title>
+  <link rel="stylesheet" href="css/addons.css"/>
+</head>
+<body>
+  <!-- left constellation toolbar -->
+  <nav class="constellation-toolbar">
+    <a href="index.html" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v9h4v-6h6v6h4v-9"/></svg>
+    </a>
+    <a href="cosmic-post-station.html" title="宇宙郵局">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3zM4 6l8 6 8-6"/></svg>
+    </a>
+    <a href="soulmirror.html" title="靈魂照妖鏡">
+      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 016 6c0 5-6 10-6 10S6 14 6 9a6 6 0 016-6zM12 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+    </a>
+    <a href="#gallery" title="觀星畫廊">
+      <svg viewBox="0 0 24 24"><path d="M5 19l4-10 3 6 2-4 5 8M2 5h20"/></svg>
+    </a>
+  </nav>
+
+  <canvas id="starfield"></canvas>
+
+  <section class="chat-wrap">
+    <div class="chat-title">
+      <div class="subheading">宇宙郵局 ✉️ <span class="en">COSMIC POST STATION</span></div>
+    </div>
+    <div class="chat-preamble">
+      <div>與宇宙聯繫中⋯</div>
+      <div>Receiving signals from Ajin / Migou / Gungun</div>
+      <div class="strong">RECEIVING SIGNALS FROM AJIN / MIGOU / GUNGUN ✨</div>
+    </div>
+
+    <!-- floating background photos: user supplies 3 vertical + 2 horizontal -->
+    <div class="bg-floats" aria-hidden="true" style="position:relative; height:22vh; margin: 0 auto 14px; max-width:980px;">
+      <img src="assets/trio_post1.webp" style="position:absolute;left:2%;top:6%;width:22%;opacity:.28; filter: blur(.2px) brightness(1.2);">
+      <img src="assets/trio_post2.webp" style="position:absolute;right:4%;top:0;width:26%;opacity:.25; filter: blur(.2px) brightness(1.15);">
+      <img src="assets/ajin_post.webp" style="position:absolute;left:26%;top:-8%;height:120%;opacity:.22;">
+      <img src="assets/migou_post.webp" style="position:absolute;left:48%;top:2%;height:110%;opacity:.20;">
+      <img src="assets/gungun_post.webp" style="position:absolute;left:68%;top:-6%;height:125%;opacity:.20;">
+    </div>
+
+    <div class="messages glass-bubble" id="messages"></div>
+
+    <div class="input-row">
+      <input id="sendInput" type="text" placeholder="在星際隧道投遞一句話，按 Enter 傳訊⋯">
+      <button id="sendBtn" class="send-btn" aria-label="Send">
+        <svg viewBox="0 0 24 24"><path d="M3 11l18-8-8 18-2-6-6-4z"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <script type="module" src="js/poststation.js"></script>
+</body>
+</html>

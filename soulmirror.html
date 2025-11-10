@@ -1,31 +1,47 @@
 
-<!doctype html><html lang="zh-Hant"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>靈魂照妖鏡 | Soul Mirror</title>
-<link rel="stylesheet" href="css/universe.css">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@400;500;700;800&display=swap" rel="stylesheet">
-<script defer src="js/soulmirror.js"></script>
-</head><body>
-<nav class="sidebar">
-  <a class="nav-pill" title="Home" href="index.html">
-    <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h6v-6h2v6h6V10"/></svg>
-  </a>
-  <a class="nav-pill" title="宇宙郵局" href="cosmic-post-station.html">
-    <svg viewBox="0 0 24 24"><path d="M3 7h18v10H3zM3 7l9 6 9-6"/></svg>
-  </a>
-  <a class="nav-pill" title="靈魂照妖鏡" href="soulmirror.html">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>
-  </a>
-  <a class="nav-pill" title="觀星畫廊" href="index.html#gallery">
-    <svg viewBox="0 0 24 24"><path d="M12 2l2.4 4.9L20 8l-4 3.9.9 5.6L12 15.8 7.1 17.5 8 11.9 4 8l5.6-1.1z"/></svg>
-  </a>
-</nav>
-<div class="starry" aria-hidden="true"></div>
-<section class="page-wrap">
-  <h2 class="page-title">靈魂照妖鏡 🪞</h2>
-  <div class="page-sub"><b>In the mirror, trace your patterns.</b></div>
-  <div class="page-sub">在雲中凝視你的意識軌跡，選 25 題讓宇宙回你一段真話。</div>
-  <div class="mirror-card"><div id="qgrid" class="qgrid"></div></div>
-</section>
-</body></html>
+<!doctype html>
+<html lang="zh-Hant" class="page--soulmirror">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>靈魂照妖鏡 | Emotional Value A.I.</title>
+  <link rel="stylesheet" href="css/addons.css"/>
+</head>
+<body>
+  <!-- left constellation toolbar -->
+  <nav class="constellation-toolbar">
+    <a href="index.html" title="Home">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v9h4v-6h6v6h4v-9"/></svg>
+    </a>
+    <a href="cosmic-post-station.html" title="宇宙郵局">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18v14H3zM4 6l8 6 8-6"/></svg>
+    </a>
+    <a href="soulmirror.html" title="靈魂照妖鏡">
+      <svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 016 6c0 5-6 10-6 10S6 14 6 9a6 6 0 016-6zM12 9a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/></svg>
+    </a>
+    <a href="#gallery" title="觀星畫廊">
+      <svg viewBox="0 0 24 24"><path d="M5 19l4-10 3 6 2-4 5 8M2 5h20"/></svg>
+    </a>
+  </nav>
+
+  <canvas id="starfield"></canvas>
+
+  <section class="mirror-wrap">
+    <div class="subheading">靈魂照妖鏡 🪞 <span class="en">SOUL MIRROR</span></div>
+    <div class="magic-lines">
+      <div class="wand">🪄 在鏡中凝視你的意識軌跡，</div>
+      <div>Trace the vectors of your inner voice.</div>
+      <div>Say it like a vow — then act.</div>
+    </div>
+
+    <div class="question-grid"></div>
+
+    <div class="result-box glass-bubble">
+      <div class="txt"></div>
+      <div class="three" style="margin-top:12px; gap:16px"></div>
+    </div>
+  </section>
+
+  <script type="module" src="js/soulmirror.js"></script>
+</body>
+</html>
