@@ -307,3 +307,88 @@ body:not([data-page]) .gallery .gimg{
   body:not([data-page]) .cards .card img{ height:240px !important; object-position:50% 16% !important; }
   body:not([data-page]) header{ margin: 8px auto 8px !important; }
 }
+/* ===== v9.3.7d HOME HARD PATCH — 卡片強制3:4 + 畫廊標題 ===== */
+
+/* A) 卡片容器：用更高權重 selector，避免被舊規則蓋掉 */
+body:not([data-page]) section.cards{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  justify-content:center !important;
+  gap: clamp(12px, 2vw, 20px) !important;
+  margin-top: 6px !important;
+}
+
+/* B) 卡片本體：aspect-ratio + flex 兩道鎖定，完全杜絕變正方形 */
+body:not([data-page]) section.cards > article.card{
+  width: clamp(260px, 25vw, 320px) !important;
+  aspect-ratio: 3 / 4 !important;   /* 第一道：比例鎖定 */
+  height: auto !important;
+  display: flex !important;          /* 第二道：用 flex 分割上下區 */
+  flex-direction: column !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  transition: transform .25s ease, box-shadow .25s ease !important;
+}
+body:not([data-page]) section.cards > article.card:hover{
+  transform: translateY(-6px) !important;
+  box-shadow: 0 0 36px rgba(255,255,255,.18) !important;
+}
+
+/* C) 卡片圖片：固定佔比（65%）且不壓頭 */
+body:not([data-page]) section.cards > article.card > img{
+  flex: 0 0 65% !important;          /* 用 flex-basis 鎖上半部高度 */
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  object-position: 50% 18% !important;
+  display: block !important;
+  filter: drop-shadow(0 0 14px rgba(255,255,255,.28)) !important;
+}
+
+/* D) 名稱 + 愛心（保持你剛剛的好效果，不變更） */
+body:not([data-page]) section.cards > article.card .heart{ display:none !important; }
+body:not([data-page]) section.cards > article.card h3{
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  font-size: clamp(16px, 1.8vw, 20px) !important;
+}
+body:not([data-page]) section.cards > article.card.ajin   h3::before{ content:"💛"; color:#FFD84D; filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor); animation: heartBeat 1.8s ease-in-out infinite; }
+body:not([data-page]) section.cards > article.card.migou  h3::before{ content:"🧡"; color:#FF925A; filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor); animation: heartBeat 1.8s ease-in-out infinite; }
+body:not([data-page]) section.cards > article.card.gungun h3::before{ content:"💙"; color:#6DB7FF; filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor); animation: heartBeat 1.8s ease-in-out infinite; }
+@keyframes heartBeat{
+  0%,100%{ transform:translateY(1px) scale(1); opacity:.95 }
+  50%    { transform:translateY(0)   scale(1.1); opacity:1 }
+}
+
+/* E) 畫廊標題：置中 + 間距固定 */
+body:not([data-page]) section.gallery > h4{
+  text-align:center !important;
+  margin: 10px 0 10px !important;     /* 標題與外框等距 */
+  letter-spacing:.08em !important;
+  font-weight:600 !important;
+  display:block !important;
+}
+
+/* F) 畫廊外框：保持 16:9、置中 */
+body:not([data-page]) section.gallery{
+  margin-top: clamp(32px, 4vh, 48px) !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:center !important;
+}
+body:not([data-page]) section.gallery .gframe{
+  width: 90% !important;
+  max-width: 1200px !important;
+  aspect-ratio: 16 / 9 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+}
+body:not([data-page]) section.gallery .gimg{
+  width:100% !important; height:100% !important; display:block !important;
+  object-fit:cover !important; object-position:50% 12% !important;
+}
