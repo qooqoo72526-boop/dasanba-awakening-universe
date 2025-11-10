@@ -82,3 +82,86 @@ h1.ev-title{margin:14px 0 6px 0;font-family:"Orbitron",ui-sans-serif;letter-spac
   .card{width:45vw}
   .gimg{height:40vh}
 }
+/* ===== v9.3.6 HOMEPAGE HOTFIX (append-only) ===== */
+
+/* 1) 卡片比例與不切頭 */
+.cards { gap: 18px; } /* 只是更均勻，非必需 */
+.card{
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 5 / 6;          /* 統一比例，避免過寬 */
+  min-height: 260px;
+}
+.card img{
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;           /* 不裁切 */
+  object-position: 50% 10%;      /* 頭部優先 */
+}
+/* 三鳥個別微調頭部位置 */
+.card.ajin   img{ object-position: 50% 8%;  }
+.card.migou  img{ object-position: 50% 10%; }
+.card.gungun img{ object-position: 50% 12%; }
+
+/* 2) 愛心固定右上（保留你的 heartbeat 動畫） */
+.card .heart{
+  position: absolute !important;
+  top: 10px !important;
+  right: 12px !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
+  z-index: 3;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,.35)); /* 微光 */
+}
+
+/* 3) 三鳥光暈加強（沿用你原本的 ::before 結構，直接增強強度與範圍） */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-30px;
+  border-radius:50%;
+  pointer-events:none;
+}
+.card.ajin::before{
+  /* 金光 +20% 、外圈更大 */
+  background:
+    radial-gradient(420px 260px at 50% 18%,
+      rgba(217,194,126,.28), rgba(217,194,126,.18) 55%,
+      rgba(217,194,126,0) 70%);
+  filter: blur(2px);
+}
+.card.migou::before{
+  /* 柔粉明顯但不刺眼 */
+  background:
+    radial-gradient(420px 260px at 22% 88%,
+      rgba(255,183,207,.24), rgba(255,183,207,.16) 55%,
+      rgba(255,183,207,0) 70%);
+  filter: blur(2px);
+}
+.card.gungun::before{
+  /* 藍白 + 銀暈雙層 */
+  background:
+    radial-gradient(420px 260px at 78% 86%,
+      rgba(185,214,255,.28), rgba(185,214,255,.16) 55%,
+      rgba(185,214,255,0) 70%),
+    radial-gradient(520px 320px at 70% 90%,
+      rgba(230,238,252,.18), rgba(230,238,252,0) 68%);
+  filter: blur(1.5px);
+}
+/* hover 再亮一級 */
+.card:hover{ transform: translateY(-2px); }
+.card.ajin:hover::before  { filter: blur(2px) brightness(1.15); }
+.card.migou:hover::before { filter: blur(2px) brightness(1.15); }
+.card.gungun:hover::before{ filter: blur(2px) brightness(1.15); }
+
+/* 4) 觀星畫廊往下留空，避免頂到卡片 */
+section.gallery{          /* 你檔案裡就是這個 selector */
+  margin-top: 64px !important; /* 原本是 24px，往下多 40px */
+}
+@media (max-width: 768px){
+  section.gallery{ margin-top: 40px !important; }
+}
+/* ===== /v9.3.6 HOMEPAGE HOTFIX ===== */
