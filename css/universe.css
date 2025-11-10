@@ -230,3 +230,80 @@ body:not([data-page]) .gallery .gimg{
   body[data-page="cps"] .composer{ margin: 10px auto 96px; gap: 8px; }
   .bg-gallery .bg{ opacity:.10; } /* 背景圖在手機稍淡，文字更清楚 */
 }
+/* ===== v9.3.7c HOME FORCE PATCH — 標題定位 + 卡片3:4 + 愛心光暈與律動 ===== */
+
+/* 1) 標題回到正確高度（避免被其它 margin 影響而“整塊往下掉”） */
+body:not([data-page]) header{
+  width:min(92vw,1200px) !important;
+  margin: 6px auto 10px !important;   /* 上窄、下也窄，維持原視覺 */
+}
+body:not([data-page]) .ev-title{ margin:14px 0 4px !important; }
+body:not([data-page]) .ev-title .ev-line-1,
+body:not([data-page]) .ev-title .ev-line-2{
+  display:block; line-height:1 !important;
+}
+
+/* 2) 卡片：強制 3:4，不再變正方形 */
+body:not([data-page]) .cards{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap: clamp(12px,2vw,20px) !important;
+  margin-top: 6px !important;
+}
+body:not([data-page]) .cards .card{
+  width: clamp(260px, 25vw, 320px) !important;
+  aspect-ratio: 3 / 4 !important;               /* 核心：比例鎖定 */
+  height: auto !important;                      /* 交給 aspect-ratio */
+  border-radius:18px; overflow:hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+body:not([data-page]) .cards .card img{
+  width:100% !important;
+  height:65% !important;                        /* 上面內容區 35% */
+  object-fit:cover !important;
+  object-position:50% 18% !important;           /* 再上移避開卡頭 */
+  display:block !important;
+}
+
+/* 3) 愛心放在名稱前 + 柔光圈與輕跳動（💛/🧡/💙） */
+body:not([data-page]) .cards .card .heart{ display:none !important; } /* 隱藏舊心形 */
+
+body:not([data-page]) .cards .card h3{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:6px; white-space:nowrap; text-align:center;
+  font-size: clamp(16px,1.8vw,20px);
+}
+/* 共用光暈與律動 */
+body:not([data-page]) .cards .card h3::before{
+  display:inline-block; transform:translateY(1px);
+  animation: heartBeat 1.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 14px currentColor);
+}
+@keyframes heartBeat{
+  0%,100%{ transform:translateY(1px) scale(1);   opacity:.95 }
+  50%    { transform:translateY(0)   scale(1.1); opacity:1   }
+}
+/* 個別顏色 */
+body:not([data-page]) .cards .card.ajin   h3::before{ content:"💛"; color:#FFD84D; }
+body:not([data-page]) .cards .card.migou  h3::before{ content:"🧡"; color:#FF925A; }
+body:not([data-page]) .cards .card.gungun h3::before{ content:"💙"; color:#6DB7FF; }
+
+/* 4) 畫廊保持 16:9 並置中（避免底部忽長忽短） */
+body:not([data-page]) .gallery{
+  margin-top: clamp(32px,4vh,48px) !important;
+  display:flex !important; justify-content:center !important; align-items:center !important;
+}
+body:not([data-page]) .gallery .gframe{
+  width: 90% !important; max-width:1200px !important;
+  aspect-ratio:16/9 !important; border-radius:16px !important; overflow:hidden !important;
+}
+body:not([data-page]) .gallery .gimg{
+  width:100% !important; height:100% !important; display:block !important;
+  object-fit:cover !important; object-position:50% 12% !important;
+}
+
+/* 5) 手機補強：仍維持 3:4 視覺且不擠到畫廊 */
+@media (max-width: 768px){
+  body:not([data-page]) .cards .card{ width:88vw !important; max-width:360px !important; }
+  body:not([data-page]) .cards .card img{ height:240px !important; object-position:50% 16% !important; }
+  body:not([data-page]) header{ margin: 8px auto 8px !important; }
+}
