@@ -144,3 +144,63 @@ body:not([data-page]) .gallery .gimg {
     height: min(54vh, 420px);
   }
 }
+/* ==== Home Hotfix v9.3.7b (ONLY index) =============================== */
+/* 1) 卡片比例→回 3:4（300×400），無論舊規則為何都覆蓋 */
+body:not([data-page]) .cards .card{
+  width:300px !important;
+  height:400px !important;
+  border-radius:18px;
+  overflow:hidden;
+  position:relative;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+body:not([data-page]) .cards .card:hover{
+  transform:translateY(-8px);
+  box-shadow:0 0 36px rgba(255,255,255,.18);
+}
+
+/* 卡片主圖：上移避免切頭 */
+body:not([data-page]) .cards .card img{
+  width:100% !important;
+  height:250px !important;
+  object-fit:cover !important;
+  object-position:50% 18% !important;
+  display:block !important;
+  filter:drop-shadow(0 0 14px rgba(255,255,255,.28));
+}
+
+/* 2) 愛心跑位：隱藏原 .heart，改由 h3::before 產生在名字前 */
+body:not([data-page]) .cards .card .heart{ display:none !important; }
+
+body:not([data-page]) .cards .card h3{
+  display:inline-flex; align-items:center; gap:6px;
+  justify-content:center; text-align:center; white-space:nowrap;
+  width:100%;
+}
+body:not([data-page]) .cards .card.ajin  h3::before{ content:"💛"; }
+body:not([data-page]) .cards .card.migou h3::before{ content:"🧡"; }
+body:not([data-page]) .cards .card.gungun h3::before{ content:"💙"; }
+
+/* 3) 畫廊高度：容器與圖片一起拉高、底部延伸、不被外框裁短 */
+body:not([data-page]) .gallery{ margin-top:48px !important; }
+body:not([data-page]) .gallery .gframe{
+  position:relative; border-radius:16px; overflow:hidden;
+  /* 這個高度決定外框的“底部有沒有到位” */
+  height:min(520px, 56vh) !important;
+}
+body:not([data-page]) .gallery .gimg{
+  width:100% !important;
+  height:100% !important;         /* 跟著 gframe 高度 */
+  object-fit:cover !important;
+  object-position:50% 10% !important;  /* 再往上，避免壓頭 */
+  display:block !important;
+  border-radius:16px;              /* 讓圖的圓角與外框一致 */
+  filter:drop-shadow(0 0 12px rgba(255,255,255,.15));
+}
+
+/* 手機微調 */
+@media (max-width:768px){
+  body:not([data-page]) .cards .card{ width:88vw !important; max-width:360px; height:390px !important; }
+  body:not([data-page]) .cards .card img{ height:240px !important; }
+  body:not([data-page]) .gallery .gframe{ height:min(54vh, 420px) !important; }
+}
