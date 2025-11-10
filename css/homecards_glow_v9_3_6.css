@@ -1,0 +1,25 @@
+/* v9.3.6 — Homepage card glows only (阿金更亮20% / 米果柔粉不刺眼 / 滾滾藍白加銀暈) */
+:root{
+  --ajin:#d9c27e;
+  --migou:#ffb7cf;
+  --gungun:#b9d6ff;
+  --gungun-silver:#e6eefc;
+}
+.card-fx{
+  transition: box-shadow .25s ease, transform .25s ease;
+  box-shadow: 0 8px 28px rgba(10,20,40,.28), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.card-fx.tone-ajin{
+  box-shadow: 0 10px 36px rgba(10,20,40,.30), 0 0 30px rgba(217,194,126,.28), 0 0 70px rgba(217,194,126,.18), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.card-fx.tone-migou{
+  box-shadow: 0 10px 34px rgba(10,20,40,.28), 0 0 26px rgba(255,183,207,.24), 0 0 60px rgba(255,183,207,.16), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.card-fx.tone-gungun{
+  box-shadow: 0 10px 34px rgba(10,20,40,.28), 0 0 28px rgba(185,214,255,.28), 0 0 80px rgba(230,238,252,.18), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.card-fx:hover{ transform: translateY(-2px); }
+.card-fx.tone-ajin:hover   { box-shadow: 0 12px 44px rgba(10,20,40,.32), 0 0 36px rgba(217,194,126,.36), 0 0 90px rgba(217,194,126,.22), inset 0 1px 0 rgba(255,255,255,.07); }
+.card-fx.tone-migou:hover  { box-shadow: 0 12px 42px rgba(10,20,40,.30), 0 0 34px rgba(255,183,207.32), 0 0 86px rgba(255,183,207.22), inset 0 1px 0 rgba(255,255,255.07); }
+.card-fx.tone-gungun:hover { box-shadow: 0 12px 42px rgba(10,20,40.30), 0 0 34px rgba(185,214,255.34), 0 0 100px rgba(230,238,252.24), inset 0 1px 0 rgba(255,255,255.07); }
+.card-fx .heart, .card-fx .like, .card-fx .fav, .card-fx .icon-heart, .card-fx [data-heart]{ filter: drop-shadow(0 0 8px rgba(255,255,255,.35)); }
