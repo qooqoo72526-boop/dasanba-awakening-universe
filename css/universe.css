@@ -93,17 +93,36 @@ body[data-page="cps"]{
   font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang TC", sans-serif;
 }
 
-/* 背景層：鋪滿、不外露、輕漂浮 */
-.bg-wrap{position:fixed;inset:0;z-index:-1;pointer-events:none;}
-.bg-gradient{position:absolute;inset:0;background:
-  radial-gradient(1000px 780px at 50% 18%, rgba(205,225,255,.22), transparent 70%),
-  radial-gradient(720px 520px at 20% 82%, rgba(245,225,200,.08), transparent 72%);}
-.bg-stars{position:absolute;inset:0}
-.bg-cloud{position:absolute;inset:-8% -10% -6% -10%;
+/* 背景層：鋪滿、不同濃度（只給宇宙郵局用） */
+body[data-page="cps"] .bg-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+body[data-page="cps"] .bg-gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1000px 780px at 50% 18%, rgba(205,225,255,.22), transparent 70%),
+    radial-gradient(720px 520px at 20% 82%, rgba(245,225,200,.08), transparent 72%);
+}
+
+body[data-page="cps"] .bg-stars {
+  position: absolute;
+  inset: 0;
+}
+
+body[data-page="cps"] .bg-cloud {
+  position: absolute;
+  inset: -8% -10% -6% -10%;
   background:
     radial-gradient(900px 600px at 65% 70%, rgba(200,220,255,.10), transparent 70%),
     radial-gradient(700px 500px at 35% 25%, rgba(245,230,200,.07), transparent 70%);
-  filter: blur(22px); animation: cloudfloat 16s ease-in-out infinite alternate;}
+  filter: blur(22px);
+  animation: cloudFloat 16s ease-in-out infinite alternate;
+}
 @keyframes cloudfloat{50%{transform:translate3d(-10px, 12px, 0)}}
 
 /* 3直2橫背景圖：置中 + 不裁壞 */
@@ -170,59 +189,6 @@ body[data-page="cps"]{
 .audio-toggle{position:fixed; right:clamp(12px,2vw,20px); top:clamp(12px,2vw,20px);
   width:clamp(40px,4vw,46px); height:clamp(40px,4vw,46px);
   border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); color:#fff; z-index:10}
-
-/* ===================== Home（首頁） ===================== */
-/* Cards 容器 + 直線間距調整 */
-body:not([data-page]) .cards{
-  display:flex; flex-wrap:wrap; justify-content:center;
-  gap: clamp(12px, 2vw, 20px);
-}
-
-/* 卡片 3:4 比例 + 轉換不跑位 */
-body:not([data-page]) .cards .card{
-  width: clamp(260px, 25vw, 320px);
-  aspect-ratio: 3 / 4;
-  border-radius: 18px;
-  overflow: hidden;
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-body:not([data-page]) .cards .card:hover{ transform: translateY(-6px); box-shadow: 0 0 36px rgba(255,255,255,.18); }
-
-body:not([data-page]) .cards .card img{
-  width: 100%; height: 65%;
-  object-fit: cover; object-position: 50% 18%;
-  display: block;
-  filter: drop-shadow(0 0 14px rgba(255,255,255,.28));
-}
-
-/* 名稱 + 愛心 */
-body:not([data-page]) .cards .card h3{
-  display:inline-flex; align-items:center; gap:6px; justify-content:center;
-  text-align:center; white-space:nowrap; font-size: clamp(16px, 1.8vw, 20px);
-}
-
-/* 舊版愛心 + 顏色設定 */
-body:not([data-page]) .cards .card .heart{ display:none !important; }
-body:not([data-page]) .cards .card.ajin h3::before{ content:"💛"; }
-body:not([data-page]) .cards .card.migou h3::before{ content:"🧡"; }
-body:not([data-page]) .cards .card.gungun h3::before{ content:"💙"; }
-
-/* 畫廊：容器固定比例（16:9），圖片填滿、底部延伸 */
-body:not([data-page]) .gallery{
-  margin-top: clamp(36px, 4vh, 56px);
-  display:flex; justify-content:center; align-items:center;
-}
-body:not([data-page]) .gallery .gframe{
-  width: 90%; max-width: 1200px;
-  aspect-ratio: 16 / 9;
-  border-radius: 16px; overflow: hidden;
-}
-body:not([data-page]) .gallery .gimg{
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: 50% 12%;
-  display: block; border-radius: 16px;
-  filter: drop-shadow(0 0 12px rgba(255,255,255,.15));
-}
 
 /* 手機額外微調（可保留更穩） */
 @media (max-width: 768px){
@@ -368,67 +334,4 @@ body[data-page="cps"].shake-brief .cps-chat{
   25%{ transform:translate3d(0.6px,0,0) }
   50%{ transform:translate3d(-0.6px,0,0) }
   75%{ transform:translate3d(0.3px,0,0) }
-}
-/* ==== Home cards — 5:6 直立 + 光暈 + 仙女棒點擊 ==== */
-body[data-page="home"] .cards{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:clamp(14px,2vw,22px);
-  align-items:stretch;
-}
-
-/* 卡片本體：直立比例、不裁頭 */
-body[data-page="home"] .card{
-  position:relative;
-  border-radius:20px;
-  overflow:hidden;
-  aspect-ratio:5/6;           /* 直立：5:6 */
-  min-height:260px;
-  transform:translateZ(0);
-  transition:transform .25s ease, box-shadow .25s ease;
-}
-body[data-page="home"] .card:hover{ transform:translateY(-6px); }
-
-/* 圖像區：上方 66%，保留頭頂 */
-body[data-page="home"] .card img{
-  width:100%; height:66%;
-  display:block;
-  object-fit:cover;
-  object-position:50% 18%;
-  filter:drop-shadow(0 14px rgba(255,255,255,.28));
-}
-
-/* 卡片內層光暈（常駐的柔光） */
-body[data-page="home"] .card::after{
-  content:"";
-  position:absolute; inset:0; border-radius:22px; pointer-events:none;
-  box-shadow:
-    0 50px 120px rgba(0,10,60,.35) inset,    /* 底部斜對角柔光 */
-    0 0 0 1px rgba(255,255,255,.06) inset;   /* 玻璃感內描邊（無邊框感） */
-}
-
-/* 滑過時加亮 */
-body[data-page="home"] .card:hover::after{
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,.12) inset,
-    0 0 24px 8px rgba(160,200,255,.35);      /* 微微仙女棒暈開 */
-}
-
-/* 點擊的「仙女棒擴散」 */
-@keyframes fairyBurst{
-  0%   { box-shadow:0 0 0 0 rgba(200,240,255,.0); }
-  50%  { box-shadow:0 0 48px 16px rgba(200,240,255,.45); }
-  100% { box-shadow:0 0 0 0 rgba(200,240,255,.0); }
-}
-body[data-page="home"] .card:active::after{ animation:fairyBurst .6s ease-out; }
-
-/* 愛心：漂浮閃爍（你原本有就會套上，沒有就可保留） */
-body[data-page="home"] .heart{
-  position:absolute; top:10px; left:12px; font-size:18px;
-  filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));
-  animation:heartFloat 3.5s ease-in-out infinite;
-}
-@keyframes heartFloat{
-  0%,100%{ transform:translateY(0); opacity:.9; }
-  50%    { transform:translateY(-6px); opacity:1; }
 }
