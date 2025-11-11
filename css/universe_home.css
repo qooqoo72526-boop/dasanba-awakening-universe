@@ -1,0 +1,89 @@
+/* ===== v9.4 home-only card fixes: 直立比例、光暈、心形漂浮 ===== */
+body[data-page="home"] .cards{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: clamp(14px, 2vw, 22px);
+  justify-content:center;
+  align-items:stretch;
+}
+
+body[data-page="home"] .cards .card{
+  position:relative;
+  border-radius:20px;
+  overflow:hidden;
+  aspect-ratio: 5 / 6;
+  min-height: 320px;
+  transform: translateZ(0);
+  box-shadow: 0 6px 18px rgba(0,0,0,.18);
+  transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+
+body[data-page="home"] .cards .card img{
+  width:100%;
+  height:68%;
+  object-fit:cover;
+  object-position: 50% 18%;
+  display:block;
+  border-radius:16px;
+  filter: drop-shadow(0 12px 28px rgba(255,255,255,.10));
+}
+
+body[data-page="home"] .cards .card::before,
+body[data-page="home"] .cards .card::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  opacity:.0;
+  transition:opacity .25s ease;
+}
+body[data-page="home"] .cards .card::before{
+  background: radial-gradient(120% 60% at 50% 120%,
+    rgba(160,200,255,.35) 0%,
+    rgba(160,200,255,.20) 36%,
+    rgba(160,200,255,0) 70%);
+}
+body[data-page="home"] .cards .card::after{
+  background: radial-gradient(80% 80% at 90% 90%,
+    rgba(180,220,255,.35) 0%,
+    rgba(180,220,255,.15) 28%,
+    rgba(180,220,255,0) 70%);
+}
+
+body[data-page="home"] .cards .card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.04) inset;
+  filter: saturate(1.05);
+}
+body[data-page="home"] .cards .card:hover::before,
+body[data-page="home"] .cards .card:hover::after{ opacity: 1; }
+
+@keyframes fairyRipple{
+  0%{ transform:scale(.35); opacity:.0; }
+  30%{ opacity:.85; }
+  100%{ transform:scale(1.25); opacity:0; }
+}
+body[data-page="home"] .cards .card:active{
+  transform: translateY(-2px) scale(.995);
+}
+body[data-page="home"] .cards .card:active::after{
+  opacity:1;
+  animation: fairyRipple .42s ease-out;
+}
+
+body[data-page="home"] .cards .card .heart{
+  position:absolute;
+  left:12px; top:10px;
+  font-size:18px; line-height:1;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  animation: heartFloat 4.8s ease-in-out infinite;
+  z-index: 2;
+}
+body[data-page="home"] .cards .card.ajin  .heart::after{ content:"💛"; }
+body[data-page="home"] .cards .card.migou .heart::after{ content:"🧡"; }
+body[data-page="home"] .cards .card.gungun .heart::after{ content:"💙"; }
+
+@keyframes heartFloat{
+  0%,100%{ transform: translateY(0) }
+  50%{ transform: translateY(-6px) }
+}
