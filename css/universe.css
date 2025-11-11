@@ -172,40 +172,6 @@ body[data-page="cps"]{
   border-radius:12px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.08); color:#fff; z-index:10}
 
 /* ===================== Home（首頁） ===================== */
-/* Cards 容器：自適應間距 */
-body:not([data-page]) .cards{
-  display:flex; flex-wrap:wrap; justify-content:center;
-  gap: clamp(12px, 2vw, 20px);
-}
-
-/* 卡片：鎖 3:4 比例，跨裝置不跑位 */
-body:not([data-page]) .cards .card{
-  width: clamp(260px, 25vw, 320px);
-  aspect-ratio: 3 / 4;
-  border-radius: 18px;
-  overflow: hidden;
-  transition: transform .25s ease, box-shadow .25s ease;
-}
-body:not([data-page]) .cards .card:hover{ transform: translateY(-6px); box-shadow: 0 0 36px rgba(255,255,255,.18); }
-
-/* 卡片圖：上移焦點避免卡頭 */
-body:not([data-page]) .cards .card img{
-  width: 100%; height: 65%;
-  object-fit: cover; object-position: 50% 18%;
-  display: block;
-  filter: drop-shadow(0 0 14px rgba(255,255,255,.28));
-}
-
-/* 名稱 + 愛心：同行且置中 */
-body:not([data-page]) .cards .card h3{
-  display:inline-flex; align-items:center; gap:6px; justify-content:center;
-  text-align:center; white-space:nowrap; font-size: clamp(16px, 1.8vw, 20px);
-}
-/* 若有原本 .heart 元素，統一隱藏，改用類名產生 */
-body:not([data-page]) .cards .card .heart{ display:none !important; }
-body:not([data-page]) .cards .card.ajin  h3::before{ content:"💛"; }
-body:not([data-page]) .cards .card.migou h3::before{ content:"🧡"; }
-body:not([data-page]) .cards .card.gungun h3::before{ content:"💙"; }
 
 /* 畫廊：容器固定比例（16:9），圖片填滿、底部延伸 */
 body:not([data-page]) .gallery{
