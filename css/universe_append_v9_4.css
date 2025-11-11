@@ -1,0 +1,16 @@
+/* ===== v9.4 Soft Nebula Patch — non‑home pages untouched ===== */
+body:not([data-page]) .starry{position:fixed;inset:0;z-index:1;pointer-events:none;}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 6px 9px rgba(255,255,255,.55);}
+.star.twinkle{animation:twinkle 2.8s ease-in-out infinite alternate;}
+.star.drift{animation:drift 7.5s ease-in-out infinite;opacity:.9;}
+.star.pulse{animation:pulse 3.6s ease-in-out infinite;}
+.meteor{position:absolute;width:2px;height:2px;border-radius:50%;background:white;box-shadow:0 0 8px rgba(255,255,255,.8);}
+.meteor::after{content:"";position:absolute;right:100%;top:50%;transform:translateY(-50%);width:150px;height:2px;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(210,230,255,.75) 90%);filter:blur(1.1px);}
+.meteor.comet{box-shadow:0 0 10px rgba(200,230,255,.95),0 0 18px rgba(150,200,255,.6);}
+.meteor.comet::after{width:220px;height:3px;background:linear-gradient(90deg,rgba(255,255,255,0) 0%,rgba(180,220,255,.95) 70%,rgba(255,255,255,.85) 100%);filter:blur(1.4px);}
+body:not([data-page]) .shake-brief .hero-wrap,
+body:not([data-page]) .shake-brief .gallery .gframe{animation:microShake .16s ease;}
+@keyframes twinkle{from{opacity:.55;filter:brightness(.9)}to{opacity:1;filter:brightness(1.35)}}
+@keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-3px)}100%{transform:translateY(0)}}
+@keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+@keyframes microShake{0%,100%{transform:translate3d(0,0,0)}25%{transform:translate3d(6px,0,0)}50%{transform:translate3d(-6px,0,0)}75%{transform:translate3d(3px,0,0)}}
