@@ -34,4 +34,15 @@ function initHome(){
   if(!starLayer){starLayer=document.createElement('div');starLayer.className='starry';document.body.prepend(starLayer);}
   makeStars(starLayer,140); scheduleMeteors(); rotateGallery();
 }
-document.addEventListener('DOMContentLoaded',initHome);
+document.addEventListener('DOMContentLoaded', () => {
+  const imgs = [...document.querySelectorAll('#gallery .gimg')];
+  if (imgs.length) {
+    let i = imgs.findIndex(el => el.classList.contains('active'));
+    if (i < 0) { i = 0; imgs[0].classList.add('active'); }
+    setInterval(() => {
+      imgs[i].classList.remove('active');
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add('active');
+    }, 4000);
+  }
+});
