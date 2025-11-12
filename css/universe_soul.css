@@ -205,22 +205,59 @@ canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
   margin-left: 6px;
   transform: translateY(2px);
 }
-/* ===== 標題：靈魂照妖鏡 SOUL MIRROR（紫色魔法區） ===== */
+/* 標題：靈魂照妖鏡 🪞 SOUL MIRROR（紫色魔法風） */
 .subheading{
-  position:relative;
-  display:inline-flex;
+  display:flex;
   justify-content:center;
   align-items:center;
-  gap:8px;
-  margin:24px auto 26px;
-  padding:10px 24px;
-  text-align:center;
+  gap:10px;
+  margin:20px auto 12px;
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: 2px;
+  color: rgba(245,250,255,.94);
+  text-shadow: 0 0 18px rgba(160,140,255,.55);
+  animation: titleFloat .6s ease-out forwards;
+}
 
-  font-family:"Noto Sans TC", sans-serif;
-  font-size:clamp(22px, 3vw, 32px);
-  letter-spacing:2px;
-  color:rgba(245,250,255,0.96);
-  text-shadow:0 0 14px rgba(120,180,255,0.45);
+.subheading .mirror-emoji{
+  font-family: "Segoe UI Emoji","Noto Color Emoji","Apple Color Emoji";
+  font-size: 1.2em;
+  filter: drop-shadow(0 0 6px rgba(230,200,255,.9));
+}
+
+.subheading .en{
+  font-family: "Orbitron", ui-sans-serif;
+  font-size: .9em;
+  letter-spacing: .22em;
+  color: rgba(210,225,255,.9);
+}
+
+/* 下面兩行標語 */
+.magic-lines{
+  text-align:center;
+  margin: 4px auto 20px;
+  opacity:.92;
+}
+
+.magic-lines .txt.zh{
+  font-size: 14px;
+  letter-spacing: .16em;
+  color: rgba(240,235,255,.88);
+}
+
+.magic-lines .txt.en{
+  margin-top:6px;
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: .04em;
+  color: rgba(215,225,255,.9);
+}
+
+/* 標題微浮動動畫 */
+@keyframes titleFloat{
+  0%{ transform: translateY(8px); opacity:0; filter:blur(3px); }
+  100%{ transform: translateY(0); opacity:1; filter:blur(0); }
+}
 
   /* 標題浮起來 0.6 秒進場 */
   animation:titleFloatIn .6s ease-out both;
@@ -322,4 +359,35 @@ canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
   0% { transform: translateY(0); }
   50% { transform: translateY(-4px); }
   100% { transform: translateY(0); }
+}
+/* 靈魂照妖鏡專用：左側工具列，跟首頁一致但套紫色玻璃感 */
+body[data-page="soulmirror"] .toolbox.nav-trail{
+  position: fixed;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  gap: 10px;
+  z-index: 20;
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool{
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(10, 6, 30, .75);
+  box-shadow: 0 6px 18px rgba(60, 40, 140, .55);
+  backdrop-filter: blur(8px);
+  text-decoration: none;
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
+  font-size: 15px;
+  color: rgba(235, 240, 255, .95);
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
+  display: none; /* 只留圖示，不顯示文字，跟首頁一樣乾淨 */
 }
