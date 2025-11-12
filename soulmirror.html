@@ -44,38 +44,33 @@
 
   <!-- 魔鏡主體 -->
   <section class="mirror-wrap">
+  <!-- 標題：中文＋英文同一行 + 鏡子 emoji -->
+  <div class="subheading">
+    <span class="zh">靈魂照妖鏡</span>
+    <span class="emoji">🪞</span>
+    <span class="en">SOUL MIRROR</span>
+  </div>
 
-    <!-- 中文＋英文＋鏡子，同一行 -->
-    <div class="subheading">
-      <span class="zh">靈魂照妖鏡</span>
-      <span class="divider">／</span>
-      <span class="emoji emoji--mirror">🪞</span>
-      <span class="en">SOUL MIRROR</span>
+  <!-- 魔法引言 -->
+  <div class="magic-lines">
+    <div class="txt zh">
+      某一條時間線，正被悄悄改寫⋯
     </div>
-
-    <!-- 魔法開場文案 -->
-    <div class="magic-lines">
-      <div class="txt zh">
-        某一條時間線正被悄悄改寫，你準備好看清自己了嗎？
-      </div>
-      <div class="txt en">
-        <span class="emoji emoji--wand">🪄</span>
-        <span class="line">
-          What you’re becoming is louder than what you’ve survived.
-        </span>
-      </div>
+    <div class="txt en">
+      <span class="wand">🪄</span>
+      What you're becoming is louder than what you've survived.
     </div>
+  </div>
 
-    <!-- 題目區：由 soul.js 自動產生 25 顆「魔法泡泡」 -->
-    <div class="question-grid"></div>
+  <!-- 題目區（保持這個容器給 soul.js 用） -->
+  <div class="question-grid"></div>
 
-    <!-- 解析區：600 字解析＋三鳥各一句 -->
-    <div class="result-box glass-bubble">
-      <div class="txt"></div>
-      <div class="three" style="margin-top:12px; gap:16px;"></div>
-    </div>
-
-  </section>
+  <!-- 解析＋三鳥一句話（保持結構，不然 JS 找不到） -->
+  <div class="result-box glass-bubble">
+    <div class="txt"></div>
+    <div class="three"></div>
+  </div>
+</section>
 
 </body>
 </html>
