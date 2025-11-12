@@ -183,17 +183,44 @@ function stopHints() {
    4) 渲染題目 / 點擊流程
 ----------------------------*/
 function renderQuestions() {
-  S.qGrid.innerHTML = '';
-  const list = next25();
-  list.forEach((line) => {
-    const [q, twist] = line.split('｜');
-    const opt = document.createElement('div');
-    opt.className = 'option';
-    opt.style.setProperty('--delay', (Math.random() * 6).toFixed(2) + 's');
-    opt.innerHTML = `<span class="q">${q}</span><span class="tw">${twist}</span>`;
-    opt.addEventListener('click', () => onPick(line, opt));
-    S.qGrid.appendChild(opt);
-  });
+    // 先清空題目區
+    s.qGrid.innerHTML = '';
+
+    // 從題庫抓 25 題
+    const list = next25();
+
+    // 🔍 Debug：如果陣列是空的，就直接顯示一行文字
+    if (!list || !list.length) {
+        s.qGrid.innerHTML = `
+            <div style="
+                color:#fff;
+                padding:16px 20px;
+                border-radius:16px;
+                background:rgba(10,10,40,.7);
+                box-shadow:0 0 25px rgba(120,180,255,.6);
+                font-size:14px;
+                letter-spacing:.08em;
+            ">
+                DEBUG：目前題目清單是空的（list.length = ${list ? list.length : 0}）<br>
+                代表錯在 next25()/buildBank()，不是 CSS。
+            </div>
+        `;
+        return;
+    }
+
+    // 正常情況：把 25 題渲染成泡泡
+    list.forEach((line) => {
+        const [q, twist] = line.split('|');
+        const opt = document.createElement('div');
+        opt.className = 'option';
+        opt.style.setProperty('--delay', (Math.random() * 6).toFixed(2) + 's');
+        opt.innerHTML = `
+            <span class="q">${q}</span>
+            <span class="tw">${twist || ''}</span>
+        `;
+        opt.addEventListener('click', () => onPick(line, opt));
+        s.qGrid.appendChild(opt);
+    });
 }
 
 async function onPick(line, node) {
