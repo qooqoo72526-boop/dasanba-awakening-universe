@@ -4,39 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>靈魂照妖鏡 | Emotional Value A.I.</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Noto+Sans+TC:wght@300;400;500&family=DM+Sans:ital,wght@1,300&display=swap" rel="stylesheet">
+
+  <!-- 字體 & 樣式 -->
   <link rel="stylesheet" href="css/universe.css">
   <link rel="stylesheet" href="css/universe_soul.css">
 </head>
 
 <body data-page="soulmirror">
-  <!-- 左側導航 -->
-  <nav class="constellation-toolbar">
-    <a href="index.html" title="Home"><svg viewBox="0 0 24 24"><path d="M3 11l9-9 9 9v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3Z"/></svg></a>
-    <a href="cosmic-post-station.html" title="宇宙郵局✉️"><svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6v10H3Z"/></svg></a>
-    <a href="soulmirror.html" title="靈魂照妖鏡🪞"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg></a>
-    <a href="gallery.html" title="觀星畫廊🔭"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/></svg></a>
+  <!-- 左側直式工具列（與首頁一致） -->
+  <nav class="toolbox nav-trail" aria-label="cosmic nav">
+    <a class="tool" href="./index.html" aria-label="Home" title="Home">
+      <span class="ico">⌂</span><span class="txt">Home</span>
+    </a>
+    <a class="tool" href="./cosmic-post-station.html" aria-label="Cosmic Post" title="Cosmic Post">
+      <span class="ico">✉</span><span class="txt">Post</span>
+    </a>
+    <a class="tool" href="./soulmirror.html" aria-label="Soul Mirror" title="Soul Mirror">
+      <span class="ico">🪞</span><span class="txt">Mirror</span>
+    </a>
+    <a class="tool" href="#gallery" aria-label="Gallery" title="Gallery" data-jump>
+      <span class="ico">🔭</span><span class="txt">Gallery</span>
+    </a>
   </nav>
 
+  <!-- 星空背景 -->
   <canvas id="starfield"></canvas>
 
-  <!-- 🪞 開場動畫 -->
-  <section class="intro-screen">
-    <div class="intro-content">
-      <h1>靈魂照妖鏡 🪞</h1>
-      <p class="en">“Whisper your truth; the cosmos listens.”</p>
-      <div class="intro-lines">
-        <div>與宇宙聯繫中⋯</div>
-        <div>Receiving signals from the Universe…</div>
-        <div><strong>Receiving signals from Ajin / Migou / Gungun ✨</strong></div>
-      </div>
+  <!-- 3.5 秒開場動畫 -->
+  <div id="intro">
+    <div>
+      <div class="logo">SOUL MIRROR</div>
+      <div class="sub">trace the vectors of your inner voice</div>
     </div>
-  </section>
+  </div>
 
-  <!-- ✨ 主體 -->
-  <section class="mirror-wrap hidden">
-    <div class="subheading">靈魂照妖鏡 <span class="en">SOUL MIRROR</span></div>
-    <div class="magic-lines">「說出你的真實，宇宙會回應。」</div>
+  <!-- 魔鏡主體 -->
+  <section class="mirror-wrap">
+    <div class="subheading">靈魂照妖鏡🪞 <span class="en">SOUL MIRROR</span></div>
+
+    <div class="magic-lines">
+      <div class="txt">與宇宙聯繫中⋯</div>
+      <div class="txt">Receiving signals from the Universe…</div>
+      <div class="txt strong">Receiving signals from Ajin / Migou / Gungun ✨</div>
+    </div>
 
     <div class="question-grid"></div>
 
