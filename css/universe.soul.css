@@ -1,1 +1,193 @@
+body[data-page="soulmirror"] {
+  background: radial-gradient(ellipse at top, #E5DBFF 0%, #8C7AD9 40%, #2D2459 100%);
+  color: #EEE9FF;
+  font-family: "Noto Sans TC", sans-serif;
+  overflow-x: hidden;
+}
 
+/* 🪞 開場動畫 */
+.intro-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 45% 50%, #D9CFFF 0%, #392E67 80%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1000;
+  transition: opacity 1s ease;
+}
+.intro-screen h1 {
+  font-size: 2.6em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+}
+.intro-screen .en {
+  font-family: "DM Sans", sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.1em;
+  margin: 10px 0 18px;
+  opacity: 0.9;
+  color: #E8E3FF;
+}
+.intro-lines {
+  text-align: center;
+  display: grid;
+  gap: 5px;
+  font-size: 1em;
+  color: #EEE9FF;
+  animation: fadeIn 3s ease forwards;
+}
+.intro-lines strong {
+  font-weight: 700;
+  color: #F5EFFF;
+  text-shadow: 0 0 20px rgba(240,230,255,.5);
+}
+
+/* ✨ 主內容 */
+.hidden { display: none; }
+
+.mirror-wrap {
+  text-align: center;
+  padding: 80px 20px;
+  animation: fadeIn 1.2s ease forwards;
+  position: relative;
+  z-index: 2;
+}
+.subheading {
+  font-size: 2.4em;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #F4EEFF;
+  text-shadow: 0 0 20px rgba(190,170,255,.45);
+}
+.subheading .en {
+  font-family: "DM Sans", sans-serif;
+  font-style: italic;
+  font-weight: 300;
+  font-size: 1.1em;
+  color: #E7E1FF;
+}
+.magic-lines {
+  font-size: 1.1em;
+  color: #D9D2FF;
+  margin-top: 10px;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 20px rgba(220,200,255,0.6);
+}
+
+/* 問題卡片 */
+.question-grid {
+  display: grid;
+  gap: 16px;
+  margin: 40px auto 0;
+  max-width: 650px;
+}
+.option {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px 16px;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(180,150,255,0.15);
+  transition: all 0.4s ease;
+  color: #E9E3FF;
+}
+.option:hover {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 0 35px rgba(200,180,255,0.35);
+  transform: translateY(-2px);
+}
+
+/* ✨ 鏡面魔法反射層 ✨ */
+body[data-page="soulmirror"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(230,210,255,0.15) 0%, transparent 60%);
+  filter: blur(60px);
+  opacity: 0.8;
+  z-index: 0;
+  animation: mirrorPulse 6s ease-in-out infinite;
+}
+
+body[data-page="soulmirror"]::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 40% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(190,160,255,0.2) 0%, transparent 50%),
+    radial-gradient(circle at 30% 80%, rgba(255,240,255,0.12) 0%, transparent 50%);
+  animation: starlight 10s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+/* 結果區塊（鏡面呼吸） */
+.result-box {
+  margin-top: 60px;
+  padding: 28px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 0 45px rgba(190,160,255,0.25);
+  color: #EFEAFF;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  animation: mirrorGlow 5s ease-in-out infinite alternate;
+}
+.result-box::before {
+  content: "";
+  position: absolute;
+  inset: -100px;
+  background: conic-gradient(from 180deg, rgba(190,160,255,0.15), rgba(255,255,255,0.05), rgba(130,110,200,0.1));
+  filter: blur(80px);
+  animation: rotateAura 20s linear infinite;
+  z-index: 0;
+}
+.result-box .txt {
+  line-height: 1.9;
+  font-size: 1.15em;
+  text-shadow: 0 0 18px rgba(255,255,255,0.2);
+  position: relative;
+  z-index: 2;
+}
+.result-box .three {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin-top: 18px;
+  position: relative;
+  z-index: 2;
+}
+.result-box img {
+  width: 44px;
+  height: 44px;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 8px rgba(230,200,255,0.5));
+}
+
+/* 🪩 粒子光環動畫 */
+@keyframes mirrorPulse {
+  0%,100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+@keyframes starlight {
+  from { opacity: 0.5; transform: scale(1); }
+  to { opacity: 0.9; transform: scale(1.03); }
+}
+@keyframes rotateAura {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes mirrorGlow {
+  from { box-shadow: 0 0 30px rgba(180,150,255,0.2); }
+  to { box-shadow: 0 0 60px rgba(210,190,255,0.4); }
+}
