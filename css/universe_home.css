@@ -101,3 +101,81 @@ body[data-page="home"] .aura-gungun {
   );
   box-shadow: 0 0 40px 15px rgba(180,220,255,0.16);
 }
+/* ======= 銀藍光感畫廊 STARFLOW GALLERY ======= */
+
+body[data-page="home"] #gallery {
+  margin: clamp(32px, 4vw, 48px) auto 60px;
+  max-width: 1200px;
+  text-align: center;
+  position: relative;
+}
+
+body[data-page="home"] #gallery h4 {
+  font-family: "Orbitron", "Noto Sans TC", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  font-size: clamp(17px, 2vw, 20px);
+  color: #dfe8ff;
+  text-shadow: 0 0 15px rgba(170, 200, 255, 0.5);
+  margin-bottom: 16px;
+}
+
+/* 畫廊主框：銀藍漸層玻璃感 */
+body[data-page="home"] #gallery .frame {
+  position: relative;
+  height: min(62vh, 640px);
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(180deg,
+    rgba(160, 190, 240, 0.12),
+    rgba(80, 120, 200, 0.1),
+    rgba(30, 60, 120, 0.12)
+  );
+  box-shadow:
+    0 0 28px rgba(150, 200, 255, 0.15),
+    inset 0 0 40px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+}
+
+/* 每張圖片 */
+body[data-page="home"] #gallery .frame .gimg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  filter: brightness(1.05) contrast(1.05) saturate(1.1);
+  border-radius: 22px;
+}
+body[data-page="home"] #gallery .frame .gimg.active {
+  opacity: 1;
+}
+
+/* 下方微光邊線 */
+body[data-page="home"] #gallery::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+  width: 40%;
+  height: 1.5px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(180, 210, 255, 0.8),
+    transparent);
+  filter: blur(2px);
+}
+
+/* 小閃光點（靜態銀藍光粒子） */
+body[data-page="home"] #gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 30%, rgba(200, 230, 255, 0.1) 0%, transparent 70%),
+    radial-gradient(circle at 85% 60%, rgba(160, 200, 255, 0.1) 0%, transparent 60%);
+  pointer-events: none;
+}
