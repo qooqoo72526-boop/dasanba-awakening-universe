@@ -253,3 +253,18 @@ canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
     transform:translateY(-4px);
   }
 }
+/* --- Mirror Emojis (🪞 + 🪄 特效) --- */
+.subheading .emoji1,
+.magic-lines .emoji2 {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji";
+  font-size: 1.2em;
+  filter: drop-shadow(0 0 6px rgba(180,140,255,.8));
+  animation: floatY 3s ease-in-out infinite;
+  margin-left: 6px;
+}
+
+@keyframes floatY {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
