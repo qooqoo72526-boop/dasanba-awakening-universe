@@ -1,496 +1,346 @@
-/* =========================
-   SOUL MIRROR (魔法紫調)
-   只作用於 <html class="page--soulmirror">
-   ========================= */
-:root{
-  --ink:#EDEBFF;                /* 文字銀白 */
-  --violet:#9B8CFF;             /* 柔紫 */
-  --violet-deep:#5B47CE;        /* 深紫 */
-  --pink:#FFB6E6;               /* 夢幻粉 */
-  --aqua:#9FE3FF;               /* 冷光藍 */
-  --glass:rgba(255,255,255,.08);
-  --glass-2:rgba(185,170,255,.14);
-  --glow:0 0 48px rgba(160,140,255,.45), 0 0 96px rgba(120,220,255,.25);
-}
+/*****************************************
+ * SOUL MIRROR ｜靈魂照妖鏡 專用樣式（乾淨版）
+ * 只作用在 html.page--soulmirror ＋ body[data-page="soulmirror"]
+ *****************************************/
 
-html.page--soulmirror, html.page--soulmirror body{
+/* === 基本主題：紫藍宇宙背景 === */
+
+html.page--soulmirror,
+html.page--soulmirror body{
+  margin:0;
+  padding:0;
+  min-height:100%;
   background:
-    radial-gradient(1200px 600px at 15% 10%, rgba(170,190,255,.28), transparent 55%),
-    radial-gradient(900px 520px at 85% 90%, rgba(120,80,255,.35), transparent 60%),
-    radial-gradient(680px 480px at 50% 40%, rgba(255,180,255,.18), transparent 65%),
-    #050618;
-  color:var(--ink);
+    radial-gradient(1200px 600px at 15% 10%, rgba(180,190,255,.28), transparent 55%),
+    radial-gradient(1200px 600px at 85% 90%, rgba(120,180,255,.25), transparent 60%),
+    linear-gradient(180deg, #111735 0%, #161d48 45%, #05091f 100%);
+  color:#E6EEFF;
+  font-family:"Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* 3.5s 開場 */
-#intro{
-  position:fixed; inset:0; z-index:9999; display:grid; place-items:center;
-  background:
-    radial-gradient(1200px 680px at 50% 40%, rgba(160,170,255,.15), transparent 70%),
-    linear-gradient(180deg, #0b0f24 0%, #0a0c1a 100%);
-  animation: introFade 3.5s ease forwards;
-}
-#intro .logo{
-  text-align:center; letter-spacing:.14em;
-  font-family: "Orbitron", ui-sans-serif;
-  font-size: clamp(20px, 4.3vw, 40px);
-  color: var(--ink);
-  text-shadow: 0 0 18px rgba(180,200,255,.55);
-}
-#intro .sub{
-  margin-top:10px; font-size: clamp(12px, 2vw, 16px);
-  opacity:.85; font-style: italic;
-}
-@keyframes introFade{
-  0%{opacity:1; filter:blur(0)}
-  80%{opacity:1}
-  100%{opacity:0; visibility:hidden}
-}
-
-/* 星塵層（沿用你 <canvas id="starfield">） */
-canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
-
-/* 版心 */
-.mirror-wrap{
-  position:relative; z-index:1; width:min(980px, 92vw);
-  margin: clamp(64px, 8vh, 90px) auto 80px;
-}
-
-/* 標題區：靈魂照妖鏡 SOUL MIRROR（紫色魔法感） */
-.subheading{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:8px;
-  margin:28px auto 16px;
-  font-size:clamp(22px, 3vw, 30px);
-  letter-spacing: 0.18em;
-  color: rgba(240,246,255,0.96);
-  text-shadow:
-    0 0 14px rgba(130,90,255,0.55),
-    0 0 28px rgba(80,20,180,0.65);
-  animation: titleFloatIn .65s ease-out both;
-}
-
-.subheading .zh{
-  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-weight: 600;
-}
-
-.subheading .en{
-  font-family: "Orbitron", ui-sans-serif;
-  font-size: 0.9em;
-  font-style: italic;
-  letter-spacing: 0.32em;
-  opacity: 0.96;
-}
-
-.subheading .emoji{
-  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Twemoji Mozilla", system-ui;
-  font-size: 1.15em;
-  filter: drop-shadow(0 0 6px rgba(190,160,255,0.9));
-}
-
-/* 標題浮起來的動畫 */
-@keyframes titleFloatIn{
-  0%   { opacity:0; transform:translateY(8px) scale(.96); filter:blur(4px); }
-  70%  { opacity:1; transform:translateY(0)   scale(1.02); }
-  100% { opacity:1; transform:translateY(0)   scale(1);    }
-}
-/* 魔法引言區：一行中文 + 一行英文＋魔法棒 */
-.magic-lines{
-  max-width: 720px;
-  margin: 8px auto 24px;
-  text-align: center;
-  opacity: .95;
-}
-
-.magic-lines .txt{
-  font-size: 14px;
-  line-height: 1.7;
-  letter-spacing: .08em;
-  color: rgba(235,242,255,0.9);
-}
-
-.magic-lines .zh{
-  font-family: "Noto Sans TC", system-ui, sans-serif;
-}
-
-.magic-lines .en{
-  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-size: 13px;
-  opacity: .9;
-}
-
-.magic-lines .wand{
-  display: inline-block;
-  margin-right: 6px;
-  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Twemoji Mozilla", system-ui;
-  filter:
-    drop-shadow(0 0 6px rgba(186,140,255,0.95))
-    drop-shadow(0 0 14px rgba(120,90,255,0.8));
-  animation: wandFloat 2.8s ease-in-out infinite;
-}
-
-@keyframes wandFloat{
-  0%   { transform: translateY(0)   rotate(-6deg); }
-  50%  { transform: translateY(-4px) rotate(2deg); }
-  100% { transform: translateY(0)   rotate(-6deg); }
-}
-/* 題目區：漂浮的魔法光球（仍然用 .question-grid / .option 給 JS 用） */
-.question-grid{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:18px;
-  max-width: 900px;
-  margin: 26px auto 18px;
-  padding: 4px 6px;
-}
-
-.option{
-  position:relative;
-  padding: 10px 16px;
-  max-width: 260px;
-  border-radius: 999px;
-  border:none;
-  cursor:pointer;
-  line-height:1.5;
-  font-size: 13px;
-  letter-spacing:.02em;
-  color: rgba(245,248,255,0.96);
-  background:
-    radial-gradient(circle at 0% 0%, rgba(255,255,255,.18), transparent 55%),
-    radial-gradient(circle at 100% 120%, rgba(140,120,255,.38), rgba(40,20,120,.12));
-  box-shadow:
-    0 0 0 1px rgba(150,190,255,.18),
-    0 10px 28px rgba(8,10,45,.85);
-  backdrop-filter: blur(14px);
-  white-space:normal;
-  transition:
-    transform .28s ease,
-    box-shadow .28s ease,
-    background .28s ease,
-    opacity .28s ease;
-  opacity:.94;
-}
-
-.option::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  border-radius:inherit;
-  background: radial-gradient(circle at 10% -10%, rgba(200,170,255,.65), transparent 55%);
-  opacity:0;
-  transition: opacity .35s ease;
+/* 星空畫布 */
+#starfield{
+  position:fixed;
+  inset:0;
+  z-index:0;
   pointer-events:none;
 }
 
-.option span:nth-child(1){
-  display:block;
-  font-size: 11px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  opacity:.7;
-}
+/* === 3.5 秒開場動畫 === */
 
-.option span:nth-child(2){
-  display:block;
-  margin-top:4px;
-}
-
-/* hover／點到時候亮一點 */
-.option:hover{
-  transform: translateY(-4px);
-  box-shadow:
-    0 0 0 1px rgba(185,210,255,.55),
-    0 16px 40px rgba(4,10,45,.95);
+#intro{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
   background:
-    radial-gradient(circle at 0% 0%, rgba(255,255,255,.24), transparent 60%),
-    radial-gradient(circle at 100% 120%, rgba(170,120,255,.52), rgba(40,20,120,.14));
-  opacity:1;
+    radial-gradient(1200px 680px at 50% 40%, rgba(160,170,255,.15), transparent 70%),
+    linear-gradient(180deg, #0d1028 0%, #050617 100%);
+  animation:introFade 3.5s ease forwards;
 }
 
-.option:hover::before{
-  opacity:1;
-}
-
-/* 魔法漂浮 keyframe（Y 軸輕輕上下晃） */
-@keyframes orbitFloat{
-  0%   { transform:translateY(0); }
-  40%  { transform:translateY(-6px); }
-  60%  { transform:translateY(-3px); }
-  100% { transform:translateY(0); }
-}
-
-/* 解析泡泡 + 三鳥一句話 */
-.result-box{
-  margin:22px auto 8px; padding:18px 18px;
-  border-radius:18px;
-  background: linear-gradient(180deg, rgba(55,40,140,.28), rgba(25,22,70,.24));
-  border:1px solid rgba(160,150,255,.25);
-  box-shadow: var(--glow), inset 0 0 120px rgba(155,120,255,.08);
-}
-.result-box .txt{
-  font-size:15px; line-height:1.9; letter-spacing:.02em; white-space:pre-line;
-}
-.result-box .three{
-  display:grid; grid-template-columns: repeat(3,1fr);
-  gap:16px; margin-top:14px; align-items:center;
-}
-.result-box .three img{ width:22px; height:22px; vertical-align:-4px; margin-right:6px; }
-
-/* 魔鏡邊緣微光（容器加一圈不規則光暈） */
-.mirror-wrap::before{
-  content:""; position:absolute; inset:-32px -24px; z-index:-1; pointer-events:none;
-  background:
-    radial-gradient(600px 180px at 30% -10%, rgba(155,120,255,.35), transparent 70%),
-    radial-gradient(520px 160px at 80% 0%, rgba(120,220,255,.25), transparent 70%);
-  filter: blur(20px); opacity:.75; animation: breathe 6s ease-in-out infinite;
-}
-@keyframes breathe{
-  0%,100%{ transform:translateY(0); opacity:.8 }
-  50%{ transform:translateY(8px); opacity:1 }
-}
-
-/* 置中工具列（沿用你左側圖標） */
-.constellation-toolbar{
-  position:fixed; left:16px; top:50%; transform:translateY(-50%);
-  display:grid; gap:10px; z-index:2; opacity:.9;
-}
-.constellation-toolbar a{
-  display:grid; place-items:center; width:34px; height:34px; border-radius:10px;
-  background:var(--glass); border:1px solid rgba(200,200,255,.18);
-  box-shadow:0 6px 18px rgba(40,30,100,.35); backdrop-filter: blur(6px);
-}
-.constellation-toolbar a:hover{ transform:translateY(-2px); }
-
-/* 手機微調 */
-@media (max-width: 768px){
-  .result-box .three{ grid-template-columns:1fr; }
-}
-.ico-mirror {
-  width: 18px;
-  height: 18px;
-  fill: rgba(255,255,255,0.85);
-  filter: drop-shadow(0 0 4px rgba(120,150,255,0.9));
-  margin-left: 6px;
-  transform: translateY(2px);
-}
-/* 標題：靈魂照妖鏡 🪞 SOUL MIRROR（紫色魔法風） */
-.subheading{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:10px;
-  margin:20px auto 12px;
-  font-size: clamp(22px, 3vw, 32px);
-  letter-spacing: 2px;
-  color: rgba(245,250,255,.94);
-  text-shadow: 0 0 18px rgba(160,140,255,.55);
-  animation: titleFloat .6s ease-out forwards;
-}
-
-.subheading .mirror-emoji{
-  font-family: "Segoe UI Emoji","Noto Color Emoji","Apple Color Emoji";
-  font-size: 1.2em;
-  filter: drop-shadow(0 0 6px rgba(230,200,255,.9));
-}
-
-.subheading .en{
-  font-family: "Orbitron", ui-sans-serif;
-  font-size: .9em;
-  letter-spacing: .22em;
-  color: rgba(210,225,255,.9);
-}
-
-/* 下面兩行標語 */
-.magic-lines{
+#intro .logo{
   text-align:center;
-  margin: 4px auto 20px;
-  opacity:.92;
+  letter-spacing:.16em;
+  font-family:"Orbitron", ui-sans-serif;
+  font-size:clamp(22px, 3vw, 34px);
+  color:#F5F6FF;
 }
 
-.magic-lines .txt.zh{
-  font-size: 14px;
-  letter-spacing: .16em;
-  color: rgba(240,235,255,.88);
-}
-
-.magic-lines .txt.en{
-  margin-top:6px;
-  font-size: 13px;
-  font-style: italic;
-  letter-spacing: .04em;
-  color: rgba(215,225,255,.9);
-}
-
-/* 標題微浮動動畫 */
-@keyframes titleFloat{
-  0%{ transform: translateY(8px); opacity:0; filter:blur(3px); }
-  100%{ transform: translateY(0); opacity:1; filter:blur(0); }
-}
-
-  /* 標題浮起來 0.6 秒進場 */
-  animation:titleFloatIn .6s ease-out both;
-}
-
-/* 中文主標：比較厚實一點 */
-.subheading .zh{
-  font-weight:600;
-}
-
-/* 中間的 · 符號 */
-.subheading .divider{
-  opacity:.7;
-  font-size:.85em;
-  margin:0 2px;
-}
-
-/* 英文 SOUL MIRROR：細斜體、科幻感 */
-.subheading .en{
-  font-family:"Orbitron", sans-serif;
-  font-size:clamp(18px, 2.4vw, 26px);
+#intro .sub{
+  margin-top:10px;
+  text-align:center;
+  font-size:clamp(12px, 2vw, 16px);
+  opacity:.85;
   font-style:italic;
-  letter-spacing:.2em;
-  color:rgba(210,225,255,0.98);
-  text-shadow:0 0 10px rgba(130,170,255,0.5);
+  color:rgba(220,230,255,.9);
 }
 
-/* 背後紫色魔法煙霧（低飽和） */
-.subheading::before{
-  content:"";
-  position:absolute;
-  inset:-18px -36px;
-  background:
-    radial-gradient(120% 200% at 10% 0%,
-      rgba(180,150,255,0.26), transparent 60%),
-    radial-gradient(110% 180% at 92% 100%,
-      rgba(120,200,255,0.18), transparent 70%);
-  filter:blur(18px);
-  opacity:.9;
-  z-index:-1;
+@keyframes introFade{
+  0%{opacity:1; filter:blur(0);}
+  80%{opacity:1;}
+  100%{opacity:0; visibility:hidden; filter:blur(2px);}
 }
 
-/* emoji 圖示：鏡子＋魔法棒 */
-.icon-inline{
-  font-family:"Segoe UI Emoji","Noto Color Emoji",
-              "Apple Color Emoji",sans-serif;
-  font-size:1.15em;
-  display:inline-block;
-  position:relative;
-}
+/* === 左側工具列（照首頁版，固定在左邊） === */
 
-/* 鏡子：冷藍微光＋上下漂浮 */
-.icon-inline.mirror{
-  animation:floatIcon 3.4s ease-in-out infinite;
-  filter:drop-shadow(0 0 6px rgba(110,150,255,0.9));
-}
-
-/* 魔法棒：紫光更強一點，也在漂浮 */
-.icon-inline.wand{
-  margin-left:2px;
-  animation:floatIcon 2.8s ease-in-out infinite;
-  filter:
-    drop-shadow(0 0 6px rgba(170,120,255,0.95))
-    drop-shadow(0 0 14px rgba(130,80,255,0.6));
-}
-
-/* --- 標題進場動畫 --- */
-@keyframes titleFloatIn{
-  0%{
-    opacity:0;
-    transform:translateY(12px) scale(.97);
-  }
-  100%{
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-}
-
-/* --- 鏡子 / 魔法棒上下漂浮（y 軸 4px） --- */
-@keyframes floatIcon{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-4px);
-  }
-}
-/* --- Mirror Emojis (🪞 + 🪄 特效) --- */
-.subheading .emoji1,
-.magic-lines .emoji2 {
-  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji";
-  font-size: 1.2em;
-  filter: drop-shadow(0 0 6px rgba(180,140,255,.8));
-  animation: floatY 3s ease-in-out infinite;
-  margin-left: 6px;
-}
-
-@keyframes floatY {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-  100% { transform: translateY(0); }
-}
-/* 靈魂照妖鏡專用：左側工具列，跟首頁一致但套紫色玻璃感 */
 body[data-page="soulmirror"] .toolbox.nav-trail{
-  position: fixed;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: grid;
-  gap: 10px;
-  z-index: 20;
-}
-
-body[data-page="soulmirror"] .toolbox.nav-trail .tool{
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background: rgba(10, 6, 30, .75);
-  box-shadow: 0 6px 18px rgba(60, 40, 140, .55);
-  backdrop-filter: blur(8px);
-  text-decoration: none;
-}
-
-body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
-  font-size: 15px;
-  color: rgba(235, 240, 255, .95);
-}
-
-body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
-  display: none; /* 只留圖示，不顯示文字，跟首頁一樣乾淨 */
-}
-/* SOUL MIRROR 專用：左側工具列只顯示 icon、置左垂直置中 */
-body[data-page="soulmirror"] .toolbox.nav-trail{
-  position:fixed !important;
-  left:16px !important;
-  top:50% !important;
-  transform:translateY(-50%) !important;
+  position:fixed;
+  left:16px;
+  top:50%;
+  transform:translateY(-50%);
   display:grid;
   gap:10px;
   z-index:20;
 }
 
 body[data-page="soulmirror"] .toolbox.nav-trail .tool{
+  display:grid;
+  place-items:center;
   width:34px;
   height:34px;
   border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:rgba(10,10,40,.75);
-  backdrop-filter:blur(8px);
+  background:rgba(10,18,60,.78);
   box-shadow:0 8px 20px rgba(0,0,0,.55);
+  backdrop-filter:blur(8px);
   text-decoration:none;
 }
 
-body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
-  display:none;
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
+  font-size:17px;
+  color:rgba(235,240,255,.96);
 }
 
-body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
-  color:rgba(235,240,255,.95);
-  font-size:18px;
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
+  display:none;   /* 只留圖示，小小一顆就好 */
+}
+
+/* === 版心容器 === */
+
+.mirror-wrap{
+  position:relative;
+  z-index:1;
+  width:min(980px, 92vw);
+  margin:clamp(80px, 9vh, 110px) auto 90px;
+}
+
+/* === 標題：中文＋🪞＋英文 同一行，帶魔法光暈 === */
+
+.subheading{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin:0 auto 24px;
+  animation:titleFloat .6s ease-out both;
+}
+
+.subheading .zh{
+  font-weight:600;
+  font-size:clamp(22px, 3vw, 32px);
+  letter-spacing:4px;
+}
+
+.subheading .en{
+  font-family:"Orbitron", ui-sans-serif;
+  font-weight:500;
+  font-size:clamp(18px, 2.4vw, 24px);
+  letter-spacing:.22em;
+  color:rgba(218,226,255,.95);
+}
+
+/* 標題底下的紫色霧光 */
+.subheading::before{
+  content:"";
+  position:absolute;
+  inset:-40px -120px;
+  background:
+    radial-gradient(circle at 0% 50%, rgba(210,170,255,.40), transparent 60%),
+    radial-gradient(circle at 100% 40%, rgba(130,200,255,.36), transparent 65%);
+  opacity:.85;
+  filter:blur(26px);
+  z-index:-1;
+}
+
+/* 鏡子 emoji：微微上下飄 */
+.icon-inline.mirror{
+  display:inline-block;
+  font-size:1.2em;
+  margin:0 4px;
+  filter:drop-shadow(0 0 10px rgba(210,200,255,.95));
+  animation:floatIcon 3.4s ease-in-out infinite;
+}
+
+/* === 魔法前導文字 === */
+
+.magic-lines{
+  text-align:center;
+  margin:10px auto 28px;
+  opacity:.95;
+}
+
+.magic-lines .txt.zh{
+  font-size:14px;
+  letter-spacing:.12em;
+  color:rgba(230,235,255,.96);
+  margin-bottom:6px;
+}
+
+.magic-lines .txt.en{
+  font-size:13px;
+  letter-spacing:.08em;
+  font-style:italic;
+  color:rgba(215,225,255,.88);
+}
+
+/* 魔法棒 emoji：紫光微擺動 */
+.magic-lines .wand{
+  display:inline-block;
+  margin-right:6px;
+  font-size:1.1em;
+  filter:drop-shadow(0 0 8px rgba(220,170,255,.95));
+  animation:wandSparkle 2.2s ease-in-out infinite;
+}
+
+/* === 25 題：魔法氣泡，不要格線、不要邊框 === */
+
+.question-grid{
+  max-width:980px;
+  margin:40px auto 10px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+}
+
+.option{
+  position:relative;
+  min-width:180px;
+  max-width:260px;
+  padding:14px 16px 18px;
+  border-radius:999px;
+  border:none;
+  line-height:1.4;
+  cursor:pointer;
+  user-select:none;
+  white-space:normal;
+
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255,255,255,.20), rgba(170,160,255,.15) 40%, rgba(60,20,120,.70) 75%);
+  box-shadow:
+    0 0 0 1px rgba(180,200,255,.18),
+    0 14px 40px rgba(5,10,40,.85);
+  backdrop-filter:blur(12px);
+
+  color:rgba(244,248,255,.96);
+  font-size:13px;
+  letter-spacing:.03em;
+  opacity:.96;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease,
+    opacity .25s ease;
+}
+
+/* 問題號碼＋ twist 文字都維持 JS 的 span 標籤 */
+.option span.q{
+  font-weight:600;
+}
+.option span.twist{
+  opacity:.9;
+}
+
+/* hover：稍微浮起來，光更亮 */
+.option:hover{
+  transform:translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(210,230,255,.32),
+    0 20px 60px rgba(20,30,80,.95);
+  background:
+    radial-gradient(circle at 5% 0%, rgba(255,255,255,.26), rgba(190,170,255,.24) 40%, rgba(80,40,150,.85) 75%);
+  opacity:1;
+}
+
+/* === 解析區：玻璃感長條 ＋ 三鳥一句話 === */
+
+.result-box{
+  max-width:980px;
+  margin:44px auto 28px;
+  padding:20px 22px;
+  border-radius:24px;
+  border:none;
+  background:
+    linear-gradient(135deg, rgba(55,40,140,.26), rgba(25,22,70,.80));
+  box-shadow:
+    0 0 0 1px rgba(165,190,255,.20),
+    0 26px 80px rgba(0,0,0,.80);
+}
+
+.result-box .txt{
+  font-size:15px;
+  line-height:1.9;
+  letter-spacing:.03em;
+  white-space:pre-line;
+  color:rgba(235,240,255,.96);
+}
+
+/* 三鳥 */
+.result-box .three{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:12px;
+  margin-top:16px;
+  font-size:13px;
+  letter-spacing:.04em;
+  color:rgba(215,225,255,.92);
+}
+
+.result-box .three .bird-line{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.result-box .three .bird-line::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:99px;
+  background:radial-gradient(circle, rgba(255,255,255,.9), rgba(200,220,255,.1));
+}
+
+/* === 動畫 keyframes === */
+
+@keyframes titleFloat{
+  0%{
+    transform:translateY(8px) scale(.97);
+    opacity:0;
+    filter:blur(3px);
+  }
+  100%{
+    transform:translateY(0) scale(1);
+    opacity:1;
+    filter:blur(0);
+  }
+}
+
+@keyframes floatIcon{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(4px); }
+}
+
+@keyframes wandSparkle{
+  0%{
+    transform:translateY(0) rotate(-8deg);
+    filter:drop-shadow(0 0 4px rgba(210,170,255,.6));
+  }
+  40%{
+    transform:translateY(-3px) rotate(6deg);
+    filter:drop-shadow(0 0 12px rgba(245,220,255,1));
+  }
+  100%{
+    transform:translateY(0) rotate(-4deg);
+    filter:drop-shadow(0 0 6px rgba(210,170,255,.7));
+  }
+}
+
+/* 手機：題目稍微放大＆單欄 */
+@media (max-width:768px){
+  .mirror-wrap{
+    width:92vw;
+    margin:72px auto 70px;
+  }
+  .question-grid{
+    gap:14px;
+  }
+  .option{
+    max-width:100%;
+  }
+  .result-box .three{
+    grid-template-columns:1fr;
+  }
 }
