@@ -1,146 +1,122 @@
-/* ===== HOME PAGE (只作用於首頁) ===== */
-body[data-page="home"]{}
+/* ==============================
+   HOME PAGE（僅作用於 <body data-page="home">）
+   ============================== */
 
-/* 卡片容器：三欄，間距固定 */
+/* 版面安全：所有連結不加底線 */
+body[data-page="home"] a { text-decoration: none; }
+
+/* 卡片容器：3 欄、維持你原來的間距語感 */
 body[data-page="home"] .cards{
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:repeat(3, minmax(0,1fr));
   gap:clamp(14px,2vw,22px);
   align-items:stretch;
 }
 
-/* 卡片本體：銀白玻璃感，無邊框感，微浮動 */
+/* 卡片本體：去邊框感 + 銀白微亮 */
 body[data-page="home"] .card{
   position:relative;
   border-radius:20px;
   overflow:hidden;
-  aspect-ratio:3/4;       /* 直立，不裁切 */
-  min-height:260px;
   transform:translateZ(0);
-  transition:transform .25s ease, box-shadow .25s ease;
-  box-shadow:0 10px 30px rgba(8,18,34,.18) inset, 0 8px 26px rgba(0,8,20,.22);
-  background:linear-gradient(180deg, rgba(240,245,255,.08), rgba(200,215,255,.05));
-  backdrop-filter:blur(8px);
-  text-decoration:none;
+  transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  /* 銀白內外光，不是硬邊框 */
+  box-shadow:
+    0 10px 30px rgba(8,18,34,.18) inset,
+    0 8px 26px rgba(0,8,20,.22);
+  background:rgba(10,18,32,.28);
+  backdrop-filter: blur(6px);
 }
-body[data-page="home"] .card:hover{transform:translateY(-6px);}
 
-/* 卡片圖片：完整置入、不裁切、略靠上 */
-body[data-page="home"] .card-photo{position:relative; height:64%;}
+/* 讓卡片微微浮起（滑過） */
+body[data-page="home"] .card:hover{ transform:translateY(-6px); }
+
+/* 卡片相片：直立不裁頭 */
+body[data-page="home"] .card-photo{
+  position:relative;
+  width:100%;
+  aspect-ratio: 3 / 4;           /* 直立比例 */
+  overflow:hidden;
+  border-radius:16px;
+  margin:14px auto 10px;
+}
 body[data-page="home"] .card-photo img{
   width:100%; height:100%;
-  object-fit:contain;
-  object-position:center top;  /* 不卡頭 */
-  display:block;
-  filter:drop-shadow(0 8px 22px rgba(160,190,255,.18));
+  object-fit:contain;            /* 不裁切、完整看到鳥 */
+  object-position:center;
+  filter: drop-shadow(0 2px 14px rgba(0,0,0,.22));
 }
 
-/* 文字區：置中、微亮 */
-body[data-page="home"] .named{
-  position:absolute; left:0; right:0; bottom:10px;
-  text-align:center; padding:4px 10px 10px;
-  color:rgba(235,245,255,.92);
-  text-shadow:0 1px 0 rgba(20,30,55,.35);
-}
-body[data-page="home"] .named .name{ 
-  font:600 14px/1 "Noto Sans TC",system-ui,Arial;
+/* 名稱＆文案：保持你現在的字體（Noto Sans TC）並置中 */
+body[data-page="home"] .named{ padding:2px 12px 14px; text-align:center; }
+body[data-page="home"] .name{
+  font: 700 14.5px/1.2 "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "PingFang TC", sans-serif;
   letter-spacing:.02em;
+  color: rgba(235,245,255,.95);
+  display:flex; align-items:center; justify-content:center; gap:6px;
 }
-body[data-page="home"] .named .quote{
+body[data-page="home"] .quote{
   margin-top:6px;
-  font:400 12.5px/1.6 "Noto Sans TC",system-ui,Arial;
-  color:rgba(220,235,255,.85);
+  font: 400 12.5px/1.5 "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "PingFang TC", sans-serif;
+  color: rgba(215,230,255,.82);
 }
 
-/* 連結預設底線全部移除（你說那條很醜） */
-body[data-page="home"] a{text-decoration:none;}
-body[data-page="home"] a:hover{text-decoration:none;}
+/* 愛心在最前且小幅漂浮 */
+body[data-page="home"] .heart{ display:inline-block; transform:translateY(0); }
+@keyframes floatHeart{ 0%{transform:translateY(0)} 50%{transform:translateY(-2px)} 100%{transform:translateY(0)} }
+body[data-page="home"] .name .heart{ animation: floatHeart 2.6s ease-in-out infinite; }
 
-/* 愛心放「名稱最前面」、輕微跳動 */
-body[data-page="home"] .heart{
-  display:inline-block; margin-right:6px;
-  filter:drop-shadow(0 1px 0 rgba(255,255,255,.35));
-  animation:heartFloat 2.6s ease-in-out infinite;
+/* 彩色光暈（不會搶戲，淡淡的） */
+body[data-page="home"] .aura{
+  position:absolute; inset:-6% -6% auto -6%;
+  pointer-events:none;
+  filter: blur(26px);
+  opacity:.35;
 }
-@keyframes heartFloat{
-  0%,100%{ transform:translateY(0) scale(1); opacity:.95;}
-  50%{ transform:translateY(-2px) scale(1.06); opacity:1;}
-}
+body[data-page="home"] .aura-ajin  { background: radial-gradient(60% 60% at 50% 80%, rgba(255,232,120,.35), transparent 70%); }
+body[data-page="home"] .aura-migou { background: radial-gradient(60% 60% at 50% 80%, rgba(255,164,120,.32), transparent 70%); }
+body[data-page="home"] .aura-gungun{ background: radial-gradient(60% 60% at 50% 80%, rgba(120,182,255,.32), transparent 70%); }
 
-/* 銀藍全域光暈（不改你的主背景，只給卡片四周淡淡仙氣） */
+/* ── 仙女棒爆光（點擊卡片的四周星光外放） ── */
+/* JS 會在點擊時加上 .sparkle 一下下 */
 body[data-page="home"] .card::before{
   content:"";
-  position:absolute; inset:-14% -10% auto -10%;
-  height:46%;
-  background:radial-gradient(60% 68% at 50% 50%, rgba(210,235,255,.26), transparent 70%);
-  filter:blur(18px);
+  position:absolute; inset:-12%;
+  border-radius:26px;
   pointer-events:none;
+  opacity:0; transform:scale(.8);
+}
+@keyframes wandBurst{
+  0%  { opacity:.0; transform:scale(.7); box-shadow: 0 0 0 0 rgba(180,210,255,.0); }
+  10% { opacity:.9; transform:scale(1); box-shadow: 0 0 12px 6px rgba(200,230,255,.35); }
+  55% { opacity:.55; box-shadow: 0 0 30px 16px rgba(160,210,255,.2); }
+  100%{ opacity:0;  transform:scale(1.06); box-shadow: 0 0 0 0 rgba(160,210,255,.0); }
+}
+body[data-page="home"] .card.sparkle::before{
+  background: radial-gradient(60% 60% at 50% 50%, rgba(220,240,255,.22), rgba(220,240,255,.0) 70%);
+  animation: wandBurst 620ms ease-out 1;
 }
 
-/* 角色專屬 Aura（斜角光暈） */
-body[data-page="home"] .aura{position:absolute; inset:0; pointer-events:none;}
-body[data-page="home"] .aura::after{
-  content:""; position:absolute; inset:auto -18% -18% auto; width:60%; height:60%;
-  filter:blur(28px); opacity:.58; transform:rotate(-12deg);
-  background:conic-gradient(from 180deg, transparent 0 60%, rgba(255,255,255,.0) 60%);
+/* 強制關閉任何舊的「網狀格子/覆蓋層」 */
+body[data-page="home"] .card::after{ display:none !important; background:none !important; box-shadow:none !important; }
+
+/* 畫廊高度（只加高，不動切換邏輯） */
+body[data-page="home"] .gallery{ margin: 26px auto 38px; }
+body[data-page="home"] .gallery .frame{
+  height: clamp(320px, 45vw, 620px);   /* ↑↑ 這行就是你要的「上下都加高」 */
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow: 0 10px 30px rgba(8,18,34,.18) inset, 0 8px 26px rgba(0,8,20,.22);
+  background: rgba(10,18,32,.22);
 }
-/* 阿金：金色 */
-body[data-page="home"] .aura-ajin::after{
-  background:conic-gradient(from 185deg,
-    rgba(255,207,90,.00) 0 55%,
-    rgba(255,210,100,.55) 55% 78%,
-    rgba(255,240,180,.35) 78% 100%);
-}
-/* 米果：粉橘 */
-body[data-page="home"] .aura-migou::after{
-  background:conic-gradient(from 185deg,
-    rgba(255,180,160,.00) 0 55%,
-    rgba(255,160,130,.50) 55% 78%,
-    rgba(255,210,200,.35) 78% 100%);
-}
-/* 滾滾：藍 */
-body[data-page="home"] .aura-gungun::after{
-  background:conic-gradient(from 185deg,
-    rgba(140,190,255,.00) 0 55%,
-    rgba(120,170,255,.50) 55% 78%,
-    rgba(190,220,255,.35) 78% 100%);
+body[data-page="home"] .gallery .frame img{
+  width:100%; height:100%;
+  object-fit:cover;    /* 你的 trio 圖是 16:9，讓畫廊鋪滿 */
+  border:0;
 }
 
-/* 仙女棒特效：點卡片爆星（配合 main.js 裡 add/remove 'sparkle'） */
-body[data-page="home"] .card.sparkle::after{
-  content:""; position:absolute; inset:0; pointer-events:none;
-  background:
-    radial-gradient(3px 3px at 20% 30%, rgba(255,255,255,.95), transparent 60%),
-    radial-gradient(2px 2px at 35% 55%, rgba(255,255,255,.9), transparent 60%),
-    radial-gradient(2px 2px at 70% 40%, rgba(255,255,255,.88), transparent 60%),
-    radial-gradient(3px 3px at 55% 75%, rgba(255,255,255,.95), transparent 60%),
-    radial-gradient(4px 4px at 80% 60%, rgba(255,255,255,.85), transparent 60%);
-  animation:sparkBurst .65s ease-out forwards;
-  filter:drop-shadow(0 0 8px rgba(255,255,255,.65));
-}
-@keyframes sparkBurst{
-  0%{opacity:0; transform:scale(.72);}
-  40%{opacity:1; transform:scale(1);}
-  100%{opacity:0; transform:scale(1.28);}
-}
-
-/* 畫廊：上下都加高、圖片滿高顯示 */
-#gallery{margin-top:18px;}
-#gallery .gframe{
-  height:clamp(360px, 52vh, 620px);    /* ↑↑ 你要加高在這裡調 */
-  border-radius:18px; overflow:hidden;
-  background:rgba(10,20,40,.18);
-  backdrop-filter:blur(8px);
-  box-shadow:0 10px 28px rgba(0,0,0,.18) inset, 0 12px 28px rgba(0,0,0,.18);
-  display:flex; align-items:center; justify-content:center;
-}
-#gallery .gimg{display:none; height:100%; width:auto; object-fit:contain;}
-#gallery .gimg.active{display:block;}
-#gallery h4{margin:8px 0 10px; text-align:center; color:rgba(225,235,255,.9);}
-
-/* 手機：保留直立比例與排版 */
-@media (max-width:768px){
-  body[data-page="home"] .cards{grid-template-columns:1fr; gap:16px;}
-  body[data-page="home"] .card-photo{height:62%;}
-  #gallery .gframe{height:clamp(280px, 45vh, 520px);}
+/* 讓卡片群與畫廊在手機也穩 */
+@media (max-width: 768px){
+  body[data-page="home"] .cards{ grid-template-columns:1fr; }
+  body[data-page="home"] .gallery .frame{ height: clamp(240px, 52vw, 420px); }
 }
