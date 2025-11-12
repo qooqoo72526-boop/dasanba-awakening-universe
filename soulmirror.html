@@ -3,37 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>靈魂照妖鏡｜Emotional Value A.I.</title>
+  <title>靈魂照妖鏡 | Emotional Value A.I.</title>
 
   <!-- 字體 & 主體樣式 -->
   <link rel="stylesheet" href="css/universe.css" />
   <link rel="stylesheet" href="css/universe_soul.css" />
 
-  <!-- 星光背景 & 題庫魔法邏輯 -->
+  <!-- 星空背景 & 題目邏輯 -->
   <script type="module" src="js/soul.js"></script>
 </head>
 
 <body data-page="soulmirror">
-  <!-- 左側直式工具列（與首頁一致） -->
+  <!-- 左側直式工具列（和首頁一致） -->
   <nav class="toolbox nav-trail" aria-label="cosmic nav">
     <a class="tool" href="./index.html" aria-label="Home" title="Home">
       <span class="ico">✦</span><span class="txt">Home</span>
     </a>
+
     <a class="tool" href="./cosmic-post-station.html" aria-label="Cosmic Post" title="Cosmic Post">
       <span class="ico">✉</span><span class="txt">Post</span>
     </a>
+
     <a class="tool" href="./soulmirror.html" aria-label="Soul Mirror" title="Soul Mirror">
       <span class="ico">🪞</span><span class="txt">Mirror</span>
     </a>
+
     <a class="tool" href="#gallery" aria-label="Gallery" title="Gallery" data-jump>
       <span class="ico">🔭</span><span class="txt">Gallery</span>
     </a>
   </nav>
 
-  <!-- 星空背景 -->
+  <!-- 星空背景畫布 -->
   <canvas id="starfield"></canvas>
 
-  <!-- 3.5 秒開場動畫 -->
+  <!-- 3.5 秒時光暫停動畫 -->
   <div id="intro">
     <div>
       <div class="logo">SOUL MIRROR</div>
@@ -43,8 +46,7 @@
 
   <!-- 魔鏡主體 -->
   <section class="mirror-wrap">
-
-    <!-- 標題：中文＋🪞＋英文 同一行 -->
+    <!-- 標題：中文＋英文 同一行 -->
     <div class="subheading">
       <span class="zh">靈魂照妖鏡</span>
       <span class="icon-inline mirror">🪞</span>
@@ -53,7 +55,7 @@
 
     <!-- 魔法前導文 -->
     <div class="magic-lines">
-      <div class="txt zh">某一條時間線，正被悄悄改寫⋯</div>
+      <div class="txt zh">某一條時間軸，正被悄悄改寫——</div>
       <div class="txt en">
         <span class="wand">🪄</span>
         <span class="line">
@@ -62,16 +64,14 @@
       </div>
     </div>
 
-    <!-- 25 題魔法氣泡：JS 會自動塞問題進來 -->
+    <!-- 25 題魔法氣泡：JS 會自動塞題目進來 -->
     <div class="question-grid"></div>
 
-    <!-- 解析區：長文＋三鳥一句話，JS 會填內容 -->
+    <!-- 解析區：長文＋三鳥一句話（JS 會填內容） -->
     <div class="result-box glass-bubble">
       <div class="txt"></div>
       <div class="three"></div>
     </div>
-
   </section>
-
 </body>
 </html>
