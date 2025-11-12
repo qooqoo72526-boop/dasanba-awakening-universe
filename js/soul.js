@@ -184,7 +184,7 @@ function stopHints() {
 ----------------------------*/
 function renderQuestions() {
   S.qGrid.innerHTML = '';
-  const list = take25();
+  const list = next25();
   list.forEach((line) => {
     const [q, twist] = line.split('｜');
     const opt = document.createElement('div');
