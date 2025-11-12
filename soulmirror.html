@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" class="page--soulmirror">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>靈魂照妖鏡｜Emotional Value A.I.</title>
 
   <!-- 字體 & 主體樣式 -->
-  <link rel="stylesheet" href="css/universe.css">
-  <link rel="stylesheet" href="css/universe_soul.css">
+  <link rel="stylesheet" href="css/universe.css" />
+  <link rel="stylesheet" href="css/universe_soul.css" />
 
-  <!-- 星光背景與魔法動畫 -->
+  <!-- 星光背景 & 題庫魔法邏輯 -->
   <script type="module" src="js/soul.js"></script>
 </head>
 
 <body data-page="soulmirror">
-
   <!-- 左側直式工具列（與首頁一致） -->
   <nav class="toolbox nav-trail" aria-label="cosmic nav">
     <a class="tool" href="./index.html" aria-label="Home" title="Home">
-      <span class="ico">◎</span><span class="txt">Home</span>
+      <span class="ico">✦</span><span class="txt">Home</span>
     </a>
     <a class="tool" href="./cosmic-post-station.html" aria-label="Cosmic Post" title="Cosmic Post">
       <span class="ico">✉</span><span class="txt">Post</span>
@@ -27,14 +26,14 @@
       <span class="ico">🪞</span><span class="txt">Mirror</span>
     </a>
     <a class="tool" href="#gallery" aria-label="Gallery" title="Gallery" data-jump>
-      <span class="ico">🖼</span><span class="txt">Gallery</span>
+      <span class="ico">🔭</span><span class="txt">Gallery</span>
     </a>
   </nav>
 
   <!-- 星空背景 -->
   <canvas id="starfield"></canvas>
 
-  <!-- 3.5 秒開場動畫（保留原本邏輯） -->
+  <!-- 3.5 秒開場動畫 -->
   <div id="intro">
     <div>
       <div class="logo">SOUL MIRROR</div>
@@ -44,33 +43,35 @@
 
   <!-- 魔鏡主體 -->
   <section class="mirror-wrap">
-  <!-- 標題：中文＋英文同一行 + 鏡子 emoji -->
-  <div class="subheading">
-    <span class="zh">靈魂照妖鏡</span>
-    <span class="emoji">🪞</span>
-    <span class="en">SOUL MIRROR</span>
-  </div>
 
-  <!-- 魔法引言 -->
-  <div class="magic-lines">
-    <div class="txt zh">
-      某一條時間線，正被悄悄改寫⋯
+    <!-- 標題：中文＋🪞＋英文 同一行 -->
+    <div class="subheading">
+      <span class="zh">靈魂照妖鏡</span>
+      <span class="icon-inline mirror">🪞</span>
+      <span class="en">SOUL MIRROR</span>
     </div>
-    <div class="txt en">
-      <span class="wand">🪄</span>
-      What you're becoming is louder than what you've survived.
+
+    <!-- 魔法前導文 -->
+    <div class="magic-lines">
+      <div class="txt zh">某一條時間線，正被悄悄改寫⋯</div>
+      <div class="txt en">
+        <span class="wand">🪄</span>
+        <span class="line">
+          What you’re becoming is louder than what you’ve survived.
+        </span>
+      </div>
     </div>
-  </div>
 
-  <!-- 題目區（保持這個容器給 soul.js 用） -->
-  <div class="question-grid"></div>
+    <!-- 25 題魔法氣泡：JS 會自動塞問題進來 -->
+    <div class="question-grid"></div>
 
-  <!-- 解析＋三鳥一句話（保持結構，不然 JS 找不到） -->
-  <div class="result-box glass-bubble">
-    <div class="txt"></div>
-    <div class="three"></div>
-  </div>
-</section>
+    <!-- 解析區：長文＋三鳥一句話，JS 會填內容 -->
+    <div class="result-box glass-bubble">
+      <div class="txt"></div>
+      <div class="three"></div>
+    </div>
+
+  </section>
 
 </body>
 </html>
