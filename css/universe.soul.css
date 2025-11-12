@@ -1,193 +1,146 @@
-body[data-page="soulmirror"] {
-  background: radial-gradient(ellipse at top, #E5DBFF 0%, #8C7AD9 40%, #2D2459 100%);
-  color: #EEE9FF;
-  font-family: "Noto Sans TC", sans-serif;
-  overflow-x: hidden;
+/* =========================
+   SOUL MIRROR (魔法紫調)
+   只作用於 <html class="page--soulmirror">
+   ========================= */
+:root{
+  --ink:#EDEBFF;                /* 文字銀白 */
+  --violet:#9B8CFF;             /* 柔紫 */
+  --violet-deep:#5B47CE;        /* 深紫 */
+  --pink:#FFB6E6;               /* 夢幻粉 */
+  --aqua:#9FE3FF;               /* 冷光藍 */
+  --glass:rgba(255,255,255,.08);
+  --glass-2:rgba(185,170,255,.14);
+  --glow:0 0 48px rgba(160,140,255,.45), 0 0 96px rgba(120,220,255,.25);
 }
 
-/* 🪞 開場動畫 */
-.intro-screen {
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 45% 50%, #D9CFFF 0%, #392E67 80%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 1000;
-  transition: opacity 1s ease;
-}
-.intro-screen h1 {
-  font-size: 2.6em;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
-}
-.intro-screen .en {
-  font-family: "DM Sans", sans-serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 1.1em;
-  margin: 10px 0 18px;
-  opacity: 0.9;
-  color: #E8E3FF;
-}
-.intro-lines {
-  text-align: center;
-  display: grid;
-  gap: 5px;
-  font-size: 1em;
-  color: #EEE9FF;
-  animation: fadeIn 3s ease forwards;
-}
-.intro-lines strong {
-  font-weight: 700;
-  color: #F5EFFF;
-  text-shadow: 0 0 20px rgba(240,230,255,.5);
+html.page--soulmirror, html.page--soulmirror body{
+  background:
+    radial-gradient(1200px 600px at 15% 10%, rgba(170,190,255,.12), transparent 60%),
+    radial-gradient(1000px 520px at 85% 15%, rgba(255,180,240,.10), transparent 65%),
+    linear-gradient(180deg, #0d0e1a 0%, #0e1330 60%, #0b0f26 100%);
+  color:var(--ink);
+  min-height:100%;
+  font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", Roboto, "PingFang TC", sans-serif;
+  overflow-x:hidden;
 }
 
-/* ✨ 主內容 */
-.hidden { display: none; }
-
-.mirror-wrap {
-  text-align: center;
-  padding: 80px 20px;
-  animation: fadeIn 1.2s ease forwards;
-  position: relative;
-  z-index: 2;
+/* 3.5s 開場 */
+#intro{
+  position:fixed; inset:0; z-index:9999; display:grid; place-items:center;
+  background:
+    radial-gradient(1200px 680px at 50% 40%, rgba(160,170,255,.15), transparent 70%),
+    linear-gradient(180deg, #0b0f24 0%, #0a0c1a 100%);
+  animation: introFade 3.5s ease forwards;
 }
-.subheading {
-  font-size: 2.4em;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  color: #F4EEFF;
-  text-shadow: 0 0 20px rgba(190,170,255,.45);
+#intro .logo{
+  text-align:center; letter-spacing:.14em;
+  font-family: "Orbitron", ui-sans-serif;
+  font-size: clamp(20px, 4.3vw, 40px);
+  color: var(--ink);
+  text-shadow: 0 0 18px rgba(180,200,255,.55);
 }
-.subheading .en {
-  font-family: "DM Sans", sans-serif;
-  font-style: italic;
-  font-weight: 300;
-  font-size: 1.1em;
-  color: #E7E1FF;
+#intro .sub{
+  margin-top:10px; font-size: clamp(12px, 2vw, 16px);
+  opacity:.85; font-style: italic;
 }
-.magic-lines {
-  font-size: 1.1em;
-  color: #D9D2FF;
-  margin-top: 10px;
-  letter-spacing: 0.04em;
-  text-shadow: 0 0 20px rgba(220,200,255,0.6);
+@keyframes introFade{
+  0%{opacity:1; filter:blur(0)}
+  80%{opacity:1}
+  100%{opacity:0; visibility:hidden}
 }
 
-/* 問題卡片 */
-.question-grid {
-  display: grid;
-  gap: 16px;
-  margin: 40px auto 0;
-  max-width: 650px;
-}
-.option {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 12px 16px;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 20px rgba(180,150,255,0.15);
-  transition: all 0.4s ease;
-  color: #E9E3FF;
-}
-.option:hover {
-  background: rgba(255,255,255,0.15);
-  box-shadow: 0 0 35px rgba(200,180,255,0.35);
-  transform: translateY(-2px);
+/* 星塵層（沿用你 <canvas id="starfield">） */
+canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
+
+/* 版心 */
+.mirror-wrap{
+  position:relative; z-index:1; width:min(980px, 92vw);
+  margin: clamp(64px, 8vh, 90px) auto 80px;
 }
 
-/* ✨ 鏡面魔法反射層 ✨ */
-body[data-page="soulmirror"]::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(circle at 50% 60%, rgba(230,210,255,0.15) 0%, transparent 60%);
-  filter: blur(60px);
-  opacity: 0.8;
-  z-index: 0;
-  animation: mirrorPulse 6s ease-in-out infinite;
+/* 標題區 */
+.subheading{
+  text-align:center; margin-bottom:18px;
+}
+.subheading .en{
+  display:block; font-family:"Orbitron", ui-sans-serif;
+  font-weight:500; font-style:italic; letter-spacing:.18em;
+  font-size: clamp(18px,3.6vw,28px);
+  color:var(--ink);
+  text-shadow: var(--glow);
+}
+.magic-lines{
+  text-align:center; margin:10px auto 16px; opacity:.9;
+}
+.magic-lines .wand{ font-size:13px; letter-spacing:.08em; opacity:.9; }
+.magic-lines .txt{ font-size:14px; margin-top:6px; opacity:.9; }
+.magic-lines .strong{
+  display:block; margin-top:8px; font-weight:800;
+  text-shadow:0 0 24px rgba(160,140,255,.55);
 }
 
-body[data-page="soulmirror"]::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 40% 30%, rgba(255,255,255,0.1) 0%, transparent 40%),
-    radial-gradient(circle at 70% 60%, rgba(190,160,255,0.2) 0%, transparent 50%),
-    radial-gradient(circle at 30% 80%, rgba(255,240,255,0.12) 0%, transparent 50%);
-  animation: starlight 10s ease-in-out infinite alternate;
-  z-index: 1;
+/* 題目 5×5 網格 */
+.question-grid{
+  display:grid; grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+  gap:12px; margin:22px auto 26px;
+}
+.option{
+  padding:14px 12px; line-height:1.4;
+  background:linear-gradient(180deg, var(--glass-2), rgba(255,255,255,.04));
+  border:1px solid rgba(180,170,255,.22);
+  border-radius:14px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03), 0 10px 30px rgba(50,30,120,.28);
+  cursor:pointer; user-select:none; transition: transform .2s ease, box-shadow .2s ease;
+  backdrop-filter: blur(6px);
+}
+.option:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 16px 46px rgba(120,90,220,.45), inset 0 0 0 1px rgba(255,255,255,.05);
 }
 
-/* 結果區塊（鏡面呼吸） */
-.result-box {
-  margin-top: 60px;
-  padding: 28px;
-  border-radius: 28px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(25px);
-  box-shadow: 0 0 45px rgba(190,160,255,0.25);
-  color: #EFEAFF;
-  position: relative;
-  overflow: hidden;
-  z-index: 2;
-  animation: mirrorGlow 5s ease-in-out infinite alternate;
+/* 解析泡泡 + 三鳥一句話 */
+.result-box{
+  margin:22px auto 8px; padding:18px 18px;
+  border-radius:18px;
+  background: linear-gradient(180deg, rgba(55,40,140,.28), rgba(25,22,70,.24));
+  border:1px solid rgba(160,150,255,.25);
+  box-shadow: var(--glow), inset 0 0 120px rgba(155,120,255,.08);
 }
-.result-box::before {
-  content: "";
-  position: absolute;
-  inset: -100px;
-  background: conic-gradient(from 180deg, rgba(190,160,255,0.15), rgba(255,255,255,0.05), rgba(130,110,200,0.1));
-  filter: blur(80px);
-  animation: rotateAura 20s linear infinite;
-  z-index: 0;
+.result-box .txt{
+  font-size:15px; line-height:1.9; letter-spacing:.02em; white-space:pre-line;
 }
-.result-box .txt {
-  line-height: 1.9;
-  font-size: 1.15em;
-  text-shadow: 0 0 18px rgba(255,255,255,0.2);
-  position: relative;
-  z-index: 2;
+.result-box .three{
+  display:grid; grid-template-columns: repeat(3,1fr);
+  gap:16px; margin-top:14px; align-items:center;
 }
-.result-box .three {
-  display: flex;
-  justify-content: center;
-  gap: 22px;
-  margin-top: 18px;
-  position: relative;
-  z-index: 2;
+.result-box .three img{ width:22px; height:22px; vertical-align:-4px; margin-right:6px; }
+
+/* 魔鏡邊緣微光（容器加一圈不規則光暈） */
+.mirror-wrap::before{
+  content:""; position:absolute; inset:-32px -24px; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(600px 180px at 30% -10%, rgba(155,120,255,.35), transparent 70%),
+    radial-gradient(520px 160px at 80% 0%, rgba(120,220,255,.25), transparent 70%);
+  filter: blur(20px); opacity:.75; animation: breathe 6s ease-in-out infinite;
 }
-.result-box img {
-  width: 44px;
-  height: 44px;
-  vertical-align: middle;
-  filter: drop-shadow(0 0 8px rgba(230,200,255,0.5));
+@keyframes breathe{
+  0%,100%{ transform:translateY(0); opacity:.8 }
+  50%{ transform:translateY(8px); opacity:1 }
 }
 
-/* 🪩 粒子光環動畫 */
-@keyframes mirrorPulse {
-  0%,100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
+/* 置中工具列（沿用你左側圖標） */
+.constellation-toolbar{
+  position:fixed; left:16px; top:50%; transform:translateY(-50%);
+  display:grid; gap:10px; z-index:2; opacity:.9;
 }
-@keyframes starlight {
-  from { opacity: 0.5; transform: scale(1); }
-  to { opacity: 0.9; transform: scale(1.03); }
+.constellation-toolbar a{
+  display:grid; place-items:center; width:34px; height:34px; border-radius:10px;
+  background:var(--glass); border:1px solid rgba(200,200,255,.18);
+  box-shadow:0 6px 18px rgba(40,30,100,.35); backdrop-filter: blur(6px);
 }
-@keyframes rotateAura {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes mirrorGlow {
-  from { box-shadow: 0 0 30px rgba(180,150,255,0.2); }
-  to { box-shadow: 0 0 60px rgba(210,190,255,0.4); }
+.constellation-toolbar a:hover{ transform:translateY(-2px); }
+
+/* 手機微調 */
+@media (max-width: 768px){
+  .result-box .three{ grid-template-columns:1fr; }
 }
