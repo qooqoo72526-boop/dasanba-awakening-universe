@@ -150,3 +150,112 @@ canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
   margin-left: 6px;
   transform: translateY(2px);
 }
+/* ===== 標題：靈魂照妖鏡 SOUL MIRROR（紫色魔法區） ===== */
+.subheading{
+  position:relative;
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin:24px auto 26px;
+  padding:10px 24px;
+  text-align:center;
+
+  font-family:"Noto Sans TC", sans-serif;
+  font-size:clamp(22px, 3vw, 32px);
+  letter-spacing:2px;
+  color:rgba(245,250,255,0.96);
+  text-shadow:0 0 14px rgba(120,180,255,0.45);
+
+  /* 標題浮起來 0.6 秒進場 */
+  animation:titleFloatIn .6s ease-out both;
+}
+
+/* 中文主標：比較厚實一點 */
+.subheading .zh{
+  font-weight:600;
+}
+
+/* 中間的 · 符號 */
+.subheading .divider{
+  opacity:.7;
+  font-size:.85em;
+  margin:0 2px;
+}
+
+/* 英文 SOUL MIRROR：細斜體、科幻感 */
+.subheading .en{
+  font-family:"Orbitron", sans-serif;
+  font-size:clamp(18px, 2.4vw, 26px);
+  font-style:italic;
+  letter-spacing:.2em;
+  color:rgba(210,225,255,0.98);
+  text-shadow:0 0 10px rgba(130,170,255,0.5);
+}
+
+/* 背後紫色魔法煙霧（低飽和） */
+.subheading::before{
+  content:"";
+  position:absolute;
+  inset:-18px -36px;
+  background:
+    radial-gradient(120% 200% at 10% 0%,
+      rgba(180,150,255,0.26), transparent 60%),
+    radial-gradient(110% 180% at 92% 100%,
+      rgba(120,200,255,0.18), transparent 70%);
+  filter:blur(18px);
+  opacity:.9;
+  z-index:-1;
+}
+
+/* emoji 圖示：鏡子＋魔法棒 */
+.icon-inline{
+  font-family:"Segoe UI Emoji","Noto Color Emoji",
+              "Apple Color Emoji",sans-serif;
+  font-size:1.15em;
+  display:inline-block;
+  position:relative;
+}
+
+/* 鏡子：冷藍微光＋上下漂浮 */
+.icon-inline.mirror{
+  animation:floatIcon 3.4s ease-in-out infinite;
+  filter:drop-shadow(0 0 6px rgba(110,150,255,0.9));
+}
+
+/* 魔法棒：紫光更強一點，也在漂浮 */
+.icon-inline.wand{
+  margin-left:2px;
+  animation:floatIcon 2.8s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 6px rgba(170,120,255,0.95))
+    drop-shadow(0 0 14px rgba(130,80,255,0.6));
+}
+
+/* --- 標題進場動畫 --- */
+@keyframes titleFloatIn{
+  0%{
+    opacity:0;
+    transform:translateY(12px) scale(.97);
+  }
+  100%{
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+
+/* --- 鏡子 / 魔法棒上下漂浮（y 軸 4px） --- */
+@keyframes floatIcon{
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-4px);
+  }
+   
+.subheading .emoji {
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji",
+               "Twemoji Mozilla", sans-serif;
+  font-size: 1.1em;
+  filter: drop-shadow(0 0 6px rgba(255,220,255,.8));
+  margin-left: 4px;
+}
