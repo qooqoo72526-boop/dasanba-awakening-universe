@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>靈魂照妖鏡 | Emotional Value A.I.</title>
+  <title>靈魂照妖鏡｜Emotional Value A.I.</title>
 
   <!-- 字體 & 主體樣式 -->
   <link rel="stylesheet" href="css/universe.css">
@@ -14,10 +14,11 @@
 </head>
 
 <body data-page="soulmirror">
+
   <!-- 左側直式工具列（與首頁一致） -->
   <nav class="toolbox nav-trail" aria-label="cosmic nav">
     <a class="tool" href="./index.html" aria-label="Home" title="Home">
-      <span class="ico">⌂</span><span class="txt">Home</span>
+      <span class="ico">◎</span><span class="txt">Home</span>
     </a>
     <a class="tool" href="./cosmic-post-station.html" aria-label="Cosmic Post" title="Cosmic Post">
       <span class="ico">✉</span><span class="txt">Post</span>
@@ -26,14 +27,14 @@
       <span class="ico">🪞</span><span class="txt">Mirror</span>
     </a>
     <a class="tool" href="#gallery" aria-label="Gallery" title="Gallery" data-jump>
-      <span class="ico">🔭</span><span class="txt">Gallery</span>
+      <span class="ico">🖼</span><span class="txt">Gallery</span>
     </a>
   </nav>
 
   <!-- 星空背景 -->
   <canvas id="starfield"></canvas>
 
-  <!-- 3.5 秒開場動畫 -->
+  <!-- 3.5 秒開場動畫（保留原本邏輯） -->
   <div id="intro">
     <div>
       <div class="logo">SOUL MIRROR</div>
@@ -43,24 +44,38 @@
 
   <!-- 魔鏡主體 -->
   <section class="mirror-wrap">
+
+    <!-- 中文＋英文＋鏡子，同一行 -->
     <div class="subheading">
-  靈魂照妖鏡 <span class="emoji1">🪞</span> 
-  <span class="en">SOUL MIRROR</span>
-</div>
+      <span class="zh">靈魂照妖鏡</span>
+      <span class="divider">／</span>
+      <span class="emoji emoji--mirror">🪞</span>
+      <span class="en">SOUL MIRROR</span>
+    </div>
 
-<div class="magic-lines">
-  <div class="txt zh">某一條時間線正被悄悄改寫⋯</div>
-  <div class="txt en"><span class="emoji2">🪄</span> What you’re becoming is louder than what you’ve survived.</div>
-</div>
+    <!-- 魔法開場文案 -->
+    <div class="magic-lines">
+      <div class="txt zh">
+        某一條時間線正被悄悄改寫，你準備好看清自己了嗎？
+      </div>
+      <div class="txt en">
+        <span class="emoji emoji--wand">🪄</span>
+        <span class="line">
+          What you’re becoming is louder than what you’ve survived.
+        </span>
+      </div>
+    </div>
 
-    <<div class="spell-area"></div>
+    <!-- 題目區：由 soul.js 自動產生 25 顆「魔法泡泡」 -->
+    <div class="question-grid"></div>
 
+    <!-- 解析區：600 字解析＋三鳥各一句 -->
     <div class="result-box glass-bubble">
       <div class="txt"></div>
       <div class="three" style="margin-top:12px; gap:16px;"></div>
     </div>
+
   </section>
-  
-  <script type="module" src="js/soul.js"></script>
+
 </body>
 </html>
