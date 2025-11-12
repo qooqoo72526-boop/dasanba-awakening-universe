@@ -56,87 +56,159 @@ canvas#starfield{ position:fixed; inset:0; z-index:0; pointer-events:none; }
   margin: clamp(64px, 8vh, 90px) auto 80px;
 }
 
-/* 標題區 */
+/* 標題區：靈魂照妖鏡 SOUL MIRROR（紫色魔法感） */
 .subheading{
-  text-align:center; margin-bottom:18px;
-}
-.subheading .en{
-  display:block; font-family:"Orbitron", ui-sans-serif;
-  font-weight:500; font-style:italic; letter-spacing:.18em;
-  font-size: clamp(18px,3.6vw,28px);
-  color:var(--ink);
-  text-shadow: var(--glow);
-}
-.magic-lines{
-  text-align:center; margin:10px auto 16px; opacity:.9;
-}
-.magic-lines .wand{ font-size:13px; letter-spacing:.08em; opacity:.9; }
-.magic-lines .txt{ font-size:14px; margin-top:6px; opacity:.9; }
-.magic-lines .strong{
-  display:block; margin-top:8px; font-weight:800;
-  text-shadow:0 0 24px rgba(160,140,255,.55);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin:28px auto 16px;
+  font-size:clamp(22px, 3vw, 30px);
+  letter-spacing: 0.18em;
+  color: rgba(240,246,255,0.96);
+  text-shadow:
+    0 0 14px rgba(130,90,255,0.55),
+    0 0 28px rgba(80,20,180,0.65);
+  animation: titleFloatIn .65s ease-out both;
 }
 
-//* 題目區：漂浮的魔法問句雲 */
+.subheading .zh{
+  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-weight: 600;
+}
+
+.subheading .en{
+  font-family: "Orbitron", ui-sans-serif;
+  font-size: 0.9em;
+  font-style: italic;
+  letter-spacing: 0.32em;
+  opacity: 0.96;
+}
+
+.subheading .emoji{
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Twemoji Mozilla", system-ui;
+  font-size: 1.15em;
+  filter: drop-shadow(0 0 6px rgba(190,160,255,0.9));
+}
+
+/* 標題浮起來的動畫 */
+@keyframes titleFloatIn{
+  0%   { opacity:0; transform:translateY(8px) scale(.96); filter:blur(4px); }
+  70%  { opacity:1; transform:translateY(0)   scale(1.02); }
+  100% { opacity:1; transform:translateY(0)   scale(1);    }
+}
+/* 魔法引言區：一行中文 + 一行英文＋魔法棒 */
+.magic-lines{
+  max-width: 720px;
+  margin: 8px auto 24px;
+  text-align: center;
+  opacity: .95;
+}
+
+.magic-lines .txt{
+  font-size: 14px;
+  line-height: 1.7;
+  letter-spacing: .08em;
+  color: rgba(235,242,255,0.9);
+}
+
+.magic-lines .zh{
+  font-family: "Noto Sans TC", system-ui, sans-serif;
+}
+
+.magic-lines .en{
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+  opacity: .9;
+}
+
+.magic-lines .wand{
+  display: inline-block;
+  margin-right: 6px;
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Twemoji Mozilla", system-ui;
+  filter:
+    drop-shadow(0 0 6px rgba(186,140,255,0.95))
+    drop-shadow(0 0 14px rgba(120,90,255,0.8));
+  animation: wandFloat 2.8s ease-in-out infinite;
+}
+
+@keyframes wandFloat{
+  0%   { transform: translateY(0)   rotate(-6deg); }
+  50%  { transform: translateY(-4px) rotate(2deg); }
+  100% { transform: translateY(0)   rotate(-6deg); }
+}
+/* 題目區：漂浮的魔法光球（仍然用 .question-grid / .option 給 JS 用） */
 .question-grid{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
-  gap:14px;
-  max-width:960px;
-  margin:32px auto 40px;
-  padding:0 12px;
+  gap:18px;
+  max-width: 900px;
+  margin: 26px auto 18px;
+  padding: 4px 6px;
 }
 
-/* 單一題目：無邊框、玻璃感、紫光 */
 .option{
   position:relative;
-  padding:10px 16px;
-  line-height:1.5;
+  padding: 10px 16px;
+  max-width: 260px;
+  border-radius: 999px;
   border:none;
-  border-radius:999px;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(255,255,255,.32), rgba(160,140,255,.16) 40%, rgba(40,20,120,0) 75%);
-  box-shadow:0 0 26px rgba(90,60,200,.40);
-  backdrop-filter:blur(12px);
-  font-size:13px;
-  letter-spacing:.02em;
-  color:rgba(245,248,255,.96);
   cursor:pointer;
-  user-select:none;
+  line-height:1.5;
+  font-size: 13px;
+  letter-spacing:.02em;
+  color: rgba(245,248,255,0.96);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255,255,255,.18), transparent 55%),
+    radial-gradient(circle at 100% 120%, rgba(140,120,255,.38), rgba(40,20,120,.12));
+  box-shadow:
+    0 0 0 1px rgba(150,190,255,.18),
+    0 10px 28px rgba(8,10,45,.85);
+  backdrop-filter: blur(14px);
   white-space:normal;
   transition:
-    transform .35s ease,
-    box-shadow .35s ease,
-    background .35s ease,
-    opacity .35s ease;
-  opacity:.95;
-
-  /* 漂浮動畫，用變數控制延遲時間 */
-  animation:orbitFloat 11s ease-in-out infinite;
-  animation-delay:var(--delay, 0s);
+    transform .28s ease,
+    box-shadow .28s ease,
+    background .28s ease,
+    opacity .28s ease;
+  opacity:.94;
 }
 
-/* 題目外圈的閃光（hover 才打開） */
 .option::before{
   content:"";
   position:absolute;
   inset:-2px;
   border-radius:inherit;
-  background:
-    radial-gradient(circle at 10% 0%, rgba(255,255,255,.85), transparent 55%),
-    radial-gradient(circle at 80% 100%, rgba(190,150,255,.65), transparent 70%);
+  background: radial-gradient(circle at 10% -10%, rgba(200,170,255,.65), transparent 55%);
   opacity:0;
-  mix-blend-mode:screen;
-  transition:opacity .4s ease;
+  transition: opacity .35s ease;
   pointer-events:none;
 }
 
+.option span:nth-child(1){
+  display:block;
+  font-size: 11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  opacity:.7;
+}
+
+.option span:nth-child(2){
+  display:block;
+  margin-top:4px;
+}
+
+/* hover／點到時候亮一點 */
 .option:hover{
-  transform:translateY(-4px) scale(1.03);
-  box-shadow:0 0 40px rgba(150,120,255,.60);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgba(185,210,255,.55),
+    0 16px 40px rgba(4,10,45,.95);
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255,255,255,.24), transparent 60%),
+    radial-gradient(circle at 100% 120%, rgba(170,120,255,.52), rgba(40,20,120,.14));
   opacity:1;
-  animation-play-state:paused;
 }
 
 .option:hover::before{
@@ -390,4 +462,35 @@ body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
 
 body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
   display: none; /* 只留圖示，不顯示文字，跟首頁一樣乾淨 */
+}
+/* SOUL MIRROR 專用：左側工具列只顯示 icon、置左垂直置中 */
+body[data-page="soulmirror"] .toolbox.nav-trail{
+  position:fixed !important;
+  left:16px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  display:grid;
+  gap:10px;
+  z-index:20;
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:rgba(10,10,40,.75);
+  backdrop-filter:blur(8px);
+  box-shadow:0 8px 20px rgba(0,0,0,.55);
+  text-decoration:none;
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
+  display:none;
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
+  color:rgba(235,240,255,.95);
+  font-size:18px;
 }
