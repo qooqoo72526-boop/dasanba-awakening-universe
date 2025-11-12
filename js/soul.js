@@ -189,6 +189,7 @@ function renderQuestions() {
     const [q, twist] = line.split('｜');
     const opt = document.createElement('div');
     opt.className = 'option';
+    opt.style.setProperty('--delay', (Math.random() * 6).toFixed(2) + 's');
     opt.innerHTML = `<span class="q">${q}</span><span class="tw">${twist}</span>`;
     opt.addEventListener('click', () => onPick(line, opt));
     S.qGrid.appendChild(opt);
