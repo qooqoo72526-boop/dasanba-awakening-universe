@@ -1,346 +1,335 @@
-/*****************************************
- * SOUL MIRROR ｜靈魂照妖鏡 專用樣式（乾淨版）
- * 只作用在 html.page--soulmirror ＋ body[data-page="soulmirror"]
- *****************************************/
+/************************************
+ * SOUL MIRROR ｜靈魂照妖鏡 專用樣式
+ * 只在 <html class="page--soulmirror"> 使用
+ ************************************/
 
-/* === 基本主題：紫藍宇宙背景 === */
+/* --- 變數：顏色與光暈 --- */
+:root {
+  --ink: #e0edff;                 /* 文字顏色 */
+  --violet: #9b4dff;              /* 紫光 */
+  --violet-soft: #b584ff;         /* 柔紫 */
+  --blue-soft: #5fa8ff;           /* 柔藍 */
+  --glass: rgba(20, 28, 60, 0.85);/* 玻璃底 */
+  --border-soft: rgba(160, 190, 255, 0.3);
+  --glow-soft: 0 0 24px rgba(140, 170, 255, 0.55),
+               0 0 64px rgba(130, 80, 255, 0.4);
+}
 
+/* --- 背景：紫藍星雲漸層 --- */
 html.page--soulmirror,
-html.page--soulmirror body{
-  margin:0;
-  padding:0;
-  min-height:100%;
+html.page--soulmirror body {
+  min-height: 100vh;
   background:
-    radial-gradient(1200px 600px at 15% 10%, rgba(180,190,255,.28), transparent 55%),
-    radial-gradient(1200px 600px at 85% 90%, rgba(120,180,255,.25), transparent 60%),
-    linear-gradient(180deg, #111735 0%, #161d48 45%, #05091f 100%);
-  color:#E6EEFF;
-  font-family:"Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    radial-gradient(1200px 600px at 15% 10%, rgba(176, 132, 255, 0.45), transparent 55%),
+    radial-gradient(900px 520px at 85% 90%, rgba(120, 180, 255, 0.45), transparent 60%),
+    linear-gradient(180deg, #02051a 0%, #05071b 45%, #020310 100%);
+  color: var(--ink);
+  overflow-x: hidden;
 }
 
-/* 星空畫布 */
-#starfield{
-  position:fixed;
-  inset:0;
-  z-index:0;
-  pointer-events:none;
+/* 星場畫布 */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* === 3.5 秒開場動畫 === */
-
-#intro{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:grid;
-  place-items:center;
+/* --- 開場 3.5 秒文字 --- */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
   background:
-    radial-gradient(1200px 680px at 50% 40%, rgba(160,170,255,.15), transparent 70%),
-    linear-gradient(180deg, #0d1028 0%, #050617 100%);
-  animation:introFade 3.5s ease forwards;
+    radial-gradient(1200px 680px at 50% 40%, rgba(160, 170, 255, 0.35), transparent 70%),
+    linear-gradient(180deg, #02051a 0%, #020316 60%, #02020b 100%);
+  animation: introFade 3.5s ease forwards;
 }
 
-#intro .logo{
-  text-align:center;
-  letter-spacing:.16em;
-  font-family:"Orbitron", ui-sans-serif;
-  font-size:clamp(22px, 3vw, 34px);
-  color:#F5F6FF;
+#intro .logo {
+  font-family: "Orbitron", ui-sans-serif;
+  font-size: clamp(24px, 3.6vw, 34px);
+  letter-spacing: 0.22em;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(240, 246, 255, 0.97);
+  text-shadow:
+    0 0 24px rgba(180, 210, 255, 0.85),
+    0 0 60px rgba(80, 120, 255, 0.75);
 }
 
-#intro .sub{
-  margin-top:10px;
-  text-align:center;
-  font-size:clamp(12px, 2vw, 16px);
-  opacity:.85;
-  font-style:italic;
-  color:rgba(220,230,255,.9);
+#intro .sub {
+  margin-top: 10px;
+  font-size: clamp(12px, 2vw, 16px);
+  opacity: 0.9;
+  font-style: italic;
+  letter-spacing: 0.14em;
 }
 
-@keyframes introFade{
-  0%{opacity:1; filter:blur(0);}
-  80%{opacity:1;}
-  100%{opacity:0; visibility:hidden; filter:blur(2px);}
+@keyframes introFade {
+  0%   { opacity: 1; filter: blur(0); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; filter: blur(6px); }
 }
 
-/* === 左側工具列（照首頁版，固定在左邊） === */
-
-body[data-page="soulmirror"] .toolbox.nav-trail{
-  position:fixed;
-  left:16px;
-  top:50%;
-  transform:translateY(-50%);
-  display:grid;
-  gap:10px;
-  z-index:20;
+/* --- 版心容器 --- */
+.mirror-wrap {
+  position: relative;
+  z-index: 1;
+  width: min(980px, 92vw);
+  margin: clamp(72px, 9vh, 96px) auto 80px;
 }
 
-body[data-page="soulmirror"] .toolbox.nav-trail .tool{
-  display:grid;
-  place-items:center;
-  width:34px;
-  height:34px;
-  border-radius:10px;
-  background:rgba(10,18,60,.78);
-  box-shadow:0 8px 20px rgba(0,0,0,.55);
-  backdrop-filter:blur(8px);
-  text-decoration:none;
-}
-
-body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico{
-  font-size:17px;
-  color:rgba(235,240,255,.96);
-}
-
-body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt{
-  display:none;   /* 只留圖示，小小一顆就好 */
-}
-
-/* === 版心容器 === */
-
-.mirror-wrap{
-  position:relative;
-  z-index:1;
-  width:min(980px, 92vw);
-  margin:clamp(80px, 9vh, 110px) auto 90px;
-}
-
-/* === 標題：中文＋🪞＋英文 同一行，帶魔法光暈 === */
-
-.subheading{
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin:0 auto 24px;
-  animation:titleFloat .6s ease-out both;
-}
-
-.subheading .zh{
-  font-weight:600;
-  font-size:clamp(22px, 3vw, 32px);
-  letter-spacing:4px;
-}
-
-.subheading .en{
-  font-family:"Orbitron", ui-sans-serif;
-  font-weight:500;
-  font-size:clamp(18px, 2.4vw, 24px);
-  letter-spacing:.22em;
-  color:rgba(218,226,255,.95);
-}
-
-/* 標題底下的紫色霧光 */
-.subheading::before{
-  content:"";
-  position:absolute;
-  inset:-40px -120px;
+/* 背後紫霧光暈 */
+.mirror-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -46px -40px;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(circle at 0% 50%, rgba(210,170,255,.40), transparent 60%),
-    radial-gradient(circle at 100% 40%, rgba(130,200,255,.36), transparent 65%);
-  opacity:.85;
-  filter:blur(26px);
-  z-index:-1;
+    radial-gradient(650px 200px at 30% 8%, rgba(175, 130, 255, 0.38), transparent 70%),
+    radial-gradient(560px 200px at 80% 80%, rgba(120, 200, 255, 0.28), transparent 70%);
+  filter: blur(22px);
+  opacity: 0.78;
+  animation: breathe 7s ease-in-out infinite;
 }
 
-/* 鏡子 emoji：微微上下飄 */
-.icon-inline.mirror{
-  display:inline-block;
-  font-size:1.2em;
-  margin:0 4px;
-  filter:drop-shadow(0 0 10px rgba(210,200,255,.95));
-  animation:floatIcon 3.4s ease-in-out infinite;
+@keyframes breathe {
+  0%, 100% { transform: translateY(0);   opacity: 0.8; }
+  50%      { transform: translateY(8px); opacity: 1;   }
 }
 
-/* === 魔法前導文字 === */
-
-.magic-lines{
-  text-align:center;
-  margin:10px auto 28px;
-  opacity:.95;
+/* --- 標題區：中文 + 🪞 + 英文 同一行 --- */
+.subheading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 18px auto 22px;
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: 0.16em;
+  animation: titleFloatIn .65s ease-out both;
 }
 
-.magic-lines .txt.zh{
-  font-size:14px;
-  letter-spacing:.12em;
-  color:rgba(230,235,255,.96);
-  margin-bottom:6px;
+.subheading .zh {
+  font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: 600;
 }
 
-.magic-lines .txt.en{
-  font-size:13px;
-  letter-spacing:.08em;
-  font-style:italic;
-  color:rgba(215,225,255,.88);
+.subheading .mirror-emoji {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", system-ui;
+  font-size: 1.25em;
+  filter: drop-shadow(0 0 6px rgba(210, 200, 255, 0.9));
 }
 
-/* 魔法棒 emoji：紫光微擺動 */
-.magic-lines .wand{
-  display:inline-block;
-  margin-right:6px;
-  font-size:1.1em;
-  filter:drop-shadow(0 0 8px rgba(220,170,255,.95));
-  animation:wandSparkle 2.2s ease-in-out infinite;
+.subheading .en {
+  font-family: "Orbitron", ui-sans-serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  opacity: 0.96;
 }
 
-/* === 25 題：魔法氣泡，不要格線、不要邊框 === */
-
-.question-grid{
-  max-width:980px;
-  margin:40px auto 10px;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:18px;
+@keyframes titleFloatIn {
+  0%  { opacity: 0; transform: translateY(10px) scale(0.96); filter: blur(4px); }
+  70% { opacity: 1; transform: translateY(0)    scale(1.02); filter: blur(0);   }
+  100%{ opacity: 1; transform: translateY(0)    scale(1);                      }
 }
 
-.option{
-  position:relative;
-  min-width:180px;
-  max-width:260px;
-  padding:14px 16px 18px;
-  border-radius:999px;
-  border:none;
-  line-height:1.4;
-  cursor:pointer;
-  user-select:none;
-  white-space:normal;
+/* --- 魔法引言區：一行中文 + 一行英文 + 魔法棒 --- */
+.magic-lines {
+  max-width: 720px;
+  margin: 6px auto 24px;
+  text-align: center;
+  opacity: 0.94;
+}
 
+.magic-lines .txt.zh {
+  font-family: "Noto Sans TC", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: rgba(230, 242, 255, 0.96);
+}
+
+.magic-lines .txt.en {
+  margin-top: 6px;
+  font-family: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: rgba(205, 225, 255, 0.9);
+}
+
+.magic-lines .wand {
+  display: inline-block;
+  margin-right: 6px;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", system-ui;
+  filter:
+    drop-shadow(0 0 6px rgba(186, 140, 255, 0.95))
+    drop-shadow(0 0 14px rgba(120, 90, 255, 0.8));
+  animation: wandFloat 2.8s ease-in-out infinite;
+}
+
+@keyframes wandFloat {
+  0%   { transform: translateY(0)   rotate(-6deg); }
+  50%  { transform: translateY(4px) rotate( 2deg); }
+  100% { transform: translateY(0)   rotate(-6deg); }
+}
+
+/* --- 題目區：漂浮的魔法泡泡（question-grid / .option） --- */
+.question-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 18px;
+  max-width: 960px;
+  margin: 26px auto 24px;
+}
+
+.option {
+  position: relative;
+  padding: 12px 20px;
+  max-width: 280px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  line-height: 1.5;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: rgba(245, 248, 255, 0.96);
   background:
-    radial-gradient(circle at 0% 0%, rgba(255,255,255,.20), rgba(170,160,255,.15) 40%, rgba(60,20,120,.70) 75%);
+    radial-gradient(circle at 0% 0%,  rgba(255, 255, 255, 0.20), transparent 55%),
+    radial-gradient(circle at 100% 120%, rgba(170, 120, 255, 0.38), rgba(40, 20, 120, 0.18));
   box-shadow:
-    0 0 0 1px rgba(180,200,255,.18),
-    0 14px 40px rgba(5,10,40,.85);
-  backdrop-filter:blur(12px);
-
-  color:rgba(244,248,255,.96);
-  font-size:13px;
-  letter-spacing:.03em;
-  opacity:.96;
-
+    0 0 1px rgba(150, 190, 255, 0.18),
+    0 10px 28px rgba(8, 10, 45, 0.85);
+  backdrop-filter: blur(14px);
+  white-space: normal;
   transition:
     transform .25s ease,
     box-shadow .25s ease,
     background .25s ease,
     opacity .25s ease;
+  opacity: 0.94;
 }
 
-/* 問題號碼＋ twist 文字都維持 JS 的 span 標籤 */
-.option span.q{
-  font-weight:600;
-}
-.option span.twist{
-  opacity:.9;
+.option span:first-child {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+  margin-bottom: 4px;
 }
 
-/* hover：稍微浮起來，光更亮 */
-.option:hover{
-  transform:translateY(-4px);
-  box-shadow:
-    0 0 0 1px rgba(210,230,255,.32),
-    0 20px 60px rgba(20,30,80,.95);
+.option span:nth-child(2) {
+  display: block;
+}
+
+/* hover 效果：抬起＋更亮一圈 */
+.option::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
   background:
-    radial-gradient(circle at 5% 0%, rgba(255,255,255,.26), rgba(190,170,255,.24) 40%, rgba(80,40,150,.85) 75%);
-  opacity:1;
+    radial-gradient(circle at 10% -10%, rgba(200, 170, 255, 0.65), transparent 55%);
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
 }
 
-/* === 解析區：玻璃感長條 ＋ 三鳥一句話 === */
-
-.result-box{
-  max-width:980px;
-  margin:44px auto 28px;
-  padding:20px 22px;
-  border-radius:24px;
-  border:none;
-  background:
-    linear-gradient(135deg, rgba(55,40,140,.26), rgba(25,22,70,.80));
+.option:hover {
+  transform: translateY(-4px);
   box-shadow:
-    0 0 0 1px rgba(165,190,255,.20),
-    0 26px 80px rgba(0,0,0,.80);
+    0 0 1px rgba(185, 210, 255, 0.6),
+    0 18px 40px rgba(10, 14, 55, 0.95);
+  background:
+    radial-gradient(circle at 0% 0%,  rgba(255, 255, 255, 0.24), transparent 60%),
+    radial-gradient(circle at 100% 120%, rgba(170, 120, 255, 0.52), rgba(40, 20, 120, 0.18));
+  opacity: 1;
 }
 
-.result-box .txt{
-  font-size:15px;
-  line-height:1.9;
-  letter-spacing:.03em;
-  white-space:pre-line;
-  color:rgba(235,240,255,.96);
+.option:hover::before {
+  opacity: 1;
 }
 
-/* 三鳥 */
-.result-box .three{
-  display:grid;
-  grid-template-columns:repeat(3, minmax(0,1fr));
-  gap:12px;
-  margin-top:16px;
-  font-size:13px;
-  letter-spacing:.04em;
-  color:rgba(215,225,255,.92);
+/* --- 解析區：玻璃泡泡 + 三鳥一句話 --- */
+.result-box {
+  margin: 24px auto 12px;
+  padding: 18px 20px;
+  max-width: 880px;
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(55, 40, 140, 0.22),
+    rgba(25, 22, 70, 0.4)
+  );
+  border: 1px solid var(--border-soft);
+  box-shadow:
+    0 0 0 1px rgba(155, 120, 255, 0.1),
+    0 0 120px rgba(155, 120, 255, 0.18);
+  backdrop-filter: blur(8px);
 }
 
-.result-box .three .bird-line{
-  display:flex;
-  align-items:center;
-  gap:6px;
+.result-box .txt {
+  font-size: 15px;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  white-space: pre-line;
 }
 
-.result-box .three .bird-line::before{
-  content:"";
-  width:6px;
-  height:6px;
-  border-radius:99px;
-  background:radial-gradient(circle, rgba(255,255,255,.9), rgba(200,220,255,.1));
+.result-box .three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+  align-items: flex-start;
 }
 
-/* === 動畫 keyframes === */
-
-@keyframes titleFloat{
-  0%{
-    transform:translateY(8px) scale(.97);
-    opacity:0;
-    filter:blur(3px);
-  }
-  100%{
-    transform:translateY(0) scale(1);
-    opacity:1;
-    filter:blur(0);
-  }
+.result-box .three .bird-line {
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
 }
 
-@keyframes floatIcon{
-  0%,100%{ transform:translateY(0); }
-  50%{ transform:translateY(4px); }
+/* 小鳥前面的 emoji 稍微對齊 */
+.result-box .three .bird-line::before {
+  content: "";
 }
 
-@keyframes wandSparkle{
-  0%{
-    transform:translateY(0) rotate(-8deg);
-    filter:drop-shadow(0 0 4px rgba(210,170,255,.6));
-  }
-  40%{
-    transform:translateY(-3px) rotate(6deg);
-    filter:drop-shadow(0 0 12px rgba(245,220,255,1));
-  }
-  100%{
-    transform:translateY(0) rotate(-4deg);
-    filter:drop-shadow(0 0 6px rgba(210,170,255,.7));
-  }
+/* --- 左側工具列：與首頁一致，但只顯示 icon --- */
+body[data-page="soulmirror"] .toolbox.nav-trail {
+  position: fixed !important;
+  left: 16px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: grid;
+  gap: 10px;
+  z-index: 20;
 }
 
-/* 手機：題目稍微放大＆單欄 */
-@media (max-width:768px){
-  .mirror-wrap{
-    width:92vw;
-    margin:72px auto 70px;
-  }
-  .question-grid{
-    gap:14px;
-  }
-  .option{
-    max-width:100%;
-  }
-  .result-box .three{
-    grid-template-columns:1fr;
-  }
+body[data-page="soulmirror"] .toolbox.nav-trail .tool {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 16, 40, 0.75);
+  box-shadow: 0 8px 20px rgba(60, 40, 140, 0.55);
+  backdrop-filter: blur(8px);
+  text-decoration: none;
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .ico {
+  font-size: 16px;
+  color: rgba(235, 240, 255, 0.95);
+}
+
+body[data-page="soulmirror"] .toolbox.nav-trail .tool .txt {
+  display: none;
 }
