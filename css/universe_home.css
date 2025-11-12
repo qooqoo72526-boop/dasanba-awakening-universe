@@ -1,9 +1,4 @@
-/* ============================
-   HOME PAGE (銀藍宇宙＋代表色光暈)
-   只作用於首頁：body[data-page="home"]
-   ============================ */
-
-/* 卡片容器 */
+/* ====== Home：卡片網格 ====== */
 body[data-page="home"] .cards{
   display:grid;
   grid-template-columns:repeat(3, minmax(0,1fr));
@@ -11,130 +6,104 @@ body[data-page="home"] .cards{
   align-items:stretch;
 }
 
-/* 卡片本體 */
+/* ====== 卡片本體：直立 5:6、銀白微亮、無邊框感 ====== */
 body[data-page="home"] .card{
+  --glow: 220,235,255;                /* 基礎銀藍發光 */
   position:relative;
   border-radius:20px;
   overflow:hidden;
   aspect-ratio:5/6;
   min-height:260px;
   transform:translateZ(0);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  box-shadow:
+    0 10px 30px rgba(8,18,34,.18) inset, /* 內柔光：去邊框感 */
+    0 8px 26px rgba(8,8,20,.22);         /* 外柔光 */
   transition:transform .25s ease, box-shadow .25s ease;
-  box-shadow:0 10px 30px rgba(8,18,34,.18) inset, 0 8px 26px rgba(0,8,20,.22);
+}
+body[data-page="home"] .card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 12px 34px rgba(8,18,34,.22) inset,
+    0 18px 36px rgba(20,40,80,.28);
 }
 
-/* hover 微浮起 */
-body[data-page="home"] .card:hover{ transform:translateY(-6px); }
-
-/* 圖片 */
-body[data-page="home"] .card img{
-  width:100%; height:66%;
-  display:block;
-  object-fit:cover;
-  object-position:50% 18%;
+/* 照片：不裁頭，保留上緣空氣感 */
+body[data-page="home"] .card-photo img{
+  width:100%; height:66%; display:block;
+  object-fit:cover; object-position:50% 18%;
   filter:drop-shadow(0 14px rgba(255,255,255,.28));
 }
 
-/* 共用柔光層（銀藍光感保持） */
-body[data-page="home"] .card::after{
-  content:"";
-  position:absolute; inset:0;
-  border-radius:22px;
-  pointer-events:none;
-  box-shadow:
-    0 0 1px rgba(255,255,255,.06) inset,
-    0 50px 120px rgba(0,10,60,.35) inset;
+/* 文字（Noto Sans TC，置中微亮） */
+body[data-page="home"] .named{ padding:10px 12px 14px; text-align:center; }
+body[data-page="home"] .named .name{
+  font: 600 14.5px/1 "Noto Sans TC",system-ui,sans-serif;
+  letter-spacing:.02em; color:rgba(240,245,255,.96);
+  display:inline-flex; align-items:center; gap:6px; justify-content:center;
+}
+body[data-page="home"] .named .quote{
+  margin-top:6px; font-size:13px;
+  color:rgba(205,220,245,.88);
 }
 
-/* ===== 各自代表色光暈 (不改底) ===== */
-
-/* 💛 阿金：金黃反骨能量 */
-body[data-page="home"] .card.ajin::before{
-  content:"";
-  position:absolute; inset:0;
-  border-radius:inherit;
-  mix-blend-mode:screen;
-  opacity:.65;
-  background:
-    radial-gradient(180px 140px at 80% 20%, rgba(255,230,120,.55), transparent 70%),
-    radial-gradient(220px 160px at 20% 85%, rgba(255,250,210,.28), transparent 72%);
-  transition:opacity .35s ease;
-}
-
-/* 🧡 米果：粉紅高價值能量 */
-body[data-page="home"] .card.migou::before{
-  content:"";
-  position:absolute; inset:0;
-  border-radius:inherit;
-  mix-blend-mode:screen;
-  opacity:.65;
-  background:
-    radial-gradient(200px 150px at 20% 22%, rgba(255,150,190,.52), transparent 70%),
-    radial-gradient(260px 180px at 82% 86%, rgba(255,220,230,.25), transparent 72%);
-  transition:opacity .35s ease;
-}
-
-/* 💙 滾滾：靜藍共鳴能量 */
-body[data-page="home"] .card.gungun::before{
-  content:"";
-  position:absolute; inset:0;
-  border-radius:inherit;
-  mix-blend-mode:screen;
-  opacity:.65;
-  background:
-    radial-gradient(220px 160px at 80% 80%, rgba(120,180,255,.48), transparent 70%),
-    radial-gradient(200px 140px at 18% 18%, rgba(200,230,255,.25), transparent 72%);
-  transition:opacity .35s ease;
-}
-
-/* hover 亮度提升 */
-body[data-page="home"] .card:hover::before{ opacity:.9; }
-
-/* 點擊仙女棒光暈 */
-@keyframes fairyBurst{
-  0%   { box-shadow:0 0 0 0 rgba(200,240,255,0); }
-  50%  { box-shadow:0 0 48px 16px rgba(200,240,255,.45); }
-  100% { box-shadow:0 0 0 0 rgba(200,240,255,0); }
-}
-body[data-page="home"] .card:active::after{
-  animation:fairyBurst .6s ease-out;
-}
-
-/* 愛心漂浮動畫 */
-body[data-page="home"] .heart{
-  position:absolute;
-  top:10px; left:12px;
-  font-size:18px;
-  filter:drop-shadow(0 2px 8px rgba(0,0,0,.4));
+/* 愛心放最前，輕微浮動＋發光 */
+body[data-page="home"] .named .heart{
+  display:inline-block; transform-origin:center;
   animation:heartFloat 3.5s ease-in-out infinite;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.35));
 }
 @keyframes heartFloat{
-  0%,100% { transform:translateY(0); opacity:.9; }
-  50%     { transform:translateY(-6px); opacity:1; }
+  0%,100%{ transform:translateY(0); opacity:.9; }
+  50%{ transform:translateY(-6px); opacity:1; }
 }
 
-/* 畫廊維持 trio.webp~10 自動輪播 */
-body[data-page="home"] .gallery{
-  margin-top:clamp(36px,4vh,56px);
-  display:flex; justify-content:center; align-items:center;
+/* 各自色系：斜對角柔光暈（不改底色） */
+body[data-page="home"] .aura{
+  position:absolute; inset:-8px; border-radius:24px; pointer-events:none;
+  filter:blur(14px); opacity:.55; mix-blend-mode:screen;
 }
-body[data-page="home"] .gallery .gframe{
-  width:90%; max-width:1200px;
-  aspect-ratio:16/9;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 30px 120px rgba(10,20,40,.22);
+body[data-page="home"] .aura-ajin{
+  background:
+    radial-gradient(100% 100% at 85% 12%, rgba(255,226,120,.28), transparent 65%),
+    radial-gradient(100% 100% at 12% 88%, rgba(255,241,190,.22), transparent 70%);
 }
-body[data-page="home"] .gallery .gimg{
-  width:100%; height:100%;
-  object-fit:cover;
-  display:none;
+body[data-page="home"] .aura-migou{
+  background:
+    radial-gradient(100% 100% at 82% 14%, rgba(255,184,130,.26), transparent 65%),
+    radial-gradient(100% 100% at 12% 86%, rgba(255,140,180,.22), transparent 70%);
 }
-body[data-page="home"] .gallery .gimg.active{
-  display:block;
-  animation:fadeIn .6s ease both;
+body[data-page="home"] .aura-gungun{
+  background:
+    radial-gradient(100% 100% at 80% 16%, rgba(110,170,255,.25), transparent 65%),
+    radial-gradient(100% 100% at 14% 84%, rgba(180,225,255,.22), transparent 70%);
 }
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(1.01);}
-  to{opacity:1; transform:none;}
+
+/* ====== 仙女棒：邊緣常駐微光 + 點擊爆開 ====== */
+body[data-page="home"] .card{ position:relative; }
+body[data-page="home"] .card .spark{
+  position:absolute; width:8px; height:8px; border-radius:50%; pointer-events:none;
+  background:radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 60%);
+  filter: drop-shadow(0 0 10px rgba(var(--glow),.95));
+  animation:spark .7s ease-out forwards;
 }
+@keyframes spark{ to{ transform:translateY(-8px) scale(.6); opacity:0; } }
+
+body[data-page="home"] .card .burst{
+  position:absolute; left:calc(50% + var(--dx)*4px); top:calc(50% + var(--dy)*4px);
+  width:6px; height:6px; border-radius:50%; pointer-events:none;
+  background:rgba(255,255,255,.95);
+  filter: drop-shadow(0 0 12px rgba(var(--glow),.95));
+  animation:burst .9s ease-out forwards;
+}
+@keyframes burst{
+  to{ transform:translate(calc(var(--dx)*64px), calc(var(--dy)*64px)) scale(.3); opacity:0; }
+}
+/* 每張卡設定發光主色（供 spark / burst 使用） */
+body[data-page="home"] .card[data-bird="ajin"]   { --glow: 255,232,120; }
+body[data-page="home"] .card[data-bird="migou"]  { --glow: 255,168,160; }
+body[data-page="home"] .card[data-bird="gungun"] { --glow: 150,200,255; }
+
+/* ====== 畫廊高度（只調高度，不動播放邏輯） ====== */
+body[data-page="home"] #gallery .gframe{ height:clamp(360px, 50vh, 620px); }
+body[data-page="home"] #gallery .gimg{ width:100%; height:100%; object-fit:cover; border-radius:16px; }
