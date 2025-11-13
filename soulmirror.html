@@ -4,229 +4,1237 @@
   <meta charset="UTF-8" />
   <title>靈魂照妖鏡｜Soul Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 保留原本全站 CSS -->
   <link rel="stylesheet" href="/css/universe_soul.css" />
+
+  <!-- AI 版字體：Orbitron + Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Soul Mirror 白銀 AI 專用樣式（只作用在這一頁） -->
+  <style>
+    body.soulmirror-body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: radial-gradient(circle at top, #f7fbff 0%, #dfe8f5 38%, #bec9dd 100%);
+      overflow-x: hidden;
+    }
+
+    .soul-ai-shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+      position: relative;
+    }
+
+    /* 淺色 AI 背景線條 */
+    .soul-ai-shell::before,
+    .soul-ai-shell::after {
+      content: "";
+      position: fixed;
+      z-index: -1;
+      border-radius: 999px;
+      filter: blur(26px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+    .soul-ai-shell::before {
+      width: 380px;
+      height: 380px;
+      top: -80px;
+      right: -120px;
+      background: conic-gradient(
+        from 210deg,
+        rgba(109, 170, 255, 0.16),
+        rgba(203, 213, 255, 0.55),
+        rgba(56, 189, 248, 0.32),
+        rgba(109, 170, 255, 0.16)
+      );
+    }
+    .soul-ai-shell::after {
+      width: 320px;
+      height: 320px;
+      bottom: -120px;
+      left: -120px;
+      background: radial-gradient(
+        circle at 30% 30%,
+        rgba(56, 189, 248, 0.25),
+        rgba(148, 163, 184, 0)
+      );
+    }
+
+    /* 頂部 Header */
+
+    .soul-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .soul-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .soul-tag {
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #64748b;
+    }
+
+    .soul-title-en {
+      margin: 0;
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0f172a;
+    }
+
+    .soul-title-zh {
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      color: #4b5563;
+    }
+
+    .soul-status {
+      text-align: right;
+      font-size: 11px;
+      line-height: 1.6;
+      color: #6b7280;
+    }
+
+    .soul-status strong {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    /* 主區：左題目 / 右 AI 面板 */
+
+    .soul-main {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .soul-ai-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.3fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    /* 問題列表外框 */
+
+    .soul-ai-question-list {
+      position: relative;
+      border-radius: 18px;
+      padding: 14px 10px 14px 14px;
+      background: linear-gradient(
+            130deg,
+            rgba(255, 255, 255, 0.76),
+            rgba(226, 232, 240, 0.9)
+          )
+          border-box,
+        radial-gradient(circle at top left, #93c5fd, #e5e7eb) padding-box;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.16);
+      overflow: hidden;
+    }
+
+    .soul-ai-question-list::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(148, 163, 184, 0.3),
+        rgba(248, 250, 252, 0)
+      );
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .soul-ai-question-scroll {
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: 4px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .soul-ai-question-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .soul-ai-question-scroll::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #93c5fd, #0ea5e9);
+      border-radius: 999px;
+    }
+
+    /* 單題卡片 */
+
+    .soul-ai-question-card {
+      position: relative;
+      width: 100%;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 6px;
+      border-radius: 999px;
+      padding: 9px 14px 9px 14px;
+      background: radial-gradient(circle at top left, #f8fafc, #e5edf7);
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.45);
+      font-size: 12px;
+      color: #111827;
+      text-align: left;
+      transition:
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        transform 0.12s ease;
+    }
+
+    .soul-ai-question-card:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 0 0 1px rgba(59, 130, 246, 0.6),
+        0 10px 24px rgba(15, 23, 42, 0.25);
+      background: radial-gradient(circle at top left, #ffffff, #e0edff);
+    }
+
+    .soul-ai-question-card.active {
+      box-shadow:
+        0 0 0 1px rgba(56, 189, 248, 0.95),
+        0 14px 30px rgba(15, 23, 42, 0.32);
+      background: linear-gradient(125deg, #eff6ff, #dbeafe);
+    }
+
+    .soul-ai-question-card.answered::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #22c55e, #15803d);
+      transform: translateY(-50%);
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16);
+    }
+
+    .soul-ai-q-index {
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #0f172a;
+      background: radial-gradient(circle at 30% 20%, #ffffff, #bfdbfe);
+      box-shadow:
+        0 0 0 1px rgba(148, 163, 184, 0.7),
+        0 4px 10px rgba(15, 23, 42, 0.18);
+    }
+
+    .soul-ai-q-text {
+      flex: 1 1 auto;
+      padding-right: 14px;
+      line-height: 1.6;
+    }
+
+    /* 右側 AI 面板 */
+
+    .soul-ai-panel {
+      position: relative;
+      border-radius: 20px;
+      padding: 16px 18px 66px;
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(226, 232, 240, 0.96))
+          border-box,
+        conic-gradient(
+          from 200deg,
+          rgba(148, 163, 184, 0.24),
+          rgba(59, 130, 246, 0.28),
+          rgba(56, 189, 248, 0.2),
+          rgba(148, 163, 184, 0.24)
+        )
+          padding-box;
+      box-shadow: 0 20px 55px rgba(15, 23, 42, 0.28);
+      overflow: hidden;
+    }
+
+    .soul-ai-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(
+          120deg,
+          rgba(148, 163, 184, 0.23),
+          rgba(248, 250, 252, 0.1),
+          rgba(191, 219, 254, 0.42)
+        );
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .soul-ai-panel-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .soul-ai-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .soul-ai-panel-label {
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .soul-ai-panel-status {
+      font-size: 11px;
+      color: #6b7280;
+      text-align: right;
+    }
+
+    .soul-ai-panel-status strong {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .soul-ai-current-question {
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: radial-gradient(circle at top left, #eff6ff, #e5edf7);
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.6);
+      font-size: 13px;
+      line-height: 1.7;
+      color: #0f172a;
+      min-height: 62px;
+    }
+
+    /* 答案選項 */
+
+    .soul-ai-answers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .soul-ai-answer-pill {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 12px;
+      text-align: left;
+      background: rgba(226, 232, 240, 0.8);
+      color: #111827;
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.6);
+      transition:
+        background 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.08s ease;
+    }
+
+    .soul-ai-answer-pill:hover {
+      background: rgba(219, 234, 254, 0.95);
+      box-shadow:
+        0 0 0 1px rgba(59, 130, 246, 0.7),
+        0 8px 18px rgba(15, 23, 42, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .soul-ai-answer-pill.active {
+      background: linear-gradient(130deg, #bfdbfe, #0ea5e9);
+      color: #0b1120;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.8),
+        0 10px 24px rgba(15, 23, 42, 0.28);
+    }
+
+    /* 底部欄：進度＋按鈕 */
+
+    .soul-ai-bottom-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 10px 16px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      backdrop-filter: blur(20px);
+      background: linear-gradient(
+        to top,
+        rgba(248, 250, 252, 0.96),
+        rgba(248, 250, 252, 0.76),
+        rgba(248, 250, 252, 0.0)
+      );
+      border-top: 1px solid rgba(148, 163, 184, 0.45);
+      z-index: 2;
+    }
+
+    .soul-ai-progress-text {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .soul-ai-progress-text span {
+      font-weight: 500;
+      color: #111827;
+    }
+
+    .btn-primary {
+      border: none;
+      outline: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      cursor: pointer;
+      background: linear-gradient(120deg, #0ea5e9, #6366f1);
+      color: #f9fafb;
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        0 12px 28px rgba(15, 23, 42, 0.35);
+      white-space: nowrap;
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        filter 0.12s ease;
+    }
+
+    .btn-primary[disabled] {
+      cursor: default;
+      background: linear-gradient(120deg, #cbd5f5, #9ca3af);
+      box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.8);
+      filter: grayscale(0.2);
+    }
+
+    .btn-primary:not([disabled]):hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 1),
+        0 16px 34px rgba(15, 23, 42, 0.45);
+    }
+
+    /* 結果浮層 */
+
+    .soul-ai-result-backdrop {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(226, 232, 240, 0.98), rgba(15, 23, 42, 0.76));
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 12px;
+      z-index: 40;
+    }
+
+    .soul-ai-result-backdrop.active {
+      display: flex;
+    }
+
+    .soul-ai-result-card {
+      max-width: 880px;
+      width: 100%;
+      border-radius: 22px;
+      padding: 18px 18px 16px;
+      background:
+        linear-gradient(140deg, rgba(255, 255, 255, 0.98), rgba(226, 232, 240, 0.95))
+          border-box,
+        conic-gradient(
+          from 220deg,
+          rgba(148, 163, 184, 0.32),
+          rgba(59, 130, 246, 0.4),
+          rgba(56, 189, 248, 0.3),
+          rgba(148, 163, 184, 0.32)
+        )
+          padding-box;
+      box-shadow:
+        0 20px 55px rgba(15, 23, 42, 0.6),
+        0 0 0 1px rgba(15, 23, 42, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .soul-ai-result-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(148, 163, 184, 0.4),
+        rgba(248, 250, 252, 0.1),
+        rgba(191, 219, 254, 0.6)
+      );
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    .soul-ai-result-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .soul-ai-result-header {
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .soul-ai-result-title {
+      margin: 0 0 4px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0f172a;
+    }
+
+    .soul-ai-result-meta {
+      margin: 0 0 10px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .soul-ai-result-body {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #111827;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .soul-ai-result-body::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .soul-ai-result-body::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #0ea5e9, #6366f1);
+      border-radius: 999px;
+    }
+
+    .soul-ai-result-birds {
+      border-radius: 16px;
+      padding: 10px 12px;
+      background: radial-gradient(circle at top left, #eff6ff, #e2e8f0);
+      box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.8);
+      font-size: 12px;
+      line-height: 1.7;
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .soul-ai-result-birds span {
+      display: block;
+    }
+
+    .soul-ai-result-side {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .soul-ai-result-side-topline {
+      font-family: "Orbitron", "Noto Sans TC", sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    .soul-ai-result-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .soul-ai-chip {
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(248, 250, 252, 0.9);
+    }
+
+    .soul-ai-result-footer {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: rgba(248, 250, 252, 0.9);
+      font-size: 11px;
+      padding: 6px 12px;
+      cursor: pointer;
+      color: #111827;
+    }
+
+    .btn-ghost:hover {
+      background: #e5e7eb;
+    }
+
+    /* 手機：堆疊顯示 */
+
+    @media (max-width: 880px) {
+      .soul-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .soul-status {
+        text-align: left;
+      }
+      .soul-ai-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .soul-ai-question-list {
+        order: 2;
+      }
+      .soul-ai-panel {
+        order: 1;
+        padding-bottom: 72px;
+      }
+      .soul-ai-result-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
 </head>
 <body class="soulmirror-body">
-  <div id="soulmirror-root">
-    <!-- 頂部標題 -->
+  <div class="soul-ai-shell">
+    <!-- Header -->
     <header class="soul-header">
       <div class="soul-title-block">
-        <div class="soul-tag">SOUL MIRROR / VISION LOG</div>
-        <h1 class="soul-title-en">SOUL MIRROR｜SYSTEM VIEW</h1>
-        <h2 class="soul-title-zh">今天的你，長這樣。</h2>
+        <div class="soul-tag">SOUL MIRROR / AI CORE</div>
+        <h1 class="soul-title-en">EMOTIONAL VALUE SCAN</h1>
+        <h2 class="soul-title-zh">今天的你，長這樣，別裝沒事。</h2>
       </div>
       <div class="soul-status">
-        <span id="question-count">0 / 25</span>
-        <span id="answer-status">鏡面還沒被觸碰。</span>
+        <div>
+          已誠實回答：<strong id="status-count">0 / 25</strong>
+        </div>
+        <div id="status-hint">鏡面還在觀察，你還在裝鎮定。</div>
       </div>
     </header>
 
-    <!-- 主視覺 -->
+    <!-- Main -->
     <main class="soul-main">
-      <!-- 背景星塵＋法陣 -->
-      <div class="soul-bg-layer">
-        <canvas id="soul-stars"></canvas>
-        <div class="soul-core-ring core-1"></div>
-        <div class="soul-core-ring core-2"></div>
-        <div class="soul-core-ring core-3"></div>
-      </div>
-
-      <!-- 題目節點：這版改成垂直排在中間 -->
-      <div
-        class="soul-node-layer"
-        id="soul-node-layer"
-        style="
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          padding: 30px 24px;
-          max-height: 420px;
-          overflow-y: auto;
-        "
-      ></div>
-
-      <!-- 中央題目 HUD -->
-      <section class="soul-focus-layer" id="soul-focus-layer" aria-hidden="true">
-        <div class="soul-focus-panel">
-          <div class="soul-focus-halo"></div>
-          <div class="soul-focus-inner">
-            <div class="soul-focus-label">CURRENT VIEW</div>
-            <p class="soul-focus-question" id="focus-question-text"></p>
-
-            <div class="soul-answer-block">
-              <div class="soul-scale-label">
-                <span>有一點像</span>
-                <span>超級就是我</span>
+      <div class="soul-ai-layout">
+        <!-- 左：題目列表 -->
+        <section class="soul-ai-question-list">
+          <div class="soul-ai-question-scroll" id="soul-ai-question-list">
+            <!-- 題目卡片由 HTML 寫死在下面 -->
+            <!-- 01 -->
+            <button class="soul-ai-question-card" data-q-id="q01">
+              <span class="soul-ai-q-index">01</span>
+              <div class="soul-ai-q-text">
+                你最害怕被看見的那一面，是什麼？為什麼？
               </div>
-              <div class="soul-answer-options" id="answer-options"></div>
+            </button>
+            <!-- 02 -->
+            <button class="soul-ai-question-card" data-q-id="q02">
+              <span class="soul-ai-q-index">02</span>
+              <div class="soul-ai-q-text">
+                當別人不回應你時，你腦中會自動補出什麼劇本？
+              </div>
+            </button>
+            <!-- 03 -->
+            <button class="soul-ai-question-card" data-q-id="q03">
+              <span class="soul-ai-q-index">03</span>
+              <div class="soul-ai-q-text">
+                你曾為了不被討厭，而說過違背內心的話嗎？哪一次最印象深刻？
+              </div>
+            </button>
+            <!-- 04 -->
+            <button class="soul-ai-question-card" data-q-id="q04">
+              <span class="soul-ai-q-index">04</span>
+              <div class="soul-ai-q-text">
+                在親密關係裡，你最常扮演的角色是照顧者、調停者，還是抽離的人？
+              </div>
+            </button>
+            <!-- 05 -->
+            <button class="soul-ai-question-card" data-q-id="q05">
+              <span class="soul-ai-q-index">05</span>
+              <div class="soul-ai-q-text">
+                如果今天所有責任都暫停 24 小時，你最想用什麼樣子存在？
+              </div>
+            </button>
+            <!-- 06 -->
+            <button class="soul-ai-question-card" data-q-id="q06">
+              <span class="soul-ai-q-index">06</span>
+              <div class="soul-ai-q-text">
+                童年時，哪一個畫面讓你學會「不能太做自己」？
+              </div>
+            </button>
+            <!-- 07 -->
+            <button class="soul-ai-question-card" data-q-id="q07">
+              <span class="soul-ai-q-index">07</span>
+              <div class="soul-ai-q-text">
+                你最容易為了哪一種人，委屈自己到失去界線？
+              </div>
+            </button>
+            <!-- 08 -->
+            <button class="soul-ai-question-card" data-q-id="q08">
+              <span class="soul-ai-q-index">08</span>
+              <div class="soul-ai-q-text">
+                當你生氣時，通常是什麼情緒被踩到，而不是單純的憤怒？
+              </div>
+            </button>
+            <!-- 09 -->
+            <button class="soul-ai-question-card" data-q-id="q09">
+              <span class="soul-ai-q-index">09</span>
+              <div class="soul-ai-q-text">
+                你是否曾經把「被需要」和「被愛」搞混？那造成了什麼？
+              </div>
+            </button>
+            <!-- 10 -->
+            <button class="soul-ai-question-card" data-q-id="q10">
+              <span class="soul-ai-q-index">10</span>
+              <div class="soul-ai-q-text">
+                你現在最怕失去的是什麼？如果真的失去了，你覺得自己會變成怎樣？
+              </div>
+            </button>
+            <!-- 11 -->
+            <button class="soul-ai-question-card" data-q-id="q11">
+              <span class="soul-ai-q-index">11</span>
+              <div class="soul-ai-q-text">
+                你有沒有一個一直沒說出口的遺憾，如果能重來，你會對誰說什麼？
+              </div>
+            </button>
+            <!-- 12 -->
+            <button class="soul-ai-question-card" data-q-id="q12">
+              <span class="soul-ai-q-index">12</span>
+              <div class="soul-ai-q-text">
+                你什麼時候最像在逃避自己？是滑手機、工作過量，還是假裝沒感覺？
+              </div>
+            </button>
+            <!-- 13 -->
+            <button class="soul-ai-question-card" data-q-id="q13">
+              <span class="soul-ai-q-index">13</span>
+              <div class="soul-ai-q-text">
+                你習慣先照顧別人的情緒，還是先誠實面對自己的需求？為什麼？
+              </div>
+            </button>
+            <!-- 14 -->
+            <button class="soul-ai-question-card" data-q-id="q14">
+              <span class="soul-ai-q-index">14</span>
+              <div class="soul-ai-q-text">
+                你曾經在哪一段關係裡，用力到忘記自己其實也有權利被照顧？
+              </div>
+            </button>
+            <!-- 15 -->
+            <button class="soul-ai-question-card" data-q-id="q15">
+              <span class="soul-ai-q-index">15</span>
+              <div class="soul-ai-q-text">
+                當你被誤解時，你是選擇解釋、沉默，還是直接抽離？背後的恐懼是什麼？
+              </div>
+            </button>
+            <!-- 16 -->
+            <button class="soul-ai-question-card" data-q-id="q16">
+              <span class="soul-ai-q-index">16</span>
+              <div class="soul-ai-q-text">
+                你覺得「被愛」對你來說最具體的樣子，是什麼畫面？
+              </div>
+            </button>
+            <!-- 17 -->
+            <button class="soul-ai-question-card" data-q-id="q17">
+              <span class="soul-ai-q-index">17</span>
+              <div class="soul-ai-q-text">
+                如果現在的你可以對十年前的自己說一句話，你會說什麼？
+              </div>
+            </button>
+            <!-- 18 -->
+            <button class="soul-ai-question-card" data-q-id="q18">
+              <span class="soul-ai-q-index">18</span>
+              <div class="soul-ai-q-text">
+                你有沒有那種「其實早就知道該離開，卻一直不敢動」的場景？
+              </div>
+            </button>
+            <!-- 19 -->
+            <button class="soul-ai-question-card" data-q-id="q19">
+              <span class="soul-ai-q-index">19</span>
+              <div class="soul-ai-q-text">
+                你最常用哪一種方式懲罰自己？（忽略、否定、過度要求，或是別的？）
+              </div>
+            </button>
+            <!-- 20 -->
+            <button class="soul-ai-question-card" data-q-id="q20">
+              <span class="soul-ai-q-index">20</span>
+              <div class="soul-ai-q-text">
+                當你說「沒事啦」的時候，心裡真正的話其實是什麼？
+              </div>
+            </button>
+            <!-- 21 -->
+            <button class="soul-ai-question-card" data-q-id="q21">
+              <span class="soul-ai-q-index">21</span>
+              <div class="soul-ai-q-text">
+                別人給過你最溫柔的一句話是什麼？你相信它嗎？
+              </div>
+            </button>
+            <!-- 22 -->
+            <button class="soul-ai-question-card" data-q-id="q22">
+              <span class="soul-ai-q-index">22</span>
+              <div class="soul-ai-q-text">
+                你理想中的安全感，是來自金錢、關係、能力，還是被理解？
+              </div>
+            </button>
+            <!-- 23 -->
+            <button class="soul-ai-question-card" data-q-id="q23">
+              <span class="soul-ai-q-index">23</span>
+              <div class="soul-ai-q-text">
+                你有沒有哪一個選擇，是當時看起來很理性，但現在回頭覺得那是自我背叛？
+              </div>
+            </button>
+            <!-- 24 -->
+            <button class="soul-ai-question-card" data-q-id="q24">
+              <span class="soul-ai-q-index">24</span>
+              <div class="soul-ai-q-text">
+                你曾經在哪件事情上，感覺自己「很值得」，而不是「好不容易被選上」？
+              </div>
+            </button>
+            <!-- 25 -->
+            <button class="soul-ai-question-card" data-q-id="q25">
+              <span class="soul-ai-q-index">25</span>
+              <div class="soul-ai-q-text">
+                如果可以把一種情緒從你的人生降低 50%，你會選哪一種？
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <!-- 右：AI 面板 -->
+        <section class="soul-ai-panel">
+          <div class="soul-ai-panel-inner">
+            <div class="soul-ai-panel-header">
+              <div>
+                <div class="soul-ai-panel-label">CURRENT PATTERN VIEW</div>
+                <div style="font-size: 11px; color: #4b5563; margin-top: 4px;">
+                  選一題，你可以暫時不要討好任何人。
+                </div>
+              </div>
+              <div class="soul-ai-panel-status">
+                <div>鏡面狀態：<strong id="status-mode">待機</strong></div>
+                <div id="status-mini">還沒有哪一題讓你願意講真話。</div>
+              </div>
             </div>
 
-            <div class="soul-focus-actions">
-              <button id="btn-skip" class="btn-ghost">先放過這題</button>
-              <button id="btn-save-answer" class="btn-primary" disabled>
-                就照這樣記
-              </button>
+            <div class="soul-ai-current-question" id="current-question-text">
+              點左邊任一題，讓鏡面先知道你是哪種麻煩。
+            </div>
+
+            <div class="soul-ai-answers" id="answer-options">
+              <!-- JS 產生 4 個深度選項 -->
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- 結果層 -->
-      <section class="soul-result-layer" id="soul-result-layer" aria-hidden="true">
-        <div class="soul-result-panel">
-          <div class="soul-result-halo"></div>
-          <div class="soul-result-inner">
-            <div class="soul-result-tag">MIRROR LOG</div>
-            <h3 class="soul-result-title">這是你的鏡面紀錄。</h3>
-            <p class="soul-result-meta" id="soul-result-meta">
-              不是定義，只是今天被看見的那一版你。
-            </p>
-
-            <div class="soul-result-text" id="soul-result-text"></div>
-
-            <div class="soul-result-birds" id="soul-result-birds"></div>
-
-            <div class="soul-result-actions">
-              <button id="btn-close-result" class="btn-ghost">收回鏡面</button>
+          <!-- 底部欄 -->
+          <div class="soul-ai-bottom-bar">
+            <div class="soul-ai-progress-text">
+              已完成 <span id="progress-count">0 / 25</span> 題｜
+              <span id="progress-hint">至少先誠實幾題再說。</span>
             </div>
+            <button class="btn-primary" id="btn-analyze" disabled>
+              打開今天的鏡面紀錄
+            </button>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
-
-    <!-- 底部操作 -->
-    <footer class="soul-footer">
-      <button id="btn-generate-questions" class="btn-outline">
-        換一組 25 題
-      </button>
-      <button id="btn-start-analysis" class="btn-primary" disabled>
-        看今天的結果
-      </button>
-    </footer>
   </div>
 
+    <!-- 結果浮層 -->
+  <div class="soul-ai-result-backdrop" id="result-layer" aria-hidden="true">
+    <div class="soul-ai-result-card">
+      <div class="soul-ai-result-inner">
+        <div>
+          <div class="soul-ai-result-header">MIRROR LOG / RAW READ</div>
+          <h3 class="soul-ai-result-title">這不是診斷，是你現在的版本。</h3>
+          <p class="soul-ai-result-meta">
+            你不用變乖，這裡只是把你平常裝沒事的那一部分拉出來看。
+          </p>
+          <div class="soul-ai-result-body" id="result-body">
+            正在整理你的情緒軌跡……不要急，它在把你說過的謊拆開看。
+          </div>
+        </div>
+        <div class="soul-ai-result-side">
+          <div>
+            <div class="soul-ai-result-side-topline">
+              AJIN / MIGOU / GUNGUN SIGNATURE
+            </div>
+            <div class="soul-ai-result-birds" id="result-birds">
+              <!-- 三隻鳥的一句話，由 AI 產生 -->
+            </div>
+          </div>
+
+          <div>
+            <div class="soul-ai-result-side-topline" style="margin-bottom: 4px;">
+              PATTERN TAGS
+            </div>
+            <div class="soul-ai-result-chip-row" id="result-tags">
+              <span class="soul-ai-chip">情緒慣性</span>
+              <span class="soul-ai-chip">界線與自我價值</span>
+              <span class="soul-ai-chip">親密關係劇本</span>
+            </div>
+          </div>
+
+          <div class="soul-ai-result-footer">
+            <div style="font-size: 10px; color: #6b7280;">
+              覺醒不是變乖，是承認你本來就不乖。
+            </div>
+            <button class="btn-ghost" id="btn-close-result">關掉這一輪</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS：深度答案 + API 串接 -->
   <script>
-  // ✅ 這版只做兩件事：
-  // 1) 畫星星
-  // 2) 把 25 題用「一排按鈕」塞進中間
+    document.addEventListener("DOMContentLoaded", () => {
+      const QUESTIONS = Array.from(
+        document.querySelectorAll(".soul-ai-question-card")
+      ).map((btn) => ({
+        id: btn.dataset.qId,
+        text: btn.querySelector(".soul-ai-q-text").textContent.trim(),
+      }));
 
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log("Soul Mirror minimal JS loaded.");
+      const ANSWER_LEVELS = [
+        {
+          key: "soft-denial",
+          label: "有一點像，但你平常會說「沒那麼誇張啦」。",
+        },
+        {
+          key: "often-happen",
+          label: "蠻常發生，只是你很少承認自己其實有在在意。",
+        },
+        {
+          key: "everyday-mode",
+          label: "這基本上就是你現在的日常運轉模式。",
+        },
+        {
+          key: "brutal-truth",
+          label: "這是你最不想承認、卻最貼臉的那個版本。",
+        },
+      ];
 
-    var nodeLayer = document.getElementById("soul-node-layer");
-    if (!nodeLayer) {
-      alert("找不到 #soul-node-layer");
-      return;
-    }
+      const state = {
+        currentId: null,
+        answers: {}, // { qId: { levelKey, label } }
+      };
 
-    // 讓容器一定是垂直可捲的區塊
-    nodeLayer.style.position = "relative";
-    nodeLayer.style.display = "flex";
-    nodeLayer.style.flexDirection = "column";
-    nodeLayer.style.alignItems = "stretch";
-    nodeLayer.style.justifyContent = "flex-start";
-    nodeLayer.style.gap = "8px";
-    nodeLayer.style.padding = "24px 20px";
-    nodeLayer.style.maxHeight = "420px";
-    nodeLayer.style.overflowY = "auto";
+      const els = {
+        questionButtons: document.querySelectorAll(".soul-ai-question-card"),
+        currentQuestion: document.getElementById("current-question-text"),
+        answerOptions: document.getElementById("answer-options"),
+        statusCount: document.getElementById("status-count"),
+        statusHint: document.getElementById("status-hint"),
+        statusMode: document.getElementById("status-mode"),
+        statusMini: document.getElementById("status-mini"),
+        progressCount: document.getElementById("progress-count"),
+        progressHint: document.getElementById("progress-hint"),
+        btnAnalyze: document.getElementById("btn-analyze"),
+        resultLayer: document.getElementById("result-layer"),
+        resultBody: document.getElementById("result-body"),
+        resultBirds: document.getElementById("result-birds"),
+        resultTags: document.getElementById("result-tags"),
+        btnCloseResult: document.getElementById("btn-close-result"),
+      };
 
-    var questions = [
-      "你最害怕被看見的那一面，是什麼？為什麼？",
-      "當別人不回應你時，你腦中會自動補出什麼劇本？",
-      "你曾為了不被討厭，而說過違背內心的話嗎？哪一次最印象深刻？",
-      "在親密關係裡，你最常扮演的角色是照顧者、調停者、還是抽離的人？",
-      "如果今天所有責任都暫停 24 小時，你最想用什麼樣子存在？",
-      "童年時，哪一個畫面讓你學會「不能太做自己」？",
-      "你最容易為了哪一種人，委屈自己到失去界線？",
-      "當你生氣時，通常是什麼情緒被踩到，而不是單純的憤怒？",
-      "你是否曾經把「被需要」和「被愛」搞混？那造成了什麼？",
-      "你現在最怕失去的是什麼？如果真的失去了，你覺得自己會變成怎樣？",
-      "你有沒有一個一直沒說出口的遺憾，如果能重來，你會對誰說什麼？",
-      "你什麼時候最像在逃避自己？是滑手機、工作過量，還是假裝沒感覺？",
-      "你習慣先照顧別人的情緒，還是先誠實面對自己的需求？為什麼？",
-      "你曾經在哪一段關係裡，用力到忘記自己其實也有權利被照顧？",
-      "當你被誤解時，你是選擇解釋、沉默，還是直接抽離？背後的恐懼是什麼？",
-      "你覺得「被愛」對你來說最具體的樣子，是什麼畫面？",
-      "如果現在的你可以對十年前的自己說一句話，你會說什麼？",
-      "你有沒有那種「其實早就知道該離開，卻一直不敢動」的場景？",
-      "你最常用哪一種方式懲罰自己？（忽略、否定、過度要求，或是別的？）",
-      "當你說「沒事啦」的時候，心裡真正的話其實是什麼？",
-      "別人給過你最溫柔的一句話是什麼？你相信它嗎？",
-      "你理想中的安全感，是來自金錢、關係、能力，還是被理解？",
-      "你有沒有哪一個選擇，是當時看起來很理性，但現在回頭覺得那是自我背叛？",
-      "你曾經在哪件事情上，感覺自己「很值得」，而不是「好不容易被選上」？",
-      "如果可以把一種情緒從你的人生降低 50%，你會選哪一種？"
-    ];
-
-    // 確保只有 25 題
-    if (questions.length > 25) {
-      questions = questions.slice(0, 25);
-    }
-
-    // 把 25 題變成 25 個按鈕
-    questions.forEach(function (text, index) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "soul-node";
-      btn.style.position = "relative";
-      btn.style.left = "auto";
-      btn.style.top = "auto";
-      btn.style.transform = "none";
-      btn.style.textAlign = "left";
-
-      btn.textContent = (index + 1) + ". " + text;
-
-      // 先用超簡單互動：點一下跳出 alert（只是確認點得到）
-      btn.addEventListener("click", function () {
-        alert("第 " + (index + 1) + " 題：\n" + text);
-      });
-
-      nodeLayer.appendChild(btn);
-    });
-
-    // 畫星星（沿用原本）
-    drawStars();
-  });
-
-  // 星塵動畫
-  function drawStars() {
-    var canvas = document.getElementById("soul-stars");
-    if (!canvas) return;
-    var ctx = canvas.getContext("2d");
-    var w = (canvas.width =
-      canvas.offsetWidth || canvas.clientWidth || window.innerWidth || 800);
-    var h = (canvas.height =
-      canvas.offsetHeight || canvas.clientHeight || window.innerHeight || 480);
-
-    var stars = [];
-    var count = 140;
-    for (var i = 0; i < count; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 1.2 + 0.3,
-        a: Math.random() * Math.PI * 2,
-        s: Math.random() * 0.4 + 0.05
-      });
-    }
-
-    function step() {
-      ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = "#ffffff";
-      for (var i = 0; i < stars.length; i++) {
-        var star = stars[i];
-        star.a += star.s * 0.02;
-        var alpha = 0.2 + 0.6 * (0.5 + 0.5 * Math.sin(star.a));
-        ctx.globalAlpha = alpha;
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-        ctx.fill();
+      function answeredCount() {
+        return Object.keys(state.answers).length;
       }
-      requestAnimationFrame(step);
-    }
-    step();
-  }
-</script>
+
+      function updateProgressUI() {
+        const count = answeredCount();
+        const total = QUESTIONS.length;
+        els.statusCount.textContent = `${count} / ${total}`;
+        els.progressCount.textContent = `${count} / ${total}`;
+
+        if (count === 0) {
+          els.statusHint.textContent = "鏡面還在觀察，你還在裝鎮定。";
+          els.progressHint.textContent = "至少先誠實幾題再說。";
+          els.statusMode.textContent = "待機";
+          els.statusMini.textContent = "還沒有哪一題讓你願意講真話。";
+        } else if (count < total) {
+          els.statusHint.textContent = "有幾題被你鬆口了，鏡面開始抓到你的節奏。";
+          els.progressHint.textContent = "不用答得很漂亮，只要誠實就夠嗆。";
+          els.statusMode.textContent = "掃描中";
+          els.statusMini.textContent = "它正在記錄你習慣怎麼對自己不仁慈。";
+        } else {
+          els.statusHint.textContent = "OK，25 題都講完了，這次你沒有打混。";
+          els.progressHint.textContent = "可以打開鏡面紀錄，看看你到底在演什麼。";
+          els.statusMode.textContent = "準備輸出";
+          els.statusMini.textContent = "接下來是閱讀，而不是審判。";
+        }
+
+        if (count === total) {
+          els.btnAnalyze.disabled = false;
+        } else {
+          els.btnAnalyze.disabled = true;
+        }
+      }
+
+      function renderAnswerOptions(qId) {
+        els.answerOptions.innerHTML = "";
+        const existing = state.answers[qId];
+
+        ANSWER_LEVELS.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "soul-ai-answer-pill";
+          btn.textContent = opt.label;
+
+          if (existing && existing.levelKey === opt.key) {
+            btn.classList.add("active");
+          }
+
+          btn.addEventListener("click", () => {
+            // mark active
+            els.answerOptions
+              .querySelectorAll(".soul-ai-answer-pill")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+
+            state.answers[qId] = {
+              levelKey: opt.key,
+              label: opt.label,
+            };
+
+            // 標記左邊那題 answered
+            const card = document.querySelector(
+              .soul-ai-question-card[data-q-id="${qId}"]
+            );
+            if (card) {
+              card.classList.add("answered");
+            }
+
+            updateProgressUI();
+          });
+
+          els.answerOptions.appendChild(btn);
+        });
+      }
+
+      function openQuestion(qId) {
+        state.currentId = qId;
+
+        // 左邊 active 樣式
+        els.questionButtons.forEach((btn) => {
+          if (btn.dataset.qId === qId) btn.classList.add("active");
+          else btn.classList.remove("active");
+        });
+
+        const q = QUESTIONS.find((item) => item.id === qId);
+        if (q) {
+          els.currentQuestion.textContent = q.text;
+        } else {
+          els.currentQuestion.textContent =
+            "這一題的文字暫時抓不到，但你可以先換下一題。";
+        }
+
+        renderAnswerOptions(qId);
+      }
+
+      // 綁定左邊題目 click
+      els.questionButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          openQuestion(btn.dataset.qId);
+        });
+      });
+
+      // 預設打開第一題
+      if (QUESTIONS.length > 0) {
+        openQuestion(QUESTIONS[0].id);
+      }
+      updateProgressUI();
+
+      function buildPrompt() {
+        const blocks = QUESTIONS.map((q, index) => {
+          const ans = state.answers[q.id];
+          const answerText = ans ? ans.label : "（這題被略過）";
+          return `Q${String(index + 1).padStart(2, "0")}：${q.text}\n回應：${answerText}`;
+        }).join("\n\n");
+
+        return `
+你現在是「大三巴覺醒宇宙｜靈魂照妖鏡」的說話者。
+
+請根據下面 25 題的回答，寫出一篇大約 600 字的中文長文：
+- 口氣可以毒一點、敢愛敢恨一點，但不要羞辱對方。
+- 不要講制式心靈雞湯，也不要用「需要學會、應該要、多多加油」這種上對下的語氣。
+- 你可以點破：這個人怎麼一邊逞強、一邊又怕被丟下。
+- 可以指出：TA 在「自我價值、界線、關係、逃避、責任感」裡面，最容易卡在哪裡。
+- 但請記得：你是在跟一個清醒的人說實話，不是在哄小孩，也不是在開導學生。
+
+結構建議（可以依照感覺調整，不用硬照抄）：
+1. 先描述：這個人目前人生的主題在談什麼（例如：不被看見的委屈、過度負責、劇本成癮等）。
+2. 說明 TA 情緒上的慣性：遇到不安時，是攻擊自己、討好別人，還是直接消失。
+3. 指出一兩個如果願意誠實看一下，會是轉折點的地方——不是叫 TA 做功課，而是讓 TA 看到「原來我一直這樣對自己」。
+4. 用一句很短的提醒句收尾，像是可以寫在手機備忘錄那種。
+
+接著，請額外再寫三句話，分別由：
+- 阿金（行動 × 反骨 × 自由）：口氣可以直白、敢嗆一點。
+- 米果（自我價值 × 邊界 × 主權）：幫 TA 把價值感撐回來，但不必溫柔到沒邊界。
+- 滾滾（被理解 × 安全感 × 共鳴）：讓 TA 感到被看見，不用被修正。
+
+格式請用：
+（前面是一整段 600 字左右的長文）
+
+阿金：一句話
+米果：一句話
+滾滾：一句話
+
+以下是題目與回答：
+
+${blocks}
+        `.trim();
+      }
+
+      async function runAnalysis() {
+        if (answeredCount() < QUESTIONS.length) return;
+
+        els.btnAnalyze.disabled = true;
+        els.btnAnalyze.textContent = "鏡面讀取中……";
+        els.statusMode.textContent = "輸出中";
+        els.statusMini.textContent = "它正在幫你把那些你自己也嫌煩的部分串起來。";
+
+        const prompt = buildPrompt();
+
+        if (els.resultBody) {
+          els.resultBody.textContent = "等它把話整理好，你就不要再假裝沒事了。";
+        }
+        if (els.resultBirds) {
+          els.resultBirds.innerHTML = "";
+        }
+
+        els.resultLayer.classList.add("active");
+        els.resultLayer.setAttribute("aria-hidden", "false");
+
+        try {
+          const messages = [
+            {
+              role: "system",
+              content: "你是大三巴覺醒宇宙的靈魂照妖鏡說話者，口氣可以誠實、帶點反骨，但不羞辱人。",
+            },
+            { role: "user", content: prompt },
+          ];
+
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ messages, mode: "soulmirror" }),
+          });
+
+          const data = await res.json();
+          const raw =
+            data.reply ||
+            data.content ||
+            (data.choices &&
+              data.choices[0] &&
+              data.choices[0].message &&
+              data.choices[0].message.content) ||
+            "";
+
+          if (!raw) {
+            els.resultBody.textContent =
+              "這次它沒講出來，可能是線路卡住了。等一下再試一次就好。";
+            return;
+          }
+
+                 const splitIndex = raw.indexOf("阿金");
+          if (splitIndex > -1) {
+            const main = raw.slice(0, splitIndex).trim();
+            const tail = raw.slice(splitIndex).trim();
+
+            els.resultBody.textContent = main || "它有點詞窮，但至少先把你看了一遍。";
+
+            els.resultBirds.innerHTML = "";
+            tail
+              .split(/\n/)
+              .map((line) => line.trim())
+              .filter((line) => line.length > 0)
+              .forEach((line) => {
+                const span = document.createElement("span");
+                span.textContent = line;
+                els.resultBirds.appendChild(span);
+              });
+          } else {
+            els.resultBody.textContent = raw;
+          }
+        } catch (err) {
+          console.error(err);
+          els.resultBody.textContent =
+            "線路有點炸，你這輪的紀錄沒有成功送出。等一下再給它一次機會。";
+        } finally {
+          els.btnAnalyze.disabled = false;
+          els.btnAnalyze.textContent = "重看這一輪的鏡面紀錄";
+        }
+      }
+
+      // 分析按鈕
+      els.btnAnalyze.addEventListener("click", () => {
+        if (answeredCount() < QUESTIONS.length) return;
+        runAnalysis();
+      });
+
+      // 關閉結果
+      els.btnCloseResult.addEventListener("click", () => {
+        els.resultLayer.classList.remove("active");
+        els.resultLayer.setAttribute("aria-hidden", "true");
+        });
+    });
+  </script>
+</body>
+</html>
