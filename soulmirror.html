@@ -5,7 +5,6 @@
   <title>靈魂照妖鏡｜Soul Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 你專用的照妖鏡 CSS -->
   <link rel="stylesheet" href="/css/universe_soul.css" />
 </head>
 <body class="soulmirror-body">
@@ -23,7 +22,7 @@
       </div>
     </header>
 
-    <!-- 主視覺區 -->
+    <!-- 主視覺 -->
     <main class="soul-main">
       <!-- 背景星塵＋法陣 -->
       <div class="soul-bg-layer">
@@ -35,10 +34,10 @@
 
       <!-- 題目節點 -->
       <div class="soul-node-layer" id="soul-node-layer">
-        <!-- JS 產生 25 顆節點 -->
+        <!-- JS 產生 25 題 -->
       </div>
 
-      <!-- 中央浮現題目 HUD -->
+      <!-- 中央題目 HUD -->
       <section class="soul-focus-layer" id="soul-focus-layer" aria-hidden="true">
         <div class="soul-focus-panel">
           <div class="soul-focus-halo"></div>
@@ -48,26 +47,17 @@
 
             <div class="soul-answer-block">
               <div class="soul-scale-label">
-                <span>完全不像我</span>
+                <span>有一點像</span>
                 <span>超級就是我</span>
               </div>
-              <input
-                type="range"
-                min="1"
-                max="5"
-                step="1"
-                value="3"
-                id="answer-slider"
-                class="soul-scale-slider"
-              />
-              <div class="soul-scale-marks">
-                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+              <div class="soul-answer-options" id="answer-options">
+                <!-- JS 塞四個文字選項 -->
               </div>
             </div>
 
             <div class="soul-focus-actions">
               <button id="btn-skip" class="btn-ghost">先放過這題</button>
-              <button id="btn-save-answer" class="btn-primary">就照這樣記</button>
+              <button id="btn-save-answer" class="btn-primary" disabled>就照這樣記</button>
             </div>
           </div>
         </div>
@@ -109,7 +99,6 @@
     </footer>
   </div>
 
-  <!-- 這頁的 JS -->
   <script src="/js/soul.js" defer></script>
 </body>
 </html>
