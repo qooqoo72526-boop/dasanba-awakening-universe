@@ -1,11 +1,10 @@
 // ============================
 //  Soul Mirror main script
+// （等 DOM 準備好才啟動）
 // ============================
 
-(() => {
+document.addEventListener("DOMContentLoaded", () => {
   const nodeLayer = document.getElementById("soul-node-layer");
-  if (!nodeLayer) return;
-
   const focusLayer = document.getElementById("soul-focus-layer");
   const focusQuestionText = document.getElementById("focus-question-text");
   const answerOptionsBox = document.getElementById("answer-options");
@@ -23,29 +22,22 @@
   const questionCountEl = document.getElementById("question-count");
   const answerStatusEl = document.getElementById("answer-status");
 
+  if (!nodeLayer) {
+    console.warn("Soul Mirror：找不到 #soul-node-layer");
+    return;
+  }
+
   const TOTAL = 25;
 
-  // 深度答案選項（所有題目共用的 4 個層次）
+  // 深度答案選項（共用四個層次）
   const ANSWER_LEVELS = [
-    {
-      level: 1,
-      label: "有一點像，但多半被你壓下去。",
-    },
-    {
-      level: 2,
-      label: "蠻常中，只是你表面裝得很冷靜。",
-    },
-    {
-      level: 3,
-      label: "這基本上是你現在的日常狀態。",
-    },
-    {
-      level: 4,
-      label: "這是你最不想承認，但最真實的樣子。",
-    },
+    { level: 1, label: "有一點像，但多半被你壓下去。" },
+    { level: 2, label: "蠻常中，只是你表面裝得很冷靜。" },
+    { level: 3, label: "這基本上是你現在的日常狀態。" },
+    { level: 4, label: "這是你最不想承認，但最真實的樣子。" }
   ];
 
-  // 題庫：深題
+  // 題庫
   const QUESTION_BANK = [
     "你最害怕被看見的那一面，是什麼？為什麼？",
     "當別人不回應你時，你腦中會自動補出什麼劇本？",
@@ -78,15 +70,16 @@
     "你對「家」的定義是什麼？那在現實裡出現過嗎？",
     "當你累到快撐不住時，你第一個想到的人，是能照顧你，還是你仍然要照顧對方？",
     "如果你再也不用證明自己值得被留下，你覺得你會變成什麼樣子？",
-    "你對「自己」最嚴厲的評語是什麼？如果換成你最心疼的人，你還會這樣說嗎？",
+    "你對「自己」最嚴厲的評語是什麼？如果換成你最心疼的人，你還會這樣說嗎？"
   ];
 
   let selectedQuestions = [];
-  let answers = {}; // { id: { text, level, label } }
+  let answers = {};          // { id: { text, level, label } }
   let currentId = null;
   let currentSelectedLevel = null;
 
-  // 洗牌
+  // ---------- 小工具 ----------
+
   function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -96,25 +89,13 @@
     return a;
   }
 
-  // 抽 25 題
-  function pickQuestions() {
-    const shuffled = shuffle(QUESTION_BANK);
-    selectedQuestions = shuffled.slice(0, TOTAL).map((text, idx) => ({
-      id: idx + 1,
-      text,
-    }));
-    answers = {};
-    currentId = null;
-    currentSelectedLevel = null;
-    btnStartAnalysis.disabled = true;
-    btnStartAnalysis.textContent = "看今天的結果";
-    updateStatus();
-  }
-
-  // 狀態文字
   function updateStatus() {
     const answeredCount = Object.keys(answers).length;
-    questionCountEl.textContent = `${answeredCount} / ${TOTAL}`;
+    if (questionCountEl) {
+      questionCountEl.textContent = `${answeredCount} / ${TOTAL}`;
+    }
+
+    if (!answerStatusEl) return;
 
     if (answeredCount === 0) {
       answerStatusEl.textContent = "鏡面還沒被觸碰。";
@@ -123,6 +104,25 @@
     } else {
       answerStatusEl.textContent = "OK，鏡面記住你了。";
     }
+  }
+
+  // 抽 25 題
+  function pickQuestions() {
+    const shuffled = shuffle(QUESTION_BANK);
+    selectedQuestions = shuffled.slice(0, TOTAL).map((text, idx) => ({
+      id: idx + 1,
+      text
+    }));
+    answers = {};
+    currentId = null;
+    currentSelectedLevel = null;
+
+    if (btnStartAnalysis) {
+      btnStartAnalysis.disabled = true;
+      btnStartAnalysis.textContent = "看今天的結果";
+    }
+
+    updateStatus();
   }
 
   // 節點佈局：三圈亂星圖
@@ -161,8 +161,7 @@
   }
 
   function dimNodes(activeId) {
-    const nodes = nodeLayer.querySelectorAll(".soul-node");
-    nodes.forEach((n) => {
+    nodeLayer.querySelectorAll(".soul-node").forEach((n) => {
       const id = Number(n.dataset.id);
       if (id === activeId) {
         n.classList.remove("dim");
@@ -176,19 +175,18 @@
     nodeLayer.querySelectorAll(".soul-node").forEach((n) => n.classList.remove("dim"));
   }
 
-  // 顯示某題
+  // ---------- 題目 HUD ----------
+
   function openQuestion(id) {
     const q = selectedQuestions.find((x) => x.id === id);
-    if (!q) return;
+    if (!q || !focusLayer || !focusQuestionText || !answerOptionsBox) return;
+
     currentId = id;
     focusQuestionText.textContent = q.text;
-
-    // 清空選項
     answerOptionsBox.innerHTML = "";
     currentSelectedLevel = null;
-    btnSave.disabled = true;
+    if (btnSave) btnSave.disabled = true;
 
-    // 產生四個深度選項
     ANSWER_LEVELS.forEach((opt) => {
       const btn = document.createElement("button");
       btn.type = "button";
@@ -197,21 +195,19 @@
       btn.textContent = opt.label;
 
       btn.addEventListener("click", () => {
-        // 清除其他 active
         answerOptionsBox
           .querySelectorAll(".soul-answer-pill")
           .forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
         currentSelectedLevel = opt.level;
-        btnSave.disabled = false;
+        if (btnSave) btnSave.disabled = false;
       });
 
-      // 若有舊答案，自動帶出
       const prev = answers[id];
       if (prev && prev.level === opt.level) {
         btn.classList.add("active");
         currentSelectedLevel = opt.level;
-        btnSave.disabled = false;
+        if (btnSave) btnSave.disabled = false;
       }
 
       answerOptionsBox.appendChild(btn);
@@ -223,6 +219,7 @@
   }
 
   function closeQuestion() {
+    if (!focusLayer) return;
     focusLayer.classList.remove("active");
     focusLayer.setAttribute("aria-hidden", "true");
     resetDimNodes();
@@ -231,39 +228,44 @@
   }
 
   // 先放過這題
-  btnSkip.addEventListener("click", () => {
-    closeQuestion();
-  });
+  if (btnSkip) {
+    btnSkip.addEventListener("click", () => {
+      closeQuestion();
+    });
+  }
 
   // 就照這樣記
-  btnSave.addEventListener("click", () => {
-    if (!currentId || !currentSelectedLevel) return;
-    const q = selectedQuestions.find((x) => x.id === currentId);
-    const opt = ANSWER_LEVELS.find((o) => o.level === currentSelectedLevel);
-    if (!q || !opt) return;
+  if (btnSave) {
+    btnSave.addEventListener("click", () => {
+      if (!currentId || !currentSelectedLevel) return;
+      const q = selectedQuestions.find((x) => x.id === currentId);
+      const opt = ANSWER_LEVELS.find((o) => o.level === currentSelectedLevel);
+      if (!q || !opt) return;
 
-    answers[currentId] = {
-      text: q.text,
-      level: opt.level,
-      label: opt.label,
-    };
+      answers[currentId] = {
+        text: q.text,
+        level: opt.level,
+        label: opt.label
+      };
 
-    markNodeAnswered(currentId);
-    updateStatus();
-    closeQuestion();
+      markNodeAnswered(currentId);
+      updateStatus();
+      closeQuestion();
 
-    if (Object.keys(answers).length === TOTAL) {
-      btnStartAnalysis.disabled = false;
-      btnStartAnalysis.textContent = "打開鏡面紀錄";
-    }
-  });
+      if (Object.keys(answers).length === TOTAL && btnStartAnalysis) {
+        btnStartAnalysis.disabled = false;
+        btnStartAnalysis.textContent = "打開鏡面紀錄";
+      }
+    });
+  }
 
   function markNodeAnswered(id) {
     const node = nodeLayer.querySelector(`.soul-node[data-id="${id}"]`);
     if (node) node.classList.add("answered");
   }
 
-  // Prompt 組合，給 /api/chat
+  // ---------- 呼叫 API ----------
+
   function buildPrompt() {
     const items = Object.entries(answers)
       .sort((a, b) => Number(a[0]) - Number(b[0]))
@@ -298,33 +300,35 @@
 以下是題目與回答層級（1~4）：層級數字只是方便你閱讀，真正的重點是「內心註解」那一行。
 
 ${items}
-`.trim();
+    `.trim();
   }
 
   async function callSoulMirrorAPI() {
     const prompt = buildPrompt();
-    resultText.textContent = "等它把話整理好再說。";
-    resultBirds.innerHTML = "";
-
-    resultLayer.classList.add("active");
-    resultLayer.setAttribute("aria-hidden", "false");
+    if (resultText) {
+      resultText.textContent = "等它把話整理好再說。";
+    }
+    if (resultBirds) {
+      resultBirds.innerHTML = "";
+    }
+    if (resultLayer) {
+      resultLayer.classList.add("active");
+      resultLayer.setAttribute("aria-hidden", "false");
+    }
 
     try {
       const messages = [
         {
           role: "system",
-          content: "你是大三巴覺醒宇宙的靈魂照妖鏡說明 AI。",
+          content: "你是大三巴覺醒宇宙的靈魂照妖鏡說明 AI。"
         },
-        {
-          role: "user",
-          content: prompt,
-        },
+        { role: "user", content: prompt }
       ];
 
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages, mode: "soulmirror" }),
+        body: JSON.stringify({ messages, mode: "soulmirror" })
       });
 
       const data = await res.json();
@@ -335,24 +339,12 @@ ${items}
         "";
 
       if (!raw) {
-        resultText.textContent = "這次它沒講出來，過一會兒再問一次就好。";
+        if (resultText) {
+          resultText.textContent = "這次它沒講出來，過一會兒再問一次就好。";
+        }
         return;
       }
 
       const splitIndex = raw.indexOf("阿金");
       if (splitIndex > -1) {
         const main = raw.slice(0, splitIndex).trim();
-        const tail = raw.slice(splitIndex).trim();
-        resultText.textContent = main;
-
-        const birdLines = tail.split(/\n/).filter((l) => l.trim());
-        resultBirds.innerHTML = "";
-        birdLines.forEach((line) => {
-          const span = document.createElement("span");
-          span.textContent = line.trim();
-          resultBirds.appendChild(span);
-        });
-      } else {
-        resultText.textContent = raw;
-      }
-    } catc
