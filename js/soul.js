@@ -140,20 +140,28 @@ function saveBank(obj) {
   try { localStorage.setItem(LS_KEY, JSON.stringify(obj)); } catch (_) {}
 }
 
-// 取得本次要顯示的 25 題；不夠就自動續庫
+// 取得本次要顯示的 25 題；不夠就自動補庫
 function next25() {
-  let state = loadBank();
-  const take = [];
-  while (take.length < 25) {
-    if (state.pool.length === 0) {
-      state = { pool: buildBank(), used: [] };
+    let state = loadBank();
+    const take = [];
+
+    // 一直拿題目，直到湊滿 25 題
+    while (take.length < 25) {
+        // 題庫用完了就重建一份新的
+        if (!state.pool.length) {
+            state = { pool: buildBank(), used: [] };
+        }
+
+        const q = state.pool.pop();
+        state.used.push(q);
+        take.push(q);
     }
-    const q = state.pool.pop();
-    state.used.push(q);
-    take.push(q);
-  }
-  saveBank(state);
-  return take;
+
+    // 存回 localStorage
+    saveBank(state);
+
+    // 🔴 重點：一定要 return 這 25 題！
+    return take;
 }
 
 /* ---------------------------
