@@ -1,499 +1,108 @@
-/* =========================================
-   SOUL MIRROR｜靈魂照妖鏡專用樣式
-   不影響其他頁：全部 class 前綴 .soul-
-   ======================================= */
-
-:root {
-  --soul-bg-top: #dde6ff;
-  --soul-bg-mid: #0d1326;
-  --soul-bg-bottom: #020311;
-
-  --soul-silver: #e6edff;
-  --soul-soft: #c8d4ff;
-  --soul-cyan: #8fd4ff;
-  --soul-violet: #b79dff;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-/* 整體背景：銀藍光感 */
-
-.soulmirror-body {
-  min-height: 100vh;
-  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont;
-  background: radial-gradient(circle at top, var(--soul-bg-top) 0, var(--soul-bg-mid) 55%, var(--soul-bg-bottom) 100%);
-  color: var(--soul-silver);
-}
-
-#soulmirror-root {
-  min-height: 100vh;
-  padding: 14px 18px 18px;
+/* ===== EVA SIDE NAV · 銀白極簡直立工具列 ===== */
+.eva-side-nav {
+  position: fixed;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  z-index: 1200;
 }
 
-/* Header */
-
-.soul-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 14px;
-  margin-bottom: 10px;
-}
-
-.soul-title-block {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.soul-tag {
-  display: inline-flex;
-  padding: 3px 12px;
+.eva-nav-item {
+  width: 40px;
+  height: 40px;
   border-radius: 999px;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  background: rgba(144, 192, 255, 0.22);
-  border: 1px solid rgba(186, 214, 255, 0.7);
-  backdrop-filter: blur(10px);
-}
-
-.soul-title-en {
-  margin: 0;
-  font-family: "Orbitron", system-ui, -apple-system;
-  font-size: 15px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #f5f7ff;
-}
-
-.soul-title-zh {
-  margin: 0;
-  font-size: 13px;
-  opacity: 0.82;
-}
-
-.soul-status {
-  font-size: 11px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: radial-gradient(circle at 30% 0%,
+              rgba(255, 255, 255, 0.16) 0,
+              rgba(255, 255, 255, 0.02) 45%,
+              rgba(0, 0, 0, 0.0) 100%);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 0 18px rgba(120, 180, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
-  opacity: 0.85;
-}
-
-/* 主區塊 */
-
-.soul-main {
-  position: relative;
-  flex: 1;
-  border-radius: 24px;
-  overflow: hidden;
-  background: radial-gradient(circle at center, rgba(140, 188, 255, 0.22), rgba(3, 6, 22, 0.96));
-  box-shadow:
-    0 0 40px rgba(116, 174, 255, 0.55),
-    inset 0 0 40px rgba(1, 3, 10, 0.95);
-}
-
-/* 背景層：星空＋法陣 */
-
-.soul-bg-layer {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-#soul-stars {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.soul-core-ring {
-  position: absolute;
-  left: 50%;
-  top: 52%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1px solid rgba(187, 212, 255, 0.75);
-  box-shadow:
-    0 0 22px rgba(153, 201, 255, 0.85),
-    0 0 80px rgba(90, 145, 255, 0.7);
-  pointer-events: none;
-}
-
-.core-1 {
-  width: 260px;
-  height: 260px;
-}
-
-.core-2 {
-  width: 360px;
-  height: 360px;
-  opacity: 0.45;
-  border-style: dashed;
-  animation: soul-ring-spin 32s linear infinite;
-}
-
-.core-3 {
-  width: 460px;
-  height: 460px;
-  opacity: 0.28;
-  animation: soul-ring-spin-rev 46s linear infinite;
-}
-
-@keyframes soul-ring-spin {
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-@keyframes soul-ring-spin-rev {
-  to {
-    transform: translate(-50%, -50%) rotate(-360deg);
-  }
-}
-
-/* 題目節點層 */
-
-.soul-node-layer {
-  position: relative;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* 節點泡泡 */
-
-.soul-node {
-  position: absolute;
-  min-width: 130px;
-  max-width: 220px;
-  padding: 8px 11px;
-  border-radius: 999px;
-  background: radial-gradient(circle at top, rgba(228, 238, 255, 0.46), rgba(13, 23, 54, 0.96));
-  color: #f7f9ff;
-  font-size: 11px;
-  line-height: 1.5;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 0 18px rgba(142, 198, 255, 0.9),
-    0 0 64px rgba(13, 21, 54, 0.96);
-  transform-origin: center;
-  transition:
-    transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.32s,
-    opacity 0.25s,
-    filter 0.25s;
-}
-
-.soul-node:hover {
-  transform: translateY(-4px) scale(1.04);
-  box-shadow:
-    0 0 28px rgba(171, 219, 255, 0.96),
-    0 0 96px rgba(77, 133, 255, 0.96);
-}
-
-.soul-node.dim {
-  opacity: 0.22;
-  filter: blur(2px);
-  pointer-events: none;
-}
-
-.soul-node.answered {
-  background: radial-gradient(circle at top, rgba(189, 255, 221, 0.55), rgba(20, 58, 46, 0.98));
-  box-shadow:
-    0 0 22px rgba(155, 255, 208, 0.95),
-    0 0 64px rgba(2, 12, 7, 0.98);
-}
-
-/* 中央 HUD：題目 */
-
-.soul-focus-layer,
-.soul-result-layer {
-  position: absolute;
-  inset: 0;
-  display: none;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
+  transition: transform .22s ease, box-shadow .22s ease,
+              border-color .22s ease, background .22s ease;
 }
 
-.soul-focus-layer.active,
-.soul-result-layer.active {
-  display: flex;
+.eva-nav-icon {
+  font-size: 18px;
+  color: #e7f1ff;
+  text-shadow: 0 0 8px rgba(150, 210, 255, 0.8);
 }
 
-.soul-focus-panel,
-.soul-result-panel {
-  position: relative;
-  width: min(580px, 94vw);
-  padding: 22px 20px 18px;
-  border-radius: 24px;
-  background: radial-gradient(circle at top, rgba(235, 243, 255, 0.42), rgba(5, 8, 24, 0.98));
+/* Hover：微浮起＋更藍一點的光，不會很厚重 */
+.eva-nav-item:hover {
+  transform: translateX(2px) scale(1.05);
+  border-color: rgba(185, 220, 255, 0.9);
   box-shadow:
-    0 0 42px rgba(166, 214, 255, 0.98),
-    0 0 150px rgba(86, 135, 255, 0.95);
-  backdrop-filter: blur(22px);
+    0 0 0 1px rgba(185, 220, 255, 0.6),
+    0 0 22px rgba(135, 205, 255, 0.8);
+  background: radial-gradient(circle at 30% 0%,
+              rgba(190, 220, 255, 0.32) 0,
+              rgba(255, 255, 255, 0.04) 50%,
+              rgba(0, 0, 0, 0.0) 100%);
 }
 
-.soul-focus-halo,
-.soul-result-halo {
+/* 目前所在頁面：光圈略亮，但一樣極簡 */
+.eva-nav-item-active {
+  border-color: rgba(231, 243, 255, 0.95);
+  box-shadow:
+    0 0 0 1px rgba(231, 243, 255, 0.9),
+    0 0 26px rgba(165, 220, 255, 1);
+}
+
+/* Tooltip：滑過才出現的小銀白標籤（靈魂照妖鏡這些字在這裡出現） */
+.eva-nav-item::after {
+  content: attr(data-label);
   position: absolute;
-  inset: -20%;
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.32), transparent 65%),
-    radial-gradient(circle at bottom, rgba(140, 190, 255, 0.38), transparent 70%);
-  opacity: 0.78;
+  left: 52px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #e9f3ff;
+  background: linear-gradient(120deg,
+              rgba(12, 26, 58, 0.98),
+              rgba(22, 48, 92, 0.98));
+  border: 1px solid rgba(180, 214, 255, 0.7);
+  box-shadow: 0 0 18px rgba(90, 150, 230, 0.9);
+  opacity: 0;
   pointer-events: none;
+  transform: translateX(4px);
+  transition: opacity .18s ease, transform .18s ease;
 }
 
-.soul-focus-inner,
-.soul-result-inner {
-  position: relative;
-  z-index: 1;
+.eva-nav-item:hover::after {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.soul-focus-label,
-.soul-result-tag {
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  opacity: 0.7;
-}
-
-.soul-focus-question {
-  margin: 8px 0 16px;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-/* 答案區：深度文字選項 */
-
-.soul-answer-block {
-  margin-bottom: 14px;
-}
-
-.soul-scale-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  opacity: 0.78;
-  margin-bottom: 6px;
-}
-
-.soul-answer-options {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.soul-answer-pill {
-  width: 100%;
-  text-align: left;
-  padding: 7px 11px;
-  border-radius: 999px;
-  border: 1px solid rgba(183, 208, 255, 0.85);
-  background: radial-gradient(circle at top, rgba(224, 236, 255, 0.2), rgba(12, 20, 42, 0.95));
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: #f3f7ff;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  backdrop-filter: blur(8px);
-  transition:
-    background 0.2s,
-    box-shadow 0.2s,
-    border-color 0.2s,
-    transform 0.18s;
-}
-
-.soul-answer-pill::before {
-  content: "";
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  border: 1px solid rgba(191, 211, 255, 0.85);
-  box-shadow: 0 0 6px rgba(149, 196, 255, 0.8);
-}
-
-.soul-answer-pill:hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 0 14px rgba(173, 219, 255, 0.96),
-    0 0 40px rgba(94, 143, 255, 0.9);
-}
-
-.soul-answer-pill.active {
-  border-color: transparent;
-  background: linear-gradient(120deg, var(--soul-cyan), var(--soul-violet));
-  color: #02040a;
-  box-shadow:
-    0 0 20px rgba(152, 228, 255, 0.98),
-    0 0 48px rgba(141, 198, 255, 0.98);
-}
-
-.soul-answer-pill.active::before {
-  background: #02020a;
-  border-color: #ffffff;
-  box-shadow:
-    0 0 12px rgba(229, 245, 255, 1),
-    0 0 28px rgba(171, 220, 255, 1);
-}
-
-/* 中央 HUD 底部按鈕 */
-
-.soul-focus-actions {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-/* Buttons */
-
-.btn-primary,
-.btn-ghost,
-.btn-outline {
-  border-radius: 999px;
-  padding: 8px 18px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  border: 1px solid transparent;
-  cursor: pointer;
-  background: transparent;
-  color: var(--soul-silver);
-  transition:
-    background 0.2s,
-    color 0.2s,
-    box-shadow 0.2s,
-    border-color 0.2s;
-}
-
-.btn-primary {
-  background: linear-gradient(120deg, var(--soul-cyan), var(--soul-violet));
-  color: #02040a;
-  box-shadow:
-    0 0 18px rgba(144, 215, 255, 0.96),
-    0 0 40px rgba(128, 182, 255, 0.94);
-}
-
-.btn-primary:disabled {
-  opacity: 0.4;
-  box-shadow: none;
-  cursor: default;
-}
-
-.btn-primary:not(:disabled):hover {
-  box-shadow:
-    0 0 24px rgba(173, 233, 255, 1),
-    0 0 60px rgba(144, 199, 255, 1);
-}
-
-.btn-ghost {
-  border-color: rgba(186, 211, 255, 0.9);
-}
-.btn-ghost:hover {
-  background: rgba(186, 211, 255, 0.12);
-  box-shadow: 0 0 16px rgba(163, 205, 255, 0.9);
-}
-
-.btn-outline {
-  border-color: rgba(163, 199, 255, 0.9);
-}
-.btn-outline:hover {
-  background: rgba(163, 199, 255, 0.12);
-}
-
-/* 結果層 */
-
-.soul-result-title {
-  margin: 4px 0 4px;
-  font-size: 14px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.soul-result-meta {
-  margin: 0 0 10px;
-  font-size: 11px;
-  opacity: 0.82;
-}
-
-.soul-result-text {
-  max-height: 320px;
-  overflow-y: auto;
-  font-size: 13px;
-  line-height: 1.8;
-}
-
-.soul-result-text::-webkit-scrollbar {
-  width: 4px;
-}
-.soul-result-text::-webkit-scrollbar-thumb {
-  background: rgba(188, 212, 255, 0.94);
-  border-radius: 999px;
-}
-
-.soul-result-birds {
-  margin-top: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  font-size: 11px;
-}
-
-.soul-result-birds span {
-  padding: 5px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(198, 217, 255, 0.95);
-  background: rgba(7, 13, 32, 0.96);
-}
-
-.soul-result-actions {
-  margin-top: 12px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-/* Footer */
-
-.soul-footer {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-/* RWD */
-
+/* 手機時縮小、往上移一點避免擋畫面 */
 @media (max-width: 768px) {
-  #soulmirror-root {
-    padding-inline: 12px;
+  .eva-side-nav {
+    left: 14px;
+    top: 56%;
+    gap: 10px;
   }
-
-  .soul-main {
-    border-radius: 18px;
+  .eva-nav-item {
+    width: 32px;
+    height: 32px;
   }
-
-  .soul-footer {
-    flex-direction: column;
+  .eva-nav-icon {
+    font-size: 15px;
   }
-
-  .soul-title-en {
-    font-size: 13px;
-    letter-spacing: 0.14em;
-  }
-
-  .soul-title-zh {
-    font-size: 12px;
+  .eva-nav-item::after {
+    font-size: 10px;
+    padding: 4px 8px;
   }
 }
