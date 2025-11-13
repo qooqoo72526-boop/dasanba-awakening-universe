@@ -1,77 +1,115 @@
 <!DOCTYPE html>
-<html lang="zh-Hant" class="page--soulmirror">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
+  <title>靈魂照妖鏡｜Soul Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>靈魂照妖鏡 | Emotional Value A.I.</title>
 
-  <!-- 字體 & 主體樣式 -->
-  <link rel="stylesheet" href="css/universe.css" />
-  <link rel="stylesheet" href="css/universe_soul.css" />
-
-  <!-- 星空背景 & 題目邏輯 -->
-<script type="module" src="js/soul.js?v=4"></script>
+  <!-- 你專用的照妖鏡 CSS -->
+  <link rel="stylesheet" href="/css/universe_soul.css" />
 </head>
+<body class="soulmirror-body">
+  <div id="soulmirror-root">
+    <!-- 頂部標題 -->
+    <header class="soul-header">
+      <div class="soul-title-block">
+        <div class="soul-tag">SOUL MIRROR / VISION LOG</div>
+        <h1 class="soul-title-en">SOUL MIRROR｜SYSTEM VIEW</h1>
+        <h2 class="soul-title-zh">今天的你，長這樣。</h2>
+      </div>
+      <div class="soul-status">
+        <span id="question-count">0 / 25</span>
+        <span id="answer-status">鏡面還沒被觸碰。</span>
+      </div>
+    </header>
 
-<body data-page="soulmirror">
-  <!-- 左側直式工具列（和首頁一致） -->
-  <nav class="toolbox nav-trail" aria-label="cosmic nav">
-    <a class="tool" href="./index.html" aria-label="Home" title="Home">
-      <span class="ico">✦</span><span class="txt">Home</span>
-    </a>
+    <!-- 主視覺區 -->
+    <main class="soul-main">
+      <!-- 背景星塵＋法陣 -->
+      <div class="soul-bg-layer">
+        <canvas id="soul-stars"></canvas>
+        <div class="soul-core-ring core-1"></div>
+        <div class="soul-core-ring core-2"></div>
+        <div class="soul-core-ring core-3"></div>
+      </div>
 
-    <a class="tool" href="./cosmic-post-station.html" aria-label="Cosmic Post" title="Cosmic Post">
-      <span class="ico">✉</span><span class="txt">Post</span>
-    </a>
+      <!-- 題目節點 -->
+      <div class="soul-node-layer" id="soul-node-layer">
+        <!-- JS 產生 25 顆節點 -->
+      </div>
 
-    <a class="tool" href="./soulmirror.html" aria-label="Soul Mirror" title="Soul Mirror">
-      <span class="ico">🪞</span><span class="txt">Mirror</span>
-    </a>
+      <!-- 中央浮現題目 HUD -->
+      <section class="soul-focus-layer" id="soul-focus-layer" aria-hidden="true">
+        <div class="soul-focus-panel">
+          <div class="soul-focus-halo"></div>
+          <div class="soul-focus-inner">
+            <div class="soul-focus-label">CURRENT VIEW</div>
+            <p class="soul-focus-question" id="focus-question-text"></p>
 
-    <a class="tool" href="#gallery" aria-label="Gallery" title="Gallery" data-jump>
-      <span class="ico">🔭</span><span class="txt">Gallery</span>
-    </a>
-  </nav>
+            <div class="soul-answer-block">
+              <div class="soul-scale-label">
+                <span>完全不像我</span>
+                <span>超級就是我</span>
+              </div>
+              <input
+                type="range"
+                min="1"
+                max="5"
+                step="1"
+                value="3"
+                id="answer-slider"
+                class="soul-scale-slider"
+              />
+              <div class="soul-scale-marks">
+                <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+              </div>
+            </div>
 
-  <!-- 星空背景畫布 -->
-  <canvas id="starfield"></canvas>
+            <div class="soul-focus-actions">
+              <button id="btn-skip" class="btn-ghost">先放過這題</button>
+              <button id="btn-save-answer" class="btn-primary">就照這樣記</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <!-- 3.5 秒時光暫停動畫 -->
-  <div id="intro">
-    <div>
-      <div class="logo">SOUL MIRROR</div>
-      <div class="sub">trace the vectors of your inner voice</div>
-    </div>
+      <!-- 結果層 -->
+      <section class="soul-result-layer" id="soul-result-layer" aria-hidden="true">
+        <div class="soul-result-panel">
+          <div class="soul-result-halo"></div>
+          <div class="soul-result-inner">
+            <div class="soul-result-tag">MIRROR LOG</div>
+            <h3 class="soul-result-title">這是你的鏡面紀錄。</h3>
+            <p class="soul-result-meta" id="soul-result-meta">
+              不是定義，只是今天被看見的那一版你。
+            </p>
+
+            <div class="soul-result-text" id="soul-result-text"></div>
+
+            <div class="soul-result-birds" id="soul-result-birds">
+              <!-- 三隻鳥的一句話 -->
+            </div>
+
+            <div class="soul-result-actions">
+              <button id="btn-close-result" class="btn-ghost">收回鏡面</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 底部操作 -->
+    <footer class="soul-footer">
+      <button id="btn-generate-questions" class="btn-outline">
+        換一組 25 題
+      </button>
+      <button id="btn-start-analysis" class="btn-primary" disabled>
+        看今天的結果
+      </button>
+    </footer>
   </div>
 
-  <!-- 魔鏡主體 -->
-  <section class="mirror-wrap">
-    <!-- 標題：中文＋英文 同一行 -->
-    <div class="subheading">
-      <span class="zh">靈魂照妖鏡</span>
-      <span class="icon-inline mirror">🪞</span>
-      <span class="en">SOUL MIRROR</span>
-    </div>
-
-    <!-- 魔法前導文 -->
-    <div class="magic-lines">
-      <div class="txt zh">某一條時間軸，正被悄悄改寫——</div>
-      <div class="txt en">
-        <span class="wand">🪄</span>
-        <span class="line">
-          What you’re becoming is louder than what you’ve survived.
-        </span>
-      </div>
-    </div>
-
-    <!-- 25 題魔法氣泡：JS 會自動塞題目進來 -->
-    <div class="question-grid"></div>
-
-    <!-- 解析區：長文＋三鳥一句話（JS 會填內容） -->
-    <div class="result-box glass-bubble">
-      <div class="txt"></div>
-      <div class="three"></div>
-    </div>
-  </section>
+  <!-- 這頁的 JS -->
+  <script src="/js/soul.js" defer></script>
 </body>
 </html>
