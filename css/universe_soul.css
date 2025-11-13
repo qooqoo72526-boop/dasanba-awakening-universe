@@ -1,12 +1,51 @@
-/* ===== EVA SIDE NAV · 銀白極簡直立工具列 ===== */
+/* ========================================
+   RESET & BASE
+======================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: #0f1525;
+  /* 銀藍宇宙底，偏白銀 */
+  background:
+    radial-gradient(circle at 20% -10%, #ffffff 0, #edf4ff 30%, transparent 60%),
+    radial-gradient(circle at 110% 0%, #d8e6ff 0, #a4bce8 45%, #1f3358 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 微星塵 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.8) 0, transparent 60%),
+    radial-gradient(1.5px 1.5px at 80% 10%, rgba(190,220,255,0.8) 0, transparent 55%),
+    radial-gradient(1.2px 1.2px at 40% 80%, rgba(255,255,255,0.6) 0, transparent 60%);
+  opacity: .6;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+/* ========================================
+   SIDE NAV · 幾何線條工具列
+======================================== */
 .eva-side-nav {
   position: fixed;
-  left: 32px;
+  left: 26px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   z-index: 1200;
 }
 
@@ -14,72 +53,35 @@
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: radial-gradient(circle at 30% 0%,
-              rgba(255, 255, 255, 0.16) 0,
-              rgba(255, 255, 255, 0.02) 45%,
-              rgba(0, 0, 0, 0.0) 100%);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 0 18px rgba(120, 180, 255, 0.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.6);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  transition: transform .22s ease, box-shadow .22s ease,
-              border-color .22s ease, background .22s ease;
+  transition: all .22s ease;
+  position: relative;
 }
 
-.eva-nav-icon {
-  font-size: 18px;
-  color: #e7f1ff;
-  text-shadow: 0 0 8px rgba(150, 210, 255, 0.8);
-}
-
-/* Hover：微浮起＋更藍一點的光，不會很厚重 */
-.eva-nav-item:hover {
-  transform: translateX(2px) scale(1.05);
-  border-color: rgba(185, 220, 255, 0.9);
-  box-shadow:
-    0 0 0 1px rgba(185, 220, 255, 0.6),
-    0 0 22px rgba(135, 205, 255, 0.8);
-  background: radial-gradient(circle at 30% 0%,
-              rgba(190, 220, 255, 0.32) 0,
-              rgba(255, 255, 255, 0.04) 50%,
-              rgba(0, 0, 0, 0.0) 100%);
-}
-
-/* 目前所在頁面：光圈略亮，但一樣極簡 */
-.eva-nav-item-active {
-  border-color: rgba(231, 243, 255, 0.95);
-  box-shadow:
-    0 0 0 1px rgba(231, 243, 255, 0.9),
-    0 0 26px rgba(165, 220, 255, 1);
-}
-
-/* Tooltip：滑過才出現的小銀白標籤（靈魂照妖鏡這些字在這裡出現） */
 .eva-nav-item::after {
   content: attr(data-label);
   position: absolute;
-  left: 52px;
-  padding: 6px 10px;
+  left: 48px;
+  padding: 2px 8px;
   border-radius: 999px;
-  font-size: 11px;
-  letter-spacing: .1em;
+  font-size: 10px;
+  letter-spacing: .16em;
   text-transform: uppercase;
-  white-space: nowrap;
-  color: #e9f3ff;
-  background: linear-gradient(120deg,
-              rgba(12, 26, 58, 0.98),
-              rgba(22, 48, 92, 0.98));
-  border: 1px solid rgba(180, 214, 255, 0.7);
-  box-shadow: 0 0 18px rgba(90, 150, 230, 0.9);
+  color: #1c2640;
+  background: rgba(247,250,255,0.9);
+  border: 1px solid rgba(180,210,255,0.9);
   opacity: 0;
   pointer-events: none;
-  transform: translateX(4px);
-  transition: opacity .18s ease, transform .18s ease;
+  transform: translateX(-4px);
+  transition: all .2s ease;
+  white-space: nowrap;
 }
 
 .eva-nav-item:hover::after {
@@ -87,22 +89,491 @@
   transform: translateX(0);
 }
 
-/* 手機時縮小、往上移一點避免擋畫面 */
+.eva-nav-item:hover {
+  transform: translateX(2px) scale(1.04);
+  background: rgba(255,255,255,0.24);
+  box-shadow:
+    0 0 18px rgba(170,210,255,0.85),
+    0 0 0 1px rgba(255,255,255,0.4);
+}
+
+.eva-nav-item-active {
+  background: linear-gradient(135deg, #ffffff, #d6e6ff);
+  box-shadow:
+    0 0 24px rgba(165,210,255,1),
+    0 0 0 1px rgba(255,255,255,0.9);
+}
+
+/* 幾何線條 ICON */
+.eva-nav-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+}
+
+.eva-nav-icon::before,
+.eva-nav-icon::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  border: 1px solid rgba(235,245,255,0.9);
+}
+
+/* home：三階梯線條 */
+.eva-nav-icon-home::before {
+  inset: 3px 5px auto 2px;
+  border-top-width: 0;
+  border-right-width: 0;
+  border-bottom-width: 1px;
+  border-left-width: 1px;
+}
+.eva-nav-icon-home::after {
+  inset: auto 2px 3px 5px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 0;
+  border-left-width: 0;
+}
+
+/* post：小菱形＋射線 */
+.eva-nav-icon-post::before {
+  inset: 5px;
+  transform: rotate(45deg);
+}
+.eva-nav-icon-post::after {
+  inset: -1px 7px -1px auto;
+  border-left-width: 0;
+  border-right-width: 1px;
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+
+/* soul：同心圓 */
+.eva-nav-icon-soul::before {
+  inset: 3px;
+}
+.eva-nav-icon-soul::after {
+  inset: 7px;
+}
+
+/* ========================================
+   LAYOUT & HEADER
+======================================== */
+.eva-soul-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 40px 60px 60px 110px;
+}
+
+.eva-soul-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.eva-tagline-en {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #111827;
+  text-shadow: 0 0 12px rgba(255,255,255,0.8);
+}
+
+.eva-tagline-tw {
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: .22em;
+  color: #30405f;
+  opacity: .9;
+}
+
+.eva-tagline-quote {
+  margin-top: 18px;
+  font-size: 13px;
+  letter-spacing: .12em;
+  color: #3b4b6a;
+  opacity: .9;
+}
+
+/* 三欄 grid */
+.eva-soul-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(260px, 360px) minmax(320px, 420px);
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ========================================
+   左：題目列表
+======================================== */
+.eva-question-panel {
+  background: radial-gradient(circle at 0 0, rgba(255,255,255,0.9) 0, rgba(240,246,255,0.9) 55%);
+  border-radius: 22px;
+  padding: 18px 18px 16px;
+  box-shadow:
+    0 18px 32px rgba(118,146,200,0.35),
+    0 0 0 1px rgba(210,225,255,0.9);
+}
+
+.eva-panel-title {
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #3a4a70;
+  opacity: .9;
+  margin-bottom: 10px;
+}
+
+.eva-question-list {
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.eva-q-item {
+  position: relative;
+  padding: 9px 12px;
+  margin-bottom: 6px;
+  border-radius: 999px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #293550;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid transparent;
+  cursor: pointer;
+  opacity: .8;
+  transition: all .16s ease;
+}
+
+.eva-q-item:hover {
+  opacity: 1;
+  border-color: rgba(120,160,230,0.9);
+  box-shadow: 0 0 12px rgba(150,190,255,0.8);
+}
+
+.eva-q-item.is-active {
+  opacity: 1;
+  background: linear-gradient(135deg, #ffffff, #dce8ff);
+  border-color: rgba(140,175,240,1);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,1),
+    0 0 20px rgba(150,190,255,1);
+}
+
+.eva-progress {
+  margin-top: 8px;
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #5b6c95;
+  opacity: .9;
+}
+
+/* ========================================
+   中：HUD + 輸入
+======================================== */
+.eva-core-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.eva-core-orbit {
+  position: relative;
+  height: 260px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,0.9) 0, rgba(255,255,255,0.05) 55%, transparent 70%),
+    radial-gradient(circle at 50% 115%, rgba(145,185,245,0.98) 0, rgba(32,52,94,0.96) 55%);
+  overflow: hidden;
+  box-shadow:
+    0 24px 40px rgba(20,40,80,0.7),
+    0 0 0 1px rgba(205,225,255,0.8);
+}
+
+/* 掃描光束 */
+.eva-core-orbit::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.55) 48%,
+    rgba(170,210,255,0.7) 52%,
+    transparent 60%
+  );
+  mix-blend-mode: screen;
+  opacity: 0;
+  pointer-events: none;
+  animation: eva-scan 4.2s linear infinite;
+}
+
+@keyframes eva-scan {
+  0%   { transform: translateX(-120%); opacity: 0; }
+  10%  { opacity: .5; }
+  50%  { transform: translateX(40%);  opacity: .4; }
+  90%  { opacity: 0; }
+  100% { transform: translateX(120%); opacity: 0; }
+}
+
+/* 三層能量環 */
+.eva-orbit-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.6);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 18px rgba(190,220,255,0.9);
+}
+
+.eva-orbit-ring-outer {
+  width: 210px;
+  height: 210px;
+  border-color: rgba(140,190,255,0.7);
+  animation: eva-spin 18s linear infinite;
+}
+.eva-orbit-ring-mid {
+  width: 170px;
+  height: 170px;
+  border-color: rgba(235,245,255,0.95);
+  animation: eva-spin 12s linear infinite reverse;
+}
+.eva-orbit-ring-inner {
+  width: 120px;
+  height: 120px;
+  border-color: rgba(255,255,255,1);
+  box-shadow:
+    0 0 25px rgba(255,255,255,0.95),
+    0 0 55px rgba(126,190,255,0.95);
+}
+
+@keyframes eva-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 浮空題目 */
+.eva-floating-question {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #0f182e;
+}
+
+.eva-float-placeholder {
+  font-size: 11px;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: rgba(18,32,60,0.8);
+}
+
+.eva-floating-question-text {
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.96);
+  box-shadow:
+    0 0 24px rgba(255,255,255,0.9),
+    0 0 55px rgba(140,190,255,1);
+}
+
+.eva-floating-question.eva-pop {
+  animation: eva-pop 0.32s ease-out;
+}
+
+@keyframes eva-pop {
+  0%   { transform: translate(-50%, -50%) scale(.9); opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1);   opacity: 1; }
+}
+
+/* 輸入區 */
+.eva-answer-input-wrap {
+  background: rgba(252,253,255,0.95);
+  border-radius: 20px;
+  padding: 14px 16px 10px;
+  box-shadow:
+    0 16px 28px rgba(120,150,210,0.35),
+    0 0 0 1px rgba(210,225,255,0.9);
+}
+
+.eva-input-label {
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #3a4a70;
+}
+
+.eva-input {
+  margin-top: 8px;
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid rgba(170,205,255,0.8);
+  background: radial-gradient(circle at 0 0, rgba(255,255,255,0.2) 0, rgba(235,242,255,0.98) 55%);
+  color: #0f1828;
+  font-size: 13px;
+  padding: 8px 10px;
+  resize: vertical;
+  min-height: 90px;
+  outline: none;
+}
+
+.eva-input:focus {
+  box-shadow:
+    0 0 0 1px rgba(160,195,255,0.9),
+    0 0 18px rgba(150,190,255,0.8);
+}
+
+.eva-input-hint {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #6a7baa;
+  opacity: .9;
+}
+
+/* ========================================
+   右：結果面板
+======================================== */
+.eva-result-panel {
+  position: relative;
+  background: radial-gradient(circle at 0 0, rgba(255,255,255,0.92) 0, rgba(238,245,255,0.96) 55%);
+  border-radius: 22px;
+  padding: 18px 18px 16px;
+  box-shadow:
+    0 20px 34px rgba(110,135,190,0.4),
+    0 0 0 1px rgba(210,225,255,0.95);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 背景細線格 */
+.eva-result-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(90deg, rgba(120,160,220,0.12) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(120,160,220,0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: .4;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.eva-panel-title-mirror {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eva-panel-en {
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: #3a4965;
+}
+
+.eva-panel-tw {
+  font-size: 11px;
+  letter-spacing: .14em;
+  color: #5a6b8f;
+}
+
+.eva-result-text {
+  position: relative;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #1b2437;
+  max-height: calc(100vh - 240px);
+  overflow-y: auto;
+  z-index: 1;
+}
+
+.eva-result-hint {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #6a7aa0;
+  opacity: .9;
+}
+
+/* 箭頭按鈕 */
+.eva-send-btn {
+  margin-top: 4px;
+  align-self: flex-end;
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ffffff, #dbe9ff);
+  box-shadow:
+    0 0 18px rgba(180,215,255,1),
+    0 10px 24px rgba(0,0,0,0.2);
+  transition: all .2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eva-send-arrow {
+  font-size: 16px;
+  color: #13213b;
+  transform: translateX(0);
+  transition: transform .2s ease;
+}
+
+.eva-send-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 26px rgba(195,225,255,1),
+    0 14px 28px rgba(0,0,0,0.25);
+}
+
+.eva-send-btn:hover:not(:disabled) .eva-send-arrow {
+  transform: translateX(3px);
+}
+
+/* 啟動後可再加：亮起 pulse */
+.eva-send-btn:disabled {
+  opacity: .35;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ========================================
+   RWD
+======================================== */
+@media (max-width: 1024px) {
+  .eva-soul-wrapper {
+    padding: 24px 16px 40px 70px;
+  }
+  .eva-soul-grid {
+    grid-template-columns: 1fr;
+  }
+  .eva-question-panel {
+    max-height: 260px;
+  }
+  .eva-result-panel {
+    max-height: none;
+  }
+}
+
 @media (max-width: 768px) {
   .eva-side-nav {
-    left: 14px;
-    top: 56%;
+    left: 12px;
     gap: 10px;
   }
   .eva-nav-item {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
-  .eva-nav-icon {
-    font-size: 15px;
-  }
-  .eva-nav-item::after {
-    font-size: 10px;
-    padding: 4px 8px;
+  .eva-soul-wrapper {
+    padding-left: 60px;
   }
 }
