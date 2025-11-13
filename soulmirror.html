@@ -5,7 +5,7 @@
   <title>靈魂照妖鏡｜Soul Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 用你現在的銀藍 CSS，不要動它 -->
+  <!-- 使用你現在的銀藍 CSS -->
   <link rel="stylesheet" href="/css/universe_soul.css" />
 </head>
 <body class="soulmirror-body">
@@ -18,8 +18,8 @@
         <h2 class="soul-title-zh">今天的你，長這樣。</h2>
       </div>
       <div class="soul-status">
-        <span id="question-count">測試模式</span>
-        <span id="answer-status">看看泡泡會不會出現。</span>
+        <span id="question-count">0 / 16</span>
+        <span id="answer-status">鏡面還沒被觸碰。</span>
       </div>
     </header>
 
@@ -33,79 +33,52 @@
         <div class="soul-core-ring core-3"></div>
       </div>
 
-      <!-- 題目節點層 -->
+      <!-- 題目節點 -->
       <div class="soul-node-layer" id="soul-node-layer">
-        <!-- 這裡我們用 JS 生出 1 顆泡泡 -->
+        <!-- JS 產生題目泡泡 -->
       </div>
-    </main>
-  </div>
 
-  <!-- 超精簡測試用 JS，直接寫在頁面裡 -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      // 1. 先確認這支 JS 有被執行
-      console.log("Soul Mirror test JS loaded.");
-      // 如果你開 F12 → Console，要能看到這一行
+      <!-- 中央題目 HUD -->
+      <section class="soul-focus-layer" id="soul-focus-layer" aria-hidden="true">
+        <div class="soul-focus-panel">
+          <div class="soul-focus-halo"></div>
+          <div class="soul-focus-inner">
+            <div class="soul-focus-label">CURRENT VIEW</div>
+            <p class="soul-focus-question" id="focus-question-text"></p>
 
-      // 2. 抓節點層
-      var nodeLayer = document.getElementById("soul-node-layer");
-      if (!nodeLayer) {
-        alert("找不到 #soul-node-layer，代表 HTML 路徑不對。");
-        return;
-      }
+            <div class="soul-answer-block">
+              <div class="soul-scale-label">
+                <span>有一點像</span>
+                <span>超級就是我</span>
+              </div>
+              <div class="soul-answer-options" id="answer-options">
+                <!-- JS 塞四個文字選項 -->
+              </div>
+            </div>
 
-      // 3. 產生一顆「測試題目」泡泡
-      var node = document.createElement("div");
-      node.className = "soul-node";
-      node.textContent = "測試題目：如果你看得到我，代表 JS 有在跑。";
+            <div class="soul-focus-actions">
+              <button id="btn-skip" class="btn-ghost">先放過這題</button>
+              <button id="btn-save-answer" class="btn-primary" disabled>就照這樣記</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      // 放在正中央
-      node.style.left = "50%";
-      node.style.top = "50%";
-      node.style.transform = "translate(-50%, -50%)";
+      <!-- 結果層 -->
+      <section class="soul-result-layer" id="soul-result-layer" aria-hidden="true">
+        <div class="soul-result-panel">
+          <div class="soul-result-halo"></div>
+          <div class="soul-result-inner">
+            <div class="soul-result-tag">MIRROR LOG</div>
+            <h3 class="soul-result-title">這是你的鏡面紀錄。</h3>
+            <p class="soul-result-meta" id="soul-result-meta">
+              不是定義，只是今天被看見的那一版你。
+            </p>
 
-      nodeLayer.appendChild(node);
+            <div class="soul-result-text" id="soul-result-text"></div>
 
-      // 4. 順便畫星星（跟之前一樣）
-      drawStars();
-    });
+            <div class="soul-result-birds" id="soul-result-birds">
+              <!-- 三隻鳥的一句話 -->
+            </div>
 
-    // 星塵動畫（跟之前邏輯一樣）
-    function drawStars() {
-      var canvas = document.getElementById("soul-stars");
-      if (!canvas) return;
-      var ctx = canvas.getContext("2d");
-      var w = (canvas.width = canvas.offsetWidth || canvas.clientWidth || 800);
-      var h = (canvas.height = canvas.offsetHeight || canvas.clientHeight || 480);
-
-      var stars = [];
-      var count = 120;
-      for (var i = 0; i < count; i++) {
-        stars.push({
-          x: Math.random() * w,
-          y: Math.random() * h,
-          r: Math.random() * 1.2 + 0.3,
-          a: Math.random() * Math.PI * 2,
-          s: Math.random() * 0.4 + 0.05
-        });
-      }
-
-      function step() {
-        ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "#ffffff";
-        for (var i = 0; i < stars.length; i++) {
-          var star = stars[i];
-          star.a += star.s * 0.02;
-          var alpha = 0.2 + 0.6 * (0.5 + 0.5 * Math.sin(star.a));
-          ctx.globalAlpha = alpha;
-          ctx.beginPath();
-          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        requestAnimationFrame(step);
-      }
-      step();
-    }
-  </script>
-</body>
-</html>
+            <div class="
