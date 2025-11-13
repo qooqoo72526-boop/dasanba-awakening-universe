@@ -8,7 +8,7 @@
 
   const focusLayer = document.getElementById("soul-focus-layer");
   const focusQuestionText = document.getElementById("focus-question-text");
-  const answerSlider = document.getElementById("answer-slider");
+  const answerOptionsBox = document.getElementById("answer-options");
   const btnSkip = document.getElementById("btn-skip");
   const btnSave = document.getElementById("btn-save-answer");
 
@@ -25,7 +25,27 @@
 
   const TOTAL = 25;
 
-  // ---- 題庫：深度題目 ----
+  // 深度答案選項（所有題目共用的 4 個層次）
+  const ANSWER_LEVELS = [
+    {
+      level: 1,
+      label: "有一點像，但多半被你壓下去。",
+    },
+    {
+      level: 2,
+      label: "蠻常中，只是你表面裝得很冷靜。",
+    },
+    {
+      level: 3,
+      label: "這基本上是你現在的日常狀態。",
+    },
+    {
+      level: 4,
+      label: "這是你最不想承認，但最真實的樣子。",
+    },
+  ];
+
+  // 題庫：深題
   const QUESTION_BANK = [
     "你最害怕被看見的那一面，是什麼？為什麼？",
     "當別人不回應你時，你腦中會自動補出什麼劇本？",
@@ -58,14 +78,15 @@
     "你對「家」的定義是什麼？那在現實裡出現過嗎？",
     "當你累到快撐不住時，你第一個想到的人，是能照顧你，還是你仍然要照顧對方？",
     "如果你再也不用證明自己值得被留下，你覺得你會變成什麼樣子？",
-    "你對「自己」最嚴厲的評語是什麼？如果換成你最心疼的人，你還會這樣說嗎？"
+    "你對「自己」最嚴厲的評語是什麼？如果換成你最心疼的人，你還會這樣說嗎？",
   ];
 
   let selectedQuestions = [];
-  let answers = {}; // { id: { text, score } }
+  let answers = {}; // { id: { text, level, label } }
   let currentId = null;
+  let currentSelectedLevel = null;
 
-  // 工具：洗牌
+  // 洗牌
   function shuffle(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -75,15 +96,16 @@
     return a;
   }
 
-  // 抽出 25 題
+  // 抽 25 題
   function pickQuestions() {
     const shuffled = shuffle(QUESTION_BANK);
     selectedQuestions = shuffled.slice(0, TOTAL).map((text, idx) => ({
       id: idx + 1,
-      text
+      text,
     }));
     answers = {};
     currentId = null;
+    currentSelectedLevel = null;
     btnStartAnalysis.disabled = true;
     btnStartAnalysis.textContent = "看今天的結果";
     updateStatus();
@@ -154,14 +176,46 @@
     nodeLayer.querySelectorAll(".soul-node").forEach((n) => n.classList.remove("dim"));
   }
 
-  // 打開某一題
+  // 顯示某題
   function openQuestion(id) {
     const q = selectedQuestions.find((x) => x.id === id);
     if (!q) return;
     currentId = id;
     focusQuestionText.textContent = q.text;
-    const prev = answers[id];
-    answerSlider.value = prev ? prev.score : 3;
+
+    // 清空選項
+    answerOptionsBox.innerHTML = "";
+    currentSelectedLevel = null;
+    btnSave.disabled = true;
+
+    // 產生四個深度選項
+    ANSWER_LEVELS.forEach((opt) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "soul-answer-pill";
+      btn.dataset.level = String(opt.level);
+      btn.textContent = opt.label;
+
+      btn.addEventListener("click", () => {
+        // 清除其他 active
+        answerOptionsBox
+          .querySelectorAll(".soul-answer-pill")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentSelectedLevel = opt.level;
+        btnSave.disabled = false;
+      });
+
+      // 若有舊答案，自動帶出
+      const prev = answers[id];
+      if (prev && prev.level === opt.level) {
+        btn.classList.add("active");
+        currentSelectedLevel = opt.level;
+        btnSave.disabled = false;
+      }
+
+      answerOptionsBox.appendChild(btn);
+    });
 
     dimNodes(id);
     focusLayer.classList.add("active");
@@ -173,19 +227,27 @@
     focusLayer.setAttribute("aria-hidden", "true");
     resetDimNodes();
     currentId = null;
+    currentSelectedLevel = null;
   }
 
-  // 按鈕：先放過這題
+  // 先放過這題
   btnSkip.addEventListener("click", () => {
     closeQuestion();
   });
 
-  // 按鈕：就照這樣記
+  // 就照這樣記
   btnSave.addEventListener("click", () => {
-    if (!currentId) return;
-    const score = Number(answerSlider.value);
+    if (!currentId || !currentSelectedLevel) return;
     const q = selectedQuestions.find((x) => x.id === currentId);
-    answers[currentId] = { text: q.text, score };
+    const opt = ANSWER_LEVELS.find((o) => o.level === currentSelectedLevel);
+    if (!q || !opt) return;
+
+    answers[currentId] = {
+      text: q.text,
+      level: opt.level,
+      label: opt.label,
+    };
+
     markNodeAnswered(currentId);
     updateStatus();
     closeQuestion();
@@ -201,19 +263,12 @@
     if (node) node.classList.add("answered");
   }
 
-  // 組給 API 的 prompt
+  // Prompt 組合，給 /api/chat
   function buildPrompt() {
     const items = Object.entries(answers)
       .sort((a, b) => Number(a[0]) - Number(b[0]))
       .map(([id, obj]) => {
-        const score = obj.score;
-        let label = "";
-        if (score <= 1) label = "幾乎完全不像當事人";
-        else if (score === 2) label = "有一點像，但多半在壓抑";
-        else if (score === 3) label = "有一半符合，是現在正在經歷的模式";
-        else if (score === 4) label = "大致符合，是習慣性模式";
-        else label = "非常符合，是核心信念與長期卡關點";
-        return `Q${id}：${obj.text}\n回答強度：${score}（${label}）`;
+        return `Q${id}：${obj.text}\n對應層級：${obj.level}\n內心註解：${obj.label}`;
       })
       .join("\n\n");
 
@@ -225,7 +280,7 @@
 可以指出卡住的模式，但語氣不要兇、不要說教、也不要變成心靈雞湯。
 
 結構建議：
-1. 簡單說明：這個人現在的內在主軸在談什麼（例如：自我價值、界線、關係、逃避、責任感等等）。
+1. 先說明：這個人現在的內在主軸在談什麼（例如：自我價值、界線、關係、逃避、責任感等等）。
 2. 描述 TA 在情緒上的慣性：通常怎麼保護自己、怎麼消耗自己、最容易在哪裡重演舊劇本。
 3. 指出一兩個「如果願意誠實看一下，會是轉折點」的地方。
 4. 結尾給一句很短的提醒句，像是給當事人的備忘錄，不要太夢幻。
@@ -240,7 +295,7 @@
 米果：一句話
 滾滾：一句話
 
-以下是題目與回答強度（1~5）：
+以下是題目與回答層級（1~4）：層級數字只是方便你閱讀，真正的重點是「內心註解」那一行。
 
 ${items}
 `.trim();
@@ -258,18 +313,18 @@ ${items}
       const messages = [
         {
           role: "system",
-          content: "你是大三巴覺醒宇宙的靈魂照妖鏡說明 AI。"
+          content: "你是大三巴覺醒宇宙的靈魂照妖鏡說明 AI。",
         },
         {
           role: "user",
-          content: prompt
-        }
+          content: prompt,
+        },
       ];
 
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages, mode: "soulmirror" })
+        body: JSON.stringify({ messages, mode: "soulmirror" }),
       });
 
       const data = await res.json();
@@ -284,7 +339,6 @@ ${items}
         return;
       }
 
-      // 嘗試依「阿金」拆主文 + 三鳥
       const splitIndex = raw.indexOf("阿金");
       if (splitIndex > -1) {
         const main = raw.slice(0, splitIndex).trim();
@@ -301,49 +355,4 @@ ${items}
       } else {
         resultText.textContent = raw;
       }
-    } catch (err) {
-      console.error(err);
-      resultText.textContent = "線路有點卡，剛剛那版訊息沒送成功。";
-    }
-  }
-
-  // 事件綁定
-
-  btnGenerate.addEventListener("click", () => {
-    pickQuestions();
-    layoutNodes();
-    updateStatus();
-  });
-
-  btnStartAnalysis.addEventListener("click", () => {
-    if (Object.keys(answers).length < TOTAL) return;
-    callSoulMirrorAPI();
-  });
-
-  btnCloseResult.addEventListener("click", () => {
-    resultLayer.classList.remove("active");
-    resultLayer.setAttribute("aria-hidden", "true");
-  });
-
-  // 初始化
-  pickQuestions();
-  window.addEventListener("load", () => {
-    layoutNodes();
-    drawStars();
-  });
-
-  // 簡單星塵動畫
-  function drawStars() {
-    const canvas = document.getElementById("soul-stars");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    const w = (canvas.width = canvas.offsetWidth || canvas.clientWidth || 800);
-    const h = (canvas.height = canvas.offsetHeight || canvas.clientHeight || 480);
-
-    const stars = [];
-    const count = 140;
-    for (let i = 0; i < count; i++) {
-      stars.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Mat
+    } catc
