@@ -1,104 +1,83 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>靈魂照妖鏡｜A.I. PATTERN SCAN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 字體：跟主頁一樣 Orbitron + Noto Sans TC -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
-    rel="stylesheet"
-  />
+    <title>A.I. PATTERN SCAN｜情緒模式掃描</title>
 
-  <link rel="stylesheet" href="css/universe_soul.css" />
+    <!-- 字體：Orbitron + Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+
+    <!-- 專屬 CSS -->
+    <link rel="stylesheet" href="css/universe_soul.css" />
 </head>
-<body>
 
-  <!-- 左側：銀色幾何工具列（4 顆） -->
-  <nav class="eva-side-nav">
-    <a href="index.html" class="eva-nav-item" data-label="HOME">
-      <span class="eva-nav-icon eva-nav-icon-home"></span>
-    </a>
-    <a href="cosmic-post-station.html" class="eva-nav-item" data-label="POST">
-      <span class="eva-nav-icon eva-nav-icon-post"></span>
-    </a>
-    <a href="soulmirror.html" class="eva-nav-item eva-nav-item-active" data-label="SOUL">
-      <span class="eva-nav-icon eva-nav-icon-soul"></span>
-    </a>
-    <a href="index.html#gallery" class="eva-nav-item" data-label="GALLERY">
-      <span class="eva-nav-icon eva-nav-icon-gallery"></span>
-    </a>
-  </nav>
+<body data-page="soulmirror">
 
-  <main class="eva-soul-wrapper">
+    <!-- 左側 EVA NAV 工具列（四個） -->
+    <nav class="eva-side-nav">
+        <a href="index.html" class="eva-nav-item" data-label="HOME">
+            <span class="eva-nav-icon eva-nav-icon-home"></span>
+        </a>
+        <a href="cosmic-post-station.html" class="eva-nav-item" data-label="POST">
+            <span class="eva-nav-icon eva-nav-icon-post"></span>
+        </a>
+        <a href="soulmirror.html" class="eva-nav-item eva-nav-active" data-label="SCAN">
+            <span class="eva-nav-icon eva-nav-icon-scan"></span>
+        </a>
+        <a href="gallery.html" class="eva-nav-item" data-label="GALLERY">
+            <span class="eva-nav-icon eva-nav-icon-gallery"></span>
+        </a>
+    </nav>
 
-    <!-- 頁首：三行標題 -->
-    <header class="eva-soul-header">
-      <div class="eva-tagline-en">A.I. PATTERN SCAN</div>
-      <div class="eva-tagline-tw">- 情緒模式掃描</div>
-      <div class="eva-tagline-quote">光不會說謊，你才會。</div>
-    </header>
+    <!-- 頁面主區 -->
+    <section class="soul-wrap">
 
-    <!-- 三欄主體 -->
-    <section class="eva-soul-grid">
-
-      <!-- 左：題目列表（25 題泡泡） -->
-      <aside class="eva-question-panel">
-        <div class="eva-panel-title">PROMPTS</div>
-        <div id="evaQList" class="eva-question-list"></div>
-        <div class="eva-progress" id="evaProgressText">已紀錄 0 / 25</div>
-      </aside>
-
-      <!-- 中：HUD 核心 + 輸入 -->
-      <section class="eva-core-panel">
-        <div class="eva-core-orbit">
-          <div class="eva-orbit-ring eva-orbit-ring-outer"></div>
-          <div class="eva-orbit-ring eva-orbit-ring-mid"></div>
-          <div class="eva-orbit-ring eva-orbit-ring-inner"></div>
-
-          <div id="evaFloatQ" class="eva-floating-question">
-            <div class="eva-float-placeholder">SELECT A PROMPT</div>
-          </div>
+        <!-- 大標題（置中） -->
+        <div class="soul-title">
+            <h1 class="title-en">A.I. PATTERN SCAN</h1>
+            <h2 class="title-zh">— 情緒模式掃描 —</h2>
+            <p class="title-sub">光會替你誠實。</p>
         </div>
 
-        <div class="eva-answer-input-wrap">
-          <label class="eva-input-label">WRITE</label>
-          <textarea
-            id="evaInput"
-            class="eva-input"
-            rows="5"
-            spellcheck="false"
-          ></textarea>
-          <div class="eva-input-hint">寫你不演的版本。</div>
-        </div>
-      </section>
+        <!-- 中央掃描介面 -->
+        <div class="scan-core">
 
-      <!-- 右：鏡面輸出 -->
-      <section class="eva-result-panel">
-        <div class="eva-panel-title eva-panel-title-mirror">
-          <span class="eva-panel-en">MIRROR OUTPUT</span>
-          <span class="eva-panel-tw">鏡面輸出</span>
-        </div>
+            <!-- 左：題目列表（25 題） -->
+            <aside class="scan-left">
+                <div id="questionList" class="q-list"></div>
+            </aside>
 
-        <div id="evaResult" class="eva-result-text">
-          <p class="eva-result-hint">
-            先讓字堆起來。<br>
-            右下角箭頭亮起時，再一次把全部交出去。
-          </p>
-        </div>
+            <!-- 中：動態掃描圈 -->
+            <div class="scan-center">
+                <div class="scan-orb">
+                    <div class="orb-inner">
+                        <span id="currentQuestion" class="orb-text">請選擇任一提示⋯</span>
+                    </div>
+                </div>
+            </div>
 
-        <!-- 沒有任何「送出」字，只剩箭頭 -->
-        <button id="evaSendBtn" class="eva-send-btn" disabled aria-label="PUSH">
-          <span class="eva-send-arrow">➤</span>
-        </button>
-      </section>
+            <!-- 右：回答區 -->
+            <div class="scan-right">
+                <div class="ans-box">
+                    <textarea id="ansInput" placeholder="Write here…"></textarea>
+                </div>
+
+                <!-- 送出按鈕（未填寫前不能按） -->
+                <button id="submitBtn" class="submit-btn" disabled>
+                    <span class="arrow">➜</span>
+                </button>
+            </div>
+
+        </div>
 
     </section>
-  </main>
 
-  <script src="js/soul.js"></script>
+    <!-- JS -->
+    <script src="js/soulmirror.js"></script>
+
 </body>
 </html>
