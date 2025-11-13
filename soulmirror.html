@@ -4,8 +4,6 @@
   <meta charset="UTF-8" />
   <title>靈魂照妖鏡｜Soul Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- 使用你現在的銀藍 CSS -->
   <link rel="stylesheet" href="/css/universe_soul.css" />
 </head>
 <body class="soulmirror-body">
@@ -18,7 +16,7 @@
         <h2 class="soul-title-zh">今天的你，長這樣。</h2>
       </div>
       <div class="soul-status">
-        <span id="question-count">0 / 16</span>
+        <span id="question-count">0 / 25</span>
         <span id="answer-status">鏡面還沒被觸碰。</span>
       </div>
     </header>
@@ -33,10 +31,22 @@
         <div class="soul-core-ring core-3"></div>
       </div>
 
-      <!-- 題目節點 -->
-      <div class="soul-node-layer" id="soul-node-layer">
-        <!-- JS 產生題目泡泡 -->
-      </div>
+      <!-- 題目節點：這版改成垂直排在中間 -->
+      <div
+        class="soul-node-layer"
+        id="soul-node-layer"
+        style="
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 30px 24px;
+          max-height: 420px;
+          overflow-y: auto;
+        "
+      ></div>
 
       <!-- 中央題目 HUD -->
       <section class="soul-focus-layer" id="soul-focus-layer" aria-hidden="true">
@@ -51,14 +61,14 @@
                 <span>有一點像</span>
                 <span>超級就是我</span>
               </div>
-              <div class="soul-answer-options" id="answer-options">
-                <!-- JS 塞四個文字選項 -->
-              </div>
+              <div class="soul-answer-options" id="answer-options"></div>
             </div>
 
             <div class="soul-focus-actions">
               <button id="btn-skip" class="btn-ghost">先放過這題</button>
-              <button id="btn-save-answer" class="btn-primary" disabled>就照這樣記</button>
+              <button id="btn-save-answer" class="btn-primary" disabled>
+                就照這樣記
+              </button>
             </div>
           </div>
         </div>
@@ -77,8 +87,208 @@
 
             <div class="soul-result-text" id="soul-result-text"></div>
 
-            <div class="soul-result-birds" id="soul-result-birds">
-              <!-- 三隻鳥的一句話 -->
-            </div>
+            <div class="soul-result-birds" id="soul-result-birds"></div>
 
-            <div class="
+            <div class="soul-result-actions">
+              <button id="btn-close-result" class="btn-ghost">收回鏡面</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 底部操作 -->
+    <footer class="soul-footer">
+      <button id="btn-generate-questions" class="btn-outline">
+        換一組 25 題
+      </button>
+      <button id="btn-start-analysis" class="btn-primary" disabled>
+        看今天的結果
+      </button>
+    </footer>
+  </div>
+
+  <!-- 內嵌 JS：25 題 + 深度選項 + 分析 -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const nodeLayer = document.getElementById("soul-node-layer");
+      const focusLayer = document.getElementById("soul-focus-layer");
+      const focusQuestionText = document.getElementById("focus-question-text");
+      const answerOptionsBox = document.getElementById("answer-options");
+      const btnSkip = document.getElementById("btn-skip");
+      const btnSave = document.getElementById("btn-save-answer");
+
+      const resultLayer = document.getElementById("soul-result-layer");
+      const resultText = document.getElementById("soul-result-text");
+      const resultBirds = document.getElementById("soul-result-birds");
+      const btnCloseResult = document.getElementById("btn-close-result");
+
+      const btnGenerate = document.getElementById("btn-generate-questions");
+      const btnStartAnalysis = document.getElementById("btn-start-analysis");
+      const questionCountEl = document.getElementById("question-count");
+      const answerStatusEl = document.getElementById("answer-status");
+
+      if (!nodeLayer) return;
+
+      const TOTAL = 25;
+
+      const ANSWER_LEVELS = [
+        { level: 1, label: "有一點像，但多半被你壓下去。" },
+        { level: 2, label: "蠻常中，只是你表面裝得很冷靜。" },
+        { level: 3, label: "這基本上是你現在的日常狀態。" },
+        { level: 4, label: "這是你最不想承認，但最真實的樣子。" }
+      ];
+
+      const QUESTION_BANK = [
+        "你最害怕被看見的那一面，是什麼？為什麼？",
+        "當別人不回應你時，你腦中會自動補出什麼劇本？",
+        "你曾為了不被討厭，而說過違背內心的話嗎？哪一次最印象深刻？",
+        "在親密關係裡，你最常扮演的角色是照顧者、調停者、還是抽離的人？",
+        "如果今天所有責任都暫停 24 小時，你最想用什麼樣子存在？",
+        "童年時，哪一個畫面讓你學會「不能太做自己」？",
+        "你最容易為了哪一種人，委屈自己到失去界線？",
+        "當你生氣時，通常是什麼情緒被踩到，而不是單純的憤怒？",
+        "你是否曾經把「被需要」和「被愛」搞混？那造成了什麼？",
+        "你現在最怕失去的是什麼？如果真的失去了，你覺得自己會變成怎樣？",
+        "你有沒有一個一直沒說出口的遺憾，如果能重來，你會對誰說什麼？",
+        "你什麼時候最像在逃避自己？是滑手機、工作過量，還是假裝沒感覺？",
+        "你習慣先照顧別人的情緒，還是先誠實面對自己的需求？為什麼？",
+        "你曾經在哪一段關係裡，用力到忘記自己其實也有權利被照顧？",
+        "當你被誤解時，你是選擇解釋、沉默，還是直接抽離？背後的恐懼是什麼？",
+        "你覺得「被愛」對你來說最具體的樣子，是什麼畫面？",
+        "如果現在的你可以對十年前的自己說一句話，你會說什麼？",
+        "你有沒有那種「其實早就知道該離開，卻一直不敢動」的場景？",
+        "你最常用哪一種方式懲罰自己？（忽略、否定、過度要求，或是別的？）",
+        "當你說「沒事啦」的時候，心裡真正的話其實是什麼？",
+        "別人給過你最溫柔的一句話是什麼？你相信它嗎？",
+        "你理想中的安全感，是來自金錢、關係、能力，還是被理解？",
+        "你有沒有哪一個選擇，是當時看起來很理性，但現在回頭覺得那是自我背叛？",
+        "你曾經在哪件事情上，感覺自己「很值得」，而不是「好不容易被選上」？",
+        "如果可以把一種情緒從你的人生降低 50%，你會選哪一種？",
+        "你對「失去控制」最深的恐懼是什麼？",
+        "你曾因為害怕被比較，而故意不全力以赴嗎？",
+        "你有沒有一個從來沒被允許的夢想？現在想起來，它還亮著嗎？",
+        "你對「家」的定義是什麼？那在現實裡出現過嗎？",
+        "當你累到快撐不住時，你第一個想到的人，是能照顧你，還是你仍然要照顧對方？",
+        "如果你再也不用證明自己值得被留下，你覺得你會變成什麼樣子？",
+        "你對「自己」最嚴厲的評語是什麼？如果換成你最心疼的人，你還會這樣說嗎？"
+      ];
+
+      let selectedQuestions = [];
+      let answers = {};
+      let currentId = null;
+      let currentSelectedLevel = null;
+
+      function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function updateStatus() {
+        const answered = Object.keys(answers).length;
+        if (questionCountEl) questionCountEl.textContent = answered + " / " + TOTAL;
+        if (!answerStatusEl) return;
+        if (answered === 0) {
+          answerStatusEl.textContent = "鏡面還沒被觸碰。";
+        } else if (answered < TOTAL) {
+          answerStatusEl.textContent = "你正在把真話灑進鏡面。";
+        } else {
+          answerStatusEl.textContent = "OK，鏡面記住你了。";
+        }
+      }
+
+      function pickQuestions() {
+        const shuffled = shuffle(QUESTION_BANK);
+        selectedQuestions = shuffled.slice(0, TOTAL).map((text, idx) => ({
+          id: idx + 1,
+          text
+        }));
+        answers = {};
+        currentId = null;
+        currentSelectedLevel = null;
+        if (btnStartAnalysis) {
+          btnStartAnalysis.disabled = true;
+          btnStartAnalysis.textContent = "看今天的結果";
+        }
+        updateStatus();
+      }
+
+      // 這版佈局：垂直泡泡列表
+      function layoutNodes() {
+        nodeLayer.innerHTML = "";
+        selectedQuestions.forEach((q) => {
+          const node = document.createElement("button");
+          node.type = "button";
+          node.className = "soul-node";
+          node.dataset.id = String(q.id);
+          node.style.position = "relative";
+          node.style.left = "auto";
+          node.style.top = "auto";
+          node.style.transform = "none";
+          node.textContent = q.text;
+          node.addEventListener("click", function () {
+            openQuestion(q.id);
+          });
+          nodeLayer.appendChild(node);
+        });
+      }
+
+      function markNodeAnswered(id) {
+        const node = nodeLayer.querySelector('.soul-node[data-id="' + id + '"]');
+        if (node) node.classList.add("answered");
+      }
+
+      function openQuestion(id) {
+        const q = selectedQuestions.find((x) => x.id === id);
+        if (!q || !focusLayer || !focusQuestionText || !answerOptionsBox) return;
+
+        currentId = id;
+        focusQuestionText.textContent = q.text;
+        answerOptionsBox.innerHTML = "";
+        currentSelectedLevel = null;
+        if (btnSave) btnSave.disabled = true;
+
+        ANSWER_LEVELS.forEach((opt) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "soul-answer-pill";
+          btn.dataset.level = String(opt.level);
+          btn.textContent = opt.label;
+
+          btn.addEventListener("click", function () {
+            answerOptionsBox
+              .querySelectorAll(".soul-answer-pill")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentSelectedLevel = opt.level;
+            if (btnSave) btnSave.disabled = false;
+          });
+
+          const prev = answers[id];
+          if (prev && prev.level === opt.level) {
+            btn.classList.add("active");
+            currentSelectedLevel = opt.level;
+            if (btnSave) btnSave.disabled = false;
+          }
+
+          answerOptionsBox.appendChild(btn);
+        });
+
+        focusLayer.classList.add("active");
+        focusLayer.setAttribute("aria-hidden", "false");
+      }
+
+      function closeQuestion() {
+        if (!focusLayer) return;
+        focusLayer.classList.remove("active");
+        focusLayer.setAttribute("aria-hidden", "true");
+        currentId = null;
+        currentSelectedLevel = null;
+      }
+
+      if (btnSkip) {
+        btnSkip.addEventListener("c
