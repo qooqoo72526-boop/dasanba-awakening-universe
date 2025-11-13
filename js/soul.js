@@ -1,5 +1,5 @@
 // ===============================
-// 題庫（深度題）
+// 題庫（25 題深度問句）
 // ===============================
 const EVA_BANK = [
   "你多久會告訴自己「沒事啦」，但其實一點都不想原諒？",
@@ -41,15 +41,17 @@ const sendBtn    = document.getElementById("evaSendBtn");
 let QUESTION_SET = [];
 let ANSWERS = {};
 let currentIndex = null;
+let autoTimer = null;
+let lastUserMove = Date.now();
 
-// 取 25 題
+// 取 25 題（洗牌）
 function pick25() {
   const arr = [...EVA_BANK];
   arr.sort(() => Math.random() - 0.5);
   return arr.slice(0, 25);
 }
 
-// 渲染左側題目
+// 初始化題目列表
 function renderQuestions() {
   QUESTION_SET = pick25();
   qListEl.innerHTML = "";
@@ -63,12 +65,22 @@ function renderQuestions() {
     const item = document.createElement("div");
     item.className = "eva-q-item";
     item.textContent = q;
-    item.addEventListener("click", () => onSelectQuestion(i));
+    item.addEventListener("click", () => {
+      lastUserMove = Date.now();
+      onSelectQuestion(i);
+    });
     qListEl.appendChild(item);
   });
+
+  // 預設先選第一題讓 HUD 動起來
+  if (QUESTION_SET.length) {
+    onSelectQuestion(0);
+  }
+
+  startAutoRotate();
 }
 
-// 點題目 → 中央浮現
+// 切換中央題目
 function onSelectQuestion(i) {
   currentIndex = i;
 
@@ -94,15 +106,37 @@ function updateProgress() {
   progressEl.textContent = `已紀錄 ${answeredCount} / 25`;
 }
 
-// 控制箭頭啟用
+// 箭頭啟用條件
 function updateSendButton() {
   const answeredCount = Object.values(ANSWERS)
     .filter(v => v && v.trim().length > 0).length;
   sendBtn.disabled = answeredCount < 8;  // 至少寫 8 題才亮
 }
 
+// 自動輪播：沒在打字、沒有互動時，題目會自己慢慢換
+function startAutoRotate() {
+  if (autoTimer) clearInterval(autoTimer);
+  autoTimer = setInterval(() => {
+    const now = Date.now();
+    const idleMs = now - lastUserMove;
+
+    // 你在打字就不要亂晃
+    if (idleMs < 8000) return;
+    if (inputEl.value.trim()) return;
+
+    if (!QUESTION_SET.length) return;
+    const nextIndex =
+      currentIndex === null
+        ? 0
+        : (currentIndex + 1) % QUESTION_SET.length;
+
+    onSelectQuestion(nextIndex);
+  }, 6000);
+}
+
 // 輸入同步儲存
 inputEl.addEventListener("input", () => {
+  lastUserMove = Date.now();
   if (currentIndex === null) return;
   ANSWERS[currentIndex] = inputEl.value;
   updateProgress();
@@ -115,6 +149,7 @@ sendBtn.addEventListener("click", async () => {
     .filter(v => v && v.trim().length > 0).length;
   if (answeredCount < 8) return;
 
+  lastUserMove = Date.now();
   const originalBtn = sendBtn.innerHTML;
   sendBtn.disabled = true;
   sendBtn.innerHTML = `<span class="eva-send-arrow">➤</span>`;
@@ -145,7 +180,7 @@ ${qaLines}
    - 他/她一直在重複的情緒模式與自我欺騙
    - 在關係、工作或自我價值上，最容易卡住的地方
    - 如果要對自己誠實，接下來三個月可以開始練習的一個小行動
-3. 最後用三行收尾，分別是三隻鳥的語氣，每行開頭請加上角色名：
+3. 最後用三行收尾，分別是三隻鳥的語氣，每行開頭請加上角色名（冒號後一句話）：
    - 阿金：行動派、反骨、敢講狠話
    - 米果：高價值、自尊、主權、會提醒界線
    - 滾滾：理解、溫柔但直接，不討好也不貶低
