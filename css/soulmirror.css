@@ -1,0 +1,148 @@
+/* ===========================================
+   Soul Mirror 專屬視覺層（卡片╳能量圈╳科技 UI）
+   =========================================== */
+
+/* 字體設定：未來科技感 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+.soul-body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron','Noto Sans TC', sans-serif;
+  color: #E8F1FF;
+  background: transparent;
+  overflow-x: hidden;
+}
+
+/* 版心布局 */
+.soul-container {
+  width: 100%;
+  max-width: 1600px;
+  margin: auto;
+  padding-top: 140px;
+}
+
+/* 主標題 */
+.soul-title {
+  text-align: center;
+  font-size: 32px;
+  letter-spacing: 0.22em;
+  font-weight: 400;
+  color: #BFD9FF;
+  margin-bottom: 20px;
+}
+
+/* 副標 */
+.soul-sub {
+  text-align: center;
+  font-size: 14px;
+  opacity: .55;
+  letter-spacing: .25em;
+  margin-bottom: 50px;
+}
+
+/* ====== 卡片列 ====== */
+.soul-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 22px;
+  max-width: 780px;
+  margin: 0 auto 80px auto;
+}
+
+/* 單一卡片 */
+.soul-card {
+  width: 100%;
+  padding: 22px 0;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.25);
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: .15em;
+  cursor: pointer;
+
+  /* 3D 基底 */
+  transform-style: preserve-3d;
+  transition: transform .45s cubic-bezier(.22,.61,.36,1),
+              box-shadow .45s;
+}
+
+/* Hover 效果：漂浮 + 光暈 */
+.soul-card:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 0 28px rgba(130,180,255,0.55);
+  border-color: rgba(255,255,255,0.45);
+}
+
+/* ====== 題目展示框 ====== */
+.soul-active-box {
+  width: 540px;
+  margin: 0 auto;
+  padding: 40px 30px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255,255,255,.22);
+  backdrop-filter: blur(22px);
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: .1em;
+  color: #E8F1FF;
+  min-height: 160px;
+
+  /* 啟動能量圈 */
+  position: relative;
+  animation: soulPulse 2.8s infinite ease-in-out;
+}
+
+@keyframes soulPulse {
+  0% { box-shadow: 0 0 20px rgba(145,195,255,.25); }
+  50% { box-shadow: 0 0 40px rgba(145,195,255,.65); }
+  100% { box-shadow: 0 0 20px rgba(145,195,255,.25); }
+}
+
+/* ====== 工具列線條 ICON ====== */
+.neo-nav {
+  position: fixed;
+  left: 40px;
+  top: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity .25s;
+}
+
+.nav-item:hover { opacity: 1; }
+
+.nav-icon {
+  width: 28px;
+  height: 28px;
+  border: 1.6px solid rgba(255,255,255,0.45);
+  border-radius: 8px;
+  position: relative;
+}
+
+/* icon 畫線效果 */
+.nav-icon::after {
+  content:'';
+  position:absolute;
+  inset: 6px;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 4px;
+}
+
+.nav-text {
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: .15em;
+  opacity: .65;
+}
