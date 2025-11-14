@@ -1,141 +1,147 @@
-//js/soul.js
+// js/soul.js
+// 靈魂照妖鏡：高科技版。25 題深度＋自由輸入，送到 /api/analysis。
 
 const QUESTIONS = [
-  "最近一次讓你覺得「受傷但懶得講」的事件是什麼？",
-  "當你很想求助時，第一個想到的人是誰？為什麼？",
-  "你最常對自己說的苛刻台詞是什麼？它從什麼時候開始？",
-  "如果把現在的你切成三個聲音：理智、情緒、防衛，它們各自在說什麼？",
-  "你最怕被誤解成什麼樣的人？為什麼那麼怕？",
-  "什麼樣的場景會讓你瞬間變得很乖、很安靜？",
-  "你做過最讓自己驚訝的反擊或拒絕是什麼？事後覺得怎麼樣？",
-  "最近一次，你為了不讓別人失望而犧牲了什麼？",
-  "你對「脆弱」這個詞的第一個直覺是什麼？舒服還是刺耳？",
-  "如果現在可以對某個人說一句實話，不用負責任，你會對誰說什麼？",
-  "你最常裝沒事的時候，心裡其實在吶喊什麼？",
-  "你有沒有一個很難說出口的願望？說出來會覺得自己很貪心的那種。",
-  "你習慣用什麼方式證明自己值得被愛？",
-  "在你心裡，什麼狀態才叫「真的被看見」？",
-  "如果把今天的你當成一個系統，你覺得哪一塊最常過熱？",
-  "你最容易對哪一種人心軟？",
-  "有沒有一段你早就該離開、卻拖到最後一刻的關係？",
-  "你現在最想對過去哪一個版本的自己道歉？為了什麼？",
-  "你曾經因為害怕失去，而做過最違反自己心意的決定是什麼？",
-  "當你覺得不被理解時，你通常會怎麼保護自己？",
-  "你覺得自己最被低估的地方是什麼？",
-  "你最不想被別人看到的情緒是哪一種？",
-  "如果可以暫停所有角色，只當自己 24 小時，你會怎麼過？",
-  "你現在最想切斷的是哪一種期待？",
-  "你覺得自己目前最大的情緒勒索對象，是別人還是你自己？"
+  "最近一次讓你想翻白眼、但最後選擇沉默的畫面是什麼？",
+  "當別人說「你想太多」時，你心裡其實在想什麼？",
+  "你習慣用什麼方式，假裝自己已經不在意了？",
+  "如果能對現在的自己誠實一句，最想承認什麼不完美？",
+  "你最怕被誰看見自己崩潰？為什麼是那個人？",
+  "最近一次，你的好脾氣是在幫誰擦屁股？",
+  "有哪件事，你到現在都覺得「其實我超委屈」？",
+  "當你說「沒事啦」時，心裡真正的 OS 是什麼？",
+  "你哪一種情緒，最常被別人誤解成「你在生氣」？",
+  "如果把今天過得很糟的原因，濃縮成一句很誠實的話，那句是？",
+  "你最羨慕別人身上哪一種自由？",
+  "有哪個選擇，你當下裝得很理智，但其實是在保護誰？",
+  "你對自己下過最狠的一句評語是什麼？",
+  "如果可以暫停所有責任 24 小時，你最想怎麼發瘋一場？",
+  "你有沒有一個永遠不會講出口的標準：超過這條線，你就會走？",
+  "最近什麼時候，你突然覺得「我好像沒被誰真正看見」？",
+  "你在哪種關係裡，最容易變得很乖？",
+  "你最常假裝不在乎、實際上超在乎的是什麼？",
+  "如果讓你選：被誤解、還是被忽略，你比較怕哪一個？",
+  "有沒有一個 moment 讓你覺得「原來我真的長大了」？",
+  "你心裡最柔軟、但最不敢被人碰到的地方是什麼主題？",
+  "你對「安穩的人生」的版本，到底長什麼樣子？",
+  "如果可以重來一次，你最想改掉哪一個對自己的誤會？",
+  "你什麼時候會突然很想消失，悄悄躲起來？",
+  "最近一次讓你突然鼻酸的畫面，是哪一個細節？",
+  "當你說「算了」的時候，心裡其實期待什麼奇蹟？",
+  "你最常對自己說的鼓勵，不是加油，而是什麼？",
+  "你覺得別人永遠搞不懂你哪一塊？",
+  "如果情緒有一個顏色，現在的你是什麼顏？為什麼？"
 ];
 
-const s = {};
 const state = {
-  currentIndex: null,
-  answers: {},
-  sending: false
+  selected: new Set(),
+  busy: false
 };
 
-function $(id) {
-  return document.getElementById(id);
+function $(sel) {
+  return document.querySelector(sel);
 }
 
-function initDOM() {
-  s.qList = $("qList");
-  s.currentQ = $("currentQuestion");
-  s.answer = $("answerArea");
-  s.pushBtn = $("pushBtn");
-  s.submit = $("submitScan");
-  s.output = $("analysisOutput");
-  s.ajin = $("ajinLine");
-  s.migou = $("migouLine");
-  s.gungun = $("gungunLine");
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function pickQuestions() {
+  const pool = shuffle(QUESTIONS);
+  return pool.slice(0, Math.min(25, pool.length));
 }
 
 function renderQuestions() {
-  s.qList.innerHTML = "";
-  QUESTIONS.forEach((text, i) => {
+  const grid = $("#soulQuestions");
+  if (!grid) return;
+  grid.innerHTML = "";
+
+  const list = pickQuestions();
+  list.forEach((q) => {
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "soul-q-pill";
-    btn.dataset.index = i;
-    btn.innerHTML = `<span>${text}</span>`;
-    btn.addEventListener("click", () => selectQuestion(i));
-    s.qList.appendChild(btn);
+    btn.className = "soul-q";
+    btn.textContent = q;
+    btn.dataset.q = q;
+    btn.addEventListener("click", () => toggleQuestion(q, btn));
+    grid.appendChild(btn);
   });
 }
 
-function selectQuestion(index) {
-  // 存現在這題的答案
-  saveCurrentAnswer();
-
-  state.currentIndex = index;
-
-  const items = s.qList.querySelectorAll(".soul-q-pill");
-  items.forEach((el) => el.classList.remove("soul-q-pill-active"));
-  const active = s.qList.querySelector(`.soul-q-pill[data-index="${index}"]`);
-  if (active) active.classList.add("soul-q-pill-active");
-
-  s.currentQ.textContent = QUESTIONS[index];
-
-  const saved = state.answers[index] || "";
-  s.answer.value = saved;
-  s.answer.disabled = false;
-
-  s.pushBtn.disabled = false;
-}
-
-function saveCurrentAnswer() {
-  if (state.currentIndex == null) return;
-  if (!s.answer) return;
-  state.answers[state.currentIndex] = s.answer.value || "";
-  updateSubmitState();
-}
-
-function handlePush() {
-  // 這裡可以加一些特效用的 class，純視覺
-  const scanner = document.querySelector(".soul-scanner");
-  scanner?.classList.add("soul-scanner-pulse");
-  setTimeout(() => scanner?.classList.remove("soul-scanner-pulse"), 260);
-}
-
-function updateSubmitState() {
-  const answeredCount = Object.values(state.answers).filter(
-    (v) => v && v.trim().length > 0
-  ).length;
-
-  const allDone = answeredCount >= QUESTIONS.length;
-  if (allDone && !state.sending) {
-    s.submit.disabled = false;
-    s.submit.classList.add("soul-submit-ready");
+function toggleQuestion(q, el) {
+  if (state.busy) return;
+  if (state.selected.has(q)) {
+    state.selected.delete(q);
+    el.classList.remove("active");
   } else {
-    s.submit.disabled = true;
-    s.submit.classList.remove("soul-submit-ready");
+    state.selected.add(q);
+    el.classList.add("active");
   }
+  updateReadyState();
+}
+
+function collectPairs() {
+  const notes = $("#soulNotes");
+  const text = (notes?.value || "").trim();
+  const pairs = [];
+
+  if (state.selected.size) {
+    state.selected.forEach((q) => {
+      pairs.push({
+        q,
+        a: text || "這題我先交給你看，你比我敢說實話。"
+      });
+    });
+  } else if (text) {
+    pairs.push({
+      q: "自由輸入",
+      a: text
+    });
+  }
+
+  return pairs;
+}
+
+function updateReadyState() {
+  const notes = $("#soulNotes");
+  const submit = $("#submitScan");
+  const pushChip = $("#soulPush");
+  if (!submit || !pushChip) return;
+
+  const hasText = (notes?.value || "").trim().length > 0;
+  const hasQ = state.selected.size > 0;
+  const ready = hasText || hasQ;
+
+  submit.disabled = !ready;
+  submit.classList.toggle("ready", !!ready);
+  pushChip.classList.toggle("active", !!ready);
 }
 
 async function handleSubmit() {
-  saveCurrentAnswer();
+  if (state.busy) return;
+  const submit = $("#submitScan");
+  const overlay = $("#soulScanning");
+  const analysis = $("#analysisText");
+  const ajin = $("#ajinLine");
+  const migou = $("#migouLine");
+  const gungun = $("#gungunLine");
 
-  const answeredCount = Object.values(state.answers).filter(
-    (v) => v && v.trim().length > 0
-  ).length;
-  if (answeredCount < QUESTIONS.length) return;
+  const pairs = collectPairs();
+  if (!pairs.length) return;
 
-  if (state.sending) return;
-  state.sending = true;
-  s.submit.disabled = true;
-  s.submit.classList.remove("soul-submit-ready");
-
-  // 清空畫面，只留空白＋轉圈感（用 CSS 動畫撐場）
-  s.output.textContent = "";
-  s.ajin.textContent = "";
-  s.migou.textContent = "";
-  s.gungun.textContent = "";
-
-  const pairs = QUESTIONS.map((q, i) => ({
-    q,
-    a: state.answers[i] || ""
-  }));
+  state.busy = true;
+  submit.disabled = true;
+  submit.classList.remove("ready");
+  if (overlay) overlay.classList.remove("hidden");
+  if (analysis) analysis.textContent = "";
+  if (ajin) ajin.textContent = "";
+  if (migou) migou.textContent = "";
+  if (gungun) gungun.textContent = "";
 
   try {
     const res = await fetch("/api/analysis", {
@@ -149,39 +155,38 @@ async function handleSubmit() {
     const data = await res.json();
     if (!data || !data.ok) throw new Error("bad");
 
-    s.output.textContent = data.analysis || "";
-    s.ajin.textContent = data.ajin || "";
-    s.migou.textContent = data.migou || "";
-    s.gungun.textContent = data.gungun || "";
-  } catch (e) {
-    // 真的出錯才講一句人話
-    s.output.textContent = "連線暫時有問題，可以稍後再試一次。";
+    if (analysis) analysis.textContent = data.analysis || "";
+    if (ajin) ajin.textContent = data.ajin || "";
+    if (migou) migou.textContent = data.migou || "";
+    if (gungun) gungun.textContent = data.gungun || "";
+  } catch (err) {
+    if (analysis) {
+      analysis.textContent = "訊號有點亂，再按一次就好。";
+    }
   } finally {
-    state.sending = false;
-    updateSubmitState();
+    state.busy = false;
+    if (overlay) overlay.classList.add("hidden");
+    updateReadyState();
   }
 }
 
-function initEvents() {
-  s.answer.addEventListener("input", () => {
-    if (state.currentIndex == null) return;
-    state.answers[state.currentIndex] = s.answer.value;
-    updateSubmitState();
-  });
+function initSoulMirror() {
+  if (document.body.dataset.page !== "soulmirror") return;
 
-  s.pushBtn.addEventListener("click", () => {
-    if (s.pushBtn.disabled) return;
-    handlePush();
-  });
+  renderQuestions();
+  updateReadyState();
 
-  s.submit.addEventListener("click", () => {
-    if (s.submit.disabled) return;
-    handleSubmit();
-  });
+  const notes = $("#soulNotes");
+  if (notes) {
+    notes.addEventListener("input", updateReadyState);
+  }
+
+  const submit = $("#submitScan");
+  if (submit) {
+    submit.addEventListener("click", handleSubmit);
+  }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initDOM();
-  renderQuestions();
-  initEvents();
-});
+document.addEventListener("DOMContentLoaded", initSoulMirror);
+
+document.addEventListener("DOMContentLoaded", initSoulMirror);
