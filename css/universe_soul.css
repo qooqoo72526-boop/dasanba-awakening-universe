@@ -1,507 +1,613 @@
-/* ========== RESET ========== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* 字體：未來科技感 */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap");
+
+/* === 全局 === */
+body.soul-body {
   margin: 0;
   padding: 0;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans TC",
-    sans-serif;
-  background: radial-gradient(circle at 10% 0%, #182647 0, #060d1c 60%, #02030a 100%);
-  color: #f5f7ff;
+  min-height: 100vh;
+  font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #e8f2ff;
+  background: radial-gradient(circle at 18% 0%, #6f97ff 0, #11172b 40%, #050610 100%);
   overflow: hidden;
 }
 
-/* ========== 全局布局 ========== */
-
-.soul-body {
-  display: grid;
-  grid-template-columns: 72px minmax(0, 1fr) 220px;
-  grid-template-rows: 100vh;
-  column-gap: 32px;
-  padding: 24px 32px;
-  position: relative;
+/* 背景星場畫布 */
+#soulStarfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 }
 
-/* 背景星霧粒子（純 CSS 動態光） */
-.soul-body::before,
-.soul-body::after {
-  content: "";
+/* === 左側工具列：線條圖示 + hover 才出文字 === */
+.soul-nav {
   position: fixed;
-  inset: -20%;
-  z-index: -2;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(120, 180, 255, 0.23), transparent 60%),
-    radial-gradient(circle at 75% 80%, rgba(255, 190, 255, 0.16), transparent 55%);
-  filter: blur(8px);
-  opacity: 0.85;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.nav-node {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1.8px solid rgba(182, 214, 255, 0.55);
+  background: radial-gradient(circle at 30% 0%, rgba(255, 255, 255, 0.35), rgba(9, 14, 30, 0.95));
+  box-shadow: 0 0 14px rgba(90, 150, 255, 0.6);
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.nav-node::before,
+.nav-node::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 0;
+  border: none;
+}
+
+/* HOME：房子線條 */
+.nav-home::before {
+  border-left: 2px solid rgba(28, 46, 96, 0.98);
+  border-right: 2px solid rgba(28, 46, 96, 0.98);
+  bottom: 6px;
+  top: 12px;
+}
+.nav-home::after {
+  border-top: 2px solid rgba(28, 46, 96, 0.98);
+  transform: rotate(45deg);
+  top: 10px;
+  left: 7px;
+  right: 7px;
+}
+
+/* POST：信封線條 */
+.nav-post::before {
+  border: 2px solid rgba(28, 46, 96, 0.98);
+  border-top: none;
+  top: 10px;
+  bottom: 8px;
+}
+.nav-post::after {
+  border-left: 2px solid rgba(28, 46, 96, 0.98);
+  border-bottom: 2px solid rgba(28, 46, 96, 0.98);
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 8px;
+  right: 8px;
+}
+
+/* VECTOR：AI 眼掃描線條 */
+.nav-vector::before {
+  border-top: 2px solid rgba(28, 46, 96, 0.98);
+  border-radius: 999px;
+  top: 11px;
+  bottom: 17px;
+}
+.nav-vector::after {
+  border-top: 2px solid rgba(28, 46, 96, 0.98);
+  top: 16px;
+  left: 8px;
+  right: 8px;
+}
+
+/* GALLERY：星雲線條 */
+.nav-gallery::before {
+  border-radius: 50%;
+  border-top: 2px solid rgba(28, 46, 96, 0.98);
+  border-right: 2px solid rgba(28, 46, 96, 0.98);
+  transform: rotate(35deg);
+}
+.nav-gallery::after {
+  border-radius: 50%;
+  border-bottom: 2px solid rgba(28, 46, 96, 0.98);
+  border-left: 2px solid rgba(28, 46, 96, 0.98);
+  inset: 11px;
+  transform: rotate(-20deg);
+}
+
+/* hover：浮起 + 強光 + 顯示文字 */
+.nav-node:hover,
+.nav-node.active {
+  border-color: rgba(230, 243, 255, 0.98);
+  box-shadow:
+    0 0 18px rgba(148, 204, 255, 1),
+    0 0 40px rgba(90, 166, 255, 0.9);
+  transform: translateY(-2px) translateZ(10px);
+}
+
+.nav-node::after {
+  transition: border-color 0.24s ease, transform 0.24s ease;
+}
+
+.nav-node:hover::after,
+.nav-node.active::after {
+  border-color: rgba(12, 30, 74, 1);
+}
+
+/* 工具列文字：hover 才出現 */
+.nav-node::marker {
+  content: "";
+}
+
+.nav-node::before {
+  transition: border-color 0.24s ease, transform 0.24s ease;
+}
+
+.nav-node::after {
   pointer-events: none;
 }
 
-.soul-body::after {
-  mix-blend-mode: screen;
-  animation: nebulaMove 26s linear infinite alternate;
+.nav-node::before,
+.nav-node::after {
+  box-sizing: border-box;
 }
 
-@keyframes nebulaMove {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  100% {
-    transform: translate3d(-40px, 30px, 0) scale(1.06);
-  }
+.nav-node::after {
+  pointer-events: none;
 }
 
-/* ========== 左側 Nav ========== */
-
-.soul-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 26px;
-  background: linear-gradient(160deg, rgba(10, 18, 40, 0.92), rgba(7, 10, 25, 0.98));
-  box-shadow:
-    0 0 0 1px rgba(170, 199, 255, 0.08),
-    0 16px 40px rgba(0, 0, 0, 0.65);
+.nav-node[data-label]::after {
+  /* 這裡只畫圖，不顯示文字 */
 }
 
-.nav-item {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-size: 12px;
-  letter-spacing: 0.25em;
-  text-decoration: none;
-  padding: 10px 0;
-  color: rgba(214, 224, 255, 0.5);
-  position: relative;
-  transition: color 200ms ease, transform 200ms ease;
-}
-
-.nav-item::before {
+.nav-node[data-label]::marker {
   content: "";
+}
+
+/* 右邊浮出的文字 label */
+.nav-node::selection {
+  background: transparent;
+}
+
+/* 文字 label 元素，用 ::before 動態生成 */
+.nav-node[data-label]::before {
+  /* 保留圖示用途，文字另外用 .nav-label element 補上 */
+}
+
+/* 使用 ::after 當 icon，文字用獨立元素： */
+.nav-node::before {
+  /* 上面已用來畫 icon 結構，因此 label 改用外層元素 */
+}
+
+.nav-node-label {
   position: absolute;
-  inset-inline-start: 50%;
-  top: -8px;
-  width: 1px;
-  height: 16px;
-  transform: translateX(-50%);
-  background: linear-gradient(to bottom, transparent, rgba(160, 196, 255, 0.7));
-  opacity: 0;
-  transition: opacity 180ms ease;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(219, 232, 255, 0.0);
+  pointer-events: none;
+  transition: color 0.24s ease, transform 0.24s ease;
 }
 
-.nav-item:hover {
-  color: #ffffff;
-  transform: translateY(-2px);
-}
+/* 利用 data-label 建立 label（由 JS 動態塞字） */
 
-.nav-item.active {
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.nav-item.active::before {
-  opacity: 1;
-}
-
-/* ========== 中央主區 ========== */
-
+/* === 主內容 === */
 .soul-main {
   position: relative;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 24px;
-  padding-inline: 8px;
+  z-index: 1;
+  padding: 38px 60px 44px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
-/* 標題區 */
-
+/* 標題：未來科技感 */
 .soul-header {
-  padding: 10px 18px 14px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(18, 29, 66, 0.9), rgba(11, 20, 45, 0.96));
-  box-shadow:
-    0 0 0 1px rgba(150, 194, 255, 0.35),
-    0 18px 45px rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(18px);
-}
-
-.sys-label {
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(196, 210, 255, 0.6);
-  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .title-en {
   font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.22em;
+  font-size: 22px;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
+  color: #f5f8ff;
 }
 
 .title-cn {
-  margin-top: 6px;
-  font-size: 14px;
-  color: rgba(223, 233, 255, 0.88);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: rgba(214, 232, 255, 0.88);
 }
 
-.tagline {
-  margin-top: 4px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(178, 205, 255, 0.7);
-}
-
-/* ========== 題目卡片雲 ========== */
-
-.vector-cloud {
-  position: relative;
+/* 版面：左卡片牆 + 右核心 */
+.soul-layout {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  grid-auto-rows: 120px;
-  gap: 14px;
-  padding: 10px 6px 10px 0;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.7fr);
+  gap: 32px;
+  align-items: stretch;
+  height: calc(100vh - 140px);
+}
+
+/* 左區：題目卡片牆 */
+.vector-panel {
+  position: relative;
+  padding: 16px 12px;
+  border-radius: 24px;
+  background: radial-gradient(circle at 0% 0%, rgba(250, 255, 255, 0.28), rgba(12, 16, 32, 0.94));
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 30px rgba(80, 150, 255, 0.7),
+    0 0 120px rgba(0, 0, 0, 0.95);
   overflow: hidden;
 }
 
+.vector-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-rows: 68px;
+  gap: 10px;
+}
+
+/* 小卡片本體 */
 .vector-card {
   position: relative;
-  border-radius: 16px;
-  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.26), transparent 60%),
-    rgba(19, 35, 72, 0.9);
-  box-shadow:
-    0 0 0 1px rgba(168, 204, 255, 0.25),
-    0 16px 32px rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(16px);
+  border-radius: 14px;
+  border: 1.8px solid rgba(172, 206, 255, 0.7);
+  background: radial-gradient(circle at 10% -10%, rgba(255, 255, 255, 0.65), rgba(8, 12, 28, 0.96));
+  box-shadow: 0 0 18px rgba(90, 150, 255, 0.8);
   cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform 0.24s ease,
+    box-shadow 0.24s ease,
+    border-color 0.24s ease,
+    background 0.24s ease;
+}
+
+.vector-card span {
+  position: absolute;
+  left: 12px;
+  bottom: 10px;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+}
+
+/* hover 3D 微傾斜 */
+.vector-card:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 0 26px rgba(144, 204, 255, 1);
+}
+
+/* 填完答案後 */
+.vector-card.answered {
+  border-color: rgba(129, 255, 206, 0.95);
+  box-shadow: 0 0 24px rgba(112, 255, 196, 0.95);
+}
+
+/* 當前題目 */
+.vector-card.active {
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 0 32px rgba(190, 225, 255, 1),
+    0 0 80px rgba(105, 170, 255, 0.95);
+  transform: translateY(-4px) scale(1.06);
+}
+
+/* 右區：核心 + 結果 */
+.core-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* 中央 3D 主卡片區 */
+.active-card {
+  flex: 0 0 56%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+}
+
+.active-inner {
+  position: relative;
+  width: 64%;
+  max-width: 520px;
+  aspect-ratio: 3 / 4.4;
+  border-radius: 24px;
+  background: radial-gradient(circle at 20% 0%, rgba(235, 245, 255, 0.6), rgba(4, 7, 18, 0.98));
+  border: 1.8px solid rgba(200, 224, 255, 0.98);
+  box-shadow:
+    0 0 40px rgba(140, 200, 255, 0.96),
+    0 0 120px rgba(40, 96, 255, 0.98);
+  transform-style: preserve-3d;
+  transform: rotateX(10deg) rotateY(-10deg);
+  transition: transform 0.54s ease, box-shadow 0.54s ease;
+}
+
+/* 顯示背面（題目 + 答案） */
+.active-inner.show-back {
+  transform: translateZ(120px) rotateX(0deg) rotateY(180deg);
+  box-shadow:
+    0 0 54px rgba(185, 230, 255, 1),
+    0 0 160px rgba(104, 182, 255, 1);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  padding: 24px 24px 20px;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 正面：能量圈 + 編號 */
+.card-front {
+  gap: 18px;
+}
+
+.card-ring {
+  width: 88%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 1.8px solid rgba(182, 215, 255, 0.94);
+  box-shadow:
+    0 0 30px rgba(140, 200, 255, 0.95),
+    0 0 100px rgba(60, 140, 255, 0.98);
+  position: relative;
+}
+
+.card-ring::before,
+.card-ring::after {
+  content: "";
+  position: absolute;
+  inset: 16%;
+  border-radius: 50%;
+  border: 1px dashed rgba(210, 235, 255, 0.86);
+}
+.card-ring::after {
+  inset: 30%;
+  border-style: solid;
+  opacity: 0.45;
+}
+
+.card-index {
+  margin-top: 18px;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.2em;
+}
+
+/* 背面：題目 + 答題框 */
+.card-back {
+  transform: rotateY(180deg);
+  gap: 14px;
+}
+
+.card-question {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  line-height: 1.8;
+  text-align: center;
+  color: #f6fbff;
+}
+
+.card-answer {
+  width: 100%;
+  min-height: 90px;
+  max-height: 150px;
+  resize: vertical;
+  border-radius: 14px;
+  border: 1px solid rgba(206, 226, 255, 0.9);
+  background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.18), rgba(7, 9, 18, 0.96));
   padding: 10px 12px;
+  font-size: 13px;
+  color: #eaf3ff;
+  outline: none;
+  backdrop-filter: blur(14px);
+}
+
+.card-answer::placeholder {
+  color: rgba(210, 225, 255, 0.4);
+}
+
+/* lock 按鈕：小圓箭頭 */
+.answer-btn {
+  margin-top: 6px;
+  align-self: flex-end;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1.4px solid rgba(196, 225, 255, 0.96);
+  background: radial-gradient(circle at 40% 0%, rgba(255, 255, 255, 0.9), rgba(18, 30, 70, 0.96));
+  box-shadow: 0 0 20px rgba(154, 210, 255, 0.98);
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.answer-btn::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: 999px;
+  border-left: 2px solid rgba(14, 26, 66, 0.98);
+  border-bottom: 2px solid rgba(14, 26, 66, 0.98);
+  transform: rotate(225deg);
+}
+
+
+/* === 結果區 === */
+.result-shell {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+  gap: 16px;
+  align-items: stretch;
+}
+
+.result-main {
+  position: relative;
+  border-radius: 24px;
+  padding: 20px 22px;
+  background: radial-gradient(circle at 16% 0%, rgba(245, 250, 255, 0.35), rgba(5, 7, 18, 0.98));
+  border: 1.6px solid rgba(198, 224, 255, 0.98);
+  box-shadow:
+    0 0 32px rgba(124, 188, 255, 0.9),
+    0 0 120px rgba(46, 88, 160, 0.9);
+  overflow: hidden;
+}
+
+.result-orbit {
+  position: absolute;
+  inset: -10%;
+  background:
+    radial-gradient(circle at 50% 100%, rgba(84, 152, 255, 0.95), transparent 60%),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.2), transparent 70%);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+
+.result-text {
+  position: relative;
+  z-index: 1;
+  font-size: 13px;
+  line-height: 1.9;
+  letter-spacing: 0.12em;
+  color: #f5fbff;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+/* 三鳥 */
+.result-birds {
+  border-radius: 24px;
+  padding: 16px 14px;
+  background: linear-gradient(160deg, rgba(10, 16, 30, 0.96), rgba(35, 58, 100, 0.96));
+  border: 1.4px solid rgba(180, 210, 255, 0.85);
+  box-shadow:
+    0 0 26px rgba(96, 148, 230, 0.9),
+    0 0 70px rgba(0, 0, 0, 0.95);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transform-origin: center;
-  transform-style: preserve-3d;
-  transition:
-    transform 200ms ease,
-    box-shadow 200ms ease,
-    background 200ms ease;
+  gap: 10px;
+}
+
+.bird {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 4px 10px;
+  align-items: center;
+}
+
+.bird-img-wrap {
+  grid-row: span 2;
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.9), rgba(10, 14, 30, 0.98));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
+  box-shadow: 0 0 18px rgba(162, 210, 255, 0.98);
 }
 
-.vector-card::before {
-  content: "";
-  position: absolute;
-  inset-inline: -40%;
-  top: -60%;
-  height: 60%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
-  opacity: 0;
-  transform: translate3d(-40%, 0, 0);
-  transition: opacity 220ms ease, transform 420ms ease;
+.bird-img {
+  max-width: 90%;
+  height: auto;
 }
 
-.vector-card:hover {
-  transform: translate3d(0, -3px, 0) rotate3d(1, -1, 0, 6deg);
-  box-shadow:
-    0 0 0 1px rgba(190, 220, 255, 0.7),
-    0 20px 40px rgba(0, 0, 0, 0.8);
+/* 三隻鳥的光圈各自顏色 */
+.bird-ajin .bird-img-wrap {
+  box-shadow: 0 0 20px rgba(255, 225, 140, 0.95);
+}
+.bird-migou .bird-img-wrap {
+  box-shadow: 0 0 20px rgba(255, 185, 220, 0.95);
+}
+.bird-gungun .bird-img-wrap {
+  box-shadow: 0 0 20px rgba(150, 215, 255, 0.95);
 }
 
-.vector-card:hover::before {
-  opacity: 1;
-  transform: translate3d(40%, 0, 0);
+.bird-tag {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: rgba(214, 232, 255, 0.98);
 }
 
-.vector-card.active {
-  box-shadow:
-    0 0 0 1px rgba(123, 204, 255, 0.95),
-    0 0 40px rgba(81, 190, 255, 0.9);
-  background: radial-gradient(circle at 0 0, rgba(123, 204, 255, 0.45), transparent 65%),
-    rgba(6, 24, 54, 0.98);
-}
-
-.card-index-mini {
+.bird-line {
   font-size: 12px;
-  font-weight: 600;
-  color: rgba(206, 226, 255, 0.95);
+  line-height: 1.7;
+  color: rgba(232, 242, 255, 0.98);
 }
 
-.card-line-mini {
-  margin-top: 4px;
-  font-size: 11px;
-  line-height: 1.5;
-  color: rgba(215, 229, 255, 0.88);
-}
-
-/* ========== 中央 AI 能量圈 + 啟動卡片 ========== */
-
-.vector-core {
-  position: absolute;
-  inset: 110px 0 120px;
-  pointer-events: none;
+/* 右下發射鍵 */
+.soul-submit {
+  position: fixed;
+  right: 40px;
+  bottom: 34px;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  border: 1.6px solid rgba(196, 225, 255, 0.9);
+  background: radial-gradient(circle at 30% 0%, rgba(255, 255, 255, 0.95), rgba(16, 28, 70, 0.98));
+  box-shadow:
+    0 0 30px rgba(146, 206, 255, 0.98),
+    0 0 80px rgba(80, 148, 255, 0.96);
+  padding: 0;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* 能量圈光暈 */
-.core-glow {
-  position: absolute;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(122, 191, 255, 0.58), transparent 60%);
-  filter: blur(26px);
-  opacity: 0.16;
-}
-
-/* 三層能量圈 */
-.core-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(167, 210, 255, 0.75);
-  box-shadow: 0 0 30px rgba(116, 196, 255, 0.9);
+.soul-submit[disabled] {
   opacity: 0.4;
-  transform-origin: center;
-}
-
-.ring-1 {
-  width: 220px;
-  height: 220px;
-  animation: ringPulse 5.6s ease-in-out infinite;
-}
-
-.ring-2 {
-  width: 280px;
-  height: 280px;
-  animation: ringPulse 7s ease-in-out infinite;
-}
-
-.ring-3 {
-  width: 340px;
-  height: 340px;
-  border-style: dashed;
-  border-color: rgba(161, 212, 255, 0.6);
-  animation: ringRotate 18s linear infinite;
-}
-
-@keyframes ringPulse {
-  0%,
-  100% {
-    transform: scale(0.96);
-    opacity: 0.35;
-  }
-  50% {
-    transform: scale(1.06);
-    opacity: 0.8;
-  }
-}
-
-@keyframes ringRotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* 中央啟動卡片 */
-
-.active-card {
-  position: relative;
-  width: 220px;
-  height: 320px;
-  border-radius: 24px;
-  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.25), transparent 60%),
-    rgba(5, 21, 45, 0.96);
-  box-shadow:
-    0 0 0 1px rgba(176, 214, 255, 0.9),
-    0 18px 50px rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(18px);
-  transform-origin: center;
-  transform-style: preserve-3d;
-  transform: translate3d(0, 40px, 0) scale(0.92);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    transform 420ms cubic-bezier(0.17, 0.9, 0.35, 1.18),
-    opacity 260ms ease;
-}
-
-/* 啟動後狀態 */
-.active-card.ready {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate3d(0, 0, 0) scale(1);
-}
-
-/* 翻面動畫 */
-
-.card-face {
-  position: absolute;
-  inset: 0;
-  padding: 22px 20px;
-  backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.card-front {
-  align-items: flex-start;
-}
-
-.card-back {
-  transform: rotateY(180deg);
-  justify-content: center;
-}
-
-/* 正在翻轉的樣式（JS 控制加上 .flipped） */
-.active-card.flipped {
-  transform: translate3d(0, 0, 40px) rotateY(180deg);
-}
-
-/* 卡片文字 */
-
-.card-label {
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: rgba(192, 214, 255, 0.7);
-}
-
-.card-index {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 38px;
-  letter-spacing: 0.18em;
-  margin-top: 10px;
-}
-
-.question-text {
-  font-size: 15px;
-  line-height: 1.9;
-  text-align: center;
-  color: rgba(227, 236, 255, 0.96);
-}
-
-/* ========== 三鳥 AI 模組 ========== */
-
-.soul-birds {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  padding-bottom: 8px;
-}
-
-.bird-node {
-  position: relative;
-  text-align: center;
+  box-shadow: none;
   cursor: default;
 }
 
-.bird-icon {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 18px rgba(160, 210, 255, 0.8));
-}
-
-.bird-label {
-  margin-top: 4px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: rgba(196, 216, 255, 0.9);
-}
-
-.bird-glow {
-  position: absolute;
-  inset: 18px -16px -10px;
+.soul-submit-arrow {
+  width: 20px;
+  height: 20px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.55), transparent 65%);
-  opacity: 0;
-  filter: blur(20px);
-  pointer-events: none;
-  transition: opacity 220ms ease;
+  border-left: 2px solid rgba(18, 30, 72, 0.96);
+  border-bottom: 2px solid rgba(18, 30, 72, 0.96);
+  transform: rotate(225deg);
 }
 
-/* 有啟動時（JS 會在其中一隻加 .active） */
-.bird-node.active .bird-glow {
-  opacity: 0.9;
-}
-
-/* 為每隻鳥加一點不同色調 */
-.ajin .bird-glow {
-  background: radial-gradient(circle, rgba(255, 230, 150, 0.85), transparent 65%);
-}
-
-.migou .bird-glow {
-  background: radial-gradient(circle, rgba(255, 180, 215, 0.85), transparent 65%);
-}
-
-.gungun .bird-glow {
-  background: radial-gradient(circle, rgba(170, 220, 255, 0.9), transparent 65%);
-}
-
-/* ========== 右側小提示 ========== */
-
-.soul-hint {
-  font-size: 11px;
-  color: rgba(204, 220, 255, 0.8);
-  padding: 12px 16px;
-  border-radius: 20px;
-  background: linear-gradient(145deg, rgba(20, 30, 60, 0.98), rgba(10, 18, 40, 0.96));
-  box-shadow:
-    0 0 0 1px rgba(148, 188, 255, 0.35),
-    0 18px 40px rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(20px);
-  align-self: flex-start;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-/* ========== RWD（簡單先顧桌機，這裡只做保護） ========== */
-
+/* RWD 防爆 */
 @media (max-width: 1024px) {
-  .soul-body {
-    grid-template-columns: 56px minmax(0, 1fr);
-    grid-template-rows: auto auto;
-    row-gap: 16px;
-    padding: 16px;
-  }
-
   .soul-main {
-    grid-row: 2 / 3;
+    padding: 26px 18px 32px 80px;
   }
 
-  .soul-hint {
-    display: none;
+  .soul-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
   }
 
-  .vector-cloud {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .active-inner {
+    width: 80%;
   }
 
-  .vector-core {
-    inset: 120px 0 150px;
+  .result-shell {
+    grid-template-columns: 1fr;
   }
 }
