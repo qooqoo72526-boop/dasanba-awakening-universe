@@ -1,77 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>A.I. PATTERN SCAN｜靈魂照妖鏡</title>
-
-<!-- 字體 -->
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet"/>
-
-<!-- 正確 CSS（你之前的錯是因為我給 universe_solu.css）-->
-<link rel="stylesheet" href="css/universe_soul.css" />
+  <meta charset="UTF-8">
+  <title>AFFECTIVE VECTOR MAP</title>
+  <link rel="stylesheet" href="css/universe_soul.css">
 </head>
 
-<body data-page="soulmirror">
+<body class="soul-body">
 
-<!-- ⭐ 星空背景 -->
-<canvas id="starfield"></canvas>
+  <!-- ✦ 1. 左側極簡工具列 ✦ -->
+  <nav class="soul-nav">
+      <a href="/" class="item">HOME</a>
+      <a href="/dialogue" class="item">POST</a>
+      <a href="/soulmirror" class="item active">VECTOR</a>
+      <a href="/gallery" class="item">GALLERY</a>
+  </nav>
 
-<!-- 左側導覽 -->
-<nav class="eva-side-nav">
-  <a href="index.html" class="eva-nav-item" data-label="HOME"><span class="eva-nav-icon"></span></a>
-  <a href="cosmic-post-station.html" class="eva-nav-item" data-label="POST"><span class="eva-nav-icon"></span></a>
-  <a href="soulmirror.html" class="eva-nav-item eva-nav-item-active" data-label="MIRROR"><span class="eva-nav-icon"></span></a>
-</nav>
+  <!-- ✦ 2. 標題區 ✦ -->
+  <header class="soul-header">
+      <div class="sys">EMOTIONAL VALUE A.I. — SYSTEM v3.2</div>
 
-<main class="soul-container">
+      <h1 class="main-en">AFFECTIVE VECTOR MAP</h1>
+      <h2 class="main-cn">情緒向量場</h2>
 
-  <!-- 題目區 -->
-  <section class="soul-q-section">
-    <h2 class="soul-title">A.I. PATTERN SCAN</h2>
-    <p class="soul-sub">情緒模式掃描 · 25 題</p>
-    <div id="soulQuestions" class="soul-questions-grid"></div>
-  </section>
+      <p class="tagline">模式，比答案更誠實。</p>
+  </header>
 
-  <!-- 三鳥 -->
-  <section class="soul-birds">
-    <div class="soul-bird">
-      <div class="soul-bird-img-wrap">
-        <img src="assets/icon_ajin.png" alt="AJIN">
+  <!-- ✦ 3. 卡片題目區 ✦ -->
+  <section id="vector-cards" class="vector-cards"></section>
+
+  <!-- ✦ 4. 啟動後：中央翻轉卡片 ✦ -->
+  <div id="activeCard" class="active-card">
+      <div class="active-inner">
+          <div class="card-front"></div>
+
+          <div class="card-back">
+              <p id="questionText"></p>
+              <button id="answerBtn" class="answer-btn">→</button>
+          </div>
       </div>
-      <div class="soul-bird-tag">AJIN</div>
-      <p id="ajinLine" class="soul-bird-line"></p>
-    </div>
+  </div>
 
-    <div class="soul-bird">
-      <div class="soul-bird-img-wrap">
-        <img src="assets/icon_migou.png" alt="MIGOU">
-      </div>
-      <div class="soul-bird-tag">MIGOU</div>
-      <p id="migouLine" class="soul-bird-line"></p>
-    </div>
-
-    <div class="soul-bird">
-      <div class="soul-bird-img-wrap">
-        <img src="assets/icon_gungun.png" alt="GUNGUN">
-      </div>
-      <div class="soul-bird-tag">GUNGUN</div>
-      <p id="gungunLine" class="soul-bird-line"></p>
-    </div>
-  </section>
-
-  <!-- 送出按鈕 -->
-  <button id="submitScan" class="soul-submit" type="button">
-    <span class="soul-submit-arrow">▶</span>
-  </button>
-
-</main>
-
-<!-- JS 引用（這裡我確認正確） -->
-<script src="js/shared.js" defer></script>
-<script src="js/soul.js" defer></script>
-
+<script src="js/soul.js"></script>
 </body>
 </html>
