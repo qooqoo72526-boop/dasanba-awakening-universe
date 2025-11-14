@@ -1,1 +1,640 @@
+/* ==========================
+   Soul Mirror 專屬樣式
+   ========================== */
 
+:root {
+  --soul-bg-top: #f7f9ff;
+  --soul-bg-mid: #e1ebff;
+  --soul-bg-bottom: #c4d5ff;
+  --soul-ink: #1c2745;
+  --soul-soft: rgba(255, 255, 255, 0.75);
+  --soul-accent: #4f8cff;
+  --soul-accent-2: #7dd3ff;
+}
+
+/* 全頁背景，延續你首頁的銀藍宇宙感 */
+
+.soul-body {
+  min-height: 100vh;
+  color: var(--soul-ink);
+  background:
+    radial-gradient(circle at top, var(--soul-bg-top) 0, var(--soul-bg-mid) 45%, var(--soul-bg-bottom) 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* 讓星星不那麼吵，淡一點 */
+
+.starry {
+  opacity: 0.4;
+}
+
+.soul-main {
+  max-width: 1120px;
+  margin: 32px auto 64px;
+  padding: 0 16px 64px;
+  position: relative;
+}
+
+/* ------------- 工具列 ------------- */
+
+.neo-nav {
+  position: fixed;
+  left: 28px;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 20;
+}
+
+.neo-nav .nav-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(245, 250, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.neo-nav .nav-item.active {
+  box-shadow: 0 0 22px rgba(79, 140, 255, 0.7);
+}
+
+.neo-nav .nav-item:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.neo-nav .nav-icon {
+  font-size: 18px;
+}
+
+.neo-nav .nav-text {
+  position: absolute;
+  left: 52px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(17, 24, 39, 0.82);
+  color: #f9fbff;
+  opacity: 0;
+  transform: translateX(-6px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.neo-nav .nav-item:hover .nav-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ------------- 標題區 ------------- */
+
+.soul-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-top: 24px;
+}
+
+.title-en {
+  font-family: "Orbitron", system-ui, sans-serif;
+  letter-spacing: 0.32em;
+  font-size: clamp(18px, 2vw, 22px);
+  text-transform: uppercase;
+  color: rgba(28, 39, 69, 0.82);
+}
+
+.title-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(28, 39, 69, 0.6);
+}
+
+.intro-copy {
+  margin: 24px auto 8px;
+  max-width: 640px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(28, 39, 69, 0.8);
+}
+
+.intro-q {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* ------------- Stage 通用 ------------- */
+
+.stage {
+  position: relative;
+  margin-top: 24px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ------------- Stage 1：入口能量圈 ------------- */
+
+.stage-intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 64px 0 40px;
+}
+
+.portal {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 24px rgba(126, 190, 255, 0.8);
+}
+
+.ring-back {
+  width: 220px;
+  height: 220px;
+  opacity: 0.4;
+  animation: ringPulse 5s ease-in-out infinite;
+}
+
+.ring-mid {
+  width: 260px;
+  height: 260px;
+  opacity: 0.6;
+  animation: ringPulse 7s ease-in-out infinite;
+}
+
+.ring-front {
+  width: 180px;
+  height: 180px;
+  opacity: 0.8;
+  animation: ringPulse 4s ease-in-out infinite;
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+}
+
+.enter-btn {
+  position: relative;
+  padding: 10px 38px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  background: radial-gradient(circle at 20% 0%, #ffffff 0, #e2ecff 30%, #b8d2ff 70%);
+  color: var(--soul-ink);
+  box-shadow: 0 14px 40px rgba(84, 130, 198, 0.7);
+  overflow: hidden;
+}
+
+.enter-btn .enter-glow {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.8), rgba(125, 211, 255, 0.8), rgba(79, 140, 255, 0.8));
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform: translateX(-40%);
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.enter-btn:hover .enter-glow {
+  opacity: 0.9;
+  transform: translateX(40%);
+}
+
+/* ------------- Stage 2：題目卡 ------------- */
+
+.stage-questions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr);
+  justify-content: center;
+  padding-bottom: 40px;
+}
+
+.energy-orbit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(137, 196, 255, 0.5);
+  box-shadow: 0 0 30px rgba(79, 140, 255, 0.4);
+}
+
+.orbit-ring-1 {
+  width: 460px;
+  height: 460px;
+  top: 60px;
+  animation: orbitFloat 11s ease-in-out infinite;
+}
+
+.orbit-ring-2 {
+  width: 340px;
+  height: 340px;
+  top: 100px;
+  animation: orbitFloat 9s ease-in-out infinite reverse;
+}
+
+.orbit-core {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  top: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0, #b9dcff 40%, rgba(60, 105, 190, 0) 70%);
+  box-shadow: 0 0 80px rgba(79, 140, 255, 0.8);
+}
+
+@keyframes orbitFloat {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-shell {
+  position: relative;
+  margin: 48px auto 0;
+  max-width: 680px;
+  z-index: 2;
+}
+
+.q-card {
+  position: relative;
+  border-radius: 24px;
+  padding: 24px 28px 22px;
+  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.9) 0, rgba(230, 241, 255, 0.85) 45%, rgba(195, 217, 255, 0.9) 100%);
+  box-shadow:
+    0 28px 60px rgba(40, 73, 132, 0.38),
+    0 0 0 1px rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(24px);
+  transform-origin: center;
+  opacity: 0;
+  transform: translate3d(0, 40px, -80px) scale(0.92) rotateX(10deg);
+}
+
+.q-card.enter {
+  animation: cardEnter 0.75s cubic-bezier(0.16, 0.92, 0.33, 1.02) forwards;
+}
+
+.q-card.exit {
+  animation: cardExit 0.55s cubic-bezier(0.16, 0.92, 0.33, 1.02) forwards;
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 40px, -120px) scale(0.9) rotateX(12deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -4px, 0) scale(1.02) rotateX(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotateX(0deg);
+  }
+}
+
+@keyframes cardExit {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -32px, -120px) scale(0.92) rotateX(-8deg);
+  }
+}
+
+.q-index {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(21, 31, 65, 0.4);
+  margin-bottom: 6px;
+}
+
+.q-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(21, 31, 65, 0.9);
+  min-height: 3em;
+}
+
+/* 逐字浮現時，先讓字透明，由 JS 控制文字內容 */
+
+.options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  width: 100%;
+  border-radius: 999px;
+  border: 0;
+  padding: 10px 16px 11px;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.9);
+  color: rgba(17, 24, 39, 0.85);
+  box-shadow:
+    0 10px 24px rgba(36, 64, 112, 0.22),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.16s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.option-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(126, 190, 255, 0.2), rgba(125, 211, 255, 0.24), rgba(255, 255, 255, 0.2));
+  opacity: 0;
+  transform: translateX(-40%);
+  transition: opacity 0.25s ease, transform 0.32s ease;
+}
+
+.option-key {
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(17, 24, 39, 0.45);
+  margin-top: 3px;
+}
+
+.option-text {
+  flex: 1;
+}
+
+.option-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 14px 30px rgba(43, 74, 129, 0.32),
+    0 0 0 1px rgba(163, 198, 255, 0.9);
+}
+
+.option-btn:hover::before {
+  opacity: 0.8;
+  transform: translateX(40%);
+}
+
+.option-btn.selected {
+  background: linear-gradient(115deg, #4f8cff, #7dd3ff);
+  color: #fdfdff;
+  box-shadow:
+    0 18px 40px rgba(54, 99, 182, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.95);
+}
+
+.option-btn.selected .option-key {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* 自由文字區 */
+
+.free-note {
+  margin-top: 18px;
+  font-size: 12px;
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.free-note textarea {
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 16px;
+  border: 0;
+  padding: 10px 12px;
+  font-size: 12px;
+  resize: vertical;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 26px rgba(36, 64, 112, 0.2);
+}
+
+/* 下一題按鈕 */
+
+.next-btn {
+  margin-top: 20px;
+  border-radius: 999px;
+  border: 0;
+  padding: 9px 22px 10px;
+  font-size: 12px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  background: radial-gradient(circle at 0 0, #ffffff 0, #e3edff 50%, #bfd4ff 100%);
+  color: rgba(17, 24, 39, 0.8);
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(47, 79, 143, 0.5);
+  float: right;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.next-btn.disabled {
+  opacity: 0.42;
+  cursor: default;
+  box-shadow: none;
+}
+
+.next-btn:not(.disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(47, 79, 143, 0.6);
+}
+
+/* ------------- Stage 3：結果 ------------- */
+
+.stage-result {
+  padding: 60px 0 40px;
+}
+
+.result-orbit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.result-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(105, 167, 255, 0.6);
+  box-shadow: 0 0 32px rgba(79, 140, 255, 0.6);
+}
+
+.result-ring-1 {
+  width: 520px;
+  height: 520px;
+  top: 20px;
+  animation: orbitFloat 12s ease-in-out infinite;
+}
+
+.result-ring-2 {
+  width: 380px;
+  height: 380px;
+  top: 80px;
+  animation: orbitFloat 9s ease-in-out infinite reverse;
+}
+
+.result-core {
+  position: absolute;
+  top: 140px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0, #c4e0ff 35%, rgba(60, 105, 190, 0) 70%);
+  box-shadow: 0 0 90px rgba(79, 140, 255, 0.9);
+}
+
+.result-panel {
+  position: relative;
+  max-width: 760px;
+  margin: 40px auto 0;
+  padding: 26px 30px 26px;
+  border-radius: 26px;
+  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.96) 0, rgba(231, 241, 255, 0.96) 55%, rgba(199, 220, 255, 0.96) 100%);
+  box-shadow:
+    0 28px 60px rgba(40, 73, 132, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(24px);
+  z-index: 2;
+}
+
+.result-title {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.result-tagline {
+  font-size: 12px;
+  color: rgba(17, 24, 39, 0.7);
+  margin-bottom: 14px;
+}
+
+.result-analysis {
+  font-size: 13px;
+  line-height: 1.8;
+  color: rgba(13, 23, 42, 0.9);
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.result-birds {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.bird-block {
+  padding: 10px 10px 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 26px rgba(36, 64, 112, 0.18);
+  font-size: 12px;
+}
+
+.bird-block h3 {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  color: rgba(15, 23, 42, 0.7);
+}
+
+.bird-block p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.bird-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.restart-btn {
+  border-radius: 999px;
+  border: 0;
+  padding: 8px 20px 9px;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  background: rgba(17, 24, 39, 0.9);
+  color: #f9fbff;
+  cursor: pointer;
+  float: right;
+}
+
+/* RWD */
+
+@media (max-width: 768px) {
+  .neo-nav {
+    left: 18px;
+    top: 80px;
+  }
+
+  .result-birds {
+    grid-template-columns: 1fr;
+  }
+}
