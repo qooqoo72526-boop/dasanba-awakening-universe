@@ -1,660 +1,225 @@
-:root {
-  --eva-bg: radial-gradient(circle at top, #f5fbff 0%, #dfe9ff 32%, #a9bff7 60%, #091122 100%);
-  --eva-card: rgba(8, 16, 40, 0.84);
-  --eva-card-soft: rgba(20, 30, 70, 0.75);
-  --eva-border-soft: rgba(176, 208, 255, 0.35);
-  --eva-border-strong: rgba(211, 232, 255, 0.85);
-  --eva-glow: 0 0 18px rgba(143, 192, 255, 0.9);
-  --eva-glow-soft: 0 0 25px rgba(161, 204, 255, 0.6);
-  --eva-text-main: #f5f7ff;
-  --eva-text-sub: #b2c0e8;
-  --eva-accent: #9ad0ff;
-  --eva-ajin: #f6cf5b;
-  --eva-migou: #ff9ac8;
-  --eva-gungun: #7fd5ff;
+/* =========================================
+   全局背景：深銀藍宇宙 × 粒子流光
+========================================= */
+.soul-body {
+  margin:0;
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
+  background: radial-gradient(circle at 30% 20%, #1e2335, #090b12 65%);
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
 }
 
-/* reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
+/* ✦ 浮動粒子 ✦ */
+.soul-body::before {
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url('/assets/starfield.png'); /* 若你沒有 我可生成 */
+  opacity:.45;
+  mix-blend-mode:screen;
+  pointer-events:none;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body[data-page="soulmirror"] {
-  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  color: var(--eva-text-main);
-  background: #050816;
-  background-image: var(--eva-bg);
-  background-attachment: fixed;
-  overflow: hidden;
-}
-
-/* optional starfield canvas */
-#starfield {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* main frame */
-.soul-frame {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0;
-  padding: 24px 28px;
-}
-
-/* side nav */
+/* =========================================
+   左側工具列（星座線條、極簡）
+========================================= */
 .soul-nav {
-  width: 52px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 10px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(8, 16, 40, 0.9), rgba(9, 18, 50, 0.85));
-  border: 1px solid rgba(180, 210, 255, 0.45);
-  box-shadow: 0 0 24px rgba(40, 80, 150, 0.9);
-  backdrop-filter: blur(18px);
+  position:fixed;
+  top:50%;
+  left:32px;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  z-index:30;
 }
 
-.soul-nav-item {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(180, 210, 255, 0.6);
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0, rgba(9, 18, 40, 0.9) 45%);
-  box-shadow: 0 0 10px rgba(135, 185, 255, 0.9);
-  position: relative;
-  cursor: pointer;
-  text-decoration: none;
+.soul-nav .item {
+  font-size:11px;
+  letter-spacing:0.2em;
+  opacity:.55;
+  text-decoration:none;
+  color:#dbe7ff;
+  transition:.25s;
+  position:relative;
 }
 
-.soul-nav-item::after {
-  content: attr(data-label);
-  position: absolute;
-  left: 28px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--eva-text-sub);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease, transform 0.18s ease;
+.soul-nav .item::before {
+  content:"";
+  position:absolute;
+  left:-14px;
+  top:50%;
+  width:6px;
+  height:1px;
+  background:#7aa2ff;
+  opacity:0;
+  transition:.25s;
 }
 
-.soul-nav-item:hover::after {
-  opacity: 1;
-  transform: translateY(-50%) translateX(2px);
+.soul-nav .item:hover,
+.soul-nav .active {
+  opacity:1;
 }
 
-.soul-nav-item-active {
-  border-color: var(--eva-border-strong);
-  box-shadow: 0 0 16px rgba(175, 215, 255, 1), 0 0 40px rgba(119, 182, 255, 0.9);
+.soul-nav .item:hover::before,
+.soul-nav .active::before {
+  opacity:1;
 }
 
-/* main layout */
-.soul-main {
-  position: relative;
-  margin-left: 18px;
-  border-radius: 26px;
-  border: 1px solid rgba(180, 210, 255, 0.5);
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.22) 0, rgba(7, 13, 32, 0.98) 52%);
-  box-shadow: 0 0 40px rgba(31, 66, 142, 0.9), 0 0 120px rgba(154, 204, 255, 0.85);
-  backdrop-filter: blur(24px);
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.4fr);
-  gap: 0;
-  padding: 24px 26px 26px;
-  overflow: hidden;
-}
-
-/* panels */
-.soul-panel {
-  position: relative;
-}
-
-.soul-panel-left {
-  padding-right: 18px;
-  border-right: 1px solid rgba(142, 179, 236, 0.6);
-}
-
-.soul-panel-right {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding-left: 20px;
-}
-
-/* header */
+/* =========================================
+   標題區（AI config 系統感）
+========================================= */
 .soul-header {
-  margin-bottom: 18px;
+  padding-top:80px;
+  text-align:center;
+  margin-bottom:40px;
 }
 
-.soul-title-en {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 18px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: #f7fbff;
-  margin: 0 0 6px;
+.sys {
+  font-size:10px;
+  letter-spacing:0.25em;
+  opacity:.45;
+  margin-bottom:18px;
 }
 
-.soul-title-zh {
-  font-size: 13px;
-  letter-spacing: 0.28em;
-  color: var(--eva-text-sub);
-  margin: 0 0 4px;
+.main-en {
+  font-size:26px;
+  letter-spacing:0.08em;
+  margin:0;
+  font-weight:300;
+  color:#dfe9ff;
 }
 
-.soul-tagline {
-  font-size: 12px;
-  color: rgba(224, 237, 255, 0.9);
-  margin: 0;
+.main-cn {
+  margin-top:6px;
+  font-size:22px;
+  font-weight:200;
+  color:#eef3ff;
 }
 
-/* questions grid */
-.soul-questions-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  max-height: calc(100% - 80px);
-  padding-right: 4px;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(163, 203, 255, 0.8) transparent;
+.tagline {
+  margin-top:14px;
+  font-size:13px;
+  opacity:.6;
 }
 
-.soul-questions-grid::-webkit-scrollbar {
-  width: 4px;
+/* =========================================
+   25 題卡片：懸浮玻璃科技感
+========================================= */
+.vector-cards {
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+  padding:20px 30px 70px;
 }
 
-.soul-questions-grid::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #a8d0ff, #6da9ff);
-  border-radius: 999px;
+.vector-card {
+  width:240px;
+  height:130px;
+
+  background:rgba(255,255,255,0.06);
+  border-radius:20px;
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.15);
+  box-shadow:0 0 25px rgba(120,160,255,0.25);
+
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:14px;
+  color:#e8f0ff;
+  letter-spacing:.5px;
+
+  cursor:pointer;
+  transition:.3s ease;
+  position:relative;
 }
 
-/* question chip */
-.soul-q {
-  position: relative;
-  border-radius: 16px;
-  padding: 10px 12px;
-  background: linear-gradient(
-    135deg,
-    rgba(16, 28, 68, 0.9),
-    rgba(14, 24, 58, 0.96),
-    rgba(24, 40, 88, 0.98)
-  );
-  border: 1px solid rgba(166, 199, 255, 0.7);
-  color: var(--eva-text-main);
-  font-size: 12px;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease,
-    background 0.16s ease;
+.vector-card:hover {
+  transform:translateY(-6px) scale(1.04);
+  box-shadow:0 0 40px rgba(150,190,255,0.55);
 }
 
-.soul-q::before {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  margin-top: 4px;
-  background: radial-gradient(circle, #a0c6ff 0, #315cf5 80%);
-  flex-shrink: 0;
+/* =========================================
+   啟動卡片：飛來 → 翻轉 → 顯示題目
+========================================= */
+
+.active-card {
+  position:fixed;
+  top:50%;
+  left:50%;
+  width:420px;
+  height:260px;
+  transform:translate(-50%,-50%) scale(0);
+  z-index:100;
+  display:none;
+  pointer-events:none;
 }
 
-.soul-q:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0 18px rgba(149, 193, 255, 0.9);
-  border-color: rgba(195, 222, 255, 0.9);
+.active-card.show {
+  display:block;
+  animation:zoomIn .38s ease forwards;
 }
 
-.soul-q.active {
-  background: radial-gradient(circle at top left, rgba(157, 213, 255, 0.22), rgba(16, 30, 72, 0.98));
-  border-color: rgba(197, 234, 255, 0.98);
-  box-shadow: 0 0 22px rgba(162, 215, 255, 0.9);
+@keyframes zoomIn {
+  0% { transform:translate(-50%,-50%) scale(.2); opacity:0; }
+  100% { transform:translate(-50%,-50%) scale(1); opacity:1; }
 }
 
-.soul-q.active::before {
-  background: radial-gradient(circle, #ffffff 0, #6fb5ff 80%);
+.active-inner {
+  width:100%;
+  height:100%;
+  transform-style:preserve-3d;
+  transition:transform .75s ease;
 }
 
-/* right side core */
-.soul-core-shell {
-  position: relative;
-  width: 170px;
-  height: 170px;
-  margin: 0 auto 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(10, 16, 40, 0.98));
-  box-shadow: 0 0 30px rgba(169, 208, 255, 0.9), 0 0 80px rgba(72, 140, 255, 0.8);
-  overflow: hidden;
+.active-card.flip .active-inner {
+  transform:rotateY(180deg);
 }
 
-.soul-core-ring {
-  position: absolute;
-  inset: 10px;
-  border-radius: 50%;
-  border: 1px solid rgba(196, 222, 255, 0.9);
-  box-shadow: 0 0 14px rgba(176, 218, 255, 0.9);
-  mix-blend-mode: screen;
+/* 前後兩面 */
+.card-front,
+.card-back {
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  backdrop-filter:blur(16px);
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,0.25);
+  background:rgba(255,255,255,0.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  color:#fff;
 }
 
-.soul-core-ring-inner {
-  inset: 32px;
-  border-color: rgba(150, 202, 255, 0.9);
+.card-back {
+  transform:rotateY(180deg);
+  background:rgba(255,255,255,0.25);
+  box-shadow:0 0 40px rgba(170,210,255,0.55);
 }
 
-.soul-core-ring-outer::before {
-  content: "";
-  position: absolute;
-  inset: -18px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    rgba(138, 196, 255, 0.05),
-    rgba(255, 255, 255, 0.2),
-    rgba(138, 196, 255, 0.05)
-  );
-  animation: soul-spin 9s linear infinite;
+/* 送出按鈕（箭頭亮起） */
+.answer-btn {
+  position:absolute;
+  bottom:18px;
+  right:22px;
+  background:none;
+  border:none;
+  font-size:24px;
+  color:#fff;
+  opacity:.45;
+  cursor:pointer;
+  transition:.25s;
 }
 
-@keyframes soul-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.soul-core-center {
-  position: absolute;
-  inset: 56px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffffff 0, #b8d5ff 34%, #0a1028 85%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.soul-core-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: radial-gradient(circle, #ffffff 0%, #5aacff 85%);
-  box-shadow: 0 0 24px rgba(160, 213, 255, 1);
-}
-
-.soul-core-text {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  text-align: center;
-  color: #10213b;
-}
-
-/* scan lines */
-.soul-core-scan-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(179, 225, 255, 0.9), transparent);
-  opacity: 0.6;
-  animation: soul-scan-h 3.5s ease-in-out infinite;
-}
-
-@keyframes soul-scan-h {
-  0% {
-    transform: translateY(-80px);
-  }
-  50% {
-    transform: translateY(80px);
-  }
-  100% {
-    transform: translateY(-80px);
-  }
-}
-
-.soul-core-scan-line-vert {
-  width: 1px;
-  height: 100%;
-  top: 0;
-  left: 50%;
-  right: auto;
-  background: linear-gradient(180deg, transparent, rgba(179, 225, 255, 0.9), transparent);
-  animation: soul-scan-v 4.8s ease-in-out infinite;
-}
-
-@keyframes soul-scan-v {
-  0% {
-    transform: translateX(-70px);
-  }
-  50% {
-    transform: translateX(70px);
-  }
-  100% {
-    transform: translateX(-70px);
-  }
-}
-
-/* input shell */
-.soul-input-shell {
-  margin-top: 4px;
-  padding: 12px 14px;
-  border-radius: 18px;
-  background: linear-gradient(
-    135deg,
-    rgba(11, 18, 46, 0.96),
-    rgba(16, 26, 60, 0.96),
-    rgba(20, 34, 72, 0.98)
-  );
-  border: 1px solid rgba(166, 197, 245, 0.85);
-  box-shadow: var(--eva-glow-soft);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.soul-input-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.soul-push-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(158, 208, 255, 0.85);
-  background: radial-gradient(circle at top left, rgba(164, 215, 255, 0.32), rgba(10, 18, 40, 0.98));
-  box-shadow: 0 0 14px rgba(151, 205, 255, 0.9);
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: #e7f1ff;
-  opacity: 0.6;
-  transform: translateY(0);
-  transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.soul-push-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: radial-gradient(circle, #ffffff 0, #6fb5ff 85%);
-  box-shadow: 0 0 16px rgba(158, 214, 255, 1);
-}
-
-.soul-push-label {
-  padding-top: 1px;
-}
-
-.soul-push-chip.active {
-  opacity: 1;
-  transform: translateY(-1px);
-  box-shadow: 0 0 18px rgba(175, 225, 255, 1), 0 0 40px rgba(143, 205, 255, 0.9);
-}
-
-.soul-input-hint {
-  font-size: 11px;
-  color: var(--eva-text-sub);
-  text-align: right;
-}
-
-.soul-notes {
-  width: 100%;
-  min-height: 92px;
-  max-height: 140px;
-  resize: vertical;
-  border-radius: 14px;
-  border: 1px solid rgba(151, 187, 241, 0.85);
-  background: radial-gradient(circle at top, rgba(25, 40, 88, 0.95), rgba(8, 12, 32, 0.98));
-  padding: 8px 10px;
-  font-family: inherit;
-  font-size: 12px;
-  color: var(--eva-text-main);
-  outline: none;
-  box-shadow: inset 0 0 14px rgba(10, 18, 46, 0.9);
-}
-
-.soul-notes::placeholder {
-  color: rgba(156, 176, 215, 0.9);
-}
-
-/* result */
-.soul-result-shell {
-  margin-top: 8px;
-  padding: 10px 12px 12px;
-  border-radius: 16px;
-  background: linear-gradient(
-    135deg,
-    rgba(7, 14, 34, 0.96),
-    rgba(10, 18, 42, 0.98),
-    rgba(14, 26, 60, 0.98)
-  );
-  border: 1px solid rgba(163, 195, 244, 0.9);
-  box-shadow: 0 0 26px rgba(74, 128, 228, 0.9);
-}
-
-.soul-result-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  color: var(--eva-text-sub);
-  margin-bottom: 6px;
-}
-
-.soul-result-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: radial-gradient(circle, #a4ffcf 0, #3ad983 85%);
-  box-shadow: 0 0 14px rgba(125, 234, 167, 1);
-}
-
-.soul-result-text {
-  min-height: 72px;
-  max-height: 160px;
-  overflow-y: auto;
-  font-size: 12px;
-  line-height: 1.6;
-  color: rgba(224, 236, 255, 0.96);
-  padding-right: 4px;
-  margin-bottom: 6px;
-}
-
-/* birds row */
-.soul-birds-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 2px;
-}
-
-.soul-bird-chip {
-  flex: 1;
-  padding: 7px 8px;
-  border-radius: 12px;
-  background: radial-gradient(circle at top, rgba(20, 32, 74, 0.9), rgba(8, 14, 32, 0.98));
-  border: 1px solid rgba(140, 176, 236, 0.9);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.soul-bird-avatar-wrap {
-  position: relative;
-  width: 32px;
-  height: 32px;
-}
-
-.soul-bird-avatar {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
-}
-
-.soul-bird-halo {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  opacity: 0.95;
-  mix-blend-mode: screen;
-  filter: blur(6px);
-}
-
-.soul-bird-halo-ajin {
-  background: radial-gradient(circle, rgba(255, 245, 184, 0.9), rgba(255, 201, 82, 0.2));
-}
-
-.soul-bird-halo-migou {
-  background: radial-gradient(circle, rgba(255, 197, 230, 0.95), rgba(255, 158, 211, 0.2));
-}
-
-.soul-bird-halo-gungun {
-  background: radial-gradient(circle, rgba(191, 231, 255, 0.95), rgba(120, 203, 255, 0.2));
-}
-
-.soul-bird-name {
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  font-family: "Orbitron", system-ui, sans-serif;
-  text-transform: uppercase;
-  color: var(--eva-text-sub);
-  margin: 0;
-}
-
-.soul-bird-line {
-  font-size: 11px;
-  color: rgba(215, 231, 255, 0.96);
-  margin: 0;
-}
-
-/* submit button */
-.soul-submit {
-  position: absolute;
-  right: 22px;
-  bottom: 18px;
-  width: 48px;
-  height: 48px;
-  border-radius: 999px;
-  border: 1px solid rgba(157, 190, 246, 0.9);
-  background: radial-gradient(circle at top left, rgba(185, 220, 255, 0.75), rgba(10, 16, 40, 0.98));
-  box-shadow: 0 0 16px rgba(146, 192, 255, 0.9);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
-  outline: none;
-  padding: 0;
-  transition: box-shadow 0.16s ease, transform 0.16s ease, border-color 0.16s ease,
-    background 0.16s ease;
-}
-
-.soul-submit[disabled] {
-  opacity: 0.45;
-  box-shadow: 0 0 10px rgba(80, 110, 166, 0.6);
-}
-
-.soul-submit-arrow {
-  width: 0;
-  height: 0;
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent;
-  border-left: 10px solid rgba(237, 245, 255, 0.7);
-  filter: drop-shadow(0 0 6px rgba(192, 220, 255, 0.9));
-}
-
-.soul-submit.ready {
-  cursor: pointer;
-  opacity: 1;
-  border-color: rgba(202, 235, 255, 0.98);
-  background: radial-gradient(circle at top left, rgba(229, 244, 255, 0.92), rgba(28, 44, 92, 0.98));
-  box-shadow: 0 0 26px rgba(188, 229, 255, 1), 0 0 70px rgba(133, 204, 255, 0.96);
-}
-
-.soul-submit.ready:hover {
-  transform: translateY(-1px);
-}
-
-/* responsive：手機時上下堆疊 */
-@media (max-width: 900px) {
-  .soul-frame {
-    padding: 14px 16px;
-    grid-template-columns: 1fr;
-  }
-
-  .soul-nav {
-    position: absolute;
-    top: 10px;
-    left: 18px;
-    z-index: 3;
-    flex-direction: row;
-    width: auto;
-    border-radius: 999px;
-  }
-
-  .soul-main {
-    margin-left: 0;
-    margin-top: 40px;
-    grid-template-columns: 1fr;
-    padding: 18px 16px 20px;
-  }
-
-  .soul-panel-left {
-    padding-right: 0;
-    border-right: none;
-    border-bottom: 1px solid rgba(142, 179, 236, 0.6);
-    padding-bottom: 14px;
-    margin-bottom: 10px;
-  }
-
-  .soul-panel-right {
-    padding-left: 0;
-  }
-
-  .soul-questions-grid {
-    max-height: 220px;
-  }
-
-  .soul-submit {
-    right: 16px;
-    bottom: 14px;
-  }
+.answer-btn.ready {
+  opacity:1;
+  color:#a9cdff;
+  text-shadow:0 0 12px #a9cdff;
 }
