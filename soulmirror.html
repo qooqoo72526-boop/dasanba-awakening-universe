@@ -1,111 +1,77 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>靈魂照妖鏡｜A.I. PATTERN SCAN</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/universe_soul.css" />
-  <script src="js/shared.js" defer></script>
-<script src="js/soul.js" defer></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>A.I. PATTERN SCAN｜靈魂照妖鏡</title>
+
+<!-- 字體 -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet"/>
+
+<!-- 正確 CSS（你之前的錯是因為我給 universe_solu.css）-->
+<link rel="stylesheet" href="css/universe_soul.css" />
 </head>
+
 <body data-page="soulmirror">
 
-  <!-- 左側：極簡直立工具列（4 個點） -->
-  <nav class="eva-side-nav">
-    <a href="index.html" class="eva-nav-item" data-label="HOME">
-      <span class="eva-nav-icon"></span>
-    </a>
-    <a href="cosmic-post-station.html" class="eva-nav-item" data-label="POST">
-      <span class="eva-nav-icon"></span>
-    </a>
-    <a href="soulmirror.html" class="eva-nav-item eva-nav-item-active" data-label="MIRROR">
-      <span class="eva-nav-icon"></span>
-    </a>
-    <a href="gallery.html" class="eva-nav-item" data-label="GALLERY">
-      <span class="eva-nav-icon"></span>
-    </a>
-  </nav>
+<!-- ⭐ 星空背景 -->
+<canvas id="starfield"></canvas>
 
-  <main class="soul-shell">
-    <!-- 頂部標題：很乾淨，只保留功能性字 -->
-    <header class="soul-header">
-      <div class="soul-title-en">A.I. PATTERN SCAN</div>
-      <div class="soul-title-sub">- 情緒模式掃描</div>
-    </header>
+<!-- 左側導覽 -->
+<nav class="eva-side-nav">
+  <a href="index.html" class="eva-nav-item" data-label="HOME"><span class="eva-nav-icon"></span></a>
+  <a href="cosmic-post-station.html" class="eva-nav-item" data-label="POST"><span class="eva-nav-icon"></span></a>
+  <a href="soulmirror.html" class="eva-nav-item eva-nav-item-active" data-label="MIRROR"><span class="eva-nav-icon"></span></a>
+</nav>
 
-    <section class="soul-layout">
-      <!-- 左：題目列表 -->
-      <aside class="soul-column soul-questions">
-        <div class="soul-label">PROMPTS</div>
-        <div id="qList" class="soul-q-list"></div>
-      </aside>
+<main class="soul-container">
 
-      <!-- 中：掃描圈 + 輸入 -->
-      <section class="soul-column soul-center">
-        <div class="soul-scanner">
-          <div class="soul-ring">
-            <div class="soul-orbit soul-orbit-outer"></div>
-            <div class="soul-orbit soul-orbit-inner"></div>
-            <div class="soul-dot"></div>
-          </div>
-          <div id="currentQuestion" class="soul-current-q">
-            點左邊任一題目。
-          </div>
-          <button id="pushBtn" class="soul-push" type="button" disabled>
-            <span class="soul-push-text">PUSH</span>
-          </button>
-        </div>
+  <!-- 題目區 -->
+  <section class="soul-q-section">
+    <h2 class="soul-title">A.I. PATTERN SCAN</h2>
+    <p class="soul-sub">情緒模式掃描 · 25 題</p>
+    <div id="soulQuestions" class="soul-questions-grid"></div>
+  </section>
 
-        <div class="soul-answer-panel">
-          <textarea
-            id="answerArea"
-            class="soul-answer"
-            placeholder=""
-            disabled
-          ></textarea>
-        </div>
-      </section>
+  <!-- 三鳥 -->
+  <section class="soul-birds">
+    <div class="soul-bird">
+      <div class="soul-bird-img-wrap">
+        <img src="assets/icon_ajin.png" alt="AJIN">
+      </div>
+      <div class="soul-bird-tag">AJIN</div>
+      <p id="ajinLine" class="soul-bird-line"></p>
+    </div>
 
-      <!-- 右：AI 結果 + 三鳥一句話 -->
-      <section class="soul-column soul-result-col">
-        <div class="soul-label soul-label-right">OUTPUT</div>
-        <div id="analysisOutput" class="soul-result"></div>
+    <div class="soul-bird">
+      <div class="soul-bird-img-wrap">
+        <img src="assets/icon_migou.png" alt="MIGOU">
+      </div>
+      <div class="soul-bird-tag">MIGOU</div>
+      <p id="migouLine" class="soul-bird-line"></p>
+    </div>
 
-        <div class="soul-birds">
-          <div class="soul-bird">
-            <div class="soul-bird-img-wrap">
-              <img src="assets/icon_ajin.png" alt="Ajin" class="soul-bird-img" />
-            </div>
-            <div class="soul-bird-tag">AJIN</div>
-            <p id="ajinLine" class="soul-bird-line"></p>
-          </div>
-          <div class="soul-bird">
-            <div class="soul-bird-img-wrap">
-              <img src="assets/icon_migou.png" alt="Migou" class="soul-bird-img" />
-            </div>
-            <div class="soul-bird-tag">MIGOU</div>
-            <p id="migouLine" class="soul-bird-line"></p>
-          </div>
-          <div class="soul-bird">
-            <div class="soul-bird-img-wrap">
-              <img src="assets/icon_gungun.png" alt="Gungun" class="soul-bird-img" />
-            </div>
-            <div class="soul-bird-tag">GUNGUN</div>
-            <p id="gungunLine" class="soul-bird-line"></p>
-          </div>
-        </div>
-      </section>
-    </section>
+    <div class="soul-bird">
+      <div class="soul-bird-img-wrap">
+        <img src="assets/icon_gungun.png" alt="GUNGUN">
+      </div>
+      <div class="soul-bird-tag">GUNGUN</div>
+      <p id="gungunLine" class="soul-bird-line"></p>
+    </div>
+  </section>
 
-    <!-- 右下角送出箭頭：沒準備好前是灰的 -->
-    <button id="submitScan" class="soul-submit" type="button" disabled aria-label="送出">
-      <span class="soul-submit-arrow"></span>
-    </button>
-  </main>
+  <!-- 送出按鈕 -->
+  <button id="submitScan" class="soul-submit" type="button">
+    <span class="soul-submit-arrow">▶</span>
+  </button>
 
-  <script src="js/shared.js" defer></script>
+</main>
+
+<!-- JS 引用（這裡我確認正確） -->
+<script src="js/shared.js" defer></script>
 <script src="js/soul.js" defer></script>
+
 </body>
 </html>
