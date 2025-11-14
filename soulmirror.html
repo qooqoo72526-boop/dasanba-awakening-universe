@@ -3,83 +3,137 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Affective Vector Map</title>
+  <title>Affective Vector Map | Soul Mirror</title>
 
-  <link rel="stylesheet" href="css/universe_soul.css" />
+  <!-- 全站宇宙底層樣式（不要刪） -->
+  <link rel="stylesheet" href="css/universe.css" />
+  <!-- 照妖鏡專屬樣式 -->
+  <link rel="stylesheet" href="css/soulmirror.css" />
 </head>
-<body>
-  <!-- 左側極簡線條工具列 -->
-  <nav id="sideNav">
-    <div class="nav-item" data-label="HOME">
-      <span class="nav-line"></span>
-    </div>
-    <div class="nav-item" data-label="MIRROR">
-      <span class="nav-line"></span>
-    </div>
-    <div class="nav-item" data-label="POST">
-      <span class="nav-line"></span>
-    </div>
-    <div class="nav-item" data-label="GALLERY">
-      <span class="nav-line"></span>
-    </div>
+
+<body class="soul-body" data-page="soulmirror">
+  <!-- 1. 背景星霧（用 universe.css 裡的共用設定就好） -->
+  <div class="starry"></div>
+
+  <!-- 2. 2026 工具列（極簡 icon，文字 hover 才出現） -->
+  <nav class="neo-nav">
+    <a href="index.html" class="nav-item" data-label="HOME">
+      <span class="nav-icon">◎</span>
+      <span class="nav-text">HOME</span>
+    </a>
+    <a href="cosmic-post-station.html" class="nav-item" data-label="POST">
+      <span class="nav-icon">✉</span>
+      <span class="nav-text">POST</span>
+    </a>
+    <a href="gallery.html" class="nav-item" data-label="GALLERY">
+      <span class="nav-icon">✦</span>
+      <span class="nav-text">GALLERY</span>
+    </a>
+    <a href="soulmirror.html" class="nav-item active" data-label="SOUL">
+      <span class="nav-icon">◐</span>
+      <span class="nav-text">SOUL</span>
+    </a>
   </nav>
 
-  <section id="entryScreen">
-    <!-- 背景粒子能量圈 -->
-    <canvas id="particleRing"></canvas>
+  <main class="soul-main">
+    <!-- 3. 上方標題區 -->
+    <header class="soul-header">
+      <h1 class="title-en">AFFECTIVE VECTOR MAP</h1>
+      <p class="title-sub">模式，比答案更誠實。</p>
 
-    <!-- 主標題區 -->
-    <div class="title-block">
-      <h1 class="en-title">AFFECTIVE VECTOR MAP</h1>
-      <p class="subtitle">模式，比答案更誠實。</p>
-    </div>
+      <section class="intro-copy">
+        <h2 class="intro-q">你認為，你正在「如何運作」？</h2>
+        <p>
+          那是一種默默形成的節奏——你怎麼看、怎麼選、怎麼避，甚至怎麼等待。<br />
+          這些模式會浮現在你的選擇之間，而不是你說出的任何內容。
+        </p>
+        <p>
+          接下來的 25 張情緒向量卡，會讓你看見自己正在運行的「默認程式」。<br />
+          不用端出完美答案，只要誠實點下，你的 AI 向量圖就會被繪製出來。
+        </p>
+      </section>
+    </header>
 
-    <!-- 開場文案 -->
-    <div class="intro">
-      <p class="intro-q"><strong>你認為，你正在「如何運作」？</strong></p>
-      <p>
-        那是一種默默形成的節奏——你怎麼看、怎麼選、怎麼避、甚至怎麼等待。<br />
-        那些細微的偏移與停頓，比語言更早暴露你。
-      </p>
-      <p>
-        這裡不解讀你的故事，只捕捉你的行為噪點。<br />
-        當你開始選擇，你的模式便會開始顯影。
-      </p>
-    </div>
+    <!-- 4. 入口能量圈 Stage 1 -->
+    <section id="stage-intro" class="stage stage-intro">
+      <div class="portal">
+        <div class="ring ring-back"></div>
+        <div class="ring ring-mid"></div>
+        <div class="ring ring-front"></div>
+        <button id="enterBtn" class="enter-btn">
+          ENTER
+          <span class="enter-glow"></span>
+        </button>
+      </div>
+    </section>
 
-    <!-- ENTER 按鈕 -->
-    <button id="startBtn" class="glow-btn">
-      <span>ENTER</span>
-    </button>
+    <!-- 5. 題目能量卡 Stage 2 -->
+    <section id="stage-questions" class="stage stage-questions hidden">
+      <div class="energy-orbit">
+        <div class="orbit-ring orbit-ring-1"></div>
+        <div class="orbit-ring orbit-ring-2"></div>
+        <div class="orbit-core"></div>
+      </div>
 
-    <!-- 問題卡片層 -->
-    <div id="questionLayer">
-      <div class="q-card">
-        <div class="q-inner">
-          <div class="q-header-dot"></div>
-          <div class="q-body">
-            <p class="q-title">
-              最近的你，把情緒收得太乾淨了。不是平靜，是你懶得再讓任何人失望。
-            </p>
-            <div class="q-options">
-              <button class="option-pill">
-                我沒有在等誰懂我了，安全是靠自己營造的。
-              </button>
-              <button class="option-pill">
-                我其實很累，但比起解釋，我更想快轉人生。
-              </button>
-              <button class="option-pill">
-                身邊的人只看到我乖的一面，亂的一面我都藏起來。
-              </button>
-              <button class="option-pill">
-                我偶爾會幻想有人能看穿我，但通常不抱希望。
-              </button>
-            </div>
+      <div class="card-shell">
+        <div id="qCard" class="q-card">
+          <div class="q-index" id="qIndex">Q01</div>
+          <p class="q-text" id="qText"></p>
+        </div>
+
+        <div class="options" id="options"></div>
+
+        <div class="free-note">
+          <label for="freeText">還有什麼想補充的，可以寫在這裡（選填）：</label>
+          <textarea id="freeText" rows="3" placeholder="想說的話，也會一起被送進向量圖。"></textarea>
+        </div>
+
+        <button id="nextBtn" class="next-btn disabled">
+          下一張向量卡
+        </button>
+      </div>
+    </section>
+
+    <!-- 6. 結果 Stage 3 -->
+    <section id="stage-result" class="stage stage-result hidden">
+      <div class="result-orbit">
+        <div class="result-ring result-ring-1"></div>
+        <div class="result-ring result-ring-2"></div>
+        <div class="result-core"></div>
+      </div>
+
+      <div class="result-panel">
+        <h2 class="result-title">AI VECTOR SUMMARY</h2>
+        <p class="result-tagline">以下是你的情緒運作向量。</p>
+
+        <article class="result-analysis" id="resultAnalysis">
+          正在繪製你的向量圖…
+        </article>
+
+        <div class="result-birds">
+          <div class="bird-block">
+            <img src="assets/icon_ajin.png" alt="AJIN" class="bird-icon" />
+            <h3>AJIN</h3>
+            <p id="ajinLine"></p>
+          </div>
+          <div class="bird-block">
+            <img src="assets/icon_migou.png" alt="MIGOU" class="bird-icon" />
+            <h3>MIGOU</h3>
+            <p id="migouLine"></p>
+          </div>
+          <div class="bird-block">
+            <img src="assets/icon_gungun.png" alt="GUNGUN" class="bird-icon" />
+            <h3>GUNGUN</h3>
+            <p id="gungunLine"></p>
           </div>
         </div>
+
+        <button id="restartBtn" class="restart-btn">
+          再看一次自己的模式
+        </button>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <script src="js/soul.js"></script>
 </body>
