@@ -1,192 +1,181 @@
-/* ======= 2026 銀藍宇宙背景 ======= */
-.soul-body {
+/* ================================
+   2026 AFFECTIVE VECTOR MAP
+   星霧科技感 + 霧面玻璃 + 立體層深度
+=================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;600&display=swap');
+
+body.soul-body {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
+    font-family: 'Orbitron','Noto Sans TC',sans-serif;
+    color: #E8EEFF;
     overflow: hidden;
-    background: radial-gradient(circle at 60% 50%, #1f2f55, #0b1326 70%, #050910);
-    font-family: "Orbitron", "Noto Sans TC", sans-serif;
-    color: #cfe2ff;
-    position: relative;
+    background: radial-gradient(circle at 50% 20%, #1C2955, #0B1227);
 }
 
-/* 星點 */
+/* ===== 星霧背景 ===== */
+
 .soul-body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("../assets/stars.png");
-    opacity: 0.35;
-    animation: starFloat 18s linear infinite;
-}
-@keyframes starFloat {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-8%); }
+    content:"";
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: url('/assets/stardust.png') repeat;
+    opacity:0.35;
+    animation: drift 18s linear infinite;
+    z-index:-2;
 }
 
-/* ======= 工具列（左側垂直線條） ======= */
+@keyframes drift {
+    from { transform: translateY(0); }
+    to { transform: translateY(-800px); }
+}
+
+/* ===== 工具列（左側）===== */
+
 .soul-nav {
     position: fixed;
-    top: 50%;
-    left: 32px;
-    transform: translateY(-50%);
+    top: 40%;
+    left: 40px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    z-index: 20;
-}
-
-.nav-icon {
-    position: relative;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    opacity: 0.6;
-    transition: 0.3s ease;
-}
-
-.nav-icon:hover {
-    opacity: 1;
-}
-
-.icon-line {
-    position: absolute;
-    inset: 0;
-    border: 2px solid rgba(170, 200, 255, 0.4);
-    border-radius: 50%;
-    transition: 0.3s ease;
-}
-
-.nav-icon:hover .icon-line {
-    box-shadow: 0 0 12px #7fb7ff;
-}
-
-.nav-icon .text {
-    position: absolute;
-    top: 50%;
-    left: 48px;
-    transform: translateY(-50%);
-    white-space: nowrap;
-    opacity: 0;
-    color: #cfe7ff;
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    transition: 0.3s ease;
-}
-
-.nav-icon:hover .text {
-    opacity: 1;
-}
-
-/* ======= 標題 ======= */
-.soul-header {
-    position: fixed;
-    top: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    color: #d5e6ff;
-}
-
-.soul-header h1 {
-    font-size: 28px;
-    letter-spacing: 0.25em;
-    margin: 0;
-}
-
-.soul-header .subtitle {
-    margin-top: 6px;
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    opacity: 0.75;
-}
-
-/* ======= 卡片群 ======= */
-.card-field {
-    position: absolute;
-    top: 54%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70vw;
-    height: 60vh;
-}
-
-.card-wrap {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-/* 單一卡片 */
-.card {
-    position: absolute;
-    width: 130px;
-    height: 180px;
-    background: rgba(180, 210, 255, 0.07);
-    border: 1px solid rgba(150, 180, 255, 0.28);
-    border-radius: 18px;
-    backdrop-filter: blur(10px);
-    color: white;
-    text-align: center;
-    padding-top: 58px;
-    font-size: 24px;
-    letter-spacing: 0.1em;
-    box-shadow: 0 0 18px rgba(130, 180, 255, 0.25);
-    transition: all 0.6s cubic-bezier(.21,.98,.6,1);
-    cursor: pointer;
-}
-
-/* 懸浮微動 */
-.card:hover {
-    transform: translateY(-18px) scale(1.03);
-    box-shadow: 0 0 28px rgba(150, 200, 255, 0.5);
-}
-
-/* ======= 飛出 + 翻轉 ======= */
-.card.active {
+    gap: 20px;
     z-index: 999;
-    transform: translate(-50%, -50%) scale(2.4) rotateY(180deg);
-    left: 50% !important;
-    top: 50% !important;
-    box-shadow: 0 0 38px rgba(170, 220, 255, 0.95);
 }
 
-/* ======= 題目面 ======= */
-.question-panel {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 520px;
-    height: 300px;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    transition: 0.6s ease;
-    z-index: 9999;
+.soul-nav .nav-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.15);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition: 0.3s ease;
+    cursor: pointer;
 }
 
-.question-panel.show {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+.soul-nav .nav-icon:hover {
+    background: rgba(255,255,255,0.18);
+    transform: translateX(6px);
+    box-shadow: 0 0 12px rgba(149,188,255,0.55);
 }
 
-.question-card {
-    width: 100%;
-    height: 100%;
-    border-radius: 22px;
-    background: rgba(200, 225, 255, 0.08);
-    border: 1px solid rgba(150, 180, 255, 0.4);
-    backdrop-filter: blur(16px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.soul-nav .nav-icon span {
+    opacity:0;
+    position:absolute;
+    left:55px;
+    color:#C7D7FF;
+    font-size:12px;
+    letter-spacing:1px;
+    transition:0.3s ease;
 }
 
-.q-inner {
-    font-size: 20px;
-    text-align: center;
-    padding: 20px;
-    line-height: 1.8em;
-    color: #e9f2ff;
-    letter-spacing: 0.1em;
+.soul-nav .nav-icon:hover span {
+    opacity:1;
+}
+
+/* ===== 主標題 ===== */
+
+h1.main-en {
+    margin-top: 80px;
+    text-align:center;
+    font-size:36px;
+    letter-spacing:0.15em;
+    color:#E5EBFF;
+}
+
+h2.main-cn {
+    text-align:center;
+    margin-top: -10px;
+    font-size:14px;
+    color:#9EB3FF;
+    opacity:0.85;
+}
+
+.tagline {
+    text-align:center;
+    margin-top:10px;
+    color:#D0D8FF;
+    font-size:13px;
+    opacity:0.75;
+}
+
+/* ===== 卡片選單 ===== */
+
+#vector-cards {
+    width: 80%;
+    margin: 50px auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+}
+
+.card {
+    height: 96px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    border:1px solid rgba(255,255,255,0.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#E3EBFF;
+    letter-spacing:0.1em;
+    font-size:20px;
+    cursor:pointer;
+    transition:0.35s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(130,172,255,0.35);
+    background: rgba(255,255,255,0.12);
+}
+
+/* ===== 題目顯示卡 ===== */
+
+#activeCard {
+    width: 420px;
+    height: 520px;
+    margin: 40px auto 0 auto;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(18px);
+    border-radius: 28px;
+    border:1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 0 65px rgba(135,172,255,0.25);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 36px;
+    text-align:center;
+    animation: fadeIn 0.4s ease;
+}
+
+#questionText {
+    font-size:20px;
+    line-height:1.6;
+    letter-spacing:0.05em;
+}
+
+/* 亮圈按鈕 */
+
+#answerBtn {
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    background: radial-gradient(circle, #A7C2FF, #7395FF);
+    box-shadow: 0 0 18px rgba(129,167,255,0.8);
+    transition:0.3s;
+}
+
+#answerBtn:hover {
+    transform: scale(1.18);
+    box-shadow: 0 0 30px rgba(149,188,255,1);
 }
