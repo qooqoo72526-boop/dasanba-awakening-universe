@@ -1,148 +1,386 @@
-/* ===========================================
-   Soul Mirror 專屬視覺層（卡片╳能量圈╳科技 UI）
-   =========================================== */
+/* SOUL MIRROR – AFFECTIVE VECTOR MAP
+   2026 銀藍科技版：背景＋卡片＋工具列
+   只服務 soulmirror.html，不會影響首頁 / 宇宙郵局
+*/
 
-/* 字體設定：未來科技感 */
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+/* ---------- 共用底色 / 字體 ---------- */
+:root {
+  --bg-deep: #031021;
+  --bg-mid:  #071c3a;
+  --bg-soft: #0e2750;
+  --accent:  #7fd0ff;
+  --accent-soft: rgba(127, 208, 255, 0.35);
+  --text-main: #e7f2ff;
+  --text-sub:  #9fb3d9;
+}
 
-.soul-body {
+body.soul-body {
   margin: 0;
-  padding: 0;
-  font-family: 'Orbitron','Noto Sans TC', sans-serif;
-  color: #E8F1FF;
-  background: transparent;
+  min-height: 100vh;
+  color: var(--text-main);
+  background:
+    radial-gradient(circle at 15% 0%, #1c4f9b 0, transparent 55%),
+    radial-gradient(circle at 85% 100%, #3e73ff 0, transparent 55%),
+    radial-gradient(120% 200% at 50% 0%, #020815 0, #020711 60%, #000309 100%);
+  font-family: "Orbitron", system-ui, -apple-system, BlinkMacSystemFont,
+    "Noto Sans TC", sans-serif;
+  letter-spacing: 0.08em;
   overflow-x: hidden;
 }
 
-/* 版心布局 */
-.soul-container {
-  width: 100%;
-  max-width: 1600px;
-  margin: auto;
-  padding-top: 140px;
-}
-
-/* 主標題 */
-.soul-title {
-  text-align: center;
-  font-size: 32px;
-  letter-spacing: 0.22em;
-  font-weight: 400;
-  color: #BFD9FF;
-  margin-bottom: 20px;
-}
-
-/* 副標 */
-.soul-sub {
-  text-align: center;
-  font-size: 14px;
-  opacity: .55;
-  letter-spacing: .25em;
-  margin-bottom: 50px;
-}
-
-/* ====== 卡片列 ====== */
-.soul-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 22px;
-  max-width: 780px;
-  margin: 0 auto 80px auto;
-}
-
-/* 單一卡片 */
-.soul-card {
-  width: 100%;
-  padding: 22px 0;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255,255,255,0.25);
-  text-align: center;
-  font-size: 16px;
-  letter-spacing: .15em;
-  cursor: pointer;
-
-  /* 3D 基底 */
-  transform-style: preserve-3d;
-  transition: transform .45s cubic-bezier(.22,.61,.36,1),
-              box-shadow .45s;
-}
-
-/* Hover 效果：漂浮 + 光暈 */
-.soul-card:hover {
-  transform: translateY(-12px) scale(1.05);
-  box-shadow: 0 0 28px rgba(130,180,255,0.55);
-  border-color: rgba(255,255,255,0.45);
-}
-
-/* ====== 題目展示框 ====== */
-.soul-active-box {
-  width: 540px;
-  margin: 0 auto;
-  padding: 40px 30px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, .07);
-  border: 1px solid rgba(255,255,255,.22);
-  backdrop-filter: blur(22px);
-  text-align: center;
-  font-size: 22px;
-  letter-spacing: .1em;
-  color: #E8F1FF;
-  min-height: 160px;
-
-  /* 啟動能量圈 */
-  position: relative;
-  animation: soulPulse 2.8s infinite ease-in-out;
-}
-
-@keyframes soulPulse {
-  0% { box-shadow: 0 0 20px rgba(145,195,255,.25); }
-  50% { box-shadow: 0 0 40px rgba(145,195,255,.65); }
-  100% { box-shadow: 0 0 20px rgba(145,195,255,.25); }
-}
-
-/* ====== 工具列線條 ICON ====== */
-.neo-nav {
+/* 背景星點，讓 shared.js 或後續 canvas 有空間用 */
+#spaceParticles {
   position: fixed;
-  left: 40px;
-  top: 140px;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---------- 整體排版 ---------- */
+
+.soul-body {
+  position: relative;
+  z-index: 1;
+}
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 72px 32px 56px;
+  display: grid;
+  grid-template-columns: 72px 1fr 1.1fr;
+  gap: 32px;
+  box-sizing: border-box;
+}
+
+/* ---------- 工具列：左側 4 顆圓點 icon ---------- */
+
+.neo-nav {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 18px;
+  padding-top: 40px;
 }
 
 .nav-item {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(135, 187, 255, 0.3);
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 55%)
+              ,rgba(5, 18, 50, 0.7);
+  box-shadow: 0 0 8px rgba(120, 180, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    box-shadow 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.nav-item::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  border: 1px solid rgba(170, 215, 255, 0.75);
+  box-shadow: 0 0 8px rgba(180, 230, 255, 0.8);
+}
+
+.nav-item.home::before {
+  border-radius: 2px;
+  border-bottom-width: 3px;
+}
+
+.nav-item.post::before {
+  border-radius: 50%;
+}
+
+.nav-item.gallery::before {
+  border-radius: 999px;
+  border-width: 1px;
+}
+
+.nav-item.soul::before {
+  border-radius: 12px;
+  border-width: 2px;
+}
+
+.nav-item:hover {
+  transform: translateX(3px) scale(1.04);
+  box-shadow:
+    0 0 10px rgba(127, 208, 255, 0.8),
+    0 0 25px rgba(60, 130, 255, 0.6);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), transparent 60%),
+    rgba(5, 26, 80, 0.95);
+}
+
+.nav-item .nav-text {
+  position: absolute;
+  left: 34px;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--text-sub);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.nav-item:hover .nav-text {
+  opacity: 1;
+  transform: translate(4px, -50%);
+}
+
+/* ---------- 標題區 ---------- */
+
+.soul-header {
+  padding-top: 8px;
+  align-self: flex-start;
+}
+
+.title-en {
+  font-size: 18px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #c1d9ff;
+  margin: 0 0 8px;
+}
+
+.title-cn {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin: 0 0 4px;
+}
+
+.title-sub {
+  font-size: 11px;
+  color: rgba(178, 206, 255, 0.75);
+  text-transform: none;
+}
+
+/* ---------- 題目卡片 3D 區 ---------- */
+
+.card-field {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-container {
+  position: relative;
+  width: 460px;
+  height: 260px;
+  perspective: 1400px;
+}
+
+/* 一開始在後方排隊的 25 張卡片 */
+.card-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.card {
+  width: 240px;
+  height: 160px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255,255,255,0.18), transparent 55%),
+    linear-gradient(145deg, rgba(47, 118, 211, 0.7), rgba(10, 39, 95, 0.95));
+  border: 1px solid rgba(166, 212, 255, 0.85);
+  box-shadow:
+    0 0 18px rgba(74, 145, 255, 0.6),
+    0 0 60px rgba(29, 82, 178, 0.9);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  transform-style: preserve-3d;
+  transform:
+    translate3d(0, 0, -120px)
+    rotateX(18deg)
+    rotateY(-12deg);
+  opacity: 0;
   cursor: pointer;
-  opacity: 0.75;
-  transition: opacity .25s;
+  transition:
+    transform 0.35s cubic-bezier(0.19, 1, 0.22, 1),
+    box-shadow 0.35s ease,
+    opacity 0.35s ease;
 }
 
-.nav-item:hover { opacity: 1; }
-
-.nav-icon {
-  width: 28px;
-  height: 28px;
-  border: 1.6px solid rgba(255,255,255,0.45);
-  border-radius: 8px;
-  position: relative;
+.card-index {
+  font-size: 26px;
+  font-weight: 600;
+  opacity: 0.85;
 }
 
-/* icon 畫線效果 */
-.nav-icon::after {
-  content:'';
-  position:absolute;
-  inset: 6px;
-  border: 1px solid rgba(255,255,255,0.35);
-  border-radius: 4px;
-}
-
-.nav-text {
+.card-label {
   margin-top: 6px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(221, 236, 255, 0.8);
+}
+
+/* 卡片漂浮時的微動 */
+.card-slot:hover .card {
+  transform:
+    translate3d(0, -6px, -80px)
+    rotateX(16deg)
+    rotateY(-8deg);
+  box-shadow:
+    0 0 22px rgba(132, 214, 255, 0.9),
+    0 0 70px rgba(35, 129, 255, 0.95);
+}
+
+/* 被選中 → 飛到中央 */
+.card--active {
+  opacity: 1 !important;
+  transform:
+    translate3d(0, 0, 120px)
+    rotateX(0deg)
+    rotateY(0deg)
+    scale(1.08);
+}
+
+/* ---------- 題目文字彈出區 ---------- */
+
+.question-panel {
+  position: fixed;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  max-width: calc(100% - 40px);
+  padding: 26px 26px 30px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 0 0, rgba(255,255,255,0.45), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(102, 190, 255, 0.45), transparent 55%),
+    rgba(5, 13, 36, 0.98);
+  box-shadow:
+    0 0 32px rgba(148, 214, 255, 0.9),
+    0 0 110px rgba(50, 130, 255, 0.95);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  backdrop-filter: blur(18px);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: center center;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.question-panel.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.question-panel.hidden {
+  transform: translate(-50%, -50%) scale(0.96);
+}
+
+.question-glow {
   font-size: 12px;
-  letter-spacing: .15em;
-  opacity: .65;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(188, 222, 255, 0.85);
+}
+
+#questionText {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  line-height: 1.9;
+}
+
+/* 送出按鈕（先保留，但文字你可以在 HTML 自己改） */
+.submit-btn {
+  align-self: flex-end;
+  width: 120px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  font-size: 11px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: #021024;
+  background:
+    radial-gradient(circle at 30% 0, #ffffff, #b4e0ff);
+  box-shadow:
+    0 0 14px rgba(177, 233, 255, 0.9),
+    0 0 32px rgba(124, 203, 255, 0.8);
+  cursor: pointer;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.06);
+  box-shadow:
+    0 0 20px rgba(188, 239, 255, 0.95),
+    0 0 42px rgba(134, 216, 255, 0.9);
+}
+
+.submit-btn.disabled {
+  opacity: 0.4;
+  cursor: default;
+  box-shadow: none;
+}
+
+/* ---------- RWD ---------- */
+
+@media (max-width: 960px) {
+  main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 60px 20px 40px;
+  }
+
+  .neo-nav {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-top: 0;
+  }
+
+  .nav-item .nav-text {
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+
+  .card-field {
+    margin-top: 24px;
+  }
+
+  .card-container {
+    width: 100%;
+  }
+
+  .question-panel {
+    top: auto;
+    bottom: 30px;
+    transform: translate(-50%, 0);
+  }
+
+  .question-panel.visible {
+    transform: translate(-50%, 0) scale(1);
+  }
 }
