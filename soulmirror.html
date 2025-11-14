@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Affective Vector Map｜Soul Mirror</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Affective Vector Map</title>
+
+    <!-- 主要 CSS -->
     <link rel="stylesheet" href="css/universe_soul.css">
 </head>
 
 <body>
+    <!-- ░░ 1｜左側極簡線條工具列 ░░ -->
+    <nav id="sideNav">
+        <div class="nav-item" data-label="Home">
+            <span class="nav-line"></span>
+        </div>
+        <div class="nav-item" data-label="Mirror">
+            <span class="nav-line"></span>
+        </div>
+        <div class="nav-item" data-label="Post">
+            <span class="nav-line"></span>
+        </div>
+        <div class="nav-item" data-label="Gallery">
+            <span class="nav-line"></span>
+        </div>
+    </nav>
 
-<!-- ░░ 顆粒星雲背景（AI 科技艙）░░ -->
-<canvas id="spaceParticles"></canvas>
+    <!-- ░░ 2｜能量圈 + 主標區 ░░ -->
+    <section id="entryScreen">
+        <canvas id="particleRing"></canvas>
 
-<!-- ░░ 工具列（極簡線條 Icon）░░ -->
-<nav class="neo-nav">
-    <a href="index.html" class="nav-item">
-        <span class="nav-icon">⌂</span>
-        <span class="nav-text">HOME</span>
-    </a>
-    <a href="cosmic-post-station.html" class="nav-item">
-        <span class="nav-icon">✉</span>
-        <span class="nav-text">POST</span>
-    </a>
-    <a href="gallery.html" class="nav-item">
-        <span class="nav-icon">✦</span>
-        <span class="nav-text">GALLERY</span>
-    </a>
-    <a href="soulmirror.html" class="nav-item active">
-        <span class="nav-icon">🜂</span>
-        <span class="nav-text">SOUL</span>
-    </a>
-</nav>
+        <div class="title-block">
+            <h1 class="en">AFFECTIVE VECTOR MAP</h1>
+            <p class="subtitle">模式，比答案更誠實。</p>
+        </div>
 
-<!-- ░░ 頁面標題（AI 2026 科技感） ░░ -->
-<header class="soul-header">
-    <h1 class="title-en">AFFECTIVE VECTOR MAP</h1>
-    <h2 class="title-cn">情緒向量場</h2>
-    <p class="title-sub">模式比答案更誠實。</p>
-</header>
+        <div class="intro">
+            <p><strong>你認為，你正在「如何運作」？</strong></p>
+            <p>
+                那是一種默默形成的節奏——  
+                你怎麼看、怎麼選、怎麼避、甚至怎麼等待。  
+                這些偏移與停頓，比語言更早暴露你。
+            </p>
+            <p>
+                這裡不解讀你的故事，只捕捉你的行為噪點。  
+                當你開始選擇，你的模式便會開始顯影。
+            </p>
+        </div>
 
-<!-- ░░ 題目卡片 3D 區域 ░░ -->
-<section class="card-field">
-    <div id="cardContainer" class="card-container"></div>
-</section>
+        <!-- ░░ 3｜開始按鈕 ░░ -->
+        <button id="startBtn" class="glow-btn">
+            <span>ENTER</span>
+        </button>
+    </section>
 
-<!-- ░░ 題目彈出（卡片飛到中央後翻面） ░░ -->
-<div id="questionPanel" class="question-panel hidden">
-    <div class="question-glass">
-        <p id="questionText"></p>
-        <div class="submit-btn disabled" id="submitBtn">➤</div>
-    </div>
-</div>
-
-<script src="js/soul.js"></script>
+    <!-- JS -->
+    <script src="js/soul.js"></script>
 </body>
 </html>
