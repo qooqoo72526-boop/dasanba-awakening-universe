@@ -1,49 +1,110 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AFFECTIVE VECTOR MAP</title>
-  <link rel="stylesheet" href="css/universe_soul.css">
+  <link rel="stylesheet" href="css/universe_soul.css" />
 </head>
 
-<body class="soul-body">
+<body class="soul-body" data-page="soulmirror">
+  <!-- 背景星場 -->
+  <canvas id="soulStarfield"></canvas>
 
-  <!-- ✦ 1. 左側極簡工具列 ✦ -->
+  <!-- 左側：線條圖示工具列 -->
   <nav class="soul-nav">
-      <a href="/" class="item">HOME</a>
-      <a href="/dialogue" class="item">POST</a>
-      <a href="/soulmirror" class="item active">VECTOR</a>
-      <a href="/gallery" class="item">GALLERY</a>
+    <a href="index.html" class="nav-node nav-home" data-label="HOME"></a>
+    <a href="cosmic-post-station.html" class="nav-node nav-post" data-label="POST"></a>
+    <a href="soulmirror.html" class="nav-node nav-vector active" data-label="VECTOR"></a>
+    <a href="gallery.html" class="nav-node nav-gallery" data-label="GALLERY"></a>
   </nav>
 
-  <!-- ✦ 2. 標題區 ✦ -->
-  <header class="soul-header">
-  <div class="sys-label">DA SAN BA · AWAKENING FIELD</div>
-  
-  <h1 class="title-en">AFFECTIVE VECTOR MAP</h1>
+  <main class="soul-main">
+    <!-- 標題：只留下這兩行 -->
+    <header class="soul-header">
+      <h1 class="title-en">AFFECTIVE VECTOR MAP</h1>
+      <h2 class="title-cn">情緒向量場｜模式；比答案更誠實</h2>
+    </header>
 
-  <h2 class="title-cn">
-    情緒向量場｜<span class="thin">模式；比答案更誠實</span>
-  </h2>
+    <!-- 主版面：左題目牆 + 右 AI 核心 -->
+    <section class="soul-layout">
+      <!-- 左：25 題卡片牆 -->
+      <section class="vector-panel">
+        <div id="vectorCards" class="vector-grid">
+          <!-- JS 會生出 25 張卡片 -->
+        </div>
+      </section>
 
-  <p class="tagline"></p>
-</header>
+      <!-- 右：中央主卡 + 答題 + 結果 -->
+      <section class="core-panel">
+        <!-- 中央 3D 主卡片 -->
+        <div id="activeCard" class="active-card">
+          <div class="active-inner">
+            <!-- 正面：能量圈 + 編號 -->
+            <div class="card-face card-front">
+              <div class="card-ring"></div>
+              <div class="card-index">—</div>
+            </div>
 
-  <!-- ✦ 3. 卡片題目區 ✦ -->
-  <section id="vector-cards" class="vector-cards"></section>
-
-  <!-- ✦ 4. 啟動後：中央翻轉卡片 ✦ -->
-  <div id="activeCard" class="active-card">
-      <div class="active-inner">
-          <div class="card-front"></div>
-
-          <div class="card-back">
-              <p id="questionText"></p>
-              <button id="answerBtn" class="answer-btn">→</button>
+            <!-- 背面：題目 + 答案 -->
+            <div class="card-face card-back">
+              <p id="questionText" class="card-question"></p>
+              <textarea
+                id="answerBox"
+                class="card-answer"
+                rows="4"
+                spellcheck="false"
+              ></textarea>
+              <!-- 右下角小圓鈕：lock / push -->
+              <button id="lockAnswer" class="answer-btn" type="button" aria-label="lock"></button>
+            </div>
           </div>
-      </div>
-  </div>
+        </div>
 
-<script src="js/soul.js"></script>
+        <!-- 底部：AI 結果區（含三鳥） -->
+        <div class="result-shell">
+          <!-- 左：主解析文字 + 能量圈 -->
+          <div class="result-main">
+            <div class="result-orbit"></div>
+            <div id="analysisOutput" class="result-text"></div>
+          </div>
+
+          <!-- 右：三鳥一句話 -->
+          <div class="result-birds">
+            <div class="bird bird-ajin">
+              <div class="bird-img-wrap">
+                <img src="assets/icon_ajin.png" alt="Ajin" class="bird-img" />
+              </div>
+              <div class="bird-tag">AJIN</div>
+              <p id="ajinLine" class="bird-line"></p>
+            </div>
+
+            <div class="bird bird-migou">
+              <div class="bird-img-wrap">
+                <img src="assets/icon_migou.png" alt="Migou" class="bird-img" />
+              </div>
+              <div class="bird-tag">MIGOU</div>
+              <p id="migouLine" class="bird-line"></p>
+            </div>
+
+            <div class="bird bird-gungun">
+              <div class="bird-img-wrap">
+                <img src="assets/icon_gungun.png" alt="Gungun" class="bird-img" />
+              </div>
+              <div class="bird-tag">GUNGUN</div>
+              <p id="gungunLine" class="bird-line"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- 右下：發射鍵（沒有文字，只有箭頭） -->
+    <button id="submitScan" class="soul-submit" type="button" disabled aria-label="scan">
+      <span class="soul-submit-arrow"></span>
+    </button>
+  </main>
+
+  <script src="js/soul.js"></script>
 </body>
 </html>
