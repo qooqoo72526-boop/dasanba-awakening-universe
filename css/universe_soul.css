@@ -1,139 +1,342 @@
-/* 全域設定 */
-body {
-    margin: 0;
-    background: radial-gradient(ellipse at center,
-        #f7f9ff 0%, #dfe7ff 45%, #bfc8e2 100%);
-    font-family: "Inter", "Noto Sans TC", sans-serif;
-    color: #121212;
-    overflow: hidden;
+/* === 全域 === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* ░░ 工具列 ░░ */
+body {
+  margin: 0;
+  font-family: "Inter", "Noto Sans TC", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  color: #11151f;
+  background: radial-gradient(
+    ellipse at center,
+    #f7f9ff 0%,
+    #dfe7ff 45%,
+    #bcc7e4 100%
+  );
+  overflow: hidden;
+}
+
+/* === 左側工具列（線條風）=== */
 #sideNav {
-    position: fixed;
-    left: 28px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
+  position: fixed;
+  left: 26px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  z-index: 30;
 }
 
 .nav-item {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    position: relative;
-    cursor: pointer;
+  width: 26px;
+  height: 26px;
+  position: relative;
+  cursor: pointer;
 }
 
 .nav-line {
-    width: 100%;
-    height: 2px;
-    background: rgba(0,0,0,0.25);
-    display: block;
-    margin-top: 13px;
-    transition: 0.3s ease;
-}
-
-.nav-item:hover .nav-line {
-    background: #000;
-    transform: scaleX(1.9);
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.22);
+  display: block;
+  margin-top: 12px;
+  transform-origin: left center;
+  transition: transform 0.26s ease, background 0.26s ease;
 }
 
 .nav-item::after {
-    content: attr(data-label);
-    position: absolute;
-    left: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    opacity: 0;
-    letter-spacing: 0.08em;
-    font-size: 12px;
-    transition: 0.25s ease;
+  content: attr(data-label);
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.26s ease;
+  pointer-events: none;
+}
+
+.nav-item:hover .nav-line {
+  background: rgba(0, 0, 0, 0.78);
+  transform: scaleX(1.9);
 }
 
 .nav-item:hover::after {
-    opacity: 1;
+  opacity: 1;
 }
 
-/* ░░ 中央區塊 ░░ */
+/* === 主畫面容器 === */
 #entryScreen {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
 #particleRing {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0; left: 0;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* 主標 */
+/* === 主標題區 === */
 .title-block {
-    position: absolute;
-    top: 18%;
-    width: 100%;
-    text-align: center;
+  position: absolute;
+  top: 11%;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
 }
 
-.title-block .en {
-    font-size: 42px;
-    letter-spacing: 0.18em;
-    font-weight: 300;
-    color: rgba(0,0,0,0.7);
+.en-title {
+  font-size: 42px;
+  letter-spacing: 0.18em;
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.75);
+  text-transform: uppercase;
 }
 
 .subtitle {
-    margin-top: 14px;
-    font-size: 16px;
-    letter-spacing: 0.2em;
-    color: rgba(0,0,0,0.55);
+  margin-top: 12px;
+  font-size: 14px;
+  letter-spacing: 0.24em;
+  color: rgba(0, 0, 0, 0.55);
 }
 
-/* 文案區 */
+/* === 開場文案 === */
 .intro {
-    position: absolute;
-    top: 36%;
-    width: 100%;
-    text-align: center;
-    line-height: 1.7;
-    font-size: 15px;
-    color: rgba(0,0,0,0.78);
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+  color: rgba(0, 0, 0, 0.78);
+  line-height: 1.8;
+  font-size: 14px;
+  transition: opacity 0.45s ease, transform 0.45s ease;
 }
 
-/* ░░ START 按鈕 ░░ */
+.intro-q {
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+/* === ENTER 按鈕 === */
 .glow-btn {
-    position: absolute;
-    bottom: 12%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: transparent;
-    border: none;
-    font-size: 18px;
-    letter-spacing: 0.3em;
-    color: rgba(0,0,0,0.85);
-    cursor: pointer;
-    padding: 16px 36px;
+  position: absolute;
+  bottom: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 17px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.78);
+  padding: 16px 40px;
 }
 
 .glow-btn span {
-    position: relative;
+  position: relative;
 }
 
 .glow-btn span::after {
-    content: "";
-    position: absolute;
-    left: 0; bottom: -6px;
-    width: 100%;
-    height: 2px;
-    background: rgba(0,0,0,0.2);
-    transition: 0.3s;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 0, 0, 0.25);
+  transform-origin: left center;
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .glow-btn:hover span::after {
-    background: #000;
-    transform: scaleX(1.3);
+  background: rgba(0, 0, 0, 0.9);
+  transform: scaleX(1.24);
+}
+
+/* === 問題卡片層 === */
+#questionLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  z-index: 3;
+}
+
+/* 玻璃卡片本體 */
+.q-card {
+  width: min(620px, 88vw);
+  perspective: 1400px;
+}
+
+.q-inner {
+  position: relative;
+  padding: 26px 26px 22px;
+  border-radius: 24px;
+  background: radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.85),
+      rgba(230, 236, 255, 0.82)
+    )
+    border-box;
+  box-shadow: 0 24px 60px rgba(44, 68, 130, 0.35);
+  backdrop-filter: blur(22px);
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: translate3d(0, 38px, -220px) scale(0.9) rotateY(-16deg);
+}
+
+/* 進場動畫 class */
+.q-card-enter .q-inner {
+  animation: cardEnter 0.7s cubic-bezier(0.19, 1, 0.22, 1) forwards,
+    cardFloat 10s ease-in-out infinite 0.8s;
+}
+
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 38px, -220px) scale(0.9) rotateY(-16deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -6px, 40px) scale(1.02) rotateY(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
+  }
+}
+
+/* 漂浮微 3D 動作 */
+@keyframes cardFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) rotateX(1.6deg) rotateY(-1.4deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  }
+}
+
+/* 卡片左上小光點 */
+.q-header-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at center,
+    #ffffff,
+    rgba(100, 155, 255, 0.2)
+  );
+  box-shadow: 0 0 18px rgba(130, 190, 255, 0.9);
+  margin-bottom: 14px;
+}
+
+/* 題目文字 */
+.q-body {
+  color: #101320;
+}
+
+.q-title {
+  font-size: 16px;
+  line-height: 1.8;
+  margin: 0 0 22px;
+  letter-spacing: 0.04em;
+}
+
+/* 選項 pills */
+.q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-pill {
+  width: 100%;
+  border-radius: 999px;
+  border: 0;
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.7;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(8, 12, 28, 0.9);
+  box-shadow: 0 10px 30px rgba(50, 70, 120, 0.18);
+  backdrop-filter: blur(16px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease, color 0.2s ease;
+}
+
+.option-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 38px rgba(35, 70, 140, 0.28);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 1),
+    rgba(210, 224, 255, 0.96)
+  );
+}
+
+/* === 模式：進入「題目模式」後的狀態 === */
+#entryScreen.mode-question .intro {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+#entryScreen.mode-question .glow-btn {
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  pointer-events: none;
+}
+
+#entryScreen.mode-question #questionLayer {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* RWD */
+@media (max-width: 768px) {
+  .en-title {
+    font-size: 30px;
+    letter-spacing: 0.14em;
+  }
+  .subtitle {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+  }
+  .intro {
+    top: 28%;
+    padding: 0 26px;
+    font-size: 13px;
+  }
+  .q-card {
+    width: 90vw;
+  }
+  .q-title {
+    font-size: 14px;
+  }
+  .option-pill {
+    font-size: 12px;
+  }
 }
