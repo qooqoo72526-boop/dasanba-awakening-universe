@@ -614,3 +614,65 @@ body[data-page="soulmirror"] {
     transform: scale(1.18);
     opacity: 0.6;
   }
+   
+ /* 結果區淡淡掃描線 */
+.soul-result {
+  position: relative;
+  overflow: hidden;
+}
+
+.soul-result::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  opacity: 0.0;
+  pointer-events: none;
+  animation: soulScan 3.6s linear infinite;
+}
+
+@keyframes soulScan {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.55;
+  }
+  60% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+   
+/* 掃描圈微粒子 */
+.soul-scanner::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.8) 0, transparent 55%),
+    radial-gradient(circle, rgba(167, 198, 255, 0.7) 0, transparent 60%);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  animation: soulNoise 14s linear infinite;
+}
+
+@keyframes soulNoise {
+  0% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3%, 1%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+  }
+}
