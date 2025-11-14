@@ -1,442 +1,192 @@
-/* ========== SOULMIRROR 2026 : AFFECTIVE VECTOR MAP ========== */
-
-body.soul-body {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
-  color: #f8fbff;
-  background:
-    radial-gradient(160% 220% at 10% -10%, #f7fbff 0, #dfe8ff 18%, transparent 45%),
-    radial-gradient(130% 200% at 90% 110%, #2b3b7a 0, #040715 65%, #02020a 100%);
-  background-color: #040715;
-  overflow-x: hidden;
+/* ======= 2026 銀藍宇宙背景 ======= */
+.soul-body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: radial-gradient(circle at 60% 50%, #1f2f55, #0b1326 70%, #050910);
+    font-family: "Orbitron", "Noto Sans TC", sans-serif;
+    color: #cfe2ff;
+    position: relative;
 }
 
-/* ===== 左側極簡工具列 ===== */
+/* 星點 */
+.soul-body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("../assets/stars.png");
+    opacity: 0.35;
+    animation: starFloat 18s linear infinite;
+}
+@keyframes starFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8%); }
+}
 
+/* ======= 工具列（左側垂直線條） ======= */
 .soul-nav {
-  position: fixed;
-  left: 32px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  z-index: 20;
+    position: fixed;
+    top: 50%;
+    left: 32px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    z-index: 20;
 }
-
-.soul-nav .nav-dot {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  border: 1px solid rgba(170, 190, 255, 0.45);
-  background: radial-gradient(circle at 30% 0, rgba(255, 255, 255, 0.16), transparent);
-  box-shadow: 0 0 0 rgba(120, 190, 255, 0.0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: border 0.35s ease, box-shadow 0.35s ease,
-    background 0.35s ease, transform 0.25s ease;
-}
-
-.soul-nav .nav-dot::after {
-  content: attr(data-label);
-  position: absolute;
-  left: 42px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #e4ecff;
-  background: rgba(8, 12, 40, 0.94);
-  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transform: translateX(-6px);
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.soul-nav .nav-dot:hover {
-  border-color: rgba(170, 220, 255, 0.9);
-  background: radial-gradient(circle at 20% 0, rgba(255, 255, 255, 0.38), transparent);
-  box-shadow: 0 0 22px rgba(120, 210, 255, 0.7);
-  transform: translateY(-2px);
-}
-
-.soul-nav .nav-dot:hover::after {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* 線條圖示：HOME / POST / MIRROR / GALLERY */
 
 .nav-icon {
-  width: 15px;
-  height: 15px;
-  position: relative;
+    position: relative;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.3s ease;
 }
 
-.nav-icon::before,
-.nav-icon::after {
-  content: "";
-  position: absolute;
-  border-radius: 999px;
-  border: 1px solid rgba(210, 230, 255, 0.7);
+.nav-icon:hover {
+    opacity: 1;
 }
 
-/* 小房子 */
-.nav-home::before {
-  inset: 3px 2px 3px 2px;
-  border-top: none;
-}
-.nav-home::after {
-  width: 10px;
-  height: 7px;
-  border-bottom: 1px solid rgba(210, 230, 255, 0.7);
-  border-left: 1px solid rgba(210, 230, 255, 0.7);
-  border-right: 1px solid rgba(210, 230, 255, 0.7);
-  border-top: none;
-  left: 2.5px;
-  top: 6px;
+.icon-line {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(170, 200, 255, 0.4);
+    border-radius: 50%;
+    transition: 0.3s ease;
 }
 
-/* 信封 */
-.nav-post::before {
-  inset: 3px 1.5px;
-}
-.nav-post::after {
-  inset: 3px 1.5px;
-  border: none;
-  border-bottom: 1px solid rgba(210, 230, 255, 0.7);
-  transform: rotate(45deg);
+.nav-icon:hover .icon-line {
+    box-shadow: 0 0 12px #7fb7ff;
 }
 
-/* 雙環鏡面 */
-.nav-mirror::before {
-  inset: 1px;
-}
-.nav-mirror::after {
-  inset: 4.5px;
-}
-
-/* 星星畫廊 */
-.nav-gallery::before {
-  inset: 3px;
-  border-radius: 4px;
-}
-.nav-gallery::after {
-  width: 2px;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(210, 230, 255, 0.9);
-  box-shadow:
-    0 -4px 0 rgba(210, 230, 255, 0.8),
-    4px 2px 0 rgba(210, 230, 255, 0.7),
-    -4px 3px 0 rgba(210, 230, 255, 0.6);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+.nav-icon .text {
+    position: absolute;
+    top: 50%;
+    left: 48px;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    color: #cfe7ff;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    transition: 0.3s ease;
 }
 
-/* ===== 主舞台容器 ===== */
-
-.soul-main {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 24px 32px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+.nav-icon:hover .text {
+    opacity: 1;
 }
 
+/* ======= 標題 ======= */
 .soul-header {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-left: 80px; /* 避開左側工具列 */
+    position: fixed;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #d5e6ff;
 }
 
-.soul-header .sys {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  color: rgba(188, 204, 255, 0.8);
+.soul-header h1 {
+    font-size: 28px;
+    letter-spacing: 0.25em;
+    margin: 0;
 }
 
-.soul-header .main-en {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 24px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: #f6f9ff;
+.soul-header .subtitle {
+    margin-top: 6px;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    opacity: 0.75;
 }
 
-.soul-header .main-cn {
-  font-size: 14px;
-  letter-spacing: 0.24em;
-  color: rgba(210, 224, 255, 0.92);
+/* ======= 卡片群 ======= */
+.card-field {
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70vw;
+    height: 60vh;
 }
 
-.soul-header .tagline {
-  font-size: 12px;
-  color: rgba(180, 198, 255, 0.75);
+.card-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
-/* ===== 中央雙欄：左卡片群 + 右結果艙 ===== */
-
-.vector-shell {
-  margin-top: 10px;
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
-  gap: 40px;
-  align-items: stretch;
+/* 單一卡片 */
+.card {
+    position: absolute;
+    width: 130px;
+    height: 180px;
+    background: rgba(180, 210, 255, 0.07);
+    border: 1px solid rgba(150, 180, 255, 0.28);
+    border-radius: 18px;
+    backdrop-filter: blur(10px);
+    color: white;
+    text-align: center;
+    padding-top: 58px;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    box-shadow: 0 0 18px rgba(130, 180, 255, 0.25);
+    transition: all 0.6s cubic-bezier(.21,.98,.6,1);
+    cursor: pointer;
 }
 
-/* 左：25 題選牌區 */
-
-.vector-cards {
-  position: relative;
-  padding: 24px 24px 28px;
-  border-radius: 32px;
-  background:
-    radial-gradient(circle at 10% 0, rgba(255, 255, 255, 0.32), transparent 50%),
-    radial-gradient(circle at 90% 120%, rgba(46, 98, 255, 0.9), #050b1c 70%);
-  box-shadow:
-    0 22px 55px rgba(3, 10, 40, 0.9),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  overflow: hidden;
+/* 懸浮微動 */
+.card:hover {
+    transform: translateY(-18px) scale(1.03);
+    box-shadow: 0 0 28px rgba(150, 200, 255, 0.5);
 }
 
-.vector-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+/* ======= 飛出 + 翻轉 ======= */
+.card.active {
+    z-index: 999;
+    transform: translate(-50%, -50%) scale(2.4) rotateY(180deg);
+    left: 50% !important;
+    top: 50% !important;
+    box-shadow: 0 0 38px rgba(170, 220, 255, 0.95);
 }
 
-.vector-btn {
-  position: relative;
-  width: 100%;
-  padding: 12px 0;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border-radius: 14px;
-  border: none;
-  cursor: pointer;
-  color: #10162b;
-  background:
-    radial-gradient(circle at 20% 0, rgba(255, 255, 255, 0.9), rgba(230, 240, 255, 0.4)),
-    linear-gradient(135deg, rgba(198, 212, 255, 0.3), rgba(132, 168, 255, 0.3));
-  box-shadow:
-    0 10px 26px rgba(5, 8, 25, 0.75),
-    0 0 0 1px rgba(255, 255, 255, 0.35);
-  transform: translateZ(0);
-  transition:
-    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 0.35s ease,
-    background 0.35s ease,
-    color 0.35s ease;
+/* ======= 題目面 ======= */
+.question-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 520px;
+    height: 300px;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    transition: 0.6s ease;
+    z-index: 9999;
 }
 
-.vector-btn::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease;
+.question-panel.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
 }
 
-.vector-btn:hover {
-  transform: translateY(-4px) scale(1.03);
-  box-shadow:
-    0 16px 40px rgba(5, 12, 40, 0.95),
-    0 0 40px rgba(123, 200, 255, 0.65);
-  background:
-    radial-gradient(circle at 15% 0, #ffffff, rgba(230, 240, 255, 0.36)),
-    linear-gradient(135deg, rgba(180, 210, 255, 0.8), rgba(126, 192, 255, 0.85));
+.question-card {
+    width: 100%;
+    height: 100%;
+    border-radius: 22px;
+    background: rgba(200, 225, 255, 0.08);
+    border: 1px solid rgba(150, 180, 255, 0.4);
+    backdrop-filter: blur(16px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.vector-btn:hover::after {
-  opacity: 1;
-}
-
-.vector-btn.active {
-  transform: translateY(-6px) scale(1.05);
-  box-shadow:
-    0 20px 55px rgba(7, 18, 55, 1),
-    0 0 60px rgba(151, 218, 255, 0.85);
-  background:
-    radial-gradient(circle at 10% 0, #ffffff, rgba(196, 220, 255, 0.95)),
-    linear-gradient(135deg, #8fd4ff, #b6e0ff);
-}
-
-/* 小能量裂縫 */
-
-.vector-btn.active::after {
-  opacity: 1;
-  border-color: rgba(255, 255, 255, 0.9);
-  box-shadow:
-    0 0 16px rgba(255, 255, 255, 0.9),
-    0 0 34px rgba(145, 240, 255, 0.9);
-}
-
-/* ===== 右：題目＋回答能量艙 ===== */
-
-.active-card {
-  position: relative;
-  border-radius: 40px;
-  padding: 40px 40px 46px;
-  background:
-    radial-gradient(circle at 30% 0, rgba(255, 255, 255, 0.22), transparent 50%),
-    radial-gradient(circle at 50% 120%, #1f3778, #050918 70%);
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.9),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(26px);
-  -webkit-backdrop-filter: blur(26px);
-  overflow: hidden;
-}
-
-/* 背後 AI 能量圈 */
-
-.active-card::before,
-.active-card::after {
-  content: "";
-  position: absolute;
-  border-radius: 999px;
-  inset: 8% 18%;
-  border: 1px solid rgba(130, 210, 255, 0.45);
-  box-shadow:
-    0 0 38px rgba(120, 210, 255, 0.65),
-    0 0 120px rgba(90, 190, 255, 0.8);
-  opacity: 0.32;
-  pointer-events: none;
-}
-
-.active-card::after {
-  inset: 16% 26%;
-  opacity: 0.22;
-  filter: blur(2px);
-}
-
-/* 題目文字 */
-
-#questionText {
-  position: relative;
-  z-index: 2;
-  font-size: 18px;
-  line-height: 1.6;
-  color: #f8fbff;
-  text-shadow: 0 0 16px rgba(0, 0, 0, 0.9);
-  min-height: 72px;
-}
-
-/* 回答輸入區：能量槽 */
-
-.answer-box-wrapper {
-  position: relative;
-  margin-top: 32px;
-}
-
-#answerBox {
-  width: 100%;
-  min-height: 120px;
-  resize: vertical;
-  padding: 16px 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(200, 220, 255, 0.7);
-  background: radial-gradient(circle at 0 0, rgba(255, 255, 255, 0.12), transparent 55%);
-  box-shadow:
-    inset 0 0 20px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.06);
-  color: #f3f6ff;
-  font-size: 14px;
-  line-height: 1.7;
-  outline: none;
-}
-
-#answerBox::placeholder {
-  color: rgba(190, 204, 244, 0.7);
-}
-
-/* 送出按鈕：能量脈衝 */
-
-.answer-btn {
-  position: absolute;
-  right: -6px;
-  bottom: -10px;
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  background:
-    radial-gradient(circle at 30% 0, #ffffff, #a9ddff);
-  box-shadow:
-    0 0 18px rgba(150, 220, 255, 0.9),
-    0 0 60px rgba(110, 200, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    filter 0.25s ease;
-}
-
-.answer-btn::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  border: 2px solid rgba(42, 90, 160, 1);
-  box-shadow:
-    0 0 5px rgba(42, 80, 140, 0.7),
-    inset 0 0 5px rgba(42, 80, 140, 0.7);
-}
-
-.answer-btn:hover {
-  transform: translateY(-2px) scale(1.03);
-  box-shadow:
-    0 0 25px rgba(170, 235, 255, 1),
-    0 0 80px rgba(130, 215, 255, 1);
-}
-
-.answer-btn:active {
-  transform: translateY(0) scale(0.97);
-  filter: brightness(0.95);
-}
-
-/* ===== RWD ===== */
-
-@media (max-width: 960px) {
-  .soul-main {
-    margin: 24px auto 32px;
-    padding: 16px 16px 32px;
-  }
-  .soul-header {
-    margin-left: 56px;
-  }
-  .vector-shell {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .active-card {
-    padding: 28px 20px 32px;
-  }
-  .soul-nav {
-    left: 16px;
-  }
+.q-inner {
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+    line-height: 1.8em;
+    color: #e9f2ff;
+    letter-spacing: 0.1em;
 }
