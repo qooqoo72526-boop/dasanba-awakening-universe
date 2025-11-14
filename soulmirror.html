@@ -1,60 +1,86 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Affective Vector Map</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Affective Vector Map</title>
 
-    <!-- 主要 CSS -->
-    <link rel="stylesheet" href="css/universe_soul.css">
+  <link rel="stylesheet" href="css/universe_soul.css" />
 </head>
-
 <body>
-    <!-- ░░ 1｜左側極簡線條工具列 ░░ -->
-    <nav id="sideNav">
-        <div class="nav-item" data-label="Home">
-            <span class="nav-line"></span>
-        </div>
-        <div class="nav-item" data-label="Mirror">
-            <span class="nav-line"></span>
-        </div>
-        <div class="nav-item" data-label="Post">
-            <span class="nav-line"></span>
-        </div>
-        <div class="nav-item" data-label="Gallery">
-            <span class="nav-line"></span>
-        </div>
-    </nav>
+  <!-- 左側極簡線條工具列 -->
+  <nav id="sideNav">
+    <div class="nav-item" data-label="HOME">
+      <span class="nav-line"></span>
+    </div>
+    <div class="nav-item" data-label="MIRROR">
+      <span class="nav-line"></span>
+    </div>
+    <div class="nav-item" data-label="POST">
+      <span class="nav-line"></span>
+    </div>
+    <div class="nav-item" data-label="GALLERY">
+      <span class="nav-line"></span>
+    </div>
+  </nav>
 
-    <!-- ░░ 2｜能量圈 + 主標區 ░░ -->
-    <section id="entryScreen">
-        <canvas id="particleRing"></canvas>
+  <section id="entryScreen">
+    <!-- 背景粒子能量圈 -->
+    <canvas id="particleRing"></canvas>
 
-        <div class="title-block">
-            <h1 class="en">AFFECTIVE VECTOR MAP</h1>
-            <p class="subtitle">模式，比答案更誠實。</p>
-        </div>
+    <!-- 主標題區 -->
+    <div class="title-block">
+      <h1 class="en-title">AFFECTIVE VECTOR MAP</h1>
+      <p class="subtitle">模式，比答案更誠實。</p>
+    </div>
 
-        <div class="intro">
-            <p><strong>你認為，你正在「如何運作」？</strong></p>
-            <p>
-                那是一種默默形成的節奏——  
-                你怎麼看、怎麼選、怎麼避、甚至怎麼等待。  
-                這些偏移與停頓，比語言更早暴露你。
+    <!-- 開場文案 -->
+    <div class="intro">
+      <p class="intro-q"><strong>你認為，你正在「如何運作」？</strong></p>
+      <p>
+        那是一種默默形成的節奏——你怎麼看、怎麼選、怎麼避、甚至怎麼等待。<br />
+        那些細微的偏移與停頓，比語言更早暴露你。
+      </p>
+      <p>
+        這裡不解讀你的故事，只捕捉你的行為噪點。<br />
+        當你開始選擇，你的模式便會開始顯影。
+      </p>
+    </div>
+
+    <!-- ENTER 按鈕 -->
+    <button id="startBtn" class="glow-btn">
+      <span>ENTER</span>
+    </button>
+
+    <!-- 問題卡片層 -->
+    <div id="questionLayer">
+      <div class="q-card">
+        <div class="q-inner">
+          <div class="q-header-dot"></div>
+          <div class="q-body">
+            <p class="q-title">
+              最近的你，把情緒收得太乾淨了。不是平靜，是你懶得再讓任何人失望。
             </p>
-            <p>
-                這裡不解讀你的故事，只捕捉你的行為噪點。  
-                當你開始選擇，你的模式便會開始顯影。
-            </p>
+            <div class="q-options">
+              <button class="option-pill">
+                我沒有在等誰懂我了，安全是靠自己營造的。
+              </button>
+              <button class="option-pill">
+                我其實很累，但比起解釋，我更想快轉人生。
+              </button>
+              <button class="option-pill">
+                身邊的人只看到我乖的一面，亂的一面我都藏起來。
+              </button>
+              <button class="option-pill">
+                我偶爾會幻想有人能看穿我，但通常不抱希望。
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- ░░ 3｜開始按鈕 ░░ -->
-        <button id="startBtn" class="glow-btn">
-            <span>ENTER</span>
-        </button>
-    </section>
-
-    <!-- JS -->
-    <script src="js/soul.js"></script>
+  <script src="js/soul.js"></script>
 </body>
 </html>
