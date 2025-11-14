@@ -1,678 +1,660 @@
-/* ============================
-   SOUL MIRROR – 白銀 AI 介面
-   專用 CSS（不動首頁）
-============================ */
-
 :root {
-  --bg-main: #ecf1ff;
-  --bg-card: rgba(255, 255, 255, 0.98);
-  --border-soft: rgba(205, 219, 246, 0.95);
-  --ink: #1b2340;
-  --ink-soft: #5d6c92;
-  --blue: #8fb5ff;
-  --blue-strong: #4b76ff;
+  --eva-bg: radial-gradient(circle at top, #f5fbff 0%, #dfe9ff 32%, #a9bff7 60%, #091122 100%);
+  --eva-card: rgba(8, 16, 40, 0.84);
+  --eva-card-soft: rgba(20, 30, 70, 0.75);
+  --eva-border-soft: rgba(176, 208, 255, 0.35);
+  --eva-border-strong: rgba(211, 232, 255, 0.85);
+  --eva-glow: 0 0 18px rgba(143, 192, 255, 0.9);
+  --eva-glow-soft: 0 0 25px rgba(161, 204, 255, 0.6);
+  --eva-text-main: #f5f7ff;
+  --eva-text-sub: #b2c0e8;
+  --eva-accent: #9ad0ff;
+  --eva-ajin: #f6cf5b;
+  --eva-migou: #ff9ac8;
+  --eva-gungun: #7fd5ff;
+}
+
+/* reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 body[data-page="soulmirror"] {
-  margin: 0;
-  min-height: 100vh;
-  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at 20% 0%, #f7f8ff 0, #e3e8f8 40%, #c9d4f0 70%, #9fb2e3 100%);
-  color: var(--ink);
-}
-
-/* 左側極簡工具列 */
-
-.eva-side-nav {
-  position: fixed;
-  left: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  z-index: 1200;
-}
-
-.eva-nav-item {
-  width: 36px;
-  height: 36px;
-  border-radius: 999px;
-  border: 1px solid rgba(210, 220, 240, 0.9);
-  background: radial-gradient(circle at 30% 0, #ffffff, #eef3ff);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.8),
-    0 10px 24px rgba(96, 130, 190, 0.35);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.eva-nav-icon {
-  width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  border: 1px solid rgba(141, 178, 255, 0.9);
-  box-shadow: 0 0 0 1px rgba(221, 236, 255, 0.9);
-}
-
-.eva-nav-item:hover {
-  transform: translateX(2px) scale(1.03);
-  border-color: rgba(143, 181, 255, 1);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.9),
-    0 14px 30px rgba(94, 132, 206, 0.6);
-}
-
-.eva-nav-item-active {
-  border-color: #ffffff;
-  box-shadow:
-    0 0 0 1px rgba(170, 199, 255, 0.9),
-    0 0 18px rgba(143, 181, 255, 0.95);
-}
-
-.eva-nav-item::after {
-  content: attr(data-label);
-  position: absolute;
-  left: 50px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #7f93b7;
-  background: linear-gradient(120deg, rgba(245, 249, 255, 0.96), rgba(217, 230, 255, 0.98));
-  border: 1px solid rgba(205, 219, 248, 0.95);
-  box-shadow:
-    0 4px 12px rgba(157, 183, 236, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(4px);
-  transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
-  white-space: nowrap;
-}
-
-.eva-nav-item:hover::after {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-@media (max-width: 768px) {
-  .eva-side-nav {
-    flex-direction: row;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .eva-nav-item::after {
-    display: none;
-  }
-}
-
-/* 主容器 */
-
-.soul-shell {
-  max-width: 1260px;
-  margin: 32px auto 40px;
-  padding: 32px 32px 40px 96px;
-  border-radius: 32px;
-  background: radial-gradient(circle at 0% 0%, #ffffff, #eef2ff);
-  box-shadow:
-    0 26px 70px rgba(74, 94, 150, 0.45),
-    0 0 0 1px rgba(210, 222, 246, 0.9);
-  box-sizing: border-box;
-  position: relative;
+  font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: var(--eva-text-main);
+  background: #050816;
+  background-image: var(--eva-bg);
+  background-attachment: fixed;
   overflow: hidden;
 }
 
-@media (max-width: 1024px) {
-  .soul-shell {
-    padding: 80px 16px 28px;
-    margin: 20px 12px 28px;
-  }
+/* optional starfield canvas */
+#starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  pointer-events: none;
 }
 
-/* 頂部標題 */
+/* main frame */
+.soul-frame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0;
+  padding: 24px 28px;
+}
 
+/* side nav */
+.soul-nav {
+  width: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(8, 16, 40, 0.9), rgba(9, 18, 50, 0.85));
+  border: 1px solid rgba(180, 210, 255, 0.45);
+  box-shadow: 0 0 24px rgba(40, 80, 150, 0.9);
+  backdrop-filter: blur(18px);
+}
+
+.soul-nav-item {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(180, 210, 255, 0.6);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0, rgba(9, 18, 40, 0.9) 45%);
+  box-shadow: 0 0 10px rgba(135, 185, 255, 0.9);
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.soul-nav-item::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--eva-text-sub);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.soul-nav-item:hover::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(2px);
+}
+
+.soul-nav-item-active {
+  border-color: var(--eva-border-strong);
+  box-shadow: 0 0 16px rgba(175, 215, 255, 1), 0 0 40px rgba(119, 182, 255, 0.9);
+}
+
+/* main layout */
+.soul-main {
+  position: relative;
+  margin-left: 18px;
+  border-radius: 26px;
+  border: 1px solid rgba(180, 210, 255, 0.5);
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.22) 0, rgba(7, 13, 32, 0.98) 52%);
+  box-shadow: 0 0 40px rgba(31, 66, 142, 0.9), 0 0 120px rgba(154, 204, 255, 0.85);
+  backdrop-filter: blur(24px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.4fr);
+  gap: 0;
+  padding: 24px 26px 26px;
+  overflow: hidden;
+}
+
+/* panels */
+.soul-panel {
+  position: relative;
+}
+
+.soul-panel-left {
+  padding-right: 18px;
+  border-right: 1px solid rgba(142, 179, 236, 0.6);
+}
+
+.soul-panel-right {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-left: 20px;
+}
+
+/* header */
 .soul-header {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .soul-title-en {
   font-family: "Orbitron", system-ui, sans-serif;
   font-size: 18px;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: #1b2846;
+  color: #f7fbff;
+  margin: 0 0 6px;
 }
 
-.soul-title-sub {
-  margin-top: 6px;
+.soul-title-zh {
   font-size: 13px;
-  letter-spacing: 0.16em;
-  color: #5a6a90;
+  letter-spacing: 0.28em;
+  color: var(--eva-text-sub);
+  margin: 0 0 4px;
 }
 
-/* 三欄版面 */
-
-.soul-layout {
-  display: grid;
-  grid-template-columns: 300px minmax(0, 420px) minmax(0, 340px);
-  gap: 18px;
-  align-items: stretch;
-}
-
-@media (max-width: 1100px) {
-  .soul-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* 共用欄位 */
-
-.soul-column {
-  border-radius: 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-soft);
-  box-shadow:
-    0 18px 38px rgba(150, 170, 215, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-  padding: 14px 16px;
-  box-sizing: border-box;
-}
-
-/* 小標籤 */
-
-.soul-label {
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(41, 56, 93, 0.7);
-  margin-bottom: 8px;
-}
-
-.soul-label-right {
-  text-align: right;
-}
-
-/* 左：題目列表 */
-
-.soul-questions {
-  display: flex;
-  flex-direction: column;
-}
-
-.soul-q-list {
-  margin-top: 4px;
-  max-height: 520px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-.soul-q-pill {
-  border-radius: 999px;
-  padding: 9px 13px;
-  margin-bottom: 6px;
-  border: 1px solid rgba(210, 222, 247, 0.95);
-  background: linear-gradient(135deg, #ffffff, #eef3ff);
+.soul-tagline {
   font-size: 12px;
-  line-height: 1.5;
-  color: var(--ink-soft);
-  cursor: pointer;
-  box-shadow:
-    0 4px 12px rgba(145, 166, 210, 0.18),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    border-color 0.16s ease,
-    background 0.16s ease;
-  position: relative;
+  color: rgba(224, 237, 255, 0.9);
+  margin: 0;
 }
 
-.soul-q-pill::before {
+/* questions grid */
+.soul-questions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-height: calc(100% - 80px);
+  padding-right: 4px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(163, 203, 255, 0.8) transparent;
+}
+
+.soul-questions-grid::-webkit-scrollbar {
+  width: 4px;
+}
+
+.soul-questions-grid::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a8d0ff, #6da9ff);
+  border-radius: 999px;
+}
+
+/* question chip */
+.soul-q {
+  position: relative;
+  border-radius: 16px;
+  padding: 10px 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 28, 68, 0.9),
+    rgba(14, 24, 58, 0.96),
+    rgba(24, 40, 88, 0.98)
+  );
+  border: 1px solid rgba(166, 199, 255, 0.7);
+  color: var(--eva-text-main);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.soul-q::before {
   content: "";
-  position: absolute;
-  left: 10px;
-  top: 50%;
   width: 6px;
   height: 6px;
   border-radius: 999px;
-  transform: translateY(-50%);
-  background: radial-gradient(circle, #9fd3ff 0, #3d8fff 40%, transparent 75%);
-  opacity: 0;
-  transition: opacity 0.16s ease, transform 0.16s ease;
+  margin-top: 4px;
+  background: radial-gradient(circle, #a0c6ff 0, #315cf5 80%);
+  flex-shrink: 0;
 }
 
-.soul-q-pill span {
-  margin-left: 14px;
-  display: inline-block;
+.soul-q:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(149, 193, 255, 0.9);
+  border-color: rgba(195, 222, 255, 0.9);
 }
 
-.soul-q-pill:hover {
-  transform: translateX(2px);
-  border-color: rgba(145, 181, 255, 1);
-  box-shadow:
-    0 7px 16px rgba(129, 156, 214, 0.32),
-    0 0 0 1px rgba(255, 255, 255, 0.9);
+.soul-q.active {
+  background: radial-gradient(circle at top left, rgba(157, 213, 255, 0.22), rgba(16, 30, 72, 0.98));
+  border-color: rgba(197, 234, 255, 0.98);
+  box-shadow: 0 0 22px rgba(162, 215, 255, 0.9);
 }
 
-.soul-q-pill:hover::before {
-  opacity: 1;
-  transform: translate(1px, -50%);
+.soul-q.active::before {
+  background: radial-gradient(circle, #ffffff 0, #6fb5ff 80%);
 }
 
-.soul-q-pill-active {
-  background: linear-gradient(135deg, #c9dbff, #eef3ff);
-  border-color: rgba(136, 173, 255, 1);
-  color: #1c2742;
-  box-shadow:
-    0 10px 24px rgba(108, 143, 220, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 1);
-}
-
-.soul-q-pill-active::before {
-  opacity: 1;
-  transform: translate(1px, -50%);
-}
-
-/* 中：掃描圈 */
-
-.soul-center {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.soul-scanner {
-  border-radius: 22px;
-  padding: 18px;
-  background:
-    radial-gradient(circle at 0 0, rgba(255, 255, 255, 1) 0, rgba(232, 240, 255, 1) 40%, rgba(214, 228, 252, 1) 100%);
-  border: 1px solid rgba(206, 220, 247, 0.98);
-  box-shadow:
-    0 22px 40px rgba(130, 156, 214, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.98);
-  display: grid;
-  grid-template-rows: auto auto auto;
-  justify-items: center;
-  gap: 10px;
+/* right side core */
+.soul-core-shell {
   position: relative;
+  width: 170px;
+  height: 170px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(10, 16, 40, 0.98));
+  box-shadow: 0 0 30px rgba(169, 208, 255, 0.9), 0 0 80px rgba(72, 140, 255, 0.8);
   overflow: hidden;
 }
 
-.soul-ring {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-}
-
-.soul-orbit {
+.soul-core-ring {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(151, 187, 255, 0.85);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.9),
-    0 0 24px rgba(151, 187, 255, 0.9);
+  inset: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 222, 255, 0.9);
+  box-shadow: 0 0 14px rgba(176, 218, 255, 0.9);
+  mix-blend-mode: screen;
 }
 
-.soul-orbit-outer {
-  border-style: dashed;
-  border-width: 2px;
-  animation: orbitSlow 18s linear infinite;
+.soul-core-ring-inner {
+  inset: 32px;
+  border-color: rgba(150, 202, 255, 0.9);
 }
 
-.soul-orbit-inner {
-  inset: 20px;
-  border-width: 3px;
-  border-style: solid;
-  border-image: conic-gradient(
-      from 0deg,
-      rgba(155, 191, 255, 1),
-      rgba(245, 201, 121, 1),
-      rgba(255, 154, 182, 1),
-      rgba(155, 191, 255, 1)
-    )
-    1;
-  animation: orbitFast 11s linear infinite;
+.soul-core-ring-outer::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(138, 196, 255, 0.05),
+    rgba(255, 255, 255, 0.2),
+    rgba(138, 196, 255, 0.05)
+  );
+  animation: soul-spin 9s linear infinite;
 }
 
-.soul-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: #ffffff;
-  box-shadow:
-    0 0 0 3px rgba(160, 194, 255, 0.5),
-    0 0 18px rgba(141, 182, 255, 1);
-  animation: dotPulse 2.2s ease-in-out infinite;
-}
-
-/* 中央題目文字 */
-
-.soul-current-q {
-  margin-top: 4px;
-  font-size: 12px;
-  text-align: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(206, 221, 247, 0.98);
-  box-shadow:
-    0 10px 24px rgba(140, 162, 214, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.96);
-  color: var(--ink-soft);
-}
-
-/* PUSH */
-
-.soul-push {
-  margin-top: 2px;
-  border-radius: 999px;
-  border: none;
-  padding: 6px 18px;
-  font-family: "Orbitron", system-ui, sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  background: linear-gradient(135deg, #ffffff, #c8dcff);
-  box-shadow:
-    0 10px 24px rgba(102, 134, 204, 0.5),
-    0 0 0 1px rgba(160, 190, 255, 0.95);
-  color: #1e2842;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    opacity 0.16s ease;
-}
-
-.soul-push:disabled {
-  opacity: 0.35;
-  cursor: default;
-  box-shadow:
-    0 6px 16px rgba(130, 150, 202, 0.35),
-    0 0 0 1px rgba(190, 205, 235, 0.9);
-}
-
-.soul-push:not(:disabled):hover {
-  transform: translateY(-1px);
-  box-shadow:
-    0 14px 28px rgba(96, 136, 214, 0.7),
-    0 0 0 1px rgba(188, 214, 255, 1);
-}
-
-/* 答案區 */
-
-.soul-answer-panel {
-  border-radius: 20px;
-  padding: 10px 12px;
-  background: linear-gradient(145deg, #ffffff, #eef3ff);
-  border: 1px solid rgba(209, 222, 246, 0.96);
-  box-shadow:
-    0 16px 32px rgba(142, 164, 214, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.98);
-}
-
-.soul-answer {
-  width: 100%;
-  min-height: 110px;
-  border-radius: 14px;
-  border: 1px solid rgba(207, 220, 244, 0.96);
-  padding: 10px 12px;
-  font-size: 12px;
-  line-height: 1.7;
-  resize: vertical;
-  box-sizing: border-box;
-  background: rgba(248, 251, 255, 0.98);
-  color: var(--ink);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 1),
-    0 0 0 0 rgba(0, 0, 0, 0);
-}
-
-.soul-answer:focus {
-  outline: none;
-  border-color: rgba(150, 182, 245, 1);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 1),
-    0 0 0 1px rgba(160, 194, 255, 0.9);
-}
-
-.soul-answer::placeholder {
-  color: transparent; /* 你說全部不要文字，就直接隱形 */
-}
-
-/* 右：結果 */
-
-.soul-result-col {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.soul-result {
-  flex: 1;
-  border-radius: 16px;
-  padding: 10px 12px;
-  background: radial-gradient(circle at 0 0, #ffffff, #eef3ff 40%, #e1ebff 100%);
-  border: 1px solid rgba(205, 219, 245, 0.98);
-  box-shadow:
-    inset 0 0 0 0.5px rgba(210, 224, 248, 0.98),
-    0 14px 30px rgba(116, 138, 194, 0.35);
-  font-size: 12px;
-  line-height: 1.8;
-  color: var(--ink-soft);
-  overflow-y: auto;
-}
-
-/* 三隻鳥 */
-
-.soul-birds {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
-@media (max-width: 1100px) {
-  .soul-birds {
-    grid-template-columns: minmax(0, 1fr);
+@keyframes soul-spin {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-.soul-bird {
-  border-radius: 16px;
-  padding: 8px 10px 10px;
-  background: linear-gradient(135deg, #f6f8ff, #e7f0ff);
-  border: 1px solid rgba(206, 221, 246, 0.98);
-  box-shadow:
-    0 10px 22px rgba(134, 156, 210, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.96);
+.soul-core-center {
+  position: absolute;
+  inset: 56px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0, #b8d5ff 34%, #0a1028 85%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.soul-bird-img-wrap {
-  width: 70px;
-  height: 70px;
+.soul-core-dot {
+  width: 10px;
+  height: 10px;
   border-radius: 999px;
-  margin-bottom: 6px;
-  overflow: hidden;
-  background: radial-gradient(circle at 50% 0, #ffffff, #dde8ff);
-  box-shadow:
-    0 0 0 1px rgba(200, 216, 250, 0.96),
-    0 11px 24px rgba(126, 146, 204, 0.65);
-  display: grid;
-  place-items: center;
+  background: radial-gradient(circle, #ffffff 0%, #5aacff 85%);
+  box-shadow: 0 0 24px rgba(160, 213, 255, 1);
 }
 
-.soul-bird-img {
+.soul-core-text {
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #10213b;
+}
+
+/* scan lines */
+.soul-core-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(179, 225, 255, 0.9), transparent);
+  opacity: 0.6;
+  animation: soul-scan-h 3.5s ease-in-out infinite;
+}
+
+@keyframes soul-scan-h {
+  0% {
+    transform: translateY(-80px);
+  }
+  50% {
+    transform: translateY(80px);
+  }
+  100% {
+    transform: translateY(-80px);
+  }
+}
+
+.soul-core-scan-line-vert {
+  width: 1px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  right: auto;
+  background: linear-gradient(180deg, transparent, rgba(179, 225, 255, 0.9), transparent);
+  animation: soul-scan-v 4.8s ease-in-out infinite;
+}
+
+@keyframes soul-scan-v {
+  0% {
+    transform: translateX(-70px);
+  }
+  50% {
+    transform: translateX(70px);
+  }
+  100% {
+    transform: translateX(-70px);
+  }
+}
+
+/* input shell */
+.soul-input-shell {
+  margin-top: 4px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(11, 18, 46, 0.96),
+    rgba(16, 26, 60, 0.96),
+    rgba(20, 34, 72, 0.98)
+  );
+  border: 1px solid rgba(166, 197, 245, 0.85);
+  box-shadow: var(--eva-glow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.soul-input-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.soul-push-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(158, 208, 255, 0.85);
+  background: radial-gradient(circle at top left, rgba(164, 215, 255, 0.32), rgba(10, 18, 40, 0.98));
+  box-shadow: 0 0 14px rgba(151, 205, 255, 0.9);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #e7f1ff;
+  opacity: 0.6;
+  transform: translateY(0);
+  transition: opacity 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.soul-push-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #ffffff 0, #6fb5ff 85%);
+  box-shadow: 0 0 16px rgba(158, 214, 255, 1);
+}
+
+.soul-push-label {
+  padding-top: 1px;
+}
+
+.soul-push-chip.active {
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow: 0 0 18px rgba(175, 225, 255, 1), 0 0 40px rgba(143, 205, 255, 0.9);
+}
+
+.soul-input-hint {
+  font-size: 11px;
+  color: var(--eva-text-sub);
+  text-align: right;
+}
+
+.soul-notes {
+  width: 100%;
+  min-height: 92px;
+  max-height: 140px;
+  resize: vertical;
+  border-radius: 14px;
+  border: 1px solid rgba(151, 187, 241, 0.85);
+  background: radial-gradient(circle at top, rgba(25, 40, 88, 0.95), rgba(8, 12, 32, 0.98));
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  color: var(--eva-text-main);
+  outline: none;
+  box-shadow: inset 0 0 14px rgba(10, 18, 46, 0.9);
+}
+
+.soul-notes::placeholder {
+  color: rgba(156, 176, 215, 0.9);
+}
+
+/* result */
+.soul-result-shell {
+  margin-top: 8px;
+  padding: 10px 12px 12px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(7, 14, 34, 0.96),
+    rgba(10, 18, 42, 0.98),
+    rgba(14, 26, 60, 0.98)
+  );
+  border: 1px solid rgba(163, 195, 244, 0.9);
+  box-shadow: 0 0 26px rgba(74, 128, 228, 0.9);
+}
+
+.soul-result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--eva-text-sub);
+  margin-bottom: 6px;
+}
+
+.soul-result-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: radial-gradient(circle, #a4ffcf 0, #3ad983 85%);
+  box-shadow: 0 0 14px rgba(125, 234, 167, 1);
+}
+
+.soul-result-text {
+  min-height: 72px;
+  max-height: 160px;
+  overflow-y: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(224, 236, 255, 0.96);
+  padding-right: 4px;
+  margin-bottom: 6px;
+}
+
+/* birds row */
+.soul-birds-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+.soul-bird-chip {
+  flex: 1;
+  padding: 7px 8px;
+  border-radius: 12px;
+  background: radial-gradient(circle at top, rgba(20, 32, 74, 0.9), rgba(8, 14, 32, 0.98));
+  border: 1px solid rgba(140, 176, 236, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.soul-bird-avatar-wrap {
+  position: relative;
+  width: 32px;
+  height: 32px;
+}
+
+.soul-bird-avatar {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.6));
 }
 
-.soul-bird-tag {
-  font-family: "Orbitron", system-ui, sans-serif;
+.soul-bird-halo {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  opacity: 0.95;
+  mix-blend-mode: screen;
+  filter: blur(6px);
+}
+
+.soul-bird-halo-ajin {
+  background: radial-gradient(circle, rgba(255, 245, 184, 0.9), rgba(255, 201, 82, 0.2));
+}
+
+.soul-bird-halo-migou {
+  background: radial-gradient(circle, rgba(255, 197, 230, 0.95), rgba(255, 158, 211, 0.2));
+}
+
+.soul-bird-halo-gungun {
+  background: radial-gradient(circle, rgba(191, 231, 255, 0.95), rgba(120, 203, 255, 0.2));
+}
+
+.soul-bird-name {
   font-size: 10px;
   letter-spacing: 0.22em;
-  color: #5b6e9a;
-  margin-bottom: 4px;
+  font-family: "Orbitron", system-ui, sans-serif;
+  text-transform: uppercase;
+  color: var(--eva-text-sub);
+  margin: 0;
 }
 
 .soul-bird-line {
   font-size: 11px;
-  line-height: 1.6;
-  color: var(--ink-soft);
+  color: rgba(215, 231, 255, 0.96);
+  margin: 0;
 }
 
-/* 送出箭頭 */
-
+/* submit button */
 .soul-submit {
-  position: fixed;
-  right: 32px;
-  bottom: 32px;
-  width: 52px;
-  height: 52px;
+  position: absolute;
+  right: 22px;
+  bottom: 18px;
+  width: 48px;
+  height: 48px;
   border-radius: 999px;
-  border: 1px solid rgba(204, 216, 240, 0.96);
-  background: radial-gradient(circle at 30% 0, #ffffff, #e4ebff);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.95),
-    0 18px 40px rgba(110, 134, 186, 0.9);
-  display: grid;
-  place-items: center;
-  cursor: not-allowed;
-  opacity: 0.4;
-  transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    opacity 0.16s ease,
-    border-color 0.16s ease;
+  border: 1px solid rgba(157, 190, 246, 0.9);
+  background: radial-gradient(circle at top left, rgba(185, 220, 255, 0.75), rgba(10, 16, 40, 0.98));
+  box-shadow: 0 0 16px rgba(146, 192, 255, 0.9);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  outline: none;
+  padding: 0;
+  transition: box-shadow 0.16s ease, transform 0.16s ease, border-color 0.16s ease,
+    background 0.16s ease;
+}
+
+.soul-submit[disabled] {
+  opacity: 0.45;
+  box-shadow: 0 0 10px rgba(80, 110, 166, 0.6);
 }
 
 .soul-submit-arrow {
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: rgba(144, 184, 255, 0.9);
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-  transform: rotate(45deg);
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 10px solid rgba(237, 245, 255, 0.7);
+  filter: drop-shadow(0 0 6px rgba(192, 220, 255, 0.9));
 }
 
-.soul-submit-ready {
+.soul-submit.ready {
   cursor: pointer;
   opacity: 1;
-  border-color: rgba(171, 203, 255, 1);
-  box-shadow:
-    0 0 0 1px #ffffff,
-    0 0 24px rgba(152, 191, 255, 1);
+  border-color: rgba(202, 235, 255, 0.98);
+  background: radial-gradient(circle at top left, rgba(229, 244, 255, 0.92), rgba(28, 44, 92, 0.98));
+  box-shadow: 0 0 26px rgba(188, 229, 255, 1), 0 0 70px rgba(133, 204, 255, 0.96);
 }
 
-.soul-submit-ready:hover {
-  transform: translateY(-2px) scale(1.03);
+.soul-submit.ready:hover {
+  transform: translateY(-1px);
 }
 
-/* 動畫 */
+/* responsive：手機時上下堆疊 */
+@media (max-width: 900px) {
+  .soul-frame {
+    padding: 14px 16px;
+    grid-template-columns: 1fr;
+  }
 
-@keyframes orbitSlow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+  .soul-nav {
+    position: absolute;
+    top: 10px;
+    left: 18px;
+    z-index: 3;
+    flex-direction: row;
+    width: auto;
+    border-radius: 999px;
+  }
 
-@keyframes orbitFast {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
+  .soul-main {
+    margin-left: 0;
+    margin-top: 40px;
+    grid-template-columns: 1fr;
+    padding: 18px 16px 20px;
+  }
 
-@keyframes dotPulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
+  .soul-panel-left {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid rgba(142, 179, 236, 0.6);
+    padding-bottom: 14px;
+    margin-bottom: 10px;
   }
-  50% {
-    transform: scale(1.18);
-    opacity: 0.6;
-  }
-   
- /* 結果區淡淡掃描線 */
-.soul-result {
-  position: relative;
-  overflow: hidden;
-}
 
-.soul-result::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(255, 255, 255, 0.5) 50%,
-    transparent 100%
-  );
-  opacity: 0.0;
-  pointer-events: none;
-  animation: soulScan 3.6s linear infinite;
-}
+  .soul-panel-right {
+    padding-left: 0;
+  }
 
-@keyframes soulScan {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
+  .soul-questions-grid {
+    max-height: 220px;
   }
-  20% {
-    opacity: 0.55;
-  }
-  60% {
-    opacity: 0.2;
-  }
-  100% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-   
-/* 掃描圈微粒子 */
-.soul-scanner::after {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background-image:
-    radial-gradient(circle, rgba(255, 255, 255, 0.8) 0, transparent 55%),
-    radial-gradient(circle, rgba(167, 198, 255, 0.7) 0, transparent 60%);
-  opacity: 0.3;
-  mix-blend-mode: screen;
-  animation: soulNoise 14s linear infinite;
-}
 
-@keyframes soulNoise {
-  0% {
-    transform: translate3d(-4%, -2%, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(3%, 1%, 0) scale(1.03);
-  }
-  100% {
-    transform: translate3d(-4%, -2%, 0) scale(1);
+  .soul-submit {
+    right: 16px;
+    bottom: 14px;
   }
 }
