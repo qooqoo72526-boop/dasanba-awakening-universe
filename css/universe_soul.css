@@ -339,4 +339,21 @@ body {
   .option-pill {
     font-size: 12px;
   }
+  
+/* === 卡片消散動畫 === */
+.q-card-exit .q-inner {
+  animation: cardExit 0.48s ease forwards;
+}
+
+@keyframes cardExit {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, -24px, 120px) scale(0.96);
+    filter: blur(6px);
+  }
 }
