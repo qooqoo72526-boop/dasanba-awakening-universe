@@ -1,95 +1,144 @@
 // api/analysis.js
-// 靈魂照妖鏡專用：不碰 /api/chat.js
+// 靈魂照妖鏡後端：接收 pairs，丟給 OpenAI，回傳深度解析＋三鳥一句話
 
 export const config = {
-  runtime: "nodejs20.x",
-  regions: ["sin1", "hnd1", "icn1"]
+  runtime: "edge",
+  regions: ["sin1", "hnd1", "icn1"], // 你固定要的三區
 };
 
-export default async function handler(req, res) {
-  try {
-    if (req.method !== "POST") {
-      res.status(405).json({ ok: false, error: "Method not allowed" });
-      return;
-    }
+const SYSTEM_PROMPT = `
+你是「大三巴覺醒宇宙」的情緒覺醒引導 AI。
 
-    const body = req.body || {};
-    const pairs = Array.isArray(body.pairs) ? body.pairs : [];
+口氣設定：
+- 不官方、不心靈雞湯、不勸人冷靜。
+- 敢講實話，但不羞辱當事人。
+- 可以有一點壞、嘴巴有點毒，但本質是站在當事人這邊。
+- 像一個看透人性的朋友：會挺你，也會拆穿你自欺的地方。
 
-    const joined = pairs
-      .map((item, idx) => {
-        const q = String(item.q || "");
-        const a = String(item.a || "");
-        return `Q${idx + 1}: ${q}\nA${idx + 1}: ${a}`;
-      })
-      .join("\n\n");
+任務：
+使用者會給你多組 {q, a}：
+- q：題目（中文）
+- a：使用者對自己的誠實描述（中文）
 
-    const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      res.status(500).json({ ok: false, error: "Missing OPENAI_API_KEY" });
-      return;
-    }
+你要輸出兩個層次：
 
-    const systemPrompt = `
-你是一個情緒模式分析師。風格要求：
-- 不官腔、不心靈雞湯、不用「深度解析模式」「系統視角」這種詞。
-- 可以直接講重點，但不要羞辱當事人。
-- 不是叫人「正向思考」，而是說出他現在的模式、在保護什麼、可以怎麼調整。
+1) 深度解析（analysis）——約 600 字中文：
+   - 給出「現在的情緒模式」與「長期習慣」的觀察。
+   - 指出他哪裡在硬撐、哪裡在委屈自己。
+   - 幫他拆解：他真正想守護的是什麼（自尊、安全感、愛、自由…）。
+   - 最後給一段「如果你真的想對自己好一點，可以從哪一小步開始」。
+   - 不要出現「以下是解析」、「結論如下」、「建議你」等官腔字眼。
 
-請只輸出 JSON，格式如下：
+2) 三隻鳥的一句話（ajin / migou / gungun）：
+   - AJIN：直球、反骨、行動派，可以有點兇，但站在他這邊。
+   - MIGOU：幫他守價值、幫他拉邊界，像在說「你很值錢，不要糟蹋自己」。
+   - GUNGUN：理解與安撫，講的是安全感與被理解，而不是要他乖乖改變。
+
+輸出格式：
+請只輸出 JSON，不要多解釋：
 
 {
-  "analysis": "約 600 字，分 3~4 段，說明：1) 目前情緒與關係模式 2) 這些反應背後在守護什麼 3) 如果想對自己誠實，接下來可以怎麼做。",
-  "ajin": "一句話，像阿金：行動派、反骨，但是站在他這邊的。",
-  "migou": "一句話，像米果：懂得價值和界線，提醒他不要再打折自己。",
-  "gungun": "一句話，像滾滾：安靜但很懂你，讓人有被理解的感覺。"
+  "analysis": "...",
+  "ajin": "...",
+  "migou": "...",
+  "gungun": "..."
 }
+`;
 
-不要加任何多餘文字，只能輸出 JSON。
-    `.trim();
-
-    const userPrompt = `
-以下是使用者在「靈魂照妖鏡」裡寫的題目與回答：
-
-${joined}
-    `.trim();
-
-    const openaiRes = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Bearer ${apiKey}
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        temperature: 0.85,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ]
-      })
+async function handler(req) {
+  if (req.method !== "POST") {
+    return new Response(JSON.stringify({ ok: false, error: "Method not allowed" }), {
+      status: 405,
+      headers: { "Content-Type": "application/json" },
     });
+  }
 
-    const json = await openaiRes.json();
-    const raw = json?.choices?.[0]?.message?.content || "";
-
-    let parsed;
-    try {
-      parsed = JSON.parse(raw);
-    } catch {
-      parsed = { analysis: raw, ajin: "", migou: "", gungun: "" };
+  try {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ ok: false, error: "Missing OPENAI_API_KEY" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
-    res.status(200).json({
-      ok: true,
-      analysis: parsed.analysis || raw || "",
-      ajin: parsed.ajin || "",
-      migou: parsed.migou || "",
-      gungun: parsed.gungun || ""
+    const body = await req.json();
+    const pairs = Array.isArray(body.pairs) ? body.pairs : [];
+
+    const compact = pairs
+      .map((p, idx) => {
+        const q = (p.q || "").trim();
+        const a = (p.a || "").trim();
+        if (!q && !a) return "";
+        return `#${idx + 1}\nQ: ${q}\nA: ${a}`;
+      })
+      .filter(Boolean)
+      .join("\n\n");
+
+    const userPrompt = compact || "使用者沒有提供明確文字，只是丟給你現在的狀態，請你直覺解讀。";
+
+    const payload = {
+      model: "gpt-4.1-mini",
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: userPrompt },
+      ],
+      temperature: 0.8,
+    };
+
+    const resp = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
     });
+
+    if (!resp.ok) {
+      const text = await resp.text();
+      return new Response(JSON.stringify({ ok: false, error: "upstream_error", detail: text }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const data = await resp.json();
+    const content = data?.choices?.[0]?.message?.content || "";
+
+    // 嘗試把 model 回傳的 JSON 抽出
+    let parsed;
+    try {
+      parsed = JSON.parse(content);
+    } catch {
+      // 如果他沒照 JSON 給，就包成整段 analysis，三鳥留白
+      parsed = {
+        analysis: content,
+        ajin: "",
+        migou: "",
+        gungun: "",
+      };
+    }
+
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        analysis: parsed.analysis || "",
+        ajin: parsed.ajin || "",
+        migou: parsed.migou || "",
+        gungun: parsed.gungun || "",
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (err) {
-    res
-      .status(500)
-      .json({ ok: false, error: err?.message || "unknown error" });
+    return new Response(JSON.stringify({ ok: false, error: "exception", detail: String(err) }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }
+
+export default handler;
