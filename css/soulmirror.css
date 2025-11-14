@@ -1,34 +1,45 @@
 /* SOUL MIRROR – AFFECTIVE VECTOR MAP
    2026 銀藍科技版：背景＋卡片＋工具列
-   只服務 soulmirror.html，不會影響首頁 / 宇宙郵局
+   ✦ 這份是「依照你現在的 HTML 結構」寫的版本 ✦
 */
 
-/* ---------- 共用底色 / 字體 ---------- */
+/* ---------- 顏色基底 ---------- */
+
 :root {
-  --bg-deep: #031021;
-  --bg-mid:  #071c3a;
-  --bg-soft: #0e2750;
+  --bg-deep: #020818;
+  --bg-mid:  #04152c;
+  --bg-soft: #0b254e;
   --accent:  #7fd0ff;
   --accent-soft: rgba(127, 208, 255, 0.35);
   --text-main: #e7f2ff;
   --text-sub:  #9fb3d9;
 }
 
+/* ---------- 整體版型：直接用 body 當 layout ---------- */
+
 body.soul-body {
   margin: 0;
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-rows: auto auto 1fr;
+  column-gap: 32px;
+  row-gap: 20px;
+  padding: 72px 40px 48px;
+  box-sizing: border-box;
+
   color: var(--text-main);
   background:
-    radial-gradient(circle at 15% 0%, #1c4f9b 0, transparent 55%),
-    radial-gradient(circle at 85% 100%, #3e73ff 0, transparent 55%),
-    radial-gradient(120% 200% at 50% 0%, #020815 0, #020711 60%, #000309 100%);
+    radial-gradient(circle at 15% 0%, #2757b9 0, transparent 60%),
+    radial-gradient(circle at 85% 100%, #3e6fff 0, transparent 55%),
+    radial-gradient(140% 200% at 50% 0%, #020815 0, #01060f 55%, #000309 100%);
   font-family: "Orbitron", system-ui, -apple-system, BlinkMacSystemFont,
     "Noto Sans TC", sans-serif;
   letter-spacing: 0.08em;
   overflow-x: hidden;
 }
 
-/* 背景星點，讓 shared.js 或後續 canvas 有空間用 */
+/* 背景星點 canvas（如果之後要用） */
 #spaceParticles {
   position: fixed;
   inset: 0;
@@ -36,30 +47,20 @@ body.soul-body {
   z-index: 0;
 }
 
-/* ---------- 整體排版 ---------- */
-
-.soul-body {
+/* 讓頁面內容在星點上面 */
+.soul-body > *:not(#spaceParticles) {
   position: relative;
   z-index: 1;
 }
 
-main {
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 72px 32px 56px;
-  display: grid;
-  grid-template-columns: 72px 1fr 1.1fr;
-  gap: 32px;
-  box-sizing: border-box;
-}
-
-/* ---------- 工具列：左側 4 顆圓點 icon ---------- */
+/* ---------- 左側工具列 ---------- */
 
 .neo-nav {
+  grid-row: 1 / span 3;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding-top: 40px;
+  align-self: flex-start;
 }
 
 .nav-item {
@@ -68,9 +69,10 @@ main {
   height: 26px;
   border-radius: 50%;
   border: 1px solid rgba(135, 187, 255, 0.3);
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 55%)
-              ,rgba(5, 18, 50, 0.7);
-  box-shadow: 0 0 8px rgba(120, 180, 255, 0.4);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3), transparent 55%),
+    rgba(5, 18, 50, 0.8);
+  box-shadow: 0 0 8px rgba(120, 180, 255, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,35 +92,24 @@ main {
   box-shadow: 0 0 8px rgba(180, 230, 255, 0.8);
 }
 
+/* 四個不同 icon 的線條感 */
 .nav-item.home::before {
   border-radius: 2px;
   border-bottom-width: 3px;
 }
-
 .nav-item.post::before {
   border-radius: 50%;
 }
-
 .nav-item.gallery::before {
   border-radius: 999px;
   border-width: 1px;
 }
-
 .nav-item.soul::before {
   border-radius: 12px;
   border-width: 2px;
 }
 
-.nav-item:hover {
-  transform: translateX(3px) scale(1.04);
-  box-shadow:
-    0 0 10px rgba(127, 208, 255, 0.8),
-    0 0 25px rgba(60, 130, 255, 0.6);
-  background:
-    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), transparent 60%),
-    rgba(5, 26, 80, 0.95);
-}
-
+/* hover 才顯示英文文字 */
 .nav-item .nav-text {
   position: absolute;
   left: 34px;
@@ -133,15 +124,25 @@ main {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.nav-item:hover .nav-text {
-  opacity: 1;
-  transform: translate(4px, -50%);
+.nav-item:hover {
+  transform: translateX(3px) scale(1.05);
+  box-shadow:
+    0 0 10px rgba(127, 208, 255, 0.9),
+    0 0 26px rgba(60, 130, 255, 0.7);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), transparent 60%),
+    rgba(5, 26, 80, 0.95);
 }
 
-/* ---------- 標題區 ---------- */
+.nav-item:hover .nav-text {
+  opacity: 1;
+  transform: translate(6px, -50%);
+}
+
+/* ---------- 標題區（右側上方） ---------- */
 
 .soul-header {
-  padding-top: 8px;
+  grid-column: 2;
   align-self: flex-start;
 }
 
@@ -161,14 +162,14 @@ main {
 
 .title-sub {
   font-size: 11px;
-  color: rgba(178, 206, 255, 0.75);
-  text-transform: none;
+  color: rgba(178, 206, 255, 0.8);
 }
 
 /* ---------- 題目卡片 3D 區 ---------- */
 
 .card-field {
-  margin-top: 40px;
+  grid-column: 2;
+  margin-top: 32px;
   display: flex;
   justify-content: center;
 }
@@ -180,7 +181,8 @@ main {
   perspective: 1400px;
 }
 
-/* 一開始在後方排隊的 25 張卡片 */
+/* 由 JS 動態產生的 card-slot + card 樣式 */
+
 .card-slot {
   position: absolute;
   inset: 0;
@@ -196,11 +198,11 @@ main {
   border-radius: 20px;
   background:
     radial-gradient(circle at 20% 0%, rgba(255,255,255,0.18), transparent 55%),
-    linear-gradient(145deg, rgba(47, 118, 211, 0.7), rgba(10, 39, 95, 0.95));
-  border: 1px solid rgba(166, 212, 255, 0.85);
+    linear-gradient(145deg, rgba(47, 118, 211, 0.8), rgba(10, 39, 95, 0.98));
+  border: 1px solid rgba(166, 212, 255, 0.9);
   box-shadow:
-    0 0 18px rgba(74, 145, 255, 0.6),
-    0 0 60px rgba(29, 82, 178, 0.9);
+    0 0 18px rgba(74, 145, 255, 0.7),
+    0 0 60px rgba(29, 82, 178, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,7 +224,7 @@ main {
 .card-index {
   font-size: 26px;
   font-weight: 600;
-  opacity: 0.85;
+  opacity: 0.9;
 }
 
 .card-label {
@@ -230,21 +232,21 @@ main {
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(221, 236, 255, 0.8);
+  color: rgba(221, 236, 255, 0.9);
 }
 
-/* 卡片漂浮時的微動 */
+/* hover 微浮動 */
 .card-slot:hover .card {
   transform:
     translate3d(0, -6px, -80px)
     rotateX(16deg)
     rotateY(-8deg);
   box-shadow:
-    0 0 22px rgba(132, 214, 255, 0.9),
-    0 0 70px rgba(35, 129, 255, 0.95);
+    0 0 22px rgba(132, 214, 255, 0.95),
+    0 0 70px rgba(35, 129, 255, 0.98);
 }
 
-/* 被選中 → 飛到中央 */
+/* 被選中 → 飛到眼前 */
 .card--active {
   opacity: 1 !important;
   transform:
@@ -254,28 +256,28 @@ main {
     scale(1.08);
 }
 
-/* ---------- 題目文字彈出區 ---------- */
+/* ---------- 題目彈出（中央玻璃框） ---------- */
 
 .question-panel {
   position: fixed;
   left: 50%;
-  top: 54%;
-  transform: translate(-50%, -50%);
+  top: 56%;
+  transform: translate(-50%, -50%) scale(0.96);
   width: 480px;
   max-width: calc(100% - 40px);
-  padding: 26px 26px 30px;
+  padding: 24px 24px 28px;
   border-radius: 26px;
   background:
     radial-gradient(circle at 0 0, rgba(255,255,255,0.45), transparent 60%),
     radial-gradient(circle at 100% 100%, rgba(102, 190, 255, 0.45), transparent 55%),
     rgba(5, 13, 36, 0.98);
   box-shadow:
-    0 0 32px rgba(148, 214, 255, 0.9),
-    0 0 110px rgba(50, 130, 255, 0.95);
+    0 0 32px rgba(148, 214, 255, 0.95),
+    0 0 110px rgba(50, 130, 255, 0.98);
   color: var(--text-main);
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
   backdrop-filter: blur(18px);
   opacity: 0;
   pointer-events: none;
@@ -292,14 +294,15 @@ main {
 }
 
 .question-panel.hidden {
-  transform: translate(-50%, -50%) scale(0.96);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .question-glow {
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(188, 222, 255, 0.85);
+  color: rgba(188, 222, 255, 0.9);
 }
 
 #questionText {
@@ -308,7 +311,7 @@ main {
   line-height: 1.9;
 }
 
-/* 送出按鈕（先保留，但文字你可以在 HTML 自己改） */
+/* 按鈕（之後你要接 AI 的 trigger 也用這顆） */
 .submit-btn {
   align-self: flex-end;
   width: 120px;
@@ -323,7 +326,7 @@ main {
     radial-gradient(circle at 30% 0, #ffffff, #b4e0ff);
   box-shadow:
     0 0 14px rgba(177, 233, 255, 0.9),
-    0 0 32px rgba(124, 203, 255, 0.8);
+    0 0 32px rgba(124, 203, 255, 0.85);
   cursor: pointer;
   transition:
     transform 0.25s ease,
@@ -331,12 +334,12 @@ main {
     filter 0.25s ease;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(.disabled) {
   transform: translateY(-1px);
   filter: brightness(1.06);
   box-shadow:
-    0 0 20px rgba(188, 239, 255, 0.95),
-    0 0 42px rgba(134, 216, 255, 0.9);
+    0 0 20px rgba(188, 239, 255, 0.98),
+    0 0 42px rgba(134, 216, 255, 0.95);
 }
 
 .submit-btn.disabled {
@@ -348,16 +351,17 @@ main {
 /* ---------- RWD ---------- */
 
 @media (max-width: 960px) {
-  main {
+  body.soul-body {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 60px 20px 40px;
+    grid-template-rows: auto auto auto 1fr;
+    padding: 56px 20px 40px;
+    row-gap: 16px;
   }
 
   .neo-nav {
     flex-direction: row;
-    justify-content: flex-start;
-    padding-top: 0;
+    grid-row: 1;
+    gap: 12px;
   }
 
   .nav-item .nav-text {
@@ -366,8 +370,12 @@ main {
     transform: translate(-50%, 0);
   }
 
+  .soul-header {
+    grid-column: 1;
+  }
+
   .card-field {
-    margin-top: 24px;
+    grid-column: 1;
   }
 
   .card-container {
@@ -376,8 +384,8 @@ main {
 
   .question-panel {
     top: auto;
-    bottom: 30px;
-    transform: translate(-50%, 0);
+    bottom: 28px;
+    transform: translate(-50%, 0) scale(0.96);
   }
 
   .question-panel.visible {
