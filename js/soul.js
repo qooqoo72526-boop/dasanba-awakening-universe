@@ -1,220 +1,187 @@
-// ===============================
-// 題庫（25 題深度問句）
-// ===============================
-const EVA_BANK = [
-  "你多久會告訴自己「沒事啦」，但其實一點都不想原諒？",
-  "最近一次想要消失，是哪一個瞬間？",
-  "你最怕哪一種安靜：沒人回訊息，還是有人回得很敷衍？",
-  "當你說「我習慣了」的時候，心裡其實在放棄什麼？",
-  "你曾為了不被丟下，做過最違背自己的一件事是什麼？",
-  "你最怕哪種愛：說很多但做很少，還是什麼都不說但你永遠搞不懂？",
-  "有哪個人，只要提到名字，你情緒就會瞬間變得很吵？",
-  "如果可以對某個人講一句最難聽的真心話，你會講什麼？",
-  "在關係裡，你最常裝沒看到的紅旗是什麼？",
-  "你有沒有那種「只要一想起來就會瞬間硬起來」的委屈？",
-  "你希望別人怎麼安撫你，但幾乎沒有人做到過？",
-  "你演給別人看的那個版本，最怕哪一個人看穿？",
-  "你現在生活中，有哪個地方一直在透支你，但你遲遲不離開？",
-  "你對「被需要」這件事，到底舒服還是疲憊？",
-  "你最常在什麼時候，覺得自己只是備用零件？",
-  "你有沒有哪一次，很想要理所當然地被偏心，卻沒有？",
-  "你害怕衝突，是因為不想傷人，還是更怕被討厭？",
-  "你最近一次真正想哭卻憋住，是因為什麼？",
-  "你有沒有哪個習慣，其實只是為了讓自己看起來還過得去？",
-  "如果可以暫停一段關係三個月，你最想暫停哪一段？",
-  "你最常對自己說的謊是什麼？",
-  "哪一個選擇，是你嘴上說不後悔，但心裡一直在重演的？",
-  "你其實在等誰先道歉？",
-  "你害怕哪一種孤單：身邊沒人，還是身邊一堆人卻沒有人懂你？",
-  "如果今天可以不用再撐，你最想放掉的是什麼？"
+// js/solu.js
+
+const QUESTIONS = [
+  "最近一次讓你覺得「受傷但懶得講」的事件是什麼？",
+  "當你很想求助時，第一個想到的人是誰？為什麼？",
+  "你最常對自己說的苛刻台詞是什麼？它從什麼時候開始？",
+  "如果把現在的你切成三個聲音：理智、情緒、防衛，它們各自在說什麼？",
+  "你最怕被誤解成什麼樣的人？為什麼那麼怕？",
+  "什麼樣的場景會讓你瞬間變得很乖、很安靜？",
+  "你做過最讓自己驚訝的反擊或拒絕是什麼？事後覺得怎麼樣？",
+  "最近一次，你為了不讓別人失望而犧牲了什麼？",
+  "你對「脆弱」這個詞的第一個直覺是什麼？舒服還是刺耳？",
+  "如果現在可以對某個人說一句實話，不用負責任，你會對誰說什麼？",
+  "你最常裝沒事的時候，心裡其實在吶喊什麼？",
+  "你有沒有一個很難說出口的願望？說出來會覺得自己很貪心的那種。",
+  "你習慣用什麼方式證明自己值得被愛？",
+  "在你心裡，什麼狀態才叫「真的被看見」？",
+  "如果把今天的你當成一個系統，你覺得哪一塊最常過熱？",
+  "你最容易對哪一種人心軟？",
+  "有沒有一段你早就該離開、卻拖到最後一刻的關係？",
+  "你現在最想對過去哪一個版本的自己道歉？為了什麼？",
+  "你曾經因為害怕失去，而做過最違反自己心意的決定是什麼？",
+  "當你覺得不被理解時，你通常會怎麼保護自己？",
+  "你覺得自己最被低估的地方是什麼？",
+  "你最不想被別人看到的情緒是哪一種？",
+  "如果可以暫停所有角色，只當自己 24 小時，你會怎麼過？",
+  "你現在最想切斷的是哪一種期待？",
+  "你覺得自己目前最大的情緒勒索對象，是別人還是你自己？"
 ];
 
-// DOM
-const qListEl    = document.getElementById("evaQList");
-const floatQEl   = document.getElementById("evaFloatQ");
-const inputEl    = document.getElementById("evaInput");
-const resultEl   = document.getElementById("evaResult");
-const progressEl = document.getElementById("evaProgressText");
-const sendBtn    = document.getElementById("evaSendBtn");
+const s = {};
+const state = {
+  currentIndex: null,
+  answers: {},
+  sending: false
+};
 
-// 狀態
-let QUESTION_SET = [];
-let ANSWERS = {};
-let currentIndex = null;
-let autoTimer = null;
-let lastUserMove = Date.now();
-
-// 取 25 題（洗牌）
-function pick25() {
-  const arr = [...EVA_BANK];
-  arr.sort(() => Math.random() - 0.5);
-  return arr.slice(0, 25);
+function $(id) {
+  return document.getElementById(id);
 }
 
-// 初始化題目列表
+function initDOM() {
+  s.qList = $("qList");
+  s.currentQ = $("currentQuestion");
+  s.answer = $("answerArea");
+  s.pushBtn = $("pushBtn");
+  s.submit = $("submitScan");
+  s.output = $("analysisOutput");
+  s.ajin = $("ajinLine");
+  s.migou = $("migouLine");
+  s.gungun = $("gungunLine");
+}
+
 function renderQuestions() {
-  QUESTION_SET = pick25();
-  qListEl.innerHTML = "";
-  ANSWERS = {};
-  currentIndex = null;
-  inputEl.value = "";
-  updateProgress();
-  updateSendButton();
-
-  QUESTION_SET.forEach((q, i) => {
-    const item = document.createElement("div");
-    item.className = "eva-q-item";
-    item.textContent = q;
-    item.addEventListener("click", () => {
-      lastUserMove = Date.now();
-      onSelectQuestion(i);
-    });
-    qListEl.appendChild(item);
+  s.qList.innerHTML = "";
+  QUESTIONS.forEach((text, i) => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "soul-q-pill";
+    btn.dataset.index = i;
+    btn.innerHTML = `<span>${text}</span>`;
+    btn.addEventListener("click", () => selectQuestion(i));
+    s.qList.appendChild(btn);
   });
+}
 
-  // 預設先選第一題讓 HUD 動起來
-  if (QUESTION_SET.length) {
-    onSelectQuestion(0);
+function selectQuestion(index) {
+  // 存現在這題的答案
+  saveCurrentAnswer();
+
+  state.currentIndex = index;
+
+  const items = s.qList.querySelectorAll(".soul-q-pill");
+  items.forEach((el) => el.classList.remove("soul-q-pill-active"));
+  const active = s.qList.querySelector(`.soul-q-pill[data-index="${index}"]`);
+  if (active) active.classList.add("soul-q-pill-active");
+
+  s.currentQ.textContent = QUESTIONS[index];
+
+  const saved = state.answers[index] || "";
+  s.answer.value = saved;
+  s.answer.disabled = false;
+
+  s.pushBtn.disabled = false;
+}
+
+function saveCurrentAnswer() {
+  if (state.currentIndex == null) return;
+  if (!s.answer) return;
+  state.answers[state.currentIndex] = s.answer.value || "";
+  updateSubmitState();
+}
+
+function handlePush() {
+  // 這裡可以加一些特效用的 class，純視覺
+  const scanner = document.querySelector(".soul-scanner");
+  scanner?.classList.add("soul-scanner-pulse");
+  setTimeout(() => scanner?.classList.remove("soul-scanner-pulse"), 260);
+}
+
+function updateSubmitState() {
+  const answeredCount = Object.values(state.answers).filter(
+    (v) => v && v.trim().length > 0
+  ).length;
+
+  const allDone = answeredCount >= QUESTIONS.length;
+  if (allDone && !state.sending) {
+    s.submit.disabled = false;
+    s.submit.classList.add("soul-submit-ready");
+  } else {
+    s.submit.disabled = true;
+    s.submit.classList.remove("soul-submit-ready");
   }
-
-  startAutoRotate();
 }
 
-// 切換中央題目
-function onSelectQuestion(i) {
-  currentIndex = i;
+async function handleSubmit() {
+  saveCurrentAnswer();
 
-  const all = qListEl.querySelectorAll(".eva-q-item");
-  all.forEach(el => el.classList.remove("is-active"));
-  const active = qListEl.children[i];
-  if (active) active.classList.add("is-active");
+  const answeredCount = Object.values(state.answers).filter(
+    (v) => v && v.trim().length > 0
+  ).length;
+  if (answeredCount < QUESTIONS.length) return;
 
-  const text = QUESTION_SET[i] || "";
-  floatQEl.innerHTML =
-    `<div class="eva-floating-question-text">${text}</div>`;
-  floatQEl.classList.remove("eva-pop");
-  void floatQEl.offsetWidth;
-  floatQEl.classList.add("eva-pop");
+  if (state.sending) return;
+  state.sending = true;
+  s.submit.disabled = true;
+  s.submit.classList.remove("soul-submit-ready");
 
-  inputEl.value = ANSWERS[i] || "";
-}
+  // 清空畫面，只留空白＋轉圈感（用 CSS 動畫撐場）
+  s.output.textContent = "";
+  s.ajin.textContent = "";
+  s.migou.textContent = "";
+  s.gungun.textContent = "";
 
-// 更新進度
-function updateProgress() {
-  const answeredCount = Object.values(ANSWERS)
-    .filter(v => v && v.trim().length > 0).length;
-  progressEl.textContent = `已紀錄 ${answeredCount} / 25`;
-}
-
-// 箭頭啟用條件
-function updateSendButton() {
-  const answeredCount = Object.values(ANSWERS)
-    .filter(v => v && v.trim().length > 0).length;
-  sendBtn.disabled = answeredCount < 8;  // 至少寫 8 題才亮
-}
-
-// 自動輪播：沒在打字、沒有互動時，題目會自己慢慢換
-function startAutoRotate() {
-  if (autoTimer) clearInterval(autoTimer);
-  autoTimer = setInterval(() => {
-    const now = Date.now();
-    const idleMs = now - lastUserMove;
-
-    // 你在打字就不要亂晃
-    if (idleMs < 8000) return;
-    if (inputEl.value.trim()) return;
-
-    if (!QUESTION_SET.length) return;
-    const nextIndex =
-      currentIndex === null
-        ? 0
-        : (currentIndex + 1) % QUESTION_SET.length;
-
-    onSelectQuestion(nextIndex);
-  }, 6000);
-}
-
-// 輸入同步儲存
-inputEl.addEventListener("input", () => {
-  lastUserMove = Date.now();
-  if (currentIndex === null) return;
-  ANSWERS[currentIndex] = inputEl.value;
-  updateProgress();
-  updateSendButton();
-});
-
-// 送出 → /api/chat
-sendBtn.addEventListener("click", async () => {
-  const answeredCount = Object.values(ANSWERS)
-    .filter(v => v && v.trim().length > 0).length;
-  if (answeredCount < 8) return;
-
-  lastUserMove = Date.now();
-  const originalBtn = sendBtn.innerHTML;
-  sendBtn.disabled = true;
-  sendBtn.innerHTML = `<span class="eva-send-arrow">➤</span>`;
-
-  resultEl.innerHTML = `
-    <p class="eva-result-hint">
-      訊號已送出。<br>
-      等它把你的字排成一面鏡子。
-    </p>
-  `;
-
-  const qaLines = QUESTION_SET.map((q, i) => {
-    const a = ANSWERS[i] || "（這題沒有寫）";
-    return `題目：${q}\n回答：${a}`;
-  }).join("\n\n");
-
-  const prompt = `
-你是一個很誠實、敢講的情緒教練，不走雞湯，不講官腔。
-
-下面是使用者在「靈魂照妖鏡」裡回答的題目與內容：
-
-${qaLines}
-
-請用中文完成這個結構：
-
-1. 先用 2～3 句話，直接點出這個人目前情緒與人生狀態的核心問題，可以有點狠，但語氣像站在他這邊的朋友，不是老師。
-2. 接著寫一段約 400～500 字的深度拆解，說明：
-   - 他/她一直在重複的情緒模式與自我欺騙
-   - 在關係、工作或自我價值上，最容易卡住的地方
-   - 如果要對自己誠實，接下來三個月可以開始練習的一個小行動
-3. 最後用三行收尾，分別是三隻鳥的語氣，每行開頭請加上角色名（冒號後一句話）：
-   - 阿金：行動派、反骨、敢講狠話
-   - 米果：高價值、自尊、主權、會提醒界線
-   - 滾滾：理解、溫柔但直接，不討好也不貶低
-
-整體語氣要：直接、真心、敢講，但不要侮辱人，也不要太「心靈雞湯」。
-請不要出現「解析如下」「總結」「分析」這種官方用語。
-  `.trim();
+  const pairs = QUESTIONS.map((q, i) => ({
+    q,
+    a: state.answers[i] || ""
+  }));
 
   try {
-    const res = await fetch("/api/chat", {
+    const res = await fetch("/api/analysis", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ pairs })
     });
 
-    if (!res.ok) throw new Error("HTTP " + res.status);
+    if (!res.ok) throw new Error("network");
 
     const data = await res.json();
-    const text = data.reply || data.message || JSON.stringify(data);
+    if (!data || !data.ok) throw new Error("bad");
 
-    resultEl.innerHTML = `<p>${text.replace(/\n/g, "<br>")}</p>`;
-  } catch (err) {
-    console.error(err);
-    resultEl.innerHTML = `
-      <p class="eva-result-hint">
-        剛剛訊號卡了一下。<br>
-        字都還在，等等再按一次箭頭就好。
-      </p>
-    `;
+    s.output.textContent = data.analysis || "";
+    s.ajin.textContent = data.ajin || "";
+    s.migou.textContent = data.migou || "";
+    s.gungun.textContent = data.gungun || "";
+  } catch (e) {
+    // 真的出錯才講一句人話
+    s.output.textContent = "連線暫時有問題，可以稍後再試一次。";
   } finally {
-    sendBtn.disabled = false;
-    sendBtn.innerHTML = originalBtn;
+    state.sending = false;
+    updateSubmitState();
   }
-});
+}
 
-// 初始化
-renderQuestions();
+function initEvents() {
+  s.answer.addEventListener("input", () => {
+    if (state.currentIndex == null) return;
+    state.answers[state.currentIndex] = s.answer.value;
+    updateSubmitState();
+  });
+
+  s.pushBtn.addEventListener("click", () => {
+    if (s.pushBtn.disabled) return;
+    handlePush();
+  });
+
+  s.submit.addEventListener("click", () => {
+    if (s.submit.disabled) return;
+    handleSubmit();
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initDOM();
+  renderQuestions();
+  initEvents();
+});
