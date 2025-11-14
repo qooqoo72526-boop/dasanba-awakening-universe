@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AFFECTIVE VECTOR MAP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affective Vector Map｜Soul Mirror</title>
     <link rel="stylesheet" href="css/universe_soul.css">
+    <link rel="stylesheet" href="css/soulmirror.css">
 </head>
 
-<body class="soul-body" data-page="soulmirror">
+<body>
 
-    <!-- 左側科技工具列 -->
-    <nav class="soul-nav">
-        <a href="index.html" class="nav-icon home">
-            <span class="icon-line"></span>
-            <span class="text">HOME</span>
-        </a>
-        <a href="cosmic-post-station.html" class="nav-icon post">
-            <span class="icon-line"></span>
-            <span class="text">POST</span>
-        </a>
-        <a href="gallery.html" class="nav-icon gallery">
-            <span class="icon-line"></span>
-            <span class="text">GALLERY</span>
-        </a>
-        <a href="soulmirror.html" class="nav-icon soul">
-            <span class="icon-line"></span>
-            <span class="text">SOUL</span>
-        </a>
-    </nav>
+<!-- ░░ 顆粒星雲背景（AI 科技艙）░░ -->
+<canvas id="spaceParticles"></canvas>
 
-    <!-- 右上 AFFECTIVE VECTOR MAP 標題 -->
-    <header class="soul-header">
-        <h1>AFFECTIVE VECTOR MAP</h1>
-        <p class="subtitle">模式；比答案更誠實。</p>
-    </header>
+<!-- ░░ 工具列（極簡線條 Icon）░░ -->
+<nav class="neo-nav">
+    <a href="index.html" class="nav-item">
+        <span class="nav-icon">⌂</span>
+        <span class="nav-text">HOME</span>
+    </a>
+    <a href="cosmic-post-station.html" class="nav-item">
+        <span class="nav-icon">✉</span>
+        <span class="nav-text">POST</span>
+    </a>
+    <a href="gallery.html" class="nav-item">
+        <span class="nav-icon">✦</span>
+        <span class="nav-text">GALLERY</span>
+    </a>
+    <a href="soulmirror.html" class="nav-item active">
+        <span class="nav-icon">🜂</span>
+        <span class="nav-text">SOUL</span>
+    </a>
+</nav>
 
-    <!-- 25 卡片群 -->
-    <section class="card-field">
-        <div id="cardWrap" class="card-wrap"></div>
-    </section>
+<!-- ░░ 頁面標題（AI 2026 科技感） ░░ -->
+<header class="soul-header">
+    <h1 class="title-en">AFFECTIVE VECTOR MAP</h1>
+    <h2 class="title-cn">情緒向量場</h2>
+    <p class="title-sub">模式比答案更誠實。</p>
+</header>
 
-    <!-- 題目顯示區（卡片飛到眼前後顯示） -->
-    <section class="question-panel" id="questionPanel">
-        <div class="question-card">
-            <div class="q-inner">
-                <p id="qText">...</p>
-            </div>
-        </div>
-    </section>
+<!-- ░░ 題目卡片 3D 區域 ░░ -->
+<section class="card-field">
+    <div id="cardContainer" class="card-container"></div>
+</section>
 
-    <script src="js/soul.js"></script>
+<!-- ░░ 題目彈出（卡片飛到中央後翻面） ░░ -->
+<div id="questionPanel" class="question-panel hidden">
+    <div class="question-glass">
+        <p id="questionText"></p>
+        <div class="submit-btn disabled" id="submitBtn">➤</div>
+    </div>
+</div>
+
+<script src="js/soul.js"></script>
 </body>
 </html>
