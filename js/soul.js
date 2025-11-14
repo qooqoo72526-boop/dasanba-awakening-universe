@@ -1,4 +1,4 @@
-// js/soul.js
+//js/soul.js
 
 const QUESTIONS = [
   "最近一次讓你覺得「受傷但懶得講」的事件是什麼？",
