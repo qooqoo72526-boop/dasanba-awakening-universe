@@ -1,181 +1,206 @@
-/* ================================
-   2026 AFFECTIVE VECTOR MAP
-   星霧科技感 + 霧面玻璃 + 立體層深度
-=================================*/
+/* ============================
+   2026 SoulMirror | Futuristic Glass UI
+   ============================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap');
 
-body.soul-body {
+body {
     margin: 0;
     padding: 0;
-    font-family: 'Orbitron','Noto Sans TC',sans-serif;
-    color: #E8EEFF;
-    overflow: hidden;
-    background: radial-gradient(circle at 50% 20%, #1C2955, #0B1227);
+    overflow-x: hidden;
+    background: #f7f9fc;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #ffffff;
 }
 
-/* ===== 星霧背景 ===== */
-
-.soul-body::before {
-    content:"";
+/* ░░ 玻璃霧化感 + 星雲粒子背景 ░░ */
+#spaceParticles {
     position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: url('/assets/stardust.png') repeat;
-    opacity:0.35;
-    animation: drift 18s linear infinite;
-    z-index:-2;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -10;
+    filter: brightness(1.3) blur(1px);
+    pointer-events: none;
 }
 
-@keyframes drift {
-    from { transform: translateY(0); }
-    to { transform: translateY(-800px); }
-}
-
-/* ===== 工具列（左側）===== */
-
-.soul-nav {
+/* ░░ 工具列 – AI 線條 icon ░░ */
+.neo-nav {
     position: fixed;
-    top: 40%;
-    left: 40px;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    z-index: 999;
-}
-
-.soul-nav .nav-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.06);
+    gap: 40px;
+    z-index: 1000;
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.15);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    padding: 8px 22px;
+    border-radius: 14px;
+    background: rgba(240,240,255,0.28);
+    border: 1px solid rgba(255,255,255,0.22);
+    box-shadow: 0 0 30px rgba(150,180,255,0.25);
+}
+
+.neo-nav .nav-item {
+    text-align: center;
+    font-family: Orbitron;
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
     transition: 0.3s ease;
-    cursor: pointer;
+    position: relative;
 }
 
-.soul-nav .nav-icon:hover {
-    background: rgba(255,255,255,0.18);
-    transform: translateX(6px);
-    box-shadow: 0 0 12px rgba(149,188,255,0.55);
+.nav-icon {
+    font-size: 20px;
+    display: block;
 }
 
-.soul-nav .nav-icon span {
-    opacity:0;
-    position:absolute;
-    left:55px;
-    color:#C7D7FF;
-    font-size:12px;
-    letter-spacing:1px;
-    transition:0.3s ease;
+.nav-text {
+    font-size: 10px;
+    opacity: 0;
+    transition: 0.3s ease;
+    letter-spacing: 0.08em;
 }
 
-.soul-nav .nav-icon:hover span {
-    opacity:1;
+.neo-nav .nav-item:hover .nav-text {
+    opacity: 1;
+    color: #fff;
 }
 
-/* ===== 主標題 ===== */
-
-h1.main-en {
-    margin-top: 80px;
-    text-align:center;
-    font-size:36px;
-    letter-spacing:0.15em;
-    color:#E5EBFF;
+/* Active page */
+.neo-nav .active {
+    color: white;
+    text-shadow: 0 0 8px #b7d4ff;
 }
 
-h2.main-cn {
-    text-align:center;
-    margin-top: -10px;
-    font-size:14px;
-    color:#9EB3FF;
-    opacity:0.85;
+/* ░░ 頁面標題 ░░ */
+.soul-header {
+    text-align: center;
+    margin-top: 120px;
 }
 
-.tagline {
-    text-align:center;
-    margin-top:10px;
-    color:#D0D8FF;
-    font-size:13px;
-    opacity:0.75;
+.title-en {
+    font-family: Orbitron;
+    font-size: 32px;
+    letter-spacing: 0.12em;
+    color: #dce6ff;
+    text-shadow: 0 0 20px rgba(180,210,255,0.7);
 }
 
-/* ===== 卡片選單 ===== */
+.title-cn {
+    font-size: 20px;
+    margin-top: 6px;
+    color: #e8eeff;
+    letter-spacing: 0.08em;
+}
 
-#vector-cards {
+.title-sub {
+    margin-top: 8px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* ░░ 3D 卡片場域 - 中央懸浮 ░░ */
+.card-field {
+    width: 100%;
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.card-container {
     width: 80%;
-    margin: 50px auto;
+    max-width: 1100px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 24px;
+    gap: 22px;
+    perspective: 1500px;
 }
 
-.card {
-    height: 96px;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(14px);
+.card-item {
+    width: 100%;
+    padding-top: 140%;
+    background: rgba(255,255,255,0.3);
     border-radius: 18px;
-    border:1px solid rgba(255,255,255,0.08);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#E3EBFF;
-    letter-spacing:0.1em;
-    font-size:20px;
-    cursor:pointer;
-    transition:0.35s;
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow:
+        0 0 25px rgba(150,170,255,0.35),
+        inset 0 0 25px rgba(255,255,255,0.35);
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 0 25px rgba(130,172,255,0.35);
-    background: rgba(255,255,255,0.12);
+/* 卡片 hover 微旋轉 */
+.card-item:hover {
+    transform: rotateX(6deg) rotateY(-6deg) translateZ(22px);
+    box-shadow: 0 0 35px rgba(185,210,255,0.45);
 }
 
-/* ===== 題目顯示卡 ===== */
-
-#activeCard {
-    width: 420px;
-    height: 520px;
-    margin: 40px auto 0 auto;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(18px);
-    border-radius: 28px;
-    border:1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 0 65px rgba(135,172,255,0.25);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding: 36px;
-    text-align:center;
-    animation: fadeIn 0.4s ease;
+/* ░░ 點選後：卡片飛來中央 ░░ */
+.card-item.active {
+    position: fixed !important;
+    left: 50%;
+    top: 50%;
+    width: 260px;
+    height: 380px;
+    padding: 0;
+    transform: translate(-50%, -50%) scale(1.2) rotateY(180deg);
+    z-index: 999;
+    box-shadow: 0 0 45px rgba(200,220,255,0.55);
+    transition: 0.6s ease;
 }
 
+/* ░░ 題目翻轉面 ░░ */
+.question-panel {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 60vw;
+    max-width: 560px;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    transition: 0.3s ease;
+}
+
+.question-panel.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.question-glass {
+    background: rgba(255,255,255,0.28);
+    padding: 40px 30px;
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.45);
+    box-shadow: 0 0 40px rgba(200,220,255,0.45);
+    text-align: center;
+    transform-style: preserve-3d;
+}
+
+/* 題目字 */
 #questionText {
-    font-size:20px;
-    line-height:1.6;
-    letter-spacing:0.05em;
+    font-size: 18px;
+    color: #344;
+    font-weight: 500;
+    line-height: 1.6em;
 }
 
-/* 亮圈按鈕 */
-
-#answerBtn {
-    margin-top: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius:50%;
-    border:none;
-    cursor:pointer;
-    background: radial-gradient(circle, #A7C2FF, #7395FF);
-    box-shadow: 0 0 18px rgba(129,167,255,0.8);
-    transition:0.3s;
+/* 送出符號 ➤ */
+.submit-btn {
+    margin-top: 28px;
+    font-size: 36px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: 0.3s ease;
 }
 
-#answerBtn:hover {
-    transform: scale(1.18);
-    box-shadow: 0 0 30px rgba(149,188,255,1);
+.submit-btn.enabled {
+    opacity: 1;
+    color: #4ba3ff;
+    text-shadow: 0 0 18px #cce1ff;
+    transform: scale(1.12);
 }
